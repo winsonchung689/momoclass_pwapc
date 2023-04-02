@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Detail from '@/components/Detail'
 
 Vue.use(Router)
 
-const Home = () => import('@/pages/Home')
-const NextPage = () => import('@/pages/NextPage')
+const Home = () => import('@/components/Home')
+const NextPage = () => import('@/components/NextPage')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
