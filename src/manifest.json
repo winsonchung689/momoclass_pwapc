@@ -1,10 +1,10 @@
 {
   "name": "momopwa",
   "short_name": "momo",
-  "display": "standalone",
+  "display": "fullscreen",
   "start_url": "/",
-  "theme_color": "#313131",
-  "background_color": "#313131",
+  "theme_color": "#ffffff",
+  "background_color": "#488acd",
   "icons": [
     {
       "src": "/assets/144.png",

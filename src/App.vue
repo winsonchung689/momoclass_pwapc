@@ -2,13 +2,18 @@
   <div id="app">
     <img src="./assets/144.png">
     <router-view/>
-    <!-- <bottom-navigation></bottom-navigation> -->
+    <bottom-navigation></bottom-navigation>
   </div>
 </template>
 
 <script>
+import BottomNavigation from '@/components/BottomNavigation'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    BottomNavigation
+  }
 }
 </script>
 
@@ -18,7 +23,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #cbdae9;
   margin-top: 60px;
 }
 </style>
