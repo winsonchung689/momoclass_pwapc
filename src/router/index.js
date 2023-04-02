@@ -5,7 +5,12 @@ import Detail from '@/components/Detail'
 
 Vue.use(Router)
 
+const Home = () => import('@/pages/Home')
+const NextPage = () => import('@/pages/NextPage')
+
 export default new Router({
+  // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -13,9 +18,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/detail',
-      name: 'Detail',
-      component: Detail
+      path: '/next',
+      name: 'NextPage',
+      component: NextPage
     }
   ]
 })
