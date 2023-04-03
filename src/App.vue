@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/144.png">
     <router-view/>
-    <bottom-navigation></bottom-navigation>
+    <!-- <bottom-navigation></bottom-navigation> -->
   </div>
 </template>
 
@@ -23,7 +22,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #cbdae9;
+  color: hwb(210 9% 6%);
   margin-top: 60px;
 }
+body {
+  margin: 0;
+  padding-top: 60px;
+}
+
 </style>

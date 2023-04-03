@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <button @click="$router.push('/next')">Go to Next Page</button>
+    <button @click="$router.push('/next')">工作台</button>
+    <button @click="$router.push('/next')">学生专区</button>
+    <button @click="$router.push('/next')">个人中心</button>
   </div>
 </template>
 
@@ -10,7 +12,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your MOMO ASSISTANT！'
     }
   }
 }
