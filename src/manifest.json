@@ -1,7 +1,7 @@
 {
   "name": "momopwa",
   "short_name": "momo",
-  "display": "fullscreen",
+  "display": "standalone",
   "start_url": "/",
   "theme_color": "#ffffff",
   "background_color": "#488acd",
