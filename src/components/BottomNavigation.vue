@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-navigation">
     <button class="current">学生专区</button>
-    <button>工作台</button>
+    <button @click="$router.push('/next')">工作台</button>
     <button>个人中心</button>
   </div>
 </template>

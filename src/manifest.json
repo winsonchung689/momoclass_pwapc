@@ -1,6 +1,6 @@
 {
-  "name": "momopwa",
-  "short_name": "momo",
+  "name": "小桃子助手",
+  "short_name": "小桃子",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#ffffff",

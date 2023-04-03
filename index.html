@@ -6,22 +6,38 @@
     <title>小桃子助手</title>
     <link rel="manifest" href="./manifest.json" />
     <link rel="shortcut icon" type="image/x-icon" href="./src/assets/favicon.ico" /> 
+    <!-- <link rel="stylesheet" href="./style/index.css"> -->
+    <!-- <link rel="stylesheet" href="./style/fonts/iconfont.css"> -->
   </head>
   <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/service-worker.js')
-            .then(function (registration) {
-              console.log('service worker 注册成功, ', registration.scope)
-            })
-            .catch(function (error) {
-              console.error('serviceWorker 注册失败', error)
-            })
+      
+  <header class="header-wrapper">
+    <div class="header-inner-wrapper">
+      <div class="header-left-logo btn"><i class="iconfont icon-category ripple"></i></div>
+      <div class="header-mid-name">小桃子</div>
+      <div class="header-right btn"><i class="iconfont icon-refresh ripple"></i></div>
+    </div>
+  </header>
+
+  <div id="app"></div>
+
+  <!-- service worker -->
+  <!-- <script>
+    // 判断浏览器是否支持 Service Worker
+    if ('serviceWorker' in navigator) {
+      // 在 load 事件触发后注册 Service Worker，确保 Service Worker 的注册不会影响首屏速度
+      window.addEventListener('load', function () {
+        // 注册 Service Worker
+        navigator.serviceWorker.register('/sw.js').then(function (registration) {
+          // 注册成功
+          console.log('ServiceWorker registration successful with scope: ', registration.scope)
+        }).catch(function (err) {
+          // 注册失败 :(
+          console.warn('ServiceWorker registration failed: ', err)
         })
-      }
-    </script>
+      })
+    }
+  </script> -->
+
   </body>
 </html>
