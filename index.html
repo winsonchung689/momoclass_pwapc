@@ -3,12 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>momoclass</title>
     <link rel="manifest" href="./manifest.json" />
+    <title>momoclas</title>
     <link rel="shortcut icon" type="image/x-icon" href="./src/assets/favicon.ico" /> 
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function (registration) {
+              console.log('service worker 注册成功, ', registration.scope)
+            })
+            .catch(function (error) {
+              console.error('serviceWorker 注册失败', error)
+            })
+        })
+      }
+    </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/144.png">
+    <!-- <img src="./assets/logo.png"> -->
     <router-view/>
     <bottom-navigation></bottom-navigation>
   </div>
@@ -10,7 +10,7 @@
 import BottomNavigation from '@/components/BottomNavigation'
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
     BottomNavigation
   }

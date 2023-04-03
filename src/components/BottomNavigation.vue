@@ -1,9 +1,8 @@
 <template>
   <div class="bottom-navigation">
-    <button class="current">首页</button>
-    <button>搜索</button>
-    <button>分类</button>
-    <button>我的</button>
+    <button class="current">学生专区</button>
+    <button>工作台</button>
+    <button>个人中心</button>
   </div>
 </template>
 
