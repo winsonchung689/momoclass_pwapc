@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
     <h1>HI,{{ nick_name }}</h1>
     <h1>欢迎来到《{{ studio }}》</h1>
     <button @click="$router.push('/next')">工作台</button>
@@ -17,7 +18,8 @@ export default {
         return {
             isAllShop: [],//定义空数组
             studio:'',
-            nick_name:''
+            nick_name:'',
+            avatarurl:''
         }
     },
     created() {
@@ -29,8 +31,9 @@ export default {
             this.isAllShop = res.data//将后端获取的数据赋值给isAllShop空数组
             this.studio = res.data[0].studio
             this.nick_name = res.data[0].nick_name
+            this.avatarurl = res.data[0].avatarurl
             console.log(res.data)
-            console.log( this.studio,this.nick_name)//空数组输出获得的数据
+            console.log( this.studio,this.nick_name,this.avatarurl)//空数组输出获得的数据
         }
     },
 }
