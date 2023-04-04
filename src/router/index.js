@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const Welcome = () => import('@/components/Welcome')
 const Home = () => import('@/components/Home')
 const NextPage = () => import('@/components/NextPage')
 
@@ -12,6 +13,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Welcome',
+      component: Welcome
+    },
+    {
+      path: '/home',
       name: 'Home',
       component: Home
     },

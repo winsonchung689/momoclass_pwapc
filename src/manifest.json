@@ -3,8 +3,8 @@
   "short_name": "小桃子",
   "display": "fullscreen",
   "start_url": "/",
-  "theme_color": "#598cda",
-  "background_color": "#598cda",
+  "theme_color": "white",
+  "background_color": "white",
   "icons": [
     {
       "src": "/assets/144.png",

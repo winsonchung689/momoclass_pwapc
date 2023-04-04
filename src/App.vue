@@ -34,8 +34,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: hwb(210 9% 6%);
+  color: white;
   margin-top: 60px;
+  height: 100%;
+  padding: 0;
 }
 body {
   margin: 0;
