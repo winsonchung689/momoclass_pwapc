@@ -41,7 +41,7 @@
 }
 body {
   margin: 0;
-  padding-top: 60px;
+  padding-top: 0px;
 }
 
 </style>

@@ -1,7 +1,51 @@
 import axios from "axios";
-//引入axios//定义baseUrl  接口网址
-const baseUrl = "https://www.momoclasss.xyz:443/getUser?openid=oRRfU5TCmjXtbw9WsxnekwJAa72M";
+import { Toast } from "mint-ui"
 
-//暴漏函数AllShops  请求类型为get  无请求参数
-// 接口网址/biz/queryAllCommodity//``连接字符串
-export function AllShops() { return axios.get(`${baseUrl}`) }
+const baseUrl = "https://www.momoclasss.xyz:443";
+
+
+var HttpRequest = {
+    getRequest({ url,data={},method = "GET" }){
+        return new Promise((resolve, reject) => {
+            this._getRequest(url,resolve,reject,data,method);
+        });
+    },
+    _getRequest:function(url,resolve,reject,data={},method="GET"){
+        let format = method.toLocaleLowerCase() == 'get'?'params':'data';
+        axios({
+            url:baseUrl+url,
+            method:method,
+            [format]:data,
+            headers:{
+                "content-type":"application/json"
+            }
+        }).then(res => {
+            if (res.code==0){
+                resolve(res);
+            }else if (res.code==-1){
+                resolve(res);
+            }
+        } ).catch(() => {
+            reject();
+            Toast({
+                message:"发生错误，请检查！",
+                position:"middle",
+                durantion:2000
+            });
+        })
+    }
+};
+
+export { HttpRequest };
+
+
+let http = {
+    
+}
+
+
+
+
+export function HttpGet(param) { 
+    return axios.get(`${baseUrl}` + param) 
+}

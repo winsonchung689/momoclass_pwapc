@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'swiper/swiper.min.css'
+import 'swiper/swiper-bundle.min.css'
 
 Vue.config.productionTip = false
 
