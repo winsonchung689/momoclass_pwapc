@@ -4,10 +4,10 @@
     <div class="banner" >
       <div class="banner_wrap">
         <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
-        <swiper :options="swiperOption" v-if="images.length>1"  class="banner-swiper-container swiper-container" style="border-radius: 0.15rem;">
+        <swiper :options="swiperOption" v-if="images.length>1"  class="banner-swiper-container swiper-container">
           <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-            <a href="" style="border-radius: 0.15rem;">
-              <img :src="item" alt="">
+            <a href="" style="margin-left: 5px;margin-right: 5px;">
+              <img :src="item" alt="" style="border-radius: 5%">
             </a>
           </swiper-slide>
         </swiper>
@@ -48,7 +48,17 @@ export default {
             studio:'',
             nick_name:'',
             avatarurl:'',
+            swiperOption: {
+                loop: true, //是否循环轮播
+                speed: 1000, //切换速度
+                observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                observeParents: true, //修改swiper的父元素时，自动初始化swiper
 
+                autoplay: {
+                  delay: 2000,
+                  disableOnInteraction: false,
+                }
+            }
         }
     },
     created() {
@@ -144,7 +154,7 @@ header {
       width:100%;
   }
   .banner_wrap {
-      /* padding: 0 0.2rem; */
+      padding: 0 0.2rem;
   }
   
   .banner .swiper-container {
