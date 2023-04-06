@@ -23,7 +23,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: false,
-      usePostCSS: tfalserue
+      usePostCSS: false
     })
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
