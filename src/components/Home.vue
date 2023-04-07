@@ -1,5 +1,12 @@
 <template>
   <div class="hello">
+    <div class="avatar">
+      <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
+      <div >
+        <h1 >HI,{{ nick_name }}</h1>
+        <h2 >欢迎来到《{{ studio }}》</h2>
+      </div>
+    </div>
 
     <div class="banner" >
       <div class="banner_wrap">
@@ -15,13 +22,7 @@
     </div>
 
 
-    <div class="avatar">
-      <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
-      <h1>HI,{{ nick_name }}</h1>
-    </div>
-    <div class="welcome">
-      欢迎来到《{{ studio }}》
-    </div>
+
 
     <button @click="$router.push('/next')">工作台</button>
     <button @click="$router.push('/next')">学生专区</button>
@@ -50,12 +51,12 @@ export default {
             avatarurl:'',
             swiperOption: {
                 loop: true, //是否循环轮播
-                speed: 1000, //切换速度
+                speed: 10000, //切换速度
                 observer: true, //修改swiper自己或子元素时，自动初始化swiper
                 observeParents: true, //修改swiper的父元素时，自动初始化swiper
 
                 autoplay: {
-                  delay: 2000,
+                  delay: 10000,
                   disableOnInteraction: false,
                 }
             }
@@ -101,9 +102,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: lighter;
+h1 {
+  font-weight: bolder;
+  font-size: medium;
+  color:#8F8FBD;
+  /* font-family: 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif; */
 }
+
+h2 {
+  font-weight: bolder;
+  font-size: medium;
+  /* font-family: 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif; */
+  margin-bottom: 5px;
+  color:#8F8FBD;
+}
+
 button {
   font-size: 16px;
   padding: 0.75em 2em;
@@ -139,10 +152,13 @@ header {
   display: flex;
   flex-direction: row;
   height: 70px;
+  margin-left: 10px;
 }
 .welcome{
   margin-top: 5px;
   font-weight: bolder;
+  font-size: small;
+  color: #e7e9def1;
 }
 
 
