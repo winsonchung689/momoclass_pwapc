@@ -13,9 +13,16 @@
         <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
         <swiper :options="swiperOption" v-if="images.length>1"  class="banner-swiper-container swiper-container">
           <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-            <a href="" style="margin-left: 5px;margin-right: 5px;">
-              <img @click="$router.push('/next')" :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
-            </a>
+               <div>
+                  <div>
+                    <a href="" style="margin-left: 5px;margin-right: 5px;">
+                      <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
+                    </a>
+                  </div>
+                  <div style="display: flex;justify-content: center;">
+                     <button @click="$router.push('/next')"> {{ item.name }}</button>
+                  </div>
+               </div>
           </swiper-slide>
         </swiper>
       </div>
@@ -45,7 +52,7 @@ export default {
   },
     data() {
         return {
-            images: [{img:'../assets/students.png',name:'学生专区'},{img:'../assets/workspace.png',name:'工作台'},{img:'../assets/me.png',name:'个人中心'}],//定义空数组
+            images: [{img:'../assets/students.png',name:'学生专区'},{img:'../assets/workspace.png',name:'工作台'},{img:'../assets/me.png',name:'个人中心'}],
             studio:'',
             nick_name:'',
             avatarurl:'',

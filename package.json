@@ -1,8 +1,8 @@
 {
-  "name": "vue-cli-demo",
+  "name": "momoclass_pwa",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "王玉龙 <wangyl07@jcgroup.com.cn>",
+  "description": "momoclass_pwa",
+  "author": "Winson",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

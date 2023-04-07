@@ -6,11 +6,12 @@
 </template>
 
 <script>
+
 export default {
   name: 'NextPage',
   data () {
     return {
-      msg: 'This is NextPage'
+      msg: '开发中，敬请期待'
     }
   }
 }
