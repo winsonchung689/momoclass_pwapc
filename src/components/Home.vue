@@ -2,7 +2,7 @@
   <div class="hello">
     <div class="avatar">
       <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
-      <div >
+      <div style="margin-top: 15px;">
         <h1 >HI,{{ nick_name }}</h1>
         <h2 >欢迎来到《{{ studio }}》</h2>
       </div>
