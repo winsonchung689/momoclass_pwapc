@@ -14,7 +14,7 @@
         <swiper :options="swiperOption" v-if="images.length>1"  class="banner-swiper-container swiper-container">
           <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
             <a href="" style="margin-left: 5px;margin-right: 5px;">
-              <img :src="item" alt="" style="border-radius: 5%; scale: 0.9;">
+              <img @click="$router.push('/next')" :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
             </a>
           </swiper-slide>
         </swiper>
@@ -22,11 +22,11 @@
     </div>
 
 
-
+<!-- 
 
     <button @click="$router.push('/next')">工作台</button>
     <button @click="$router.push('/next')">学生专区</button>
-    <button @click="$router.push('/next')">个人中心</button>
+    <button @click="$router.push('/next')">个人中心</button> -->
   </div>
   
 </template>
@@ -45,7 +45,7 @@ export default {
   },
     data() {
         return {
-            images: [],//定义空数组
+            images: [{img:'../assets/students.png',name:'学生专区'},{img:'../assets/workspace.png',name:'工作台'},{img:'../assets/me.png',name:'个人中心'}],//定义空数组
             studio:'',
             nick_name:'',
             avatarurl:'',
@@ -78,17 +78,17 @@ export default {
             let uuids = home.data[0].uuids
             console.log(uuids)
 
-            if(uuids){
-              let uuidslist =uuids.split(",");
-              // console.log(uuidslist)
-              for(let i in uuidslist){
-                let url = "https://www.momoclasss.xyz:443/file/uploadimages/" + uuidslist[i];
-                // console.log(url)
-                this.images.push(url);
-              }
+            // if(uuids){
+            //   let uuidslist =uuids.split(",");
+            //   // console.log(uuidslist)
+            //   for(let i in uuidslist){
+            //     let url = "https://www.momoclasss.xyz:443/file/uploadimages/" + uuidslist[i];
+            //     // console.log(url)
+            //     this.images.push(url);
+            //   }
 
-              console.log(this.images)
-            }
+            //   console.log(this.images)
+            // }
             
         },
         
