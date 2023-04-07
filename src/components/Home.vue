@@ -15,9 +15,7 @@
           <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
                <div>
                   <div>
-                    <a href="" style="margin-left: 5px;margin-right: 5px;">
-                      <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
-                    </a>
+                    <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
                   </div>
                   <div style="display: flex;justify-content: center;">
                      <button @click="$router.push('/next')"> {{ item.name }}</button>

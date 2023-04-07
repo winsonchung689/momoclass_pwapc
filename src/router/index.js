@@ -6,6 +6,7 @@ Vue.use(Router)
 const Welcome = () => import('@/components/Welcome')
 const Home = () => import('@/components/Home')
 const NextPage = () => import('@/components/NextPage')
+const Login = () => import('@/components/Login')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -13,7 +14,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Welcome',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/welcome',
+      name: 'Login',
       component: Welcome
     },
     {
