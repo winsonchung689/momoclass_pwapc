@@ -2,7 +2,7 @@
   "name": "小桃子助手",
   "short_name": "小桃子",
   "display": "fullscreen",
-  "start_url": "http://www.momoclasss.xyz:8080/",
+  "start_url": "/",
   "theme_color": "white",
   "background_color": "white",
   "icons": [

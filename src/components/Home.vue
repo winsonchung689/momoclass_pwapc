@@ -14,7 +14,7 @@
         <swiper :options="swiperOption" v-if="images.length>1"  class="banner-swiper-container swiper-container">
           <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
             <a href="" style="margin-left: 5px;margin-right: 5px;">
-              <img :src="item" alt="" style="border-radius: 5%; scale: 0.7;">
+              <img :src="item" alt="" style="border-radius: 5%; scale: 0.9;">
             </a>
           </swiper-slide>
         </swiper>
