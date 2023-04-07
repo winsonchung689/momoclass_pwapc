@@ -29,7 +29,7 @@ import { HttpGet } from "@/api";
 
         methods: {
             login() {
-                this.$router.replace('/welcome');
+                this.$router.replace('/Home');
             }
         }
     }
