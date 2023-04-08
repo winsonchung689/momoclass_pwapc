@@ -1,6 +1,5 @@
 <template>
   <div class='welcome'>
-    <meta http-equiv='refresh' content='5; URL=/Login'>
     <img src='@/assets/welcome.png' alt=''>
   </div>
 </template>
