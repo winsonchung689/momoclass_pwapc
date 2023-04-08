@@ -5,9 +5,14 @@ import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import { Message } from "element-ui";
+
 
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
+
+Vue.use(Message)
+Vue.prototype.$message = Message
 
 /* eslint-disable no-new */
 new Vue({

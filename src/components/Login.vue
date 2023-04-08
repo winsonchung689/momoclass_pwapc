@@ -12,9 +12,9 @@
             <div class="lgD">
                 <input type="text" v-model="ruleForm.student_name" placeholder="输入学生名" />
             </div>
-            <!-- <div class="lgD">
+            <div class="lgD">
                 <input type="text" v-model="ruleForm.nick_name" placeholder="输入用户名" />
-            </div> -->
+            </div>
             <div class="logC">
                 <a><button @click="login">登 录</button></a>
             </div>
@@ -24,6 +24,9 @@
 
 <script>
 import { HttpPost } from "@/api";
+import { Message } from "element-ui";
+
+
 
     export default {
 
@@ -42,23 +45,54 @@ import { HttpPost } from "@/api";
         methods: {
             login() {
                 var that = this;
+                let studio= that.ruleForm.studio;
+                let student_name= that.ruleForm.student_name;
+                let nick_name= that.ruleForm.nick_name;
+
                 let loginParams = {
-                    studio: that.ruleForm.studio, 
-                    student_name: that.ruleForm.student_name
+                    studio: studio, 
+                    student_name: student_name,
+                    nick_name: nick_name,
                 };
                 console.log(loginParams)
 
+                if(studio==''){
+                    console.log('studio is null')
+                    return;
+                }
+
+                if(student_name==''){
+                    console.log('student_name is null')
+                    return;
+                }
+
+                if(nick_name==''){
+                    console.log('nick_name is null')
+                    return;
+                }
+
                 let res = HttpPost("/getUserByStudent",loginParams);
                 res.then(res => {
-                    console.log(res.data[0].openid),
-                    that.openid = res.data[0].openid
+                    console.log(res.data)
+                    try {
+                        that.openid = res.data[0].openid
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    
+                    if(that.openid != ''){
+                        that.$router.push({path: '/Home',query:{ openid: that.openid}});
+                        // that.$message({
+                        //     type:'success',
+                        //     message:'登陆成功'
+                        // })
+                    }else{
+                        that.$message.error('用户不存在')
+                    }
 
+                    that.clearCookie();
+                    that.setCookie(that.openid,7);
                 })
-                console.log(that.openid)
-
-                that.clearCookie();
-                that.setCookie(that.openid,7);
-
             },
 
             setCookie(openid, days) {

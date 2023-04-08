@@ -20,7 +20,14 @@ export default {
   },
 
   methods: {
+
+    sleep(d) {
+        return new Promise((resolve) => setTimeout(resolve, d))
+      },
+      
       getCookie() {
+           this.sleep(3);
+
           if (document.cookie.length > 0) {
               var arr = document.cookie.split('; ');
               console.log(arr)
@@ -42,6 +49,7 @@ export default {
             this.$router.push('/Login');
           }
       },
+ 
   },
 }
 </script>
