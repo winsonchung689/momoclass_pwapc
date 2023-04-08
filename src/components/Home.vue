@@ -69,7 +69,6 @@ export default {
 
     async getUser () {
       const users = await HttpGet('/getUser?openid=' + this.openid)
-      // this.isAllShop = res.data//将后端获取的数据赋值给isAllShop空数组
       this.studio = users.data[0].studio
       this.nick_name = users.data[0].nick_name
       this.avatarurl = users.data[0].avatarurl
