@@ -23,211 +23,206 @@
 </template>
 
 <script>
-import { HttpPost } from "@/api";
-import { Message } from "element-ui";
+import { HttpPost } from '@/api'
 
+export default {
+    data() {
+        return {
+            ruleForm: {
+                studio: '',
+                student_name: '',
+                nick_name: ''
+            },
+            openid: ''
+        };
+    },
 
+    methods: {
+        login() {
+            var that = this;
+            let studio = that.ruleForm.studio;
+            let student_name = that.ruleForm.student_name;
+            let nick_name = that.ruleForm.nick_name;
 
-    export default {
-
-        data() {
-            return {
-                ruleForm: {
-                    studio: '', 
-                    student_name: '',
-                    nick_name:''
-                },
-                openid:''
+            let loginParams = {
+                studio: studio,
+                student_name: student_name,
+                nick_name: nick_name,
             };
+            console.log(loginParams)
+
+            if (studio == '') {
+                console.log('studio is null')
+                return;
+            }
+
+            if (student_name == '') {
+                console.log('student_name is null')
+                return;
+            }
+
+            if (nick_name == '') {
+                console.log('nick_name is null')
+                return;
+            }
+
+            let res = HttpPost("/getUserByStudent", loginParams);
+            res.then(res => {
+                console.log(res.data)
+                try {
+                    that.openid = res.data[0].openid
+                } catch (error) {
+                    console.log(error)
+                }
+
+                if (that.openid != '') {
+                    that.$router.push({ path: '/Home', query: { openid: that.openid } });
+                    // that.$message({
+                    //     type:'success',
+                    //     message:'登陆成功'
+                    // })
+                } else {
+                    that.$message.error('用户不存在')
+                }
+
+                that.clearCookie();
+                that.setCookie(that.openid, 7);
+            })
         },
 
+        setCookie(openid, days) {
+            let date = new Date(); // 获取时间
+            date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days); // 保存的天数
+            window.document.cookie = "openid" + "=" + openid + ";path=/;expires=" + date.toGMTString();
+        },
 
-        methods: {
-            login() {
-                var that = this;
-                let studio= that.ruleForm.studio;
-                let student_name= that.ruleForm.student_name;
-                let nick_name= that.ruleForm.nick_name;
-
-                let loginParams = {
-                    studio: studio, 
-                    student_name: student_name,
-                    nick_name: nick_name,
-                };
-                console.log(loginParams)
-
-                if(studio==''){
-                    console.log('studio is null')
-                    return;
-                }
-
-                if(student_name==''){
-                    console.log('student_name is null')
-                    return;
-                }
-
-                if(nick_name==''){
-                    console.log('nick_name is null')
-                    return;
-                }
-
-                let res = HttpPost("/getUserByStudent",loginParams);
-                res.then(res => {
-                    console.log(res.data)
-                    try {
-                        that.openid = res.data[0].openid
-                    } catch (error) {
-                        console.log(error)
-                    }
-                    
-                    if(that.openid != ''){
-                        that.$router.push({path: '/Home',query:{ openid: that.openid}});
-                        // that.$message({
-                        //     type:'success',
-                        //     message:'登陆成功'
-                        // })
-                    }else{
-                        that.$message.error('用户不存在')
-                    }
-
-                    that.clearCookie();
-                    that.setCookie(that.openid,7);
-                })
-            },
-
-            setCookie(openid, days) {
-                let date = new Date(); // 获取时间
-                date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days); // 保存的天数
-                window.document.cookie ="openid" + "=" + openid + ";path=/;expires=" + date.toGMTString();
-            },
-
-            clearCookie() {
-                this.setCookie("", "", 0); 
-            },
-        }
+        clearCookie() {
+            this.setCookie("", "", 0);
+        },
     }
+}
 </script>
 
 <style>
-    body {
-        background-size: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-    }
+body {
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-    }
+* {
+    margin: 0;
+    padding: 0;
+}
 
-    #wrap {
-        height: 600px;
-        width: 100%;
-        background-position: center center;
-        position: relative;
-        justify-content: center;
-        margin-top: 25%;
-        
-    }
+#wrap {
+    height: 600px;
+    width: 100%;
+    background-position: center center;
+    position: relative;
+    justify-content: center;
+    margin-top: 25%;
 
-    #head {
-        height: 120px;
-        width: 100;
-        background-color: #66CCCC;
-        text-align: center;
-        position: relative;
-    }
+}
 
-    #wrap .logGet {
-        height: 408px;
-        width: 368px;
-        background-color: #FFFFFF;
-        top: 100px;
-        right: 15%;
-        justify-content: center;
-    }
+#head {
+    height: 120px;
+    width: 100;
+    background-color: #66CCCC;
+    text-align: center;
+    position: relative;
+}
 
-    .logC a button {
-        width: 100%;
-        height: 45px;
-        background-color: #e2a3cd;
-        border: none;
-        color: white;
-        font-size: 18px;
-    }
+#wrap .logGet {
+    height: 408px;
+    width: 368px;
+    background-color: #FFFFFF;
+    top: 100px;
+    right: 15%;
+    justify-content: center;
+}
 
-    .logGet .logD.logDtip .p1 {
-        display: inline-block;
-        font-size: 28px;
-        margin-top: 30px;
-        width: 86%;
-        justify-content: center;
-    }
+.logC a button {
+    width: 100%;
+    height: 45px;
+    background-color: #e2a3cd;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
 
-    #wrap .logGet .logD.logDtip {
-        width: 86%;
-        border-bottom: 1px solid #e2a3cd;
-        margin-bottom: 60px;
-        margin-top: 0px;
-        margin-right: auto;
-        margin-left: auto;
-        justify-content: center;
-        display: flex;
-    }
+.logGet .logD.logDtip .p1 {
+    display: inline-block;
+    font-size: 28px;
+    margin-top: 30px;
+    width: 86%;
+    justify-content: center;
+}
 
-    .logGet .lgD img {
-        position: absolute;
-        top: 12px;
-        left: 8px;
-    }
+#wrap .logGet .logD.logDtip {
+    width: 86%;
+    border-bottom: 1px solid #e2a3cd;
+    margin-bottom: 60px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: center;
+    display: flex;
+}
 
-    .logGet .lgD input {
-        width: 100%;
-        height: 42px;
-        text-indent: 2.5rem;
-    }
+.logGet .lgD img {
+    position: absolute;
+    top: 12px;
+    left: 8px;
+}
 
-    #wrap .logGet .lgD {
-        width: 86%;
-        position: relative;
-        margin-bottom: 30px;
-        margin-top: 30px;
-        margin-right: auto;
-        margin-left: auto;
-    }
+.logGet .lgD input {
+    width: 100%;
+    height: 42px;
+    text-indent: 2.5rem;
+}
 
-    #wrap .logGet .logC {
-        width: 86%;
-        margin-top: 0px;
-        margin-right: auto;
-        margin-bottom: 0px;
-        margin-left: auto;
-    }
+#wrap .logGet .lgD {
+    width: 86%;
+    position: relative;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#wrap .logGet .logC {
+    width: 86%;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+}
 
 
-    .title {
-        font-family: "宋体";
-        color: #FFFFFF;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* 使用css3的transform来实现 */
-        font-size: 36px;
-        height: 40px;
-        width: 30%;
-    }
+.title {
+    font-family: "宋体";
+    color: #FFFFFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 使用css3的transform来实现 */
+    font-size: 36px;
+    height: 40px;
+    width: 30%;
+}
 
-    .copyright {
-        font-family: "宋体";
-        color: #FFFFFF;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* 使用css3的transform来实现 */
-        height: 60px;
-        width: 40%;
-        text-align: center;
-    }
+.copyright {
+    font-family: "宋体";
+    color: #FFFFFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 使用css3的transform来实现 */
+    height: 60px;
+    width: 40%;
+    text-align: center;
+}
 </style>
