@@ -7,14 +7,14 @@
             </div>
             <!-- 输入框 -->
             <div class="lgD">
-                <input type="text" placeholder="输入工作室名" />
+                <input type="text" v-model="ruleForm.studio" placeholder="输入工作室名" />
             </div>
             <div class="lgD">
-                <input type="text" placeholder="输入学生名" />
+                <input type="text" v-model="ruleForm.student_name" placeholder="输入学生名" />
             </div>
-            <div class="lgD">
-                <input type="text" placeholder="输入用户名" />
-            </div>
+            <!-- <div class="lgD">
+                <input type="text" v-model="ruleForm.nick_name" placeholder="输入用户名" />
+            </div> -->
             <div class="logC">
                 <a><button @click="login">登 录</button></a>
             </div>
@@ -23,14 +23,53 @@
 </template>
 
 <script>
-import { HttpGet } from "@/api";
+import { HttpPost } from "@/api";
 
     export default {
 
+        data() {
+            return {
+                ruleForm: {
+                    studio: '', 
+                    student_name: '',
+                    nick_name:''
+                },
+                openid:''
+            };
+        },
+
+
         methods: {
             login() {
-                this.$router.replace('/Home');
-            }
+                var that = this;
+                let loginParams = {
+                    studio: that.ruleForm.studio, 
+                    student_name: that.ruleForm.student_name
+                };
+                console.log(loginParams)
+
+                let res = HttpPost("/getUserByStudent",loginParams);
+                res.then(res => {
+                    console.log(res.data[0].openid),
+                    that.openid = res.data[0].openid
+
+                })
+                console.log(that.openid)
+
+                that.clearCookie();
+                that.setCookie(that.openid,7);
+
+            },
+
+            setCookie(openid, days) {
+                let date = new Date(); // 获取时间
+                date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days); // 保存的天数
+                window.document.cookie ="openid" + "=" + openid + ";path=/;expires=" + date.toGMTString();
+            },
+
+            clearCookie() {
+                this.setCookie("", "", 0); 
+            },
         }
     }
 </script>

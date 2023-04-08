@@ -49,3 +49,12 @@ let http = {
 export function HttpGet(param) { 
     return axios.get(`${baseUrl}` + param) 
 }
+
+
+export function HttpPost(url,data) { 
+    return axios({
+        url: `${baseUrl}` + url,
+        method: 'POST',
+        params: data
+      })
+}

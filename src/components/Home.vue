@@ -4,7 +4,7 @@
       <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
       <div style="margin-top: 15px;">
         <h1 >HI,{{ nick_name }}</h1>
-        <h2 >欢迎来到《{{ studio }}》</h2>
+        <h2 @click="$router.push('/Login')">欢迎来到《{{ studio }}》</h2>
       </div>
     </div>
 
@@ -26,12 +26,6 @@
       </div>
     </div>
 
-
-<!-- 
-
-    <button @click="$router.push('/next')">工作台</button>
-    <button @click="$router.push('/next')">学生专区</button>
-    <button @click="$router.push('/next')">个人中心</button> -->
   </div>
   
 </template>
@@ -64,16 +58,17 @@ export default {
                   delay: 3000,
                   disableOnInteraction: false,
                 }
-            }
+            },
+            openid:this.$route.query.openid
         }
     },
     created() {
-        this.getShops()//调用getShops函数
+        this.getUser()//调用getShops函数
     },
     methods: {
       
-        async getShops() { //异步  async与await
-            const users = await HttpGet("/getUser?openid=oRRfU5TCmjXtbw9WsxnekwJAa72M")
+        async getUser() { //异步  async与await
+            const users = await HttpGet("/getUser?openid=" + this.openid)
             // this.isAllShop = res.data//将后端获取的数据赋值给isAllShop空数组
             this.studio = users.data[0].studio
             this.nick_name = users.data[0].nick_name
