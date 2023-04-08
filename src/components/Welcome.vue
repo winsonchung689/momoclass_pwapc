@@ -35,9 +35,11 @@ export default {
                         console.log("cookie_openid 为空!")
                         this.$router.push('/Login');
                        }
-
                   } 
               }
+          }else{
+            console.log("cookie_openid 为空!")
+            this.$router.push('/Login');
           }
       },
   },
