@@ -18,6 +18,9 @@
             <div class="logC">
                 <a><button @click="login">登 录</button></a>
             </div>
+            <div class="logE">
+                <a><button @click="login">注 册</button></a>
+            </div>
         </div>
     </div>
 </template>
@@ -53,17 +56,26 @@ export default {
         console.log(loginParams)
 
         if (studio == '') {
-            console.log('studio is null')
+            this.$message({
+                message: '工作室为空！',
+                type: 'warning'
+            });
             return;
         }
 
         if (student_name == '') {
-            console.log('student_name is null')
+            this.$message({
+                message: '学生名为空！',
+                type: 'warning'
+            });
             return;
         }
 
         if (nick_name == '') {
-            console.log('nick_name is null')
+            this.$message({
+                message: '用户名为空！',
+                type: 'warning'
+            });
             return;
         }
 
@@ -151,6 +163,15 @@ body {
     font-size: 18px;
 }
 
+.logE a button {
+    width: 100%;
+    height: 45px;
+    background-color: #7cbeea;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
+
 .logGet .logD.logDtip .p1 {
     display: inline-block;
     font-size: 28px;
@@ -192,6 +213,14 @@ body {
 }
 
 #wrap .logGet .logC {
+    width: 86%;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+}
+
+#wrap .logGet .logE {
     width: 86%;
     margin-top: 0px;
     margin-right: auto;
