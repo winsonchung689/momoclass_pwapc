@@ -19,7 +19,7 @@
                 <a><button @click="login">登 录</button></a>
             </div>
             <div class="logE">
-                <a><button @click="login">注 册</button></a>
+                <a><button @click="signup">注 册</button></a>
             </div>
         </div>
     </div>
@@ -45,12 +45,10 @@ export default {
     login () {
         var that = this;
         let studio = that.ruleForm.studio;
-        let student_name = that.ruleForm.student_name;
         let nick_name = that.ruleForm.nick_name;
 
         let loginParams = {
             studio: studio,
-            student_name: student_name,
             nick_name: nick_name,
         };
         console.log(loginParams)
@@ -58,14 +56,6 @@ export default {
         if (studio == '') {
             this.$message({
                 message: '工作室为空！',
-                type: 'warning'
-            });
-            return;
-        }
-
-        if (student_name == '') {
-            this.$message({
-                message: '学生名为空！',
                 type: 'warning'
             });
             return;
@@ -79,7 +69,7 @@ export default {
             return;
         }
 
-        let res = HttpPost("/getUserByStudent", loginParams);
+        let res = HttpPost("/getUserByNickStudioEq", loginParams);
         res.then(res => {
             console.log(res.data)
             try {
@@ -100,6 +90,55 @@ export default {
             that.clearCookie()
             that.setCookie(that.openid, 7)
         })
+    },
+
+    signup () {
+        var that = this;
+        let studio = that.ruleForm.studio;
+        let student_name = that.ruleForm.student_name;
+        let nick_name = that.ruleForm.nick_name;
+
+        let loginParams = {
+            studio: studio,
+            nick_name: nick_name,
+        };
+
+        if (studio == '') {
+            this.$message({
+                message: '工作室为空！',
+                type: 'warning'
+            });
+            return;
+        }
+
+        if (student_name == '') {
+            student_name = 'no_name'
+        }
+
+        if (nick_name == '') {
+            this.$message({
+                message: '用户名为空！',
+                type: 'warning'
+            });
+            return;
+        }
+
+        HttpPost("/insertUser", loginParams);
+        let res = HttpPost("/getUserByNickStudioEq", loginParams);
+        res.then(res => {
+            console.log(res.data)
+            try {
+                that.openid = res.data[0].openid
+            } catch (error) {
+                console.log(error)
+            }
+
+            that.$router.push({ path: '/Home', query: { openid: that.openid } })
+            that.clearCookie()
+            that.setCookie(that.openid, 7)
+        })
+
+
     },
 
     setCookie (openid, days) {
