@@ -79,7 +79,10 @@ export default {
             if (that.openid !== '') {
                 that.$router.push({ path: '/Home', query: { openid: that.openid } })
             } else {
-                that.$message.error('用户不存在')
+                this.$message({
+                    message: '用户不存在,请注册！',
+                    type: 'warning'
+                });
             }
 
             that.clearCookie()
@@ -100,7 +103,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 body {
     background-size: 100%;
     background-repeat: no-repeat;

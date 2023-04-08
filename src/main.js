@@ -9,7 +9,6 @@ import { Message } from 'element-ui'
 
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
-Vue.use(Message)
 Vue.prototype.$message = Message
 
 /* eslint-disable no-new */
