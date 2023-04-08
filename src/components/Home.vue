@@ -1,11 +1,10 @@
 <template>
   <div class="hello">
     <div class="avatar">
-      <img :src="avatarurl" alt=""
-        style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
-      <div style="margin-top: 15px;">
+      <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
+      <div style="margin-top: 0px;">
         <h1>HI,{{ nick_name }}</h1>
-        <h2 @click="$router.push('/Login')">欢迎来到《{{ studio }}》</h2>
+        <h2 @click="$router.push('/Login')">欢迎来到《{{ studio }}》!</h2>
       </div>
     </div>
 
@@ -42,7 +41,11 @@ export default {
   },
   data () {
     return {
-      images: [{ img: '../assets/students.png', name: '学生专区' }, { img: '../assets/workspace.png', name: '工作台' }, { img: '../assets/me.png', name: '个人中心' }],
+      images: [
+        { img: '../assets/students.png', name: '学生专区' }, 
+        { img: '../assets/workspace.png', name: '工作台' }, 
+        { img: '../assets/me.png', name: '个人中心' }
+      ],
       studio: '',
       nick_name: '',
       avatarurl: '',
@@ -51,7 +54,6 @@ export default {
         speed: 2000,
         observer: true,
         observeParents: true,
-
         autoplay: {
           delay: 3000,
           disableOnInteraction: false
@@ -71,10 +73,6 @@ export default {
       this.studio = users.data[0].studio
       this.nick_name = users.data[0].nick_name
       this.avatarurl = users.data[0].avatarurl
-
-      const home = await HttpGet('getHome?studio=' + this.studio)
-      let uuids = home.data[0].uuids
-      console.log(uuids)
     }
   }
 }
