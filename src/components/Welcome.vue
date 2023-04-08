@@ -9,18 +9,18 @@
 export default {
   name: 'Welcome',
 
-  data() {
+  data () {
     return {
       openid: ''
     }
   },
 
-  created() {
+  created () {
     this.getCookie()
   },
 
   methods: {
-    getCookie() {
+    getCookie () {
       if (document.cookie.length > 0) {
         var arr = document.cookie.split('; ')
         console.log(arr)

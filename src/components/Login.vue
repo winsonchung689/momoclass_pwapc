@@ -26,80 +26,77 @@
 import { HttpPost } from '@/api'
 
 export default {
-    data() {
-        return {
-            ruleForm: {
-                studio: '',
-                student_name: '',
-                nick_name: ''
-            },
-            openid: ''
+
+  data () {
+    return {
+        ruleForm: {
+            studio: '',
+            student_name: '',
+            nick_name: ''
+        },
+        openid: ''
+    };
+  },  
+
+  methods: {
+    login () {
+        var that = this;
+        let studio = that.ruleForm.studio;
+        let student_name = that.ruleForm.student_name;
+        let nick_name = that.ruleForm.nick_name;
+
+        let loginParams = {
+            studio: studio,
+            student_name: student_name,
+            nick_name: nick_name,
         };
+        console.log(loginParams)
+
+        if (studio == '') {
+            console.log('studio is null')
+            return;
+        }
+
+        if (student_name == '') {
+            console.log('student_name is null')
+            return;
+        }
+
+        if (nick_name == '') {
+            console.log('nick_name is null')
+            return;
+        }
+
+        let res = HttpPost("/getUserByStudent", loginParams);
+        res.then(res => {
+            console.log(res.data)
+            try {
+                that.openid = res.data[0].openid
+            } catch (error) {
+                console.log(error)
+            }
+
+            if (that.openid !== '') {
+                that.$router.push({ path: '/Home', query: { openid: that.openid } })
+            } else {
+                that.$message.error('用户不存在')
+            }
+
+            that.clearCookie()
+            that.setCookie(that.openid, 7)
+        })
     },
 
-    methods: {
-        login() {
-            var that = this;
-            let studio = that.ruleForm.studio;
-            let student_name = that.ruleForm.student_name;
-            let nick_name = that.ruleForm.nick_name;
+    setCookie (openid, days) {
+      let date = new Date()
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days)
+      window.document.cookie = 'openid=' + openid + ';path=/;expires=' + date.toGMTString()
+    },
 
-            let loginParams = {
-                studio: studio,
-                student_name: student_name,
-                nick_name: nick_name,
-            };
-            console.log(loginParams)
-
-            if (studio == '') {
-                console.log('studio is null')
-                return;
-            }
-
-            if (student_name == '') {
-                console.log('student_name is null')
-                return;
-            }
-
-            if (nick_name == '') {
-                console.log('nick_name is null')
-                return;
-            }
-
-            let res = HttpPost("/getUserByStudent", loginParams);
-            res.then(res => {
-                console.log(res.data)
-                try {
-                    that.openid = res.data[0].openid
-                } catch (error) {
-                    console.log(error)
-                }
-
-                if (that.openid != '') {
-                    that.$router.push({ path: '/Home', query: { openid: that.openid } });
-                    // that.$message({
-                    //     type:'success',
-                    //     message:'登陆成功'
-                    // })
-                } else {
-                    that.$message.error('用户不存在')
-                }
-
-                that.clearCookie();
-                that.setCookie(that.openid, 7);
-            })
-        },
-
-        setCookie(openid, days) {
-            let date = new Date(); // 获取时间
-            date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days); // 保存的天数
-            window.document.cookie = "openid" + "=" + openid + ";path=/;expires=" + date.toGMTString();
-        },
-
-        clearCookie() {
-            this.setCookie("", "", 0);
-        },
+    clearCookie () {
+      this.setCookie('', '', 0)
     }
+  }
 }
 </script>
 
@@ -198,7 +195,6 @@ body {
     margin-bottom: 0px;
     margin-left: auto;
 }
-
 
 .title {
     font-family: "宋体";
