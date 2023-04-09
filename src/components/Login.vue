@@ -29,7 +29,7 @@
 import { HttpPost } from '@/api'
 
 export default {
-
+  name:'Login',
   data () {
     return {
         ruleForm: {

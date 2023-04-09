@@ -5,7 +5,7 @@ Vue.use(Router)
 
 const Welcome = () => import('@/components/Welcome')
 const Home = () => import('@/components/Home')
-const NextPage = () => import('@/components/NextPage')
+const Students = () => import('@/components/Students')
 const Login = () => import('@/components/Login')
 
 export default new Router({
@@ -28,9 +28,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/next',
-      name: 'NextPage',
-      component: NextPage
+      path: '/students',
+      name: 'Students',
+      component: Students
     }
   ]
 })

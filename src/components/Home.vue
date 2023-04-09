@@ -12,7 +12,7 @@
     <div style="display: flex;justify-content: center;">
       <div class="today">
         <h3>{{ today }}  {{ today_season }}</h3>
-        <img :src="today_img" alt="" style="border-radius: 20%;width: 50px;height: 70px;background-color:  #b7f4d9;">
+        <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
       </div>
     </div>
     
@@ -26,7 +26,7 @@
                 <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
               </div>
               <div style="display: flex;justify-content: center;">
-                <button @click="$router.push('/next')"> {{ item.name }}</button>
+                <button @click="click"> {{ item.name }}</button>
               </div>
             </div>
           </swiper-slide>
@@ -42,7 +42,7 @@ import { HttpGet } from '@/api'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
-  name: 'App',
+  name: 'Home',
   components: {
     swiper,
     swiperSlide
@@ -50,9 +50,9 @@ export default {
   data () {
     return {
       images: [
-        { img: '../assets/students.png', name: '学生专区' }, 
-        { img: '../assets/workspace.png', name: '工作台' }, 
-        { img: '../assets/me.png', name: '个人中心' }
+        { img: '../assets/students.png', name: '学生专区' ,url:'/students'}, 
+        { img: '../assets/workspace.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/me.png', name: '个人中心' ,url:'/next'}
       ],
       studio: '',
       nick_name: '',
@@ -102,6 +102,10 @@ export default {
       that.today_img = that.seasons[num].img
       that.today_season = that.seasons[num].name
 
+    },
+
+    click () {
+      this.$router.push({ path: '/Students', query: { openid: this.openid } })
     }
   }
 }
@@ -123,7 +127,7 @@ h2 {
 }
 
 .today {
-  width: 70%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
   border-radius: 1rem;
@@ -135,7 +139,7 @@ h3 {
   color: #ffffff;
   /* background-color:  #b7f4d9; */
   justify-content: center;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 button {
