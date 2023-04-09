@@ -1,13 +1,21 @@
 <template>
-  <div class="hello">
+  <div >
     <div class="avatar">
-      <img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative; top: 10px; right: 5px;">
-      <div style="margin-top: 0px;">
+      <div style="margin-top: auto;">
         <h1>HI,{{ nick_name }}</h1>
-        <h2 @click="$router.push('/Login')">欢迎来到《{{ studio }}》!</h2>
       </div>
+      <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
     </div>
 
+    <h2 @click="$router.push('/Login')">欢迎来到《{{ studio }}》!</h2>
+
+    <div style="display: flex;justify-content: center;">
+      <div class="today">
+        <h3>{{ today }}  {{ today_season }}</h3>
+        <img :src="today_img" alt="" style="border-radius: 20%;width: 50px;height: 70px;background-color:  #b7f4d9;">
+      </div>
+    </div>
+    
     <div class="banner">
       <div class="banner_wrap">
         <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
@@ -59,7 +67,16 @@ export default {
           disableOnInteraction: false
         }
       },
-      openid: this.$route.query.openid
+      openid: this.$route.query.openid,
+      seasons:[
+        { img: '../assets/spring.png', name: '春' }, 
+        { img: '../assets/summer.png', name: '夏' }, 
+        { img: '../assets/autumn.png', name: '秋' },
+        { img: '../assets/winter.png', name: '冬' }
+      ],
+      today:'',
+      today_img:'',
+      today_season:''
     }
   },
   created () {
@@ -68,10 +85,23 @@ export default {
   methods: {
 
     async getUser () {
+      let that = this
       const users = await HttpGet('/getUser?openid=' + this.openid)
       this.studio = users.data[0].studio
       this.nick_name = users.data[0].nick_name
       this.avatarurl = users.data[0].avatarurl
+
+      const date = new Date
+      const year = date.getFullYear()
+      const month = date.getMonth()+1
+      const day = date.getDate()
+      that.today = year+'年'+month+'月'+day+'日'
+
+      let num = parseInt(month/4)
+      console.log(that.today,num)
+      that.today_img = that.seasons[num].img
+      that.today_season = that.seasons[num].name
+
     }
   }
 }
@@ -79,16 +109,33 @@ export default {
 
 <style scoped>
 h1 {
-  font-weight: bolder;
+  font-weight: bold;
   font-size: medium;
-  color: #8F8FBD;
+  color: #a1bfbf91;
 }
 
 h2 {
   font-weight: bolder;
-  font-size: medium;
-  margin-bottom: 5px;
-  color: #8F8FBD;
+  font-size: large;
+  color: #434a3d;
+  margin-left: 5%;
+  height: auto;
+}
+
+.today {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 1rem;
+  background-color:  #b7f4d9;
+
+}
+
+h3 {
+  color: #ffffff;
+  /* background-color:  #b7f4d9; */
+  justify-content: center;
+  margin-left: 10px;
 }
 
 button {
@@ -123,10 +170,12 @@ header {
 }
 
 .avatar {
+  width: 90%;
   display: flex;
   flex-direction: row;
-  height: 70px;
-  margin-left: 10px;
+  justify-content: space-between;
+  margin-left: 5%;
+  
 }
 
 .welcome {
