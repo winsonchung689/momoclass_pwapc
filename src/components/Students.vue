@@ -1,8 +1,18 @@
 <template>
     <div>
-      <li v-for="item of items">
-          <span>{{ item.studio }}</span><span>{{ item.subject }}</span>
-      </li>
+      <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
+          <div class="lesson">
+            <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
+            <div style="margin-left: 40px;margin-top: 20px;">
+              <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
+              <div style="color: #c1c5c7;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                <div style="margin-right: 5px;">科目: {{ item.subject }} </div>
+                <div style="margin-right: 5px;">课时: {{ item.left_amount }}/{{ item.total_amount }} </div>
+                <div style="margin-right: 5px;">积分: {{ item.points }} </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -39,6 +49,7 @@ export default {
 
         const lessons = await HttpPost('/getLessonByName',param)
         const lessons_data = lessons.data
+
         for( var i in lessons_data){
           const total_amount = lessons_data[i].total_amount
           const left_amount = lessons_data[i].left_amount
@@ -68,4 +79,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.lesson{
+  background-color: #d2f0e3;
+  width: 85%;
+  height: 90px;
+  border-radius: 0.5rem;
+  margin-bottom: 6px;
+  flex-direction: row;
+  display: flex;
+  /* color: #43504a; */
+}
+
 </style>
