@@ -10,6 +10,7 @@ const Login = () => import('@/components/Login')
 const Records = () => import('@/components/Records')
 const SingnInRecord = () => import('@/components/SingnInRecord')
 const LeaveRecord = () => import('@/components/LeaveRecord')
+const GrowthRecord = () => import('@/components/GrowthRecord')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -49,6 +50,11 @@ export default new Router({
       path: '/leaverecord',
       name: 'LeaveRecord',
       component: LeaveRecord
+    },
+    {
+      path: '/growthrecord',
+      name: 'GrowthRecord',
+      component: GrowthRecord
     }
   ]
 })

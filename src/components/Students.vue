@@ -4,6 +4,7 @@
         <i class="el-icon-arrow-left" @click="goOff()"></i>
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
+
       <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
           <div class="lesson" @click="goIn(item.studio,item.subject,item.student_name)">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
@@ -16,7 +17,7 @@
               </div>
             </div>
           </div>
-        </div>
+      </div>
     </div>
 </template>
 

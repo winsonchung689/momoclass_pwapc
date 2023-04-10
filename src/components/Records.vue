@@ -7,7 +7,7 @@
 
       <div style="justify-content: center;display: flex;margin-bottom: 15px;">
         <div class="container">
-          <div class="item" @click="signInRecord(subject,studio,student_name,)">
+          <div class="item" @click="signInRecord(subject,studio,student_name)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/signin.png" alt="">
@@ -16,7 +16,7 @@
             </div>
           </div>
 
-          <div class="item" @click="leaveRecord(subject,studio,student_name,)">
+          <div class="item" @click="leaveRecord(subject,studio,student_name)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/leave.png" alt="">
@@ -29,7 +29,7 @@
 
       <div style="justify-content: center;display: flex;margin-bottom: 15px;;">
         <div class="container">
-          <div class="item" @click="absentRecord(subject,studio,student_name,)">
+          <div class="item" @click="absentRecord(subject,studio,student_name)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/absent.png" alt="">
@@ -38,7 +38,7 @@
             </div>
           </div>
 
-          <div class="item">
+          <div class="item" @click="growthRecord(subject,studio,student_name)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/growth.png" alt="">
@@ -86,8 +86,8 @@ export default {
       this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'旷课' } })
     },
 
-    growthRecord () {
-      // this.$router.push({ path: '/Students', query: { openid: this.openid } })
+    growthRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/growthrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     goOff () {

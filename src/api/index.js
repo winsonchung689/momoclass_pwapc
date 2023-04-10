@@ -13,3 +13,6 @@ export function HttpPost (url, data) {
     params: data
   })
 }
+
+
+export const ImageUrl = baseUrl + '/file/uploadimages/'
