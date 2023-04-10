@@ -68,6 +68,7 @@ export default {
         }
       },
       openid: this.$route.query.openid,
+      role: this.$route.query.role,
       seasons:[
         { img: '../assets/spring.png', name: '春' }, 
         { img: '../assets/summer.png', name: '夏' }, 
@@ -90,6 +91,7 @@ export default {
       this.studio = users.data[0].studio
       this.nick_name = users.data[0].nick_name
       this.avatarurl = users.data[0].avatarurl
+      this.role = users.data[0].role
 
       const date = new Date
       const year = date.getFullYear()
@@ -105,7 +107,7 @@ export default {
     },
 
     click () {
-      this.$router.push({ path: '/Students', query: { openid: this.openid } })
+      this.$router.push({ path: '/Students', query: { openid: this.openid,role:this.role,studio:this.studio } })
     }
   }
 }

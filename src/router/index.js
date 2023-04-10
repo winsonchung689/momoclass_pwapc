@@ -7,7 +7,7 @@ const Welcome = () => import('@/components/Welcome')
 const Home = () => import('@/components/Home')
 const Students = () => import('@/components/Students')
 const Login = () => import('@/components/Login')
-const SignIn = () => import('@/components/SignIn')
+const Records = () => import('@/components/Records')
 const SingnInRecord = () => import('@/components/SingnInRecord')
 
 export default new Router({
@@ -35,9 +35,9 @@ export default new Router({
       component: Students
     },
     {
-      path: '/signin',
-      name: 'SignIn',
-      component: SignIn
+      path: '/records',
+      name: 'Records',
+      component: Records
     },
     {
       path: '/signinrecord',

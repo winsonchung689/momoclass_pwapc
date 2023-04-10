@@ -58,12 +58,14 @@ import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 
 export default {
-  name: 'SignIn',
+  name: 'Records',
   data () {
     return {
       student_name:this.$route.query.student_name,
       subject:this.$route.query.subject,
       studio:this.$route.query.studio,
+      role:this.$route.query.role,
+      openid:this.$route.query.openid,
     }
   },
 
@@ -73,7 +75,7 @@ export default {
   methods: {
 
     signInRecord (subject,studio,student_name) {
-      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name } })
+      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     leaveRecord () {

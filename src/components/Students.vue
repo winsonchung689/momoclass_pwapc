@@ -30,6 +30,8 @@ export default {
     return {
       items:[],
       openid: this.$route.query.openid,
+      role: this.$route.query.role,
+      studio: this.$route.query.studio,
       header:'学生专区'
     }
   },
@@ -54,7 +56,7 @@ export default {
 
         const lessons = await HttpPost('/getLessonByName',param)
         const lessons_data = lessons.data
-
+        that.items =[]
         for( var i in lessons_data){
           const total_amount = lessons_data[i].total_amount
           const left_amount = lessons_data[i].left_amount
@@ -78,7 +80,7 @@ export default {
     },
 
     goIn(studio,subject,student_name) {
-      this.$router.push({ path: '/signin', query: { studio: studio,subject: subject,student_name: student_name } })
+      this.$router.push({ path: '/records', query: { studio: studio,subject: subject,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
   }

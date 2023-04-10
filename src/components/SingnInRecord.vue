@@ -5,17 +5,33 @@
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
 
-      <el-table :data="tableData" style="width: 100%;" max-height=80%>
-        <el-table-column fixed prop="date" label="日期" width="150">
+      <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
+        <el-table-column fixed prop="rank" label="序号" width="50">
         </el-table-column> 
-        <el-table-column prop="name" label="姓名"  width="120">
+        <el-table-column prop="student_name" label="名字"  width="70">
         </el-table-column>
-        <el-table-column prop="province" label="省份" width="120">
+        <el-table-column prop="create_time" label="上课日" width="90">
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="120">
-          <template slot-scope="scope">
-            <el-button
-              @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small">移除</el-button>
+        <el-table-column prop="duration" label="时间段" width="90">
+        </el-table-column>
+        <el-table-column prop="sign_time" label="签到日" width="90">
+        </el-table-column>
+        <el-table-column prop="mark" label="备注" width="90">
+        </el-table-column>
+        <el-table-column prop="count" label="课时" width="60">
+        </el-table-column>
+        <el-table-column prop="status" label="状态" width="80">
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="70">
+          <template slot-scope="scope" >
+            <div style="justify-content: center;display: flex;flex-direction: column;">
+              <div>
+                <el-button @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+              </div>
+              <div>
+                <el-button @click.native.prevent="deleteAll()" type="text" size="small" style="font-size:x-small">清空</el-button>
+              </div>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -31,104 +47,13 @@ export default {
   name: 'SignInRecord',
   data () {
     return {
-      items:[],
       subject: this.$route.query.subject,
       studio: this.$route.query.studio,
       student_name: this.$route.query.student_name,
+      role: this.$route.query.role,
+      openid: this.$route.query.openid,
       header:'签到记录',
-      tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }
-      ]
+      tableData: []
     }
   },
 
@@ -137,12 +62,103 @@ export default {
   },
 
   methods: {
-    getSignInRecord () {
+    async getSignInRecord () {
+      let that = this;
+      let param ={
+          studio:that.studio,
+          student_name:that.student_name,
+          subject:that.subject
+        }
+      const signins = await HttpPost('/getSignUp', param)
+      let signin_data = signins.data;
+
+      console.log(signin_data)
+      that.tableData =[]
+      for( var i in signin_data){
+          const rank = signin_data[i].rank
+          const student_name = signin_data[i].student_name
+          const create_time = signin_data[i].create_time
+          const duration = signin_data[i].duration
+          const sign_time = signin_data[i].sign_time
+          const mark = signin_data[i].mark
+          const count = signin_data[i].count
+          const status = signin_data[i].status
+          const id = signin_data[i].id
+
+          var json ={};
+          json.rank = rank
+          json.student_name = student_name
+          json.create_time = create_time
+          json.duration = duration
+          json.sign_time = sign_time
+          json.mark = mark
+          json.count = count
+          json.status = status
+          json.id = id
+          that.tableData.push(json)
+      }
 
     },
 
     goOff() {
       this.$router.go(-1);
+    },
+
+    deleteRow (index, tableData) {
+      const id = tableData[index].id
+      console.log(id)
+      console.log(this.studio)
+      console.log(this.role)
+      let param ={
+          studio:this.studio,
+          id:id,
+          role:this.role,
+          openid:this.openid
+        }
+      let res = HttpPost("/deleteSignUpRecord",param)
+      res.then(res => {
+          console.log(res.data)
+          if(res.data == 1){
+            this.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+            this.getSignInRecord()
+          }else {
+            this.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+          }
+      })
+      
+    },
+
+    deleteAll () {
+      let param ={
+          name:this.student_name,
+          role:this.role,
+          studio: this.studio,
+          openid:this.openid
+        }
+      let res = HttpPost("/deleteSignUpAllRecord",param)
+      res.then(res => {
+          console.log(res.data)
+          if(res.data == 1){
+            this.$message({
+                message: '清空成功',
+                type: 'success'
+            });
+            this.getSignInRecord()
+          }else {
+            this.$message({
+                message: '清空失败',
+                type: 'warning'
+            });
+            this.getSignInRecord()
+          }
+      })
+
     },
 
   }
