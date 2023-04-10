@@ -2,12 +2,12 @@
   <div >
     <div class="avatar">
       <div style="margin-top: auto;">
-        <h1>HI,{{ nick_name }}</h1>
+        <h1>HI,{{ nick_name }} ({{ mode }})</h1>
       </div>
       <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
     </div>
 
-    <h2 @click="$router.push('/Login')">欢迎来到《{{ studio }}》!</h2>
+    <h2 @click="$router.push('/Login')">{{ hello }}</h2>
 
     <div style="display: flex;justify-content: center;">
       <div class="today">
@@ -55,7 +55,7 @@ export default {
         { img: '../assets/me.png', name: '个人中心' ,url:'/next'}
       ],
       studio: '',
-      nick_name: '',
+      nick_name: '你好',
       avatarurl: '',
       swiperOption: {
         loop: true,
@@ -77,7 +77,9 @@ export default {
       ],
       today:'',
       today_img:'',
-      today_season:''
+      today_season:'',
+      mode: '游客模式',
+      hello:'去登陆 👉'
     }
   },
   created () {
@@ -87,11 +89,6 @@ export default {
 
     async getUser () {
       let that = this
-      const users = await HttpGet('/getUser?openid=' + this.openid)
-      this.studio = users.data[0].studio
-      this.nick_name = users.data[0].nick_name
-      this.avatarurl = users.data[0].avatarurl
-      this.role = users.data[0].role
 
       const date = new Date
       const year = date.getFullYear()
@@ -104,6 +101,26 @@ export default {
       that.today_img = that.seasons[num].img
       that.today_season = that.seasons[num].name
 
+      const users = await HttpGet('/getUser?openid=' + this.openid)
+      that.studio = users.data[0].studio
+      if(that.studio.length>0){
+        that.hello = '欢迎来到《' + that.studio + "》！"
+      }else {
+        that.hello = '去登陆 👉'
+      }
+
+      that.nick_name = users.data[0].nick_name
+      that.avatarurl = users.data[0].avatarurl
+      that.role = users.data[0].role
+      if('boss' == that.role){
+        that.mode = '老师模式'
+      }else if('client' == that.role){
+        that.mode = '家长模式'
+      }else if('visit' == that.role){
+        that.mode = '游客模式'
+      }else {
+        that.mode = '未登录'
+      }
     },
 
     click () {
