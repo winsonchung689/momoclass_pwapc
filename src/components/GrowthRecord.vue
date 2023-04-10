@@ -5,12 +5,18 @@
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
 
-      <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
-          <div class="lesson" @click="goIn(item.studio,item.subject,item.student_name)">
-            <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
-
-
+      <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="item of items">
+          <div v-for="image in item.images" style="display: flex;flex-wrap: wrap;width: 30%;">
+            <img :src="image.src" alt="">
           </div>
+
+          <div>
+            <div>学生: {{ student_name }}</div>
+            <div>课堂名称: {{ item.class_name }}</div>
+            <div>点评: {{ item.comment }}</div>
+            <div> {{ studio }} {{ item.create_time}}</div>
+          </div>
+          
       </div>
 
     </div>
@@ -49,40 +55,21 @@ export default {
         }
       const growth = await HttpPost('/getGrowthRecord', param)
       let growth_data = growth.data;
-
-      console.log(growth_data)
-      that.tableData =[]
       for( var i in growth_data){
           const uuids = growth_data[i].uuids
-          const class_name = growth_data[i].class_name
-          const studio = growth_data[i].studio
-          const create_time = growth_data[i].create_time
-
           let images =[]
           let uuidslist =uuids.split(",");
           for(let i in uuidslist){
               let url = ImageUrl + uuidslist[i];
-              console.log(url)
               var json = {
                 src:url
               }
               images.push(json);
             }
             growth_data[i]["images"] = images;
-
-
-          // var json ={};
-          // json.rank = rank
-          // json.subject = subject
-          // json.student_name = student_name
-          // json.mark_leave = mark_leave
-          // json.date_time = date_time
-          // json.duration = duration
-          // json.id = id
-          // that.tableData.push(json)
       }
-
       console.log(growth_data)
+      that.items = growth_data
 
     },
 

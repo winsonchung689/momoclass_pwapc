@@ -49,11 +49,21 @@ export default {
   },
   data () {
     return {
-      images: [
-        { img: '../assets/students.png', name: '学生专区' ,url:'/students'}, 
-        { img: '../assets/workspace.png', name: '工作台' ,url:'/next'}, 
-        { img: '../assets/me.png', name: '个人中心' ,url:'/next'}
+      images_all: [
+        [{ img: '../assets/spring1.png', name: '学生专区' ,url:'/students'}, 
+        { img: '../assets/spring2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/spring3.png', name: '个人中心' ,url:'/next'}],
+        [{ img: '../assets/summer1.png', name: '学生专区' ,url:'/students'}, 
+        { img: '../assets/summer2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/summer3.png', name: '个人中心' ,url:'/next'}],
+        [{ img: '../assets/autumn1.png', name: '学生专区' ,url:'/students'}, 
+        { img: '../assets/autumn2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/autumn3.png', name: '个人中心' ,url:'/next'}],
+        [{ img: '../assets/winter1.png', name: '学生专区' ,url:'/students'}, 
+        { img: '../assets/winter2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/winter3.png', name: '个人中心' ,url:'/next'}]
       ],
+      images:[],
       studio: '',
       nick_name: '你好',
       avatarurl: '',
@@ -100,6 +110,7 @@ export default {
       console.log(that.today,num)
       that.today_img = that.seasons[num].img
       that.today_season = that.seasons[num].name
+      that.images = that.images_all[num]
 
       const users = await HttpGet('/getUser?openid=' + this.openid)
       that.studio = users.data[0].studio
