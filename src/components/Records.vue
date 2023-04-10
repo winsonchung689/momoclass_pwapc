@@ -16,7 +16,7 @@
             </div>
           </div>
 
-          <div class="item">
+          <div class="item" @click="leaveRecord(subject,studio,student_name,)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/leave.png" alt="">
@@ -29,7 +29,7 @@
 
       <div style="justify-content: center;display: flex;margin-bottom: 15px;;">
         <div class="container">
-          <div class="item">
+          <div class="item" @click="absentRecord(subject,studio,student_name,)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/absent.png" alt="">
@@ -78,12 +78,12 @@ export default {
       this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
-    leaveRecord () {
-      // this.$router.push({ path: '/Students', query: { openid: this.openid } })
+    leaveRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'请假' } })
     },
 
-    absentRecord () {
-      // this.$router.push({ path: '/Students', query: { openid: this.openid } })
+    absentRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'旷课' } })
     },
 
     growthRecord () {
