@@ -7,7 +7,7 @@
 
       <div style="justify-content: center;display: flex;margin-bottom: 15px;">
         <div class="container">
-          <div class="item">
+          <div class="item" @click="signInRecord(subject,studio,student_name,)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/signin.png" alt="">
@@ -61,10 +61,9 @@ export default {
   name: 'SignIn',
   data () {
     return {
-      items:[],
-      openid: this.$route.query.openid,
       student_name:this.$route.query.student_name,
       subject:this.$route.query.subject,
+      studio:this.$route.query.studio,
     }
   },
 
@@ -73,7 +72,23 @@ export default {
 
   methods: {
 
-    goOff() {
+    signInRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name } })
+    },
+
+    leaveRecord () {
+      // this.$router.push({ path: '/Students', query: { openid: this.openid } })
+    },
+
+    absentRecord () {
+      // this.$router.push({ path: '/Students', query: { openid: this.openid } })
+    },
+
+    growthRecord () {
+      // this.$router.push({ path: '/Students', query: { openid: this.openid } })
+    },
+
+    goOff () {
       this.$router.go(-1);
     },
 

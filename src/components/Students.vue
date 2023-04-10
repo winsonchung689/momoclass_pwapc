@@ -5,7 +5,7 @@
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
       <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
-          <div class="lesson" @click="goIn(item.subject,item.student_name)">
+          <div class="lesson" @click="goIn(item.studio,item.subject,item.student_name)">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
             <div style="margin-left: 40px;margin-top: 20px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
@@ -60,7 +60,6 @@ export default {
           const left_amount = lessons_data[i].left_amount
           const subject = lessons_data[i].subject
           const points = lessons_data[i].points
-
           var json ={};
           json.studio = studio
           json.subject = subject
@@ -69,9 +68,6 @@ export default {
           json.left_amount = left_amount
           json.points = points
           that.items.push(json)
-
-          console.log(that.items)
-
         }
       }
 
@@ -81,8 +77,8 @@ export default {
       this.$router.go(-1);
     },
 
-    goIn(subject,student_name) {
-      this.$router.push({ path: '/signin', query: { subject: subject,student_name: student_name } })
+    goIn(studio,subject,student_name) {
+      this.$router.push({ path: '/signin', query: { studio: studio,subject: subject,student_name: student_name } })
     },
 
   }

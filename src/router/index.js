@@ -8,6 +8,7 @@ const Home = () => import('@/components/Home')
 const Students = () => import('@/components/Students')
 const Login = () => import('@/components/Login')
 const SignIn = () => import('@/components/SignIn')
+const SingnInRecord = () => import('@/components/SingnInRecord')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -37,6 +38,11 @@ export default new Router({
       path: '/signin',
       name: 'SignIn',
       component: SignIn
+    },
+    {
+      path: '/signinrecord',
+      name: 'SingnInRecord',
+      component: SingnInRecord
     }
   ]
 })

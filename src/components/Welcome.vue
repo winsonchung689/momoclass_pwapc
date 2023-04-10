@@ -35,7 +35,7 @@ export default {
             } else {
               console.log('cookie_openid 为空!')
               setTimeout(() => {
-                this.$router.push('/Login')
+                this.$router.replace('/Login')
               }, 3000)
             }
           }
@@ -43,7 +43,7 @@ export default {
       } else {
         console.log('cookie_openid 为空!')
         setTimeout(() => {
-          this.$router.push('/Login')
+          this.$router.replace('/Login')
         }, 3000)
       }
     }
