@@ -1,7 +1,11 @@
 <template>
     <div>
+      <div style="display: flex;direction: row;">
+        <i class="el-icon-arrow-left" @click="goOff()"></i>
+        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
+      </div>
       <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
-          <div class="lesson">
+          <div class="lesson" @click="goIn(item.subject,item.student_name)">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
             <div style="margin-left: 40px;margin-top: 20px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
@@ -26,6 +30,7 @@ export default {
     return {
       items:[],
       openid: this.$route.query.openid,
+      header:'学生专区'
     }
   },
 
@@ -70,7 +75,15 @@ export default {
         }
       }
 
-    }
+    },
+
+    goOff() {
+      this.$router.go(-1);
+    },
+
+    goIn(subject,student_name) {
+      this.$router.push({ path: '/signin', query: { subject: subject,student_name: student_name } })
+    },
 
   }
 
@@ -81,7 +94,7 @@ export default {
 <style scoped>
 
 .lesson{
-  background-color: #d2f0e3;
+  background-color: #b7f4d9;
   width: 85%;
   height: 90px;
   border-radius: 0.5rem;
@@ -89,6 +102,12 @@ export default {
   flex-direction: row;
   display: flex;
   /* color: #43504a; */
+}
+
+.el-icon-arrow-left{
+  margin-left: 5px;
+  margin-top: 10px;
+  scale: 1.5;
 }
 
 </style>

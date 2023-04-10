@@ -30,7 +30,7 @@ export default {
             if (this.openid !== '') {
               console.log('cookie_openid:' + this.openid)
               setTimeout(() => {
-                this.$router.push({ path: '/Home', query: { openid: this.openid } })
+                this.$router.replace({ path: '/Home', query: { openid: this.openid } })
               }, 3000)
             } else {
               console.log('cookie_openid 为空!')
