@@ -26,7 +26,7 @@
                 <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
               </div>
               <div style="display: flex;justify-content: center;">
-                <button @click="click"> {{ item.name }}</button>
+                <button @click="click(item.url)"> {{ item.name }}</button>
               </div>
             </div>
           </swiper-slide>
@@ -136,8 +136,8 @@ export default {
       }
     },
 
-    click () {
-      this.$router.push({ path: '/Students', query: { openid: this.openid,role:this.role,studio:this.studio } })
+    click (url) {
+      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio } })
     },
 
     touchStart(e) {
