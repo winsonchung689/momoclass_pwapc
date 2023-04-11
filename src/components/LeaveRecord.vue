@@ -18,7 +18,7 @@
         </el-table-column>
         <el-table-column prop="duration" label="时间段" width="90">
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="70">
+        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
           <template slot-scope="scope" >
             <div style="justify-content: center;display: flex;flex-direction: column;">
               <div>
@@ -50,7 +50,8 @@ export default {
       openid: this.$route.query.openid,
       leave_type: this.$route.query.leave_type,
       header:  this.$route.query.leave_type+'记录',
-      tableData: []
+      tableData: [],
+      isShow:false
     }
   },
 
@@ -61,6 +62,10 @@ export default {
   methods: {
     async getLeaveRecord () {
       let that = this;
+      if(that.role == 'boss'){
+        that.isShow = true
+      }
+
       let param ={
           studio:that.studio,
           student_name:that.student_name,
