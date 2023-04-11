@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
     <div class="avatar">
       <div style="margin-top: auto;">
         <h1>HI,{{ nick_name }} ({{ mode }})</h1>
@@ -89,7 +89,9 @@ export default {
       today_img:'',
       today_season:'',
       mode: '游客模式',
-      hello:'去登陆 👉'
+      hello:'去登陆 👉',
+      diff:0,
+      startY: 0
     }
   },
   created () {
@@ -136,7 +138,32 @@ export default {
 
     click () {
       this.$router.push({ path: '/Students', query: { openid: this.openid,role:this.role,studio:this.studio } })
-    }
+    },
+
+    touchStart(e) {
+      this.diff = 0
+      this.startY = e.targetTouches[0].pageY
+      this.startScroll = this.$el.scrollTop || 0
+    },
+
+    touchMove(e) {
+      let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
+      console.log(diff)
+      this.diff = diff
+    },
+
+    touchEnd(e) {
+      if(this.diff >= 200){
+        this.getUser()
+        this.$message({
+        message: '刷新成功',
+        type: 'success'
+      });
+      }
+    
+},
+
+
   }
 }
 </script>

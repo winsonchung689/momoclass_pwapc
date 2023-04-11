@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column prop="status" label="状态" width="80">
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="70">
+        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
           <template slot-scope="scope" >
             <div style="justify-content: center;display: flex;flex-direction: column;">
               <div>
@@ -53,7 +53,8 @@ export default {
       role: this.$route.query.role,
       openid: this.$route.query.openid,
       header:'签到记录',
-      tableData: []
+      tableData: [],
+      isShow:false
     }
   },
 
@@ -64,6 +65,10 @@ export default {
   methods: {
     async getSignInRecord () {
       let that = this;
+      if(that.role == 'boss'){
+        that.isShow = true
+      }
+      
       let param ={
           studio:that.studio,
           student_name:that.student_name,
