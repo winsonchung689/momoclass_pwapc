@@ -10,11 +10,20 @@
         <div class="covers" :style="{display:MinDisplay}">
             <div class="cover" v-for="(img,index) in item.images" :key='img'><img :src="img.src" width="90%" class="min" @click="ZoomIn(index)" alt=""></div>
         </div>
-        <div>
+        <div class="max" :style="{display:display}">
+            <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
+            <div class="small">
+                <div :class="[{'smallActive':index===ShowIndex},'cover-small']" v-for="(img,index) in item.images" :key='img' @click="select(index)" ><img :src="img.src" width="90%"></div>
+            </div>
+        </div>
+
+
+
+        <div style="font-size: small;font-weight: bold;color: #608bc9;">
           <div>学生: {{ student_name }}</div>
           <div>课堂名称: {{ item.class_name }}</div>
           <div>老师点评: {{ item.comment }}</div>
-          <div> {{ studio }} {{ item.create_time}}</div>
+          <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }} {{ item.create_time}}</div>
         </div>
       </div>
 
@@ -38,6 +47,8 @@ export default {
       header:  '成长记录',
       items: [],
       MinDisplay:'flex',
+      ShowIndex:0,
+      display: 'none',
     }
   },
 
@@ -58,15 +69,17 @@ export default {
       for( var i in growth_data){
           const uuids = growth_data[i].uuids
           let images =[]
-          let uuidslist =uuids.split(",");
-          for(let i in uuidslist){
-              let url = ImageUrl + uuidslist[i];
-              var json = {
-                src:url
-              }
-              images.push(json);
+          if(uuids){
+            let uuidslist =uuids.split(",");
+            for(let i in uuidslist){
+                let url = ImageUrl + uuidslist[i];
+                var json = {
+                  src:url
+                }
+                images.push(json);
             }
             growth_data[i]["images"] = images;
+          }
       }
       console.log(growth_data)
       that.items = growth_data
@@ -83,6 +96,16 @@ export default {
         this.ShowIndex=i;
     },
 
+    ZoomOut(){
+        this.display='none';
+        this.MinDisplay='flex';
+    },
+
+    select(i){
+        this.ShowIndex=i;
+
+
+    }
   }
 
 }
@@ -99,7 +122,7 @@ export default {
   margin-bottom: 6px;
   flex-direction: row;
   display: flex;
-  /* color: #43504a; */
+  /* color: #608bc9; */
 }
 
 .el-icon-arrow-left{
@@ -119,6 +142,37 @@ export default {
     justify-content: center;
     width: 33%;
     margin: 10px 0;
+}
+
+.max{
+    cursor: zoom-out;
+    width: 100%;
+
+}
+.small{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.cover-small{
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    margin: 10px 0;
+    opacity: 0.6;
+    cursor: pointer;
+}
+.cover-small:hover{
+    opacity: 1;
+}
+.active{
+    display: flex;
+}
+.None{
+    display: none;
+}
+.smallActive{
+    opacity: 1;
 }
 
 </style>
