@@ -12,16 +12,12 @@
               <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
             </div>
         </div>
+
         <div class="max" :style="{display:display}">
             <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
-            <div class="small">
-                <div :class="[{'smallActive':index_out+'_'+index===ShowIndex},'cover-small']" v-for="(img,index) in item.images" :key='img' @click="select(index)" ><img :src="img.src" width="90%"></div>
-            </div>
         </div>
 
-
-
-        <div style="font-size: small;font-weight: bold;color: #608bc9;">
+        <div  class="foot" :style="{display:MinDisplay}">
           <div>学生: {{ subject }}_{{ student_name }}</div>
           <div>课堂名称: {{ item.class_name }}</div>
           <div>老师点评: {{ item.comment }}</div>
@@ -144,6 +140,14 @@ export default {
     justify-content: center;
     width: 33%;
     margin: 10px 0;
+}
+
+.foot{
+  font-size: small;
+  font-weight: bold;
+  color: #608bc9;
+  display: flex;
+  flex-direction: column;
 }
 
 .max{
