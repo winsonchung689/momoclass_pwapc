@@ -8,7 +8,9 @@
 
       <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="item of items">
         <div class="covers" :style="{display:MinDisplay}">
-            <div class="cover" v-for="(img,index) in item.images" :key='img'><img :src="img.src" width="90%" class="min" @click="ZoomIn(index)" alt=""></div>
+            <div class="cover" v-for="(img,index) in item.images" :key='img'>
+              <img :src="img.src" width="90%" class="min" @click="ZoomIn(index)" alt="">
+            </div>
         </div>
         <div class="max" :style="{display:display}">
             <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
@@ -20,10 +22,10 @@
 
 
         <div style="font-size: small;font-weight: bold;color: #608bc9;">
-          <div>学生: {{ student_name }}</div>
+          <div>学生: {{ subject }}_{{ student_name }}</div>
           <div>课堂名称: {{ item.class_name }}</div>
           <div>老师点评: {{ item.comment }}</div>
-          <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }} {{ item.create_time}}</div>
+          <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
         </div>
       </div>
 
@@ -134,7 +136,7 @@ export default {
 .covers{
     width: 60%;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     flex-wrap: wrap;
 }
 .cover{
