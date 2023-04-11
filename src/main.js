@@ -8,9 +8,11 @@ import 'swiper/css/swiper.css'
 import { Message } from 'element-ui'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+
+Vue.use(preview)
 Vue.use(ElementUI)
-
-
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$message = Message

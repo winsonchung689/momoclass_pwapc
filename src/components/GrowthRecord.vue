@@ -4,19 +4,18 @@
         <i class="el-icon-arrow-left" @click="goOff()"></i>
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
+      
 
       <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="item of items">
-          <div v-for="image in item.images" style="display: flex;flex-wrap: wrap;width: 30%;">
-            <img :src="image.src" alt="">
-          </div>
-
-          <div>
-            <div>学生: {{ student_name }}</div>
-            <div>课堂名称: {{ item.class_name }}</div>
-            <div>点评: {{ item.comment }}</div>
-            <div> {{ studio }} {{ item.create_time}}</div>
-          </div>
-          
+        <div class="covers" :style="{display:MinDisplay}">
+            <div class="cover" v-for="(img,index) in item.images" :key='img'><img :src="img.src" width="90%" class="min" @click="ZoomIn(index)" alt=""></div>
+        </div>
+        <div>
+          <div>学生: {{ student_name }}</div>
+          <div>课堂名称: {{ item.class_name }}</div>
+          <div>老师点评: {{ item.comment }}</div>
+          <div> {{ studio }} {{ item.create_time}}</div>
+        </div>
       </div>
 
     </div>
@@ -37,7 +36,8 @@ export default {
       role: this.$route.query.role,
       openid: this.$route.query.openid,
       header:  '成长记录',
-      items: []
+      items: [],
+      MinDisplay:'flex',
     }
   },
 
@@ -77,6 +77,12 @@ export default {
       this.$router.go(-1);
     },
 
+    ZoomIn(i){
+        this.display='block';
+        this.MinDisplay='none';
+        this.ShowIndex=i;
+    },
+
   }
 
 }
@@ -100,6 +106,19 @@ export default {
   margin-left: 5px;
   margin-top: 10px;
   scale: 1.5;
+}
+
+.covers{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.cover{
+    display: flex;
+    justify-content: center;
+    width: 33%;
+    margin: 10px 0;
 }
 
 </style>
