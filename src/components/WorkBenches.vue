@@ -16,7 +16,7 @@
             </div>
           </div>
 
-          <div class="item" @click="leaveRecord(subject,studio,student_name)">
+          <div class="item" @click="calender(subject,studio,student_name)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/tosignin.png" alt="">
@@ -53,6 +53,10 @@ export default {
 
     timeTable (subject) {
       this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+    },
+
+    calender (subject) {
+      this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
     },
 
     goOff () {
