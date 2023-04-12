@@ -117,7 +117,7 @@ export default {
   height: 150px;
   border-radius: 1rem;
 
-  color: #517cf1;
+  /* color: #517cf1; */
 }
 
 .content{

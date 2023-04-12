@@ -11,7 +11,9 @@ const Records = () => import('@/components/Records')
 const SingnInRecord = () => import('@/components/SingnInRecord')
 const LeaveRecord = () => import('@/components/LeaveRecord')
 const GrowthRecord = () => import('@/components/GrowthRecord')
-const NextPage = () => import('@/components/NextPage.vue')
+const WorkBenches = () => import('@/components/WorkBenches')
+const Timetable = () => import('@/components/Timetable')
+const NextPage = () => import('@/components/NextPage')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -56,6 +58,16 @@ export default new Router({
       path: '/growthrecord',
       name: 'GrowthRecord',
       component: GrowthRecord
+    },
+    {
+      path: '/workbenches',
+      name: 'WorkBenches',
+      component: WorkBenches
+    },
+    {
+      path: '/timetable',
+      name: 'Timetable',
+      component: Timetable
     },
     {
       path: '/next',

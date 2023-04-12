@@ -1,0 +1,101 @@
+<template>
+    <div>
+      <div style="display: flex;direction: row;margin-bottom: 5px;">
+        <i class="el-icon-arrow-left" @click="goOff()"></i>
+        <div style="font-size: medium;margin-left: 40%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
+      </div>
+
+      <div style="justify-content: center;display: flex;margin-bottom: 15px;">
+        <div class="container">
+          <div class="item" @click="timeTable(subject)">
+            <div class="content">
+              <div style="display: flex;justify-content: center;">
+                <img style="width: 40px;height: 40px;" src="@/assets/timetable.png" alt="">
+              </div>
+              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程表</div>
+            </div>
+          </div>
+
+          <div class="item" @click="leaveRecord(subject,studio,student_name)">
+            <div class="content">
+              <div style="display: flex;justify-content: center;">
+                <img style="width: 40px;height: 40px;" src="@/assets/tosignin.png" alt="">
+              </div>
+              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">签到处</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</template>
+
+<script>
+import { HttpGet } from '@/api'
+import { HttpPost } from '@/api'
+
+export default {
+  name: 'WorkBenches',
+  data () {
+    return {
+      subject:this.$route.query.subject,
+      studio:this.$route.query.studio,
+      role:this.$route.query.role,
+      openid:this.$route.query.openid,
+      header: '工作台'
+    }
+  },
+
+  created () {
+  },
+
+  methods: {
+
+    timeTable (subject) {
+      this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+    },
+
+    goOff () {
+      this.$router.go(-1);
+    },
+
+  }
+
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+.container{
+  flex-direction: row;
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  
+}
+
+.item{
+  background-color: #d8e8e1;
+  width: 150px;
+  height: 150px;
+  border-radius: 1rem;
+
+  /* color: #81a1eb; */
+}
+
+.content{
+  justify-content: center;
+  display: flex;
+  margin-top: 20%;
+  flex-direction: column;
+}
+
+.el-icon-arrow-left{
+  margin-left: 5px;
+  margin-top: 10px;
+  scale: 1.5;
+}
+
+</style>

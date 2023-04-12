@@ -25,7 +25,7 @@
               <div>
                 <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
               </div>
-              <div style="display: flex;justify-content: center;">
+              <div style="display: flex;justify-content: center;margin-bottom: 15px;">
                 <button @click="click(item.url)"> {{ item.name }}</button>
               </div>
             </div>
@@ -51,16 +51,16 @@ export default {
     return {
       images_all: [
         [{ img: '../assets/spring1.png', name: '学生专区' ,url:'/students'}, 
-        { img: '../assets/spring2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/spring2.png', name: '工作台' ,url:'/workbenches'}, 
         { img: '../assets/spring3.png', name: '个人中心' ,url:'/next'}],
         [{ img: '../assets/summer1.png', name: '学生专区' ,url:'/students'}, 
-        { img: '../assets/summer2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/summer2.png', name: '工作台' ,url:'/workbenches'}, 
         { img: '../assets/summer3.png', name: '个人中心' ,url:'/next'}],
         [{ img: '../assets/autumn1.png', name: '学生专区' ,url:'/students'}, 
-        { img: '../assets/autumn2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/autumn2.png', name: '工作台' ,url:'/workbenches'}, 
         { img: '../assets/autumn3.png', name: '个人中心' ,url:'/next'}],
         [{ img: '../assets/winter1.png', name: '学生专区' ,url:'/students'}, 
-        { img: '../assets/winter2.png', name: '工作台' ,url:'/next'}, 
+        { img: '../assets/winter2.png', name: '工作台' ,url:'/workbenches'}, 
         { img: '../assets/winter3.png', name: '个人中心' ,url:'/next'}]
       ],
       images:[],
@@ -69,7 +69,7 @@ export default {
       avatarurl: '',
       swiperOption: {
         loop: true,
-        speed: 2000,
+        speed: 500,
         observer: true,
         observeParents: true,
         autoplay: {
@@ -79,6 +79,7 @@ export default {
       },
       openid: this.$route.query.openid,
       role: this.$route.query.role,
+      subject:'',
       seasons:[
         { img: '../assets/spring.png', name: '春' }, 
         { img: '../assets/summer.png', name: '夏' }, 
@@ -125,6 +126,7 @@ export default {
       that.nick_name = users.data[0].nick_name
       that.avatarurl = users.data[0].avatarurl
       that.role = users.data[0].role
+      that.subject = users.data[0].subjects
       if('boss' == that.role){
         that.mode = '老师模式'
       }else if('client' == that.role){
@@ -137,7 +139,7 @@ export default {
     },
 
     click (url) {
-      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio } })
+      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject } })
     },
 
     touchStart(e) {
@@ -148,7 +150,7 @@ export default {
 
     touchMove(e) {
       let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
-      console.log(diff)
+      // console.log(diff)
       this.diff = diff
     },
 
