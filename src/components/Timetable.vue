@@ -31,7 +31,7 @@
         <el-table-column prop="week3" label="周三" width="150">
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week3" :key="index">
-              <div class="class_element_3">
+              <div class="class_element_1">
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
@@ -42,7 +42,7 @@
         <el-table-column prop="week4" label="周四" width="150">
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week4" :key="index">
-              <div class="class_element_4">
+              <div class="class_element_2">
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
@@ -53,7 +53,7 @@
         <el-table-column prop="week5" label="周五" width="150">
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week5" :key="index">
-              <div class="class_element_5">
+              <div class="class_element_1">
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
@@ -64,7 +64,7 @@
         <el-table-column prop="week6" label="周六" width="150">
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week6" :key="index">
-              <div class="class_element_6">
+              <div class="class_element_2">
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
@@ -76,7 +76,7 @@
         <el-table-column prop="week7" label="周日"  width="150">
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week7" :key="index">
-              <div class="class_element_7">
+              <div class="class_element_1">
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
@@ -182,7 +182,7 @@ export default {
 }
 
 .class_element_2{
-  background-color: rgb(177, 245, 180);
+  background-color: rgb(177, 245, 225);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
@@ -190,7 +190,7 @@ export default {
 
 
 .class_element_3{
-  background-color: rgb(228, 245, 177);
+  background-color: rgb(177, 245, 242);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
@@ -198,7 +198,7 @@ export default {
 
 
 .class_element_4{
-  background-color: rgb(177, 203, 245);
+  background-color: rgb(177, 245, 242);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
@@ -206,7 +206,7 @@ export default {
 
 
 .class_element_5{
-  background-color: rgb(228, 177, 245);
+  background-color: rgb(177, 235, 245);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
@@ -214,7 +214,7 @@ export default {
 
 
 .class_element_6{
-  background-color: rgb(245, 221, 177);
+  background-color: rgb(177, 245, 212);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
@@ -222,7 +222,7 @@ export default {
 
 
 .class_element_7{
-  background-color: rgb(177, 245, 242);
+  background-color: rgb(177, 245, 226);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
