@@ -15,7 +15,7 @@ const WorkBenches = () => import('@/components/WorkBenches')
 const Timetable = () => import('@/components/Timetable')
 const Calendar = () => import('@/components/Calendar')
 const School = () => import('@/components/School')
-const NextPage = () => import('@/components/NextPage')
+const Me = () => import('@/components/Me')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -82,9 +82,9 @@ export default new Router({
       component: School
     },
     {
-      path: '/next',
-      name: 'NextPage',
-      component: NextPage
+      path: '/me',
+      name: 'Me',
+      component: Me
     }
   ]
 })

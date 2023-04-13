@@ -38,11 +38,11 @@ export default {
   },
 
   created () {
-    this.getUser()
+    this.getStudents()
   },
 
   methods: {
-    async getUser () {
+    async getStudents () {
       let that = this
 
       if(that.role === 'boss'){

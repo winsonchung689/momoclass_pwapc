@@ -52,16 +52,16 @@ export default {
       images_all: [
         [{ img: '../assets/spring1.png', name: '学生专区' ,url:'/students'}, 
         { img: '../assets/spring2.png', name: '工作台' ,url:'/workbenches'}, 
-        { img: '../assets/spring3.png', name: '个人中心' ,url:'/next'}],
+        { img: '../assets/spring3.png', name: '个人中心' ,url:'/me'}],
         [{ img: '../assets/summer1.png', name: '学生专区' ,url:'/students'}, 
         { img: '../assets/summer2.png', name: '工作台' ,url:'/workbenches'}, 
-        { img: '../assets/summer3.png', name: '个人中心' ,url:'/next'}],
+        { img: '../assets/summer3.png', name: '个人中心' ,url:'/me'}],
         [{ img: '../assets/autumn1.png', name: '学生专区' ,url:'/students'}, 
         { img: '../assets/autumn2.png', name: '工作台' ,url:'/workbenches'}, 
-        { img: '../assets/autumn3.png', name: '个人中心' ,url:'/next'}],
+        { img: '../assets/autumn3.png', name: '个人中心' ,url:'/me'}],
         [{ img: '../assets/winter1.png', name: '学生专区' ,url:'/students'}, 
         { img: '../assets/winter2.png', name: '工作台' ,url:'/workbenches'}, 
-        { img: '../assets/winter3.png', name: '个人中心' ,url:'/next'}]
+        { img: '../assets/winter3.png', name: '个人中心' ,url:'/me'}]
       ],
       images:[],
       studio: '',
