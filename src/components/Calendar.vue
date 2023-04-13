@@ -135,7 +135,7 @@ export default {
               subject:subject,
               openid:that.openid,
               duration:duration,
-              class_number:class_number
+              class_number:class_number.replace('(插班生)','')
             }
             const details = await HttpPost('/getScheduleByClass', param)
             console.log(class_number)

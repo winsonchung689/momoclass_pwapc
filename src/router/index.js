@@ -14,6 +14,7 @@ const GrowthRecord = () => import('@/components/GrowthRecord')
 const WorkBenches = () => import('@/components/WorkBenches')
 const Timetable = () => import('@/components/Timetable')
 const Calendar = () => import('@/components/Calendar')
+const School = () => import('@/components/School')
 const NextPage = () => import('@/components/NextPage')
 
 export default new Router({
@@ -74,6 +75,11 @@ export default new Router({
       path: '/calendar',
       name: 'Calendar',
       component: Calendar
+    },
+    {
+      path: '/school',
+      name: 'School',
+      component: School
     },
     {
       path: '/next',

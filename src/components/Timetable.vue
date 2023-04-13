@@ -182,47 +182,7 @@ export default {
 }
 
 .class_element_2{
-  background-color: rgb(177, 245, 225);
-  border-radius: 5%;
-  height: 180px;
-  margin-bottom: 20px;
-}
-
-
-.class_element_3{
-  background-color: rgb(177, 245, 242);
-  border-radius: 5%;
-  height: 180px;
-  margin-bottom: 20px;
-}
-
-
-.class_element_4{
-  background-color: rgb(177, 245, 242);
-  border-radius: 5%;
-  height: 180px;
-  margin-bottom: 20px;
-}
-
-
-.class_element_5{
-  background-color: rgb(177, 235, 245);
-  border-radius: 5%;
-  height: 180px;
-  margin-bottom: 20px;
-}
-
-
-.class_element_6{
-  background-color: rgb(177, 245, 212);
-  border-radius: 5%;
-  height: 180px;
-  margin-bottom: 20px;
-}
-
-
-.class_element_7{
-  background-color: rgb(177, 245, 226);
+  background-color: rgb(147, 236, 181);
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;

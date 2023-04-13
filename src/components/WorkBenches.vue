@@ -27,6 +27,20 @@
         </div>
       </div>
 
+      <div style="justify-content: center;display: flex;margin-bottom: 15px;">
+        <div class="container">
+          <div class="item" @click="school(subject)">
+            <div class="content">
+              <div style="display: flex;justify-content: center;">
+                <img style="width: 40px;height: 40px;" src="@/assets/school.png" alt="">
+              </div>
+              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
 </template>
 
@@ -59,6 +73,10 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
     },
 
+    school (subject) {
+      this.$router.push({ path: '/school', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+    },
+
     goOff () {
       this.$router.go(-1);
     },
@@ -81,7 +99,7 @@ export default {
 }
 
 .item{
-  background-color: #d8e8e1;
+  background-color: #b7f4d9;
   width: 150px;
   height: 150px;
   border-radius: 1rem;
