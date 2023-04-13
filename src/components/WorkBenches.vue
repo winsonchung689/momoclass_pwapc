@@ -5,7 +5,7 @@
         <div style="font-size: medium;margin-left: 40%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
 
-      <div style="justify-content: center;display: flex;margin-bottom: 15px;">
+      <div style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
         <div class="container">
           <div class="item" @click="timeTable(subject)">
             <div class="content">
