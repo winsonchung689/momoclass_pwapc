@@ -193,7 +193,7 @@ export default {
   border-radius: 3rem;
   background-color: rgb(132, 132, 224);
   width: 60px;
-  height: 10px;
+  height: 40px;
   font-size: small;
   margin-left: 25%;
   justify-content: center;
