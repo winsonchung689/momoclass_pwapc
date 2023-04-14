@@ -5,15 +5,56 @@
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
 
+
+      <el-dialog title="排课中" :visible.sync="dialogFormVisible">
+        <el-autocomplete
+          popper-class="my-autocomplete"
+          v-model="state"
+          :fetch-suggestions="querySearch"
+          placeholder="请选择学生"
+          @select="handleSelect">
+          <template slot-scope="{ item }">
+            <div class="name">{{ item.student_name }}</div>
+          </template>
+        </el-autocomplete>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="arrangeClass()">确 定</el-button>
+        </div>
+      </el-dialog>
+
       <el-table :data="tableData" style="width: 100%;font-size: small;justify-content: center;" max-height="750">
         <el-table-column prop="week1" label="周一"  width="150" style="text-align: center;">
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week1" :key="index">
               <div class="class_element_1">
+                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                   <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                   <div class="text"> {{ item.duration }} </div>
                   <div class="text"> 报名: {{ item.classes_count }} </div>
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+                  
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
+
               </div>
             </div>
           </template>
@@ -22,10 +63,33 @@
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week2" :key="index">
               <div class="class_element_2">
+                <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                              <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
+
               </div>
             </div>
           </template>
@@ -34,10 +98,33 @@
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week3" :key="index">
               <div class="class_element_1">
+                <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+                 
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                              <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
+
               </div>
             </div>
           </template>
@@ -46,10 +133,33 @@
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week4" :key="index">
               <div class="class_element_2">
+                <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                              <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
+                 
               </div>
             </div>
           </template>
@@ -58,10 +168,33 @@
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week5" :key="index">
               <div class="class_element_1">
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                              <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
+
               </div>
             </div>
           </template>
@@ -70,10 +203,32 @@
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week6" :key="index">
               <div class="class_element_2">
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                              <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
               </div>
             </div>
           </template>
@@ -83,10 +238,33 @@
           <template slot-scope="scope">
             <div v-for="(item,index) in scope.row.week7" :key="index">
               <div class="class_element_1">
+                <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
+                 
+                 <div class="t_choose">
+                    <el-popover
+                      placement="right"
+                      width="120"
+                      trigger="click">
+                      <el-table :data="gridData">
+                        <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                        <template slot-scope="scope" >
+                          <div style="justify-content: center;display: flex;flex-direction: column;">
+                            <div>
+                              <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                            </div>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      </el-table>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                    </el-popover>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                 </div>
+
               </div>
             </div>
           </template>
@@ -110,15 +288,22 @@ export default {
       role:this.$route.query.role,
       openid:this.$route.query.openid,
       header: '课程表',
-      tableData: [
-      ],
+      tableData: [],
       leave_data:[],
-      isShow:false
+      isShow:false,
+      gridData: [],
+      dialogFormVisible: false,
+      allstudents:[],
+      searchsubject:' 全科目',
+      state:'',
+      class_select:'',
+      student_select:''
     }
   },
 
   created () {
     this.getTimetable();
+    this.getAllStudents();
   },
 
   methods: {
@@ -156,22 +341,176 @@ export default {
           }
       } 
       that.tableData.push(json)
-      console.log(that.tableData)
+      // console.log(that.tableData)
     },
 
-    chooseLesson (dayofweek,subject,class_number,duration,chooselesson) {
-      let that = this
-      let weekday = '星期' + dayofweek
-      let inputdefault = weekday+ ',' + subject + ',' + class_number + ',' + duration
-      console.log(that.openid,inputdefault,chooselesson)
-      let param ={
-        openid: that.openid,
-        inputdefault: inputdefault,
-        chooselesson: chooselesson  
+    async chooseLesson (dayofweek,subject,class_number,duration,chooselesson,index) {
+        let that = this
+        let weekday = '星期' + dayofweek
+        let inputdefault = weekday+ ',' + subject + ',' + class_number + ',' + duration
+        let param ={
+          openid: that.openid,
+          inputdefault: inputdefault,
+          chooselesson: chooselesson  
+        }
+        await HttpPost('/updateBossLessons', param)
+
+        let param_1 ={
+            studio: that.studio,
+            dayofweek: dayofweek,
+            subject: that.subject,
+            openid: that.openid
+        }
+        const leave = await HttpPost('/getArrangement', param_1)
+        let leave_data = leave.data
+        let status = leave_data[0].chooseLesson
+        that.tableData[0]['week'+dayofweek][index].chooseLesson = status
+    },
+
+    async getStudents (dayofweek,subject,class_number,duration) {
+      let that = this;
+      let weekDay = parseInt(dayofweek) + parseInt(1);
+      if(dayofweek==7){
+          weekDay=1
       }
-      const res = HttpPost('/updateBossLessons', param)
-      console.log(res)
-      that.getTimetable()
+
+      let param ={
+        studio:that.studio,
+        weekDay:weekDay,
+        duration:duration,
+        class_number:class_number,
+        subject:subject,
+      }
+      const students = await HttpPost('/getScheduleDetail', param)
+      let students_data = students.data;
+      console.log(students_data)
+      that.gridData = []
+      for(var i in students_data){
+        let json={}
+        let student_name = students_data[i].student_name
+        let id = students_data[i].id
+        json.student_name = student_name
+        json.id = id
+        that.gridData.push(json)
+      }
+      console.log(that.gridData)
+    },
+
+    deleteRow (index, gridData) {
+      const id = gridData[index].id
+      console.log(id)
+      console.log(this.studio)
+      console.log(this.role)
+      let param ={
+          studio:this.studio,
+          id:id,
+          role:this.role,
+          openid:this.openid
+        }
+      let res = HttpPost("/deleteSchedule",param)
+      res.then(res => {
+          console.log(res.data)
+          if(res.data == 1){
+            this.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+            this.getTimetable()
+          }else {
+            this.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+          }
+      })
+      
+    },
+
+    createFilter(queryString) {
+      return (list) => {
+        return (list.student_name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+
+    querySearch(queryString,cb) {
+      let that = this;      
+      try {
+        var list = []
+        for(var i in that.allstudents){
+          let json ={}
+          let student_name = that.allstudents[i].student_name
+          let subject = that.allstudents[i].subject
+          if (subject == this.searchsubject){
+            json.student_name = student_name
+            list.push(json)
+          }
+        }
+        var results = queryString ? list.filter(this.createFilter(queryString)) : list;
+        // 调用 callback 返回建议列表的数据
+        cb(results);
+      } catch (error) {
+        that.$message({
+        message: '该学生未报该科目',
+        type: 'warning'
+      });
+      }      
+    },
+
+    async getAllStudents () {
+      let that = this;
+      let param ={
+        studio:that.studio,
+        student_name:'all',
+        subject:'全科目'
+      }
+      console.log(param)
+      const students = await HttpPost('/getLesson', param)
+      let students_data = students.data;
+      console.log(students_data)
+      that.allstudents = []
+      for(var i in students_data){
+        let json={}
+        let student_name = students_data[i].student_name
+        let subject = students_data[i].subject
+        json.student_name = student_name
+        json.subject = subject
+        that.allstudents.push(json)
+      }
+      console.log(that.allstudents)
+
+    },
+
+    dialogFunction (dayofweek,subject,class_number,duration) {
+        this.searchsubject = subject
+        this.dialogFormVisible = true
+        this.class_select = '星期'+dayofweek + ',' + class_number + ',' + duration + ',' + subject
+        console.log(this.class_select)
+    },
+
+    handleSelect(item) {
+      console.log(item);
+      const subject = item.subject
+      const student_name = item.student_name
+      this.state = student_name
+      this.student_select = student_name
+    },
+
+  
+    async arrangeClass () {
+      let that = this;
+      that.dialogFormVisible = false
+      let param ={
+        student_name: that.student_select,
+        class_select: that.class_select,
+        studio:that.studio,
+        status:'1'
+      }
+      await HttpPost('/arrangeClass', param)
+      that.$message({
+        message: '排课成功',
+        type: 'success'
+      });
+      this.getTimetable()
     },
 
     goOff () {
@@ -222,10 +561,23 @@ export default {
   margin-top: 25px;
 }
 
+.t_detail{
+  border-radius: 3rem;
+  width: 60px;
+  height: 25px;
+  font-size: small;
+  margin-left: 25%;
+  justify-content: center;
+  display: flex;
+}
+
 .t_choose text {
   color: white;
 }
 
+.test{
+  color:rgba(33, 31, 160, 0.843) ;
+}
 
 
 </style>

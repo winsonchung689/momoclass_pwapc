@@ -5,7 +5,6 @@
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
       
-
       <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
         <div class="covers" :style="{display:MinDisplay}">
             <div class="cover" v-for="(img,index) in item.images" :key='img'>
@@ -23,6 +22,14 @@
           <div>老师点评: {{ item.comment }}</div>
           <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
         </div>
+      </div>
+      <div style="display: flex;justify-content: center;">
+        <el-pagination
+          small
+          layout="prev, pager, next"
+          :total="50"
+          @current-change="handleCurrentChange">
+        </el-pagination>
       </div>
 
     </div>
@@ -47,20 +54,21 @@ export default {
       MinDisplay:'flex',
       ShowIndex:0,
       display: 'none',
+      page:1
     }
   },
 
   created () {
-    this.getGrowthRecord()
+    this.getGrowthRecord(this.page)
   },
 
   methods: {
-    async getGrowthRecord () {
+    async getGrowthRecord (page) {
       let that = this;
       let param ={
           studio:that.studio,
           student_name:that.student_name,
-          page:1
+          page:page
         }
       const growth = await HttpPost('/getGrowthRecord', param)
       let growth_data = growth.data;
@@ -101,9 +109,15 @@ export default {
 
     select(i){
         this.ShowIndex=i;
+    },
 
+    handleCurrentChange (val) {
+      console.log(val)
+      this.page = val
+      this.getGrowthRecord(this.page)
 
     }
+
   }
 
 }
