@@ -13,7 +13,7 @@
                   <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                   <div class="text"> {{ item.duration }} </div>
                   <div class="text"> 报名: {{ item.classes_count }} </div>
-                  <div class="t_choose">老师选课</div>
+                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -25,6 +25,7 @@
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -36,6 +37,7 @@
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -47,6 +49,7 @@
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -58,6 +61,7 @@
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -69,6 +73,7 @@
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -81,6 +86,7 @@
                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                  <div class="text"> {{ item.duration }} </div>
                  <div class="text"> 报名: {{ item.classes_count }} </div>
+                 <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson)">{{ item.chooseLesson }}</div>
               </div>
             </div>
           </template>
@@ -153,6 +159,21 @@ export default {
       console.log(that.tableData)
     },
 
+    chooseLesson (dayofweek,subject,class_number,duration,chooselesson) {
+      let that = this
+      let weekday = '星期' + dayofweek
+      let inputdefault = weekday+ ',' + subject + ',' + class_number + ',' + duration
+      console.log(that.openid,inputdefault,chooselesson)
+      let param ={
+        openid: that.openid,
+        inputdefault: inputdefault,
+        chooselesson: chooselesson  
+      }
+      const res = HttpPost('/updateBossLessons', param)
+      console.log(res)
+      that.getTimetable()
+    },
+
     goOff () {
       this.$router.go(-1);
     },
@@ -191,14 +212,18 @@ export default {
 
 .t_choose{
   border-radius: 3rem;
-  background-color: rgb(132, 132, 224);
+  background-color: rgb(221, 232, 184);
   width: 60px;
-  height: 40px;
+  height: 25px;
   font-size: small;
   margin-left: 25%;
   justify-content: center;
   display: flex;
   margin-top: 25px;
+}
+
+.t_choose text {
+  color: white;
 }
 
 
