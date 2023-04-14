@@ -13,6 +13,7 @@
                   <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                   <div class="text"> {{ item.duration }} </div>
                   <div class="text"> 报名: {{ item.classes_count }} </div>
+                  <div class="t_choose">老师选课</div>
               </div>
             </div>
           </template>
@@ -186,6 +187,18 @@ export default {
   border-radius: 5%;
   height: 180px;
   margin-bottom: 20px;
+}
+
+.t_choose{
+  border-radius: 3rem;
+  background-color: rgb(132, 132, 224);
+  width: 60px;
+  height: 10px;
+  font-size: small;
+  margin-left: 25%;
+  justify-content: center;
+  display: flex;
+  margin-top: 25px;
 }
 
 

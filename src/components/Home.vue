@@ -9,7 +9,7 @@
 
     <h2 @click="$router.push('/Login')">{{ hello }}</h2>
 
-    <div style="display: flex;justify-content: center;">
+    <div style="display: flex;justify-content: center;margin-bottom: 5px;">
       <div class="today">
         <h3>{{ today }}  {{ today_season }}</h3>
         <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
@@ -21,24 +21,43 @@
         <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
         <swiper :options="swiperOption" v-if="images.length > 1" class="banner-swiper-container swiper-container">
           <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-            <div>
-              <div>
-                <img :src="item.img" alt="" style="border-radius: 5%; scale: 0.9;">
+            
+            <div @click="click(item.url)" style="display: flex;justify-content: center; flex-direction: row;">
+              <div style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
+                <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div>
               </div>
-              <div style="display: flex;justify-content: center;margin-bottom: 15px;">
-                <button @click="click(item.url)"> {{ item.name }}</button>
+              <div style="width: 80%;">
+                <img :src="item.img" alt="" style="border-radius: 0rem; scale: 1;">
               </div>
             </div>
+
           </swiper-slide>
         </swiper>
       </div>
     </div>
+
+    <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
+
+    <div v-for="(item ,index) in schedule_data" :key="index">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span style="font-weight: bolder;color: #767e69;font-size: medium;margin-top: 5px;">科目: {{ item.subject }}</span>
+          <el-button @click="calender(item.subject)" style="float: right;border-color: white; " type="text">签到</el-button>
+        </div>
+        <div style="font-weight: bolder;color: #767e69;font-size: medium;">班级: {{ item.class_number }}</div>
+        <div style="font-weight: bolder;color: #767e69;font-size: medium;">上课时间: {{ item.duration }}</div>
+        <div style="font-weight: bolder;color: #767e69;font-size: medium;">人数: {{ item.classes_count }}</div>
+        <div style="font-weight: bolder;color: #767e69;font-size: medium;">已签到: {{ item.sign_count }}</div>
+      </el-card>
+    </div>
+     
 
   </div>
 </template>
 
 <script>
 import { HttpGet } from '@/api'
+import { HttpPost } from '@/api'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
@@ -92,7 +111,10 @@ export default {
       mode: '游客模式',
       hello:'去登陆 👉',
       diff:0,
-      startY: 0
+      startY: 0,
+      weekday:'',
+      date:'',
+      schedule_data:[]
     }
   },
   created () {
@@ -102,12 +124,15 @@ export default {
 
     async getUser () {
       let that = this
-
       const date = new Date
       const year = date.getFullYear()
       const month = date.getMonth()+1
       const day = date.getDate()
+      const weekday = date.getDay()
       that.today = year+'年'+month+'月'+day+'日'
+      that.date = year+'-'+month+'-'+day
+      
+      that.weekday = weekday
 
       let num = parseInt(month/4)
       console.log(that.today,num)
@@ -136,6 +161,22 @@ export default {
       }else {
         that.mode = '未登录'
       }
+
+      console.log(that.studio,that.weekday,that.date,that.openid)
+
+
+      let param ={
+          studio:that.studio,
+          dayofweek:that.weekday,
+          date:that.date,
+          openid:that.openid,
+          subject: that.subject
+        }
+      const schedule = await HttpPost('/getArrangement', param)
+      let schedule_data = schedule.data;
+      console.log(schedule_data)
+      that.schedule_data = schedule_data
+
     },
 
     click (url) {
@@ -162,9 +203,11 @@ export default {
         type: 'success'
       });
       }
-    
-},
+    },
 
+    calender (subject) {
+      this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+    },
 
   }
 }
@@ -201,17 +244,6 @@ h3 {
   margin-left: 20px;
 }
 
-button {
-  font-size: 16px;
-  padding: 0.75em 2em;
-  border-radius: 2em;
-  display: inline-block;
-  color: #fff;
-  background-color: #4fc08d;
-  transition: all 0.15s ease;
-  box-sizing: border-box;
-  border: 1px solid #4fc08d;
-}
 
 header {
   padding: 0 20px;
@@ -224,14 +256,6 @@ header {
   z-index: 99;
 }
 
-.header-mid-name {
-  flex: 1;
-  text-align: center;
-  color: white;
-  font-size: medium;
-  justify-content: center;
-}
-
 .avatar {
   width: 90%;
   display: flex;
@@ -241,20 +265,9 @@ header {
   
 }
 
-.welcome {
-  margin-top: 5px;
-  font-weight: bolder;
-  font-size: small;
-  color: #e7e9def1;
-}
-
 .banner {
   width: 100%;
   /* height: 2.9rem; */
-}
-
-.banner_bg {
-  width: 100%;
 }
 
 .banner_wrap {
@@ -298,11 +311,23 @@ header {
   background: #ffffff;
 }
 
-.scroll-box {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  /*height: 100vh;*/
-  overflow: hidden;
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
 }
+
+.clearfix:after {
+  clear: both
+}
+
+.box-card {
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+text{
+  font-weight: bolder;color: #767e69;font-size: medium;
+}
+
 </style>
