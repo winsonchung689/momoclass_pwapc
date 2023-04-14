@@ -17,7 +17,7 @@
             <div class="name">{{ item.student_name }}</div>
           </template>
         </el-autocomplete>
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
           <el-button type="primary" @click="arrangeClass()">确 定</el-button>
         </div>
@@ -52,7 +52,7 @@
                       </el-table>
                       <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
               </div>
@@ -85,9 +85,9 @@
                         </template>
                       </el-table-column>
                       </el-table>
-                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
               </div>
@@ -120,9 +120,9 @@
                         </template>
                       </el-table-column>
                       </el-table>
-                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
               </div>
@@ -155,9 +155,9 @@
                         </template>
                       </el-table-column>
                       </el-table>
-                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
                  
               </div>
@@ -190,9 +190,9 @@
                         </template>
                       </el-table-column>
                       </el-table>
-                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
               </div>
@@ -225,9 +225,9 @@
                         </template>
                       </el-table-column>
                       </el-table>
-                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
               </div>
             </div>
@@ -260,9 +260,9 @@
                         </template>
                       </el-table-column>
                       </el-table>
-                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" small style="font-size: small;color:rgba(33, 31, 160, 0.843);font-weight: bolder;">明细</el-button>
+                      <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
                     </el-popover>
-                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration)">排课</el-button>
+                    <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
               </div>
@@ -297,7 +297,9 @@ export default {
       searchsubject:' 全科目',
       state:'',
       class_select:'',
-      student_select:''
+      student_select:'',
+      week_select:'',
+      index_select:''
     }
   },
 
@@ -355,16 +357,22 @@ export default {
         }
         await HttpPost('/updateBossLessons', param)
 
-        let param_1 ={
+        let res = await that .getArrangement(dayofweek)
+        let status = res.chooseLesson
+        that.tableData[0]['week'+dayofweek][index].chooseLesson = status
+    },
+
+    async getArrangement (dayofweek) {
+      let that = this
+      let param_1 ={
             studio: that.studio,
             dayofweek: dayofweek,
             subject: that.subject,
             openid: that.openid
         }
         const leave = await HttpPost('/getArrangement', param_1)
-        let leave_data = leave.data
-        let status = leave_data[0].chooseLesson
-        that.tableData[0]['week'+dayofweek][index].chooseLesson = status
+        let leave_data = leave.data[0]
+        return leave_data
     },
 
     async getStudents (dayofweek,subject,class_number,duration) {
@@ -393,7 +401,7 @@ export default {
         json.id = id
         that.gridData.push(json)
       }
-      console.log(that.gridData)
+      // console.log(that.gridData)
     },
 
     deleteRow (index, gridData) {
@@ -434,26 +442,25 @@ export default {
 
     querySearch(queryString,cb) {
       let that = this;      
-      try {
-        var list = []
-        for(var i in that.allstudents){
-          let json ={}
-          let student_name = that.allstudents[i].student_name
-          let subject = that.allstudents[i].subject
-          if (subject == this.searchsubject){
-            json.student_name = student_name
-            list.push(json)
-          }
+      var list = []
+      for(var i in that.allstudents){
+        let json ={}
+        let student_name = that.allstudents[i].student_name
+        let subject = that.allstudents[i].subject
+        if (subject == this.searchsubject){
+          json.student_name = student_name
+          list.push(json)
         }
-        var results = queryString ? list.filter(this.createFilter(queryString)) : list;
-        // 调用 callback 返回建议列表的数据
-        cb(results);
-      } catch (error) {
+      }
+      if(list.size == 0){
         that.$message({
-        message: '该学生未报该科目',
-        type: 'warning'
-      });
-      }      
+          message: '该学生未报该科目',
+          type: 'warning'
+        });
+      }
+      var results = queryString ? list.filter(this.createFilter(queryString)) : list;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
     },
 
     async getAllStudents () {
@@ -480,9 +487,11 @@ export default {
 
     },
 
-    dialogFunction (dayofweek,subject,class_number,duration) {
+    dialogFunction (dayofweek,subject,class_number,duration,index) {
         this.searchsubject = subject
         this.dialogFormVisible = true
+        this.week_select = dayofweek
+        this.index_select = index
         this.class_select = '星期'+dayofweek + ',' + class_number + ',' + duration + ',' + subject
         console.log(this.class_select)
     },
@@ -510,7 +519,10 @@ export default {
         message: '排课成功',
         type: 'success'
       });
-      this.getTimetable()
+
+      let res = await that .getArrangement(that.week_select)
+      let classes_count = res.classes_count
+      that.tableData[0]['week'+that.week_select][that.index_select].classes_count = classes_count
     },
 
     goOff () {
