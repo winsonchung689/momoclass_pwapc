@@ -16,20 +16,27 @@
       </el-calendar>
       </div>
 
-      <el-dialog :title="leave_student" :visible.sync="dialogFormVisible">
-
-        <el-switch
-          style="display: block"
-          v-model="leave_value"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-text="请假"
-          inactive-text="旷课">
-        </el-switch>
+      <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 400px">
+        <div v-if="isLeave">
+          <el-switch
+            style="display: block"
+            v-model="leave_value"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="请假"
+            inactive-text="旷课">
+          </el-switch>
+        </div>
+        <div v-if="isSignIn">
+          <template>
+            <el-input-number v-model="class_count" :precision="2" :step="0.1" :max="10" step-strictly></el-input-number>
+          </template>
+        </div>
+        
         <el-input v-model="mark_leave" placeholder="请输入备注"></el-input>
         <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addLeave()">确 定</el-button>
+          <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -39,9 +46,13 @@
                 <div v-for="(item,index) in props.row.children" :key="index">
                   <div style="display: flex;flex-direction: row;margin-left: 20px;justify-content: left;margin-bottom: 20px;">
                     <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
-                    <el-button @click="dialogFunction(item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
-                    <el-button type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
-                    <el-button type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
+                    <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
+
+
+                    <el-button @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
+
+
+                    <el-button @click="dialogFunction(item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
                   </div>
                 </div>
             </template>
@@ -75,14 +86,18 @@ export default {
       date_time: '',
       dialogFormVisible: false,
       leave_value:true,
-      leave_student:'无名',
+      leave_student:'',
       leave_duration:'',
       leave_type:'',
       mark_leave:'',
       leave_subject:'',
       index1:'',
-      index2:''
-      
+      index2:'',
+      isLeave:false,
+      isSignIn:false,
+      class_count:0,
+      sign_class_number:'',
+      button:''
     }
   },
 
@@ -178,6 +193,7 @@ export default {
               const comment_status = details_data[i].comment_status
               const subject = details_data[i].subject
               const duration = details_data[i].duration
+              const class_number = details_data[i].class_number
 
               json_detail.student_name = student_name
               json_detail.leave = leave
@@ -186,6 +202,7 @@ export default {
               json_detail.id = id
               json_detail.subject = subject
               json_detail.duration = duration
+              json_detail.class_number = class_number
               children.push(json_detail)
             }
             json.children = children
@@ -195,26 +212,50 @@ export default {
       console.log(that.tableData)
     },
 
-    dialogFunction (student_name,subject,leave,duration,index1,index2) {
+    dialogFunction (type,sign_up,class_number,student_name,subject,leave,duration,index1,index2) {
+      let that = this
+      that.isLeave = false
+      that.isSignIn = false
       console.log(leave,index1,index2)
-      if(leave == '缺席'){
-        this.dialogFormVisible = true
-        this.leave_student = student_name
-        this.leave_subject = subject
-        this.leave_duration = duration
-        this.index1 = index1
-        this.index2 = index2
-      }else{
-        this.$message({
-          message: '学生' + leave,
-          type: 'warning'
-        });
+      if(type =='leave'){
+        if(leave == '缺席'){
+          that.button = 'leave'
+          that.dialogFormVisible = true
+          that.isLeave = true
+          that.leave_student = student_name
+          that.leave_subject = subject
+          that.leave_duration = duration
+          that.index1 = index1
+          that.index2 = index2
+        }else{
+          that.$message({
+            message: '学生' + leave,
+            type: 'warning'
+          });
+        }
+      }else if(type == 'signin'){
+        if(sign_up == '签到'){
+          that.button = 'signin'
+          that.dialogFormVisible = true
+          that.isSignIn = true
+          that.leave_student = student_name
+          that.leave_subject = subject
+          that.leave_duration = duration
+          that.sign_class_number = class_number
+          that.index1 = index1
+          that.index2 = index2
+        }else{
+          that.$message({
+            message: '学生' + sign_up,
+            type: 'warning'
+          });
+        }
       }
+      
     },
 
     async addLeave () {
       let that = this;
-      that.dialogFormVisible = false
       if(that.leave_value == true){
         that.leave_type = '请假'
       }else{
@@ -254,6 +295,57 @@ export default {
       let leave_type_get = data.leave_type
       that.tableData[that.index1].children[that.index2].leave = '已'+leave_type_get
       
+
+    },
+
+    async signIn () {
+      let that = this
+      if(that.mark_leave.trim().length == 0  || that.mark_leave == null){
+        that.mark_leave = '无备注'
+      }
+
+      let param ={
+        student_name:that.leave_student,
+        studio:that.studio,
+        date_time:that.date_time,
+        duration:that.leave_duration,
+        class_number:that.sign_class_number,
+        subject:that.leave_subject,
+        openid:that.openid,
+        mark:that.mark_leave,
+        class_count:that.class_count,
+      }
+
+      console.log(param)
+      await HttpPost('/signUpSchedule', param)
+      that.$message({
+        message: '操作成功',
+        type: 'success'
+      });
+
+      let param1 = {
+        date_time: that.date_time,
+        studio:that.studio,
+        student_name:that.leave_student,
+        duration:that.leave_duration,
+      }
+      const leave_verify = await HttpPost('/getSignUpByDateDuration', param1)
+      let data = leave_verify.data[0]
+      console.log(data)
+      let id = data.id
+      if(id){
+        that.tableData[that.index1].children[that.index2].sign_up = '已签到'
+      }
+    },
+
+    async confirm_buttom () {
+      let that = this
+      that.dialogFormVisible = false
+      if (that.button == 'leave'){
+        await that.addLeave ()
+      }else if (that.button == 'signin'){
+        await that.signIn ()
+      } 
 
     },
 
