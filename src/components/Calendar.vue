@@ -216,6 +216,8 @@ export default {
       let that = this
       that.isLeave = false
       that.isSignIn = false
+      that.mark_leave = ''
+      that.class_count = 0
       console.log(leave,index1,index2)
       if(type =='leave'){
         if(leave == '缺席'){

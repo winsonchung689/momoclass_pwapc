@@ -31,6 +31,9 @@
               <div>
                 <el-button @click.native.prevent="deleteAll()" type="text" size="small" style="font-size:x-small">清空</el-button>
               </div>
+              <div>
+                <el-button @click.native.prevent="cancel(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">取消</el-button>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -89,6 +92,7 @@ export default {
           const count = signin_data[i].count
           const status = signin_data[i].status
           const id = signin_data[i].id
+          const subject = signin_data[i].subject
 
           var json ={};
           json.rank = rank
@@ -100,6 +104,7 @@ export default {
           json.count = count
           json.status = status
           json.id = id
+          json.subject = subject
           that.tableData.push(json)
       }
 
@@ -165,6 +170,28 @@ export default {
       })
 
     },
+
+    async cancel (index, tableData) {
+      let that = this
+      let data = tableData[index]
+           
+      let param ={
+        id:data.id,
+        role:that.role,
+        studio: that.studio,
+        openid:that.openid,
+        student_name:data.student_name,
+        count:data.count,
+        subject:data.subject
+      }
+
+      await HttpPost("/cancelSignUp",param)
+      this.$message({
+        message: '取消成功',
+        type: 'success'
+      })
+      await that.getSignInRecord()
+    }
 
   }
 
