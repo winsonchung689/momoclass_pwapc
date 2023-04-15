@@ -5,7 +5,7 @@
         <div style="font-size: medium;margin-left: 40%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
 
-      <div style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
+      <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
         <div class="container">
           <div class="item" @click="timeTable(subject)">
             <div class="content">
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div style="justify-content: center;display: flex;margin-bottom: 15px;">
+      <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;">
         <div class="container">
           <div class="item" @click="school(subject)">
             <div class="content">
@@ -56,14 +56,23 @@ export default {
       studio:this.$route.query.studio,
       role:this.$route.query.role,
       openid:this.$route.query.openid,
-      header: '工作台'
+      header: '工作台',
+      isBoss:false
     }
   },
 
   created () {
+    this.onload()
   },
 
   methods: {
+
+    onload () {
+      let that = this
+      if(that.role=='boss'){
+        that.isBoss = true
+      }
+    },
 
     timeTable (subject) {
       this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
