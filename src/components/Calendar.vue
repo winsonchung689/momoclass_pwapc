@@ -47,12 +47,9 @@
                   <div style="display: flex;flex-direction: row;margin-left: 20px;justify-content: left;margin-bottom: 20px;">
                     <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
                     <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
-
-
                     <el-button @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
 
-
-                    <el-button @click="dialogFunction(item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
+                    <el-button @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
                   </div>
                 </div>
             </template>
@@ -64,6 +61,28 @@
         <el-table-column prop="duration" label="时间段" width="120">
         </el-table-column>
       </el-table>
+
+
+
+
+      <!-- <div>
+        <el-upload
+          list-type="picture-card"
+          :file-list="fileList"
+          :auto-upload="false">
+            <i slot="default" class="el-icon-plus"></i>
+            <div slot="file" slot-scope="{file}">
+              <img
+                class="el-upload-list__item-thumbnail"
+                :src="file.url" alt=""
+              >
+            </div>
+        </el-upload>
+        <el-button style="margin-left: 10px;" size="small" type="success" @click="beforeAvatarUpload">上传到服务器</el-button>
+
+
+
+      </div> -->
 
     </div>
 </template>
@@ -97,7 +116,8 @@ export default {
       isSignIn:false,
       class_count:0,
       sign_class_number:'',
-      button:''
+      button:'',
+      fileList:[]
     }
   },
 
@@ -340,6 +360,28 @@ export default {
       }
     },
 
+    async comment () {
+      let that = this
+      if(that.mark_leave.trim().length == 0  || that.mark_leave == null){
+        that.mark_leave = '无备注'
+      }
+
+      let param ={
+        student_name:that.leave_student,
+        studio:that.studio,
+        date_time:that.date_time,
+        duration:that.leave_duration,
+        class_number:that.sign_class_number,
+        subject:that.leave_subject,
+        openid:that.openid,
+        mark:that.mark_leave,
+        class_count:that.class_count,
+      }
+
+      console.log(param)
+      await HttpPost('/signUpSchedule', param)
+    },
+
     async confirm_buttom () {
       let that = this
       that.dialogFormVisible = false
@@ -351,6 +393,39 @@ export default {
 
     },
 
+    handleRemove (file) {
+      const url = "https://www.momoclasss.xyz:443/push_photo"
+
+      console.log(file)
+    },
+
+    // handleImageSuccess (res, file,fileList) {
+    //   let imageUrl = URL.createObjectURL(file.raw);
+    //   console.log(imageUrl)
+      
+    // },
+
+
+    handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+    },
+
+    beforeAvatarUpload() {
+      console.log(this.fileList)
+    },
+
+
+    async upLoadFile (file) {
+      let that = this
+      // const url = "https://www.momoclasss.xyz:443/push_photo"
+
+      let param ={
+        file: file
+      }
+      await HttpPost('/push_photo', param)
+
+    },
+    
     goOff () {
       this.$router.go(-1);
     },
