@@ -16,6 +16,22 @@
       </el-calendar>
       </div>
 
+      <el-dialog :title="leave_student" :visible.sync="dialogFormVisible">
+
+        <el-switch
+          style="display: block"
+          v-model="leave_value"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          active-text="请假"
+          inactive-text="旷课">
+        </el-switch>
+        <el-input v-model="mark_leave" placeholder="请输入备注"></el-input>
+        <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addLeave()">确 定</el-button>
+        </div>
+      </el-dialog>
 
       <el-table :data="tableData" style="width: 100%;font-size: small;">
         <el-table-column type="expand">
@@ -23,7 +39,7 @@
                 <div v-for="(item,index) in props.row.children" :key="index">
                   <div style="display: flex;flex-direction: row;margin-left: 20px;justify-content: left;margin-bottom: 20px;">
                     <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
-                    <el-button type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
+                    <el-button @click="dialogFunction(item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
                     <el-button type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
                     <el-button type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
                   </div>
@@ -56,7 +72,17 @@ export default {
       tableData: [],
       isShow:false,
       value: new Date(),
-      date_time: ''
+      date_time: '',
+      dialogFormVisible: false,
+      leave_value:true,
+      leave_student:'无名',
+      leave_duration:'',
+      leave_type:'',
+      mark_leave:'',
+      leave_subject:'',
+      index1:'',
+      index2:''
+      
     }
   },
 
@@ -150,21 +176,84 @@ export default {
               const leave = details_data[i].leave
               const sign_up = details_data[i].sign_up
               const comment_status = details_data[i].comment_status
+              const subject = details_data[i].subject
+              const duration = details_data[i].duration
 
               json_detail.student_name = student_name
               json_detail.leave = leave
               json_detail.sign_up = sign_up
               json_detail.comment_status = comment_status
               json_detail.id = id
+              json_detail.subject = subject
+              json_detail.duration = duration
               children.push(json_detail)
             }
             json.children = children
-
             that.tableData.push(json)
           }
       }
-
       console.log(that.tableData)
+    },
+
+    dialogFunction (student_name,subject,leave,duration,index1,index2) {
+      console.log(leave,index1,index2)
+      if(leave == '缺席'){
+        this.dialogFormVisible = true
+        this.leave_student = student_name
+        this.leave_subject = subject
+        this.leave_duration = duration
+        this.index1 = index1
+        this.index2 = index2
+      }else{
+        this.$message({
+          message: '学生' + leave,
+          type: 'warning'
+        });
+      }
+    },
+
+    async addLeave () {
+      let that = this;
+      that.dialogFormVisible = false
+      if(that.leave_value == true){
+        that.leave_type = '请假'
+      }else{
+        that.leave_type = '旷课'
+      }
+
+      if(that.mark_leave.trim().length == 0  || that.mark_leave == null){
+        that.mark_leave = '无备注'
+      }
+      console.log(that.leave_type,that.leave_subject,this.leave_student,this,this.leave_duration,that.mark_leave)
+      
+      let param ={
+        student_name: that.leave_student,
+        studio:that.studio,
+        date_time:that.date_time,
+        duration: that.leave_duration,
+        leave_type:that.leave_type,
+        mark_leave:that.mark_leave,
+        subject:that.leave_subject
+      }
+      await HttpPost('/leaveRecord', param)
+      that.$message({
+        message: '操作成功',
+        type: 'success'
+      });
+
+
+      let param1 = {
+        date_time: that.date_time,
+        studio:that.studio,
+        student_name:that.leave_student,
+        duration:that.leave_duration,
+      }
+      const leave_verify = await HttpPost('/getLeaveByDateDuration', param1)
+      let data = leave_verify.data[0]
+      console.log(data)
+      let leave_type_get = data.leave_type
+      that.tableData[that.index1].children[that.index2].leave = '已'+leave_type_get
+      
 
     },
 
