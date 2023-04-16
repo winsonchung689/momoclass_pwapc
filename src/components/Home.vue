@@ -114,7 +114,8 @@ export default {
       startY: 0,
       weekday:'',
       date:'',
-      schedule_data:[]
+      schedule_data:[],
+      comment_style:''
     }
   },
   created () {
@@ -152,6 +153,8 @@ export default {
       that.avatarurl = users.data[0].avatarurl
       that.role = users.data[0].role
       that.subject = users.data[0].subjects
+      that.comment_style = users.data[0].comment_style
+      
       if('boss' == that.role){
         that.mode = '老师模式'
       }else if('client' == that.role){
@@ -180,7 +183,7 @@ export default {
     },
 
     click (url) {
-      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject } })
+      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style } })
     },
 
     touchStart(e) {

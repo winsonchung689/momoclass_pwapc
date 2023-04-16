@@ -16,6 +16,7 @@ const Timetable = () => import('@/components/Timetable')
 const Calendar = () => import('@/components/Calendar')
 const School = () => import('@/components/School')
 const Me = () => import('@/components/Me')
+const CommentCenter = () => import('@/components/CommentCenter')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -85,6 +86,11 @@ export default new Router({
       path: '/me',
       name: 'Me',
       component: Me
+    },
+    {
+      path: '/commentcenter',
+      name: 'CommentCenter',
+      component: CommentCenter
     }
   ]
 })

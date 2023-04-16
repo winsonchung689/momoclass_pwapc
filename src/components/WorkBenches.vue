@@ -38,6 +38,14 @@
             </div>
           </div>
 
+          <div class="item" @click="commentCenter(subject)">
+            <div class="content">
+              <div style="display: flex;justify-content: center;">
+                <img style="width: 40px;height: 40px;" src="@/assets/comment.png" alt="">
+              </div>
+              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -56,6 +64,7 @@ export default {
       studio:this.$route.query.studio,
       role:this.$route.query.role,
       openid:this.$route.query.openid,
+      comment_style:this.$route.query.comment_style,
       header: '工作台',
       isBoss:false
     }
@@ -84,6 +93,10 @@ export default {
 
     school (subject) {
       this.$router.push({ path: '/school', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+    },
+
+    commentCenter (subject) {
+      this.$router.push({ path: '/commentcenter', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,comment_style:this.comment_style } })
     },
 
     goOff () {
