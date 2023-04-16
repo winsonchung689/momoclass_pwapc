@@ -5,7 +5,7 @@
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
 
-      <div style="height: 50%;width: 100%;">
+      <div v-if="isCalender" style="height: 50%;width: 100%;">
         <el-calendar v-model="value">
         <template slot="dateCell" slot-scope="{data}">
         <!--自定义内容-->
@@ -63,68 +63,68 @@
       </el-table>
 
 
-      <div v-if="isComment">
-      <div>
-        <el-button type="text"  @click="back">取消</el-button>
-      </div>
-      <el-upload
-        list-type="picture-card"
-        style="display: inline"
-        :auto-upload="false"
-        :on-change="handleChange"
-        :file-list="fileList"
-        :multiple="true"
-        :type="file"
-        action="#">
-          <i slot="default" class="el-icon-plus"></i>
-          <div slot="file" slot-scope="{file}">
-            <img
-              class="el-upload-list__item-thumbnail"
-              :src="file.url" alt=""
-            >
-          </div>
-      </el-upload>
-      <div>学生名: {{ leave_student }}</div>
-      <div>时间段: {{ leave_duration }}</div>
-      <el-input
-        placeholder="请输入课堂名称"
-        v-model="class_name"
-        clearable>
-      </el-input>
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4}"
-        placeholder="请输入课堂目标"
-        v-model="class_target">
-      </el-input>
-      <div>
-        积极度:
-        <el-rate
-          v-model="positive"
-          show-text>
-        </el-rate>
-      </div>
-      <div>
-        纪律性:
-        <el-rate
-          v-model="discipline"
-          show-text>
-        </el-rate>
-      </div>
-      <div>
-        开心值:
-        <el-rate
-          v-model="happiness"
-          show-text>
-        </el-rate>
-      </div>
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4}"
-        placeholder="请输入老师点评"
-        v-model="class_comment">
-      </el-input>
-      <el-button type="primary" @click="comment">提交</el-button>
+      <div v-if="isComment" style="margin-bottom: 30px;">
+        <div>
+          <el-button type="text"  @click="back">取消</el-button>
+        </div>
+        <el-upload
+          list-type="picture-card"
+          style="display: inline"
+          :auto-upload="false"
+          :on-change="handleChange"
+          :file-list="fileList"
+          :multiple="true"
+          :type="file"
+          action="#">
+            <i slot="default" class="el-icon-plus"></i>
+            <div slot="file" slot-scope="{file}">
+              <img
+                class="el-upload-list__item-thumbnail"
+                :src="file.url" alt=""
+              >
+            </div>
+        </el-upload>
+        <div>学生名: {{ leave_student }}</div>
+        <div>时间段: {{ leave_duration }}</div>
+        <el-input
+          placeholder="请输入课堂名称"
+          v-model="class_name"
+          clearable>
+        </el-input>
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          placeholder="请输入课堂目标"
+          v-model="class_target">
+        </el-input>
+        <div>
+          积极度:
+          <el-rate
+            v-model="positive"
+            show-text>
+          </el-rate>
+        </div>
+        <div>
+          纪律性:
+          <el-rate
+            v-model="discipline"
+            show-text>
+          </el-rate>
+        </div>
+        <div>
+          开心值:
+          <el-rate
+            v-model="happiness"
+            show-text>
+          </el-rate>
+        </div>
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          placeholder="请输入老师点评"
+          v-model="class_comment">
+        </el-input>
+        <el-button type="primary" @click="comment">提交</el-button>
       </div>
 
     </div>
@@ -175,6 +175,7 @@ export default {
       class_target:'',
       class_comment:'',
       class_name:'',
+      isCalender:true
     }
   },
 
@@ -330,6 +331,7 @@ export default {
         if(comment_status == '课评'){
           that.button = 'comment'
           that.isComment = true
+          that.isCalender = false
           that.leave_student = student_name
           that.leave_subject = subject
           that.leave_duration = duration
@@ -357,6 +359,7 @@ export default {
     back () {
       let that = this
       that.isComment = false
+      that.isCalender = true
       that.uuids = []
       that.positive = 5
       that.discipline = 5
@@ -493,6 +496,7 @@ export default {
         type: 'danger'
       });
       }
+      that.isCalender = true
 
     },
 

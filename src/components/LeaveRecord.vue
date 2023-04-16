@@ -105,9 +105,6 @@ export default {
 
     deleteRow (index, tableData) {
       const id = tableData[index].id
-      console.log(id)
-      console.log(this.studio)
-      console.log(this.role)
       let param ={
           studio:this.studio,
           id:id,

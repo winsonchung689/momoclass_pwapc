@@ -24,28 +24,31 @@
           <div>
             积极度:
             <el-rate
-              :v-model="item.positive"
+              disabled
+              v-model= "item.positive"
               show-text>
             </el-rate>
           </div>
           <div>
             纪律性:
             <el-rate
-              :v-model="item.discipline"
+              disabled
+              v-model="item.discipline"
               show-text>
             </el-rate>
           </div>
           <div>
             开心值:
             <el-rate
-              :v-model="item.happiness"
+              disabled
+              v-model="item.happiness"
               show-text>
             </el-rate>
           </div>
 
           <div>老师点评: {{ item.comment }}</div>
           <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
-          <div style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
+          <div @click=deleteRow(item.id) style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
           <el-divider></el-divider>
         </div> 
       </div>
@@ -147,7 +150,33 @@ export default {
       console.log(val)
       this.page = val
       this.getComment(this.page)
-
+    },
+    
+    deleteRow (id) {
+      let that = this;
+      let param ={
+          studio:this.studio,
+          id:id,
+          role:this.role,
+          openid:this.openid
+        }
+      let res = HttpPost("/deleteComment",param)
+      res.then(res => {
+          console.log(res.data)
+          if(res.data == 1){
+            this.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+            this.getComment(this.page)
+          }else {
+            this.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+            this.getComment(this.page)
+          }
+      })
     }
 
   }
