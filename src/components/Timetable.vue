@@ -270,6 +270,60 @@
           </template>
         </el-table-column>
       </el-table>
+      
+      <div style="margin-left: 70%;">
+        <el-button @click="showAdd" type="primary">新增课程</el-button>
+      </div>
+     
+      <div v-if="isAdd">
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+      </el-select>
+      <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
+      <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
+      <!-- <div style="display: flex;flex-direction: row;">
+        <el-time-select allow-create 
+          placeholder="起始时间"
+          v-model="start_time"
+          :picker-options="{
+            start: '00:00',
+            step: '00:30',
+            end: '23:59'
+          }">
+        </el-time-select>
+        <el-time-select allow-create 
+          placeholder="结束时间"
+          v-model="end_time"
+          :picker-options="{
+            start: '00:00',
+            step: '00:30',
+            end: '23:59',
+            minTime: start_time
+          }">
+        </el-time-select>
+      </div> -->
+
+      <el-time-picker
+        value-format="HH:mm"
+        format="HH:mm"
+        is-range
+        v-model="time_value"
+        range-separator="至"
+        start-placeholder="开始时间"
+        end-placeholder="结束时间"
+        placeholder="选择时间范围">
+      </el-time-picker>
+
+      <div style="margin-left: 50%;margin-top: 10px;">
+        <el-button @click ="addArrangement" type="success" plain>确定</el-button>
+      </div>
+      
+      </div>
 
 
 
@@ -299,7 +353,37 @@ export default {
       class_select:'',
       student_select:'',
       week_select:'',
-      index_select:''
+      index_select:'',
+      options: [{
+          value: '1',
+          label: '星期一'
+        }, {
+          value: '2',
+          label: '星期二'
+        }, {
+          value: '3',
+          label: '星期三'
+        }, {
+          value: '4',
+          label: '星期四'
+        }, {
+          value: '5',
+          label: '星期五'
+        },{
+          value: '6',
+          label: '星期六'
+        },{
+          value: '7',
+          label: '星期日'
+        }],
+        isAdd:false,
+        value:'',
+        time_value: [],
+        subject_add:'',
+        start_time:'',
+        end_time:'',
+        class_number_add:'',
+        subject_add:''
     }
   },
 
@@ -373,6 +457,65 @@ export default {
         const leave = await HttpPost('/getArrangement', param_1)
         let leave_data = leave.data[0]
         return leave_data
+    },
+
+    async addArrangement () {
+      let that = this
+      console.log(that.time_value)
+      let duration = that.time_value[0] + '-' + that.time_value[1]
+      console.log(that.value,duration,that.subject_add,that.class_number_add)
+
+      if(that.value == ''){
+          that.$message({
+            message: '星期不能为空',
+            type: 'warning'
+          });
+        return
+      }
+
+      if(that.subject_add == ''){
+          that.$message({
+            message: '科目不能为空',
+            type: 'warning'
+          });
+        return
+      }
+
+      if(that.class_number_add == ''){
+          that.$message({
+            message: '班号不能为空',
+            type: 'warning'
+          });
+        return
+      }
+
+      if(that.time_value.length == 0){
+          that.$message({
+            message: '时间不能为空',
+            type: 'warning'
+          });
+        return
+      }
+
+      let param ={
+        dayofweek:that.value,
+        class_number:that.class_number_add,
+        duration:duration,
+        limits:10,
+        studio:that.studio,
+        subject:that.subject_add
+      }
+      await HttpPost('/insertArrangement', param)
+      that.$message({
+        message: '新增成功',
+        type: 'success'
+      });
+      that.getTimetable()
+      that.isAdd = false
+    },
+
+    showAdd() {
+      this.isAdd=true
     },
 
     async getStudents (dayofweek,subject,class_number,duration) {
