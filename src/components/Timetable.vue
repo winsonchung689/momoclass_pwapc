@@ -54,6 +54,10 @@
                     </el-popover>
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
+                  <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
+                
 
               </div>
             </div>
@@ -90,6 +94,10 @@
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
+                 <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
+
               </div>
             </div>
           </template>
@@ -125,6 +133,10 @@
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
+                 <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
+
               </div>
             </div>
           </template>
@@ -159,6 +171,10 @@
                     </el-popover>
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
+
+                 <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
                  
               </div>
             </div>
@@ -195,6 +211,10 @@
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
+                 <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
+
               </div>
             </div>
           </template>
@@ -229,6 +249,10 @@
                     </el-popover>
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
+
+                 <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
               </div>
             </div>
           </template>
@@ -265,6 +289,10 @@
                     <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                  </div>
 
+                 <div>
+                    <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: red;margin-top: 10px;" type="text">删除</el-button>
+                  </div>
+
               </div>
             </div>
           </template>
@@ -276,53 +304,29 @@
       </div>
      
       <div v-if="isAdd">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-      </el-select>
-      <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
-      <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
-      <!-- <div style="display: flex;flex-direction: row;">
-        <el-time-select allow-create 
-          placeholder="起始时间"
-          v-model="start_time"
-          :picker-options="{
-            start: '00:00',
-            step: '00:30',
-            end: '23:59'
-          }">
-        </el-time-select>
-        <el-time-select allow-create 
-          placeholder="结束时间"
-          v-model="end_time"
-          :picker-options="{
-            start: '00:00',
-            step: '00:30',
-            end: '23:59',
-            minTime: start_time
-          }">
-        </el-time-select>
-      </div> -->
-
-      <el-time-picker
-        value-format="HH:mm"
-        format="HH:mm"
-        is-range
-        v-model="time_value"
-        range-separator="至"
-        start-placeholder="开始时间"
-        end-placeholder="结束时间"
-        placeholder="选择时间范围">
-      </el-time-picker>
-
-      <div style="margin-left: 50%;margin-top: 10px;">
-        <el-button @click ="addArrangement" type="success" plain>确定</el-button>
-      </div>
-      
+         <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+        </el-select>
+        <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
+        <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
+        <el-time-picker
+          value-format="HH:mm"
+          format="HH:mm"
+          is-range
+          v-model="time_value"
+          range-separator="至"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
+          placeholder="选择时间范围">
+        </el-time-picker>
+        <div style="margin-left: 50%;margin-top: 10px;">
+          <el-button @click ="addArrangement" type="success" plain>确定</el-button>
+        </div>
       </div>
 
 
@@ -375,15 +379,15 @@ export default {
         },{
           value: '7',
           label: '星期日'
-        }],
-        isAdd:false,
-        value:'',
-        time_value: [],
-        subject_add:'',
-        start_time:'',
-        end_time:'',
-        class_number_add:'',
-        subject_add:''
+      }],
+      isAdd:false,
+      value:'',
+      time_value: [],
+      subject_add:'',
+      start_time:'',
+      end_time:'',
+      class_number_add:'',
+      subject_add:''
     }
   },
 
@@ -549,9 +553,6 @@ export default {
 
     deleteRow (index, gridData) {
       const id = gridData[index].id
-      console.log(id)
-      console.log(this.studio)
-      console.log(this.role)
       let param ={
           studio:this.studio,
           id:id,
@@ -646,7 +647,6 @@ export default {
       this.state = student_name
       this.student_select = student_name
     },
-
   
     async arrangeClass () {
       let that = this;
@@ -668,6 +668,38 @@ export default {
       that.tableData[0]['week'+that.week_select][that.index_select].classes_count = classes_count
     },
 
+    deleteArrangement (id,dayofweek,subject,class_number,duration) {
+      let that = this 
+      console.log(id)
+      let param ={
+          id:id,
+          studio:that.studio,
+          role:that.role,
+          openid:that.openid,
+          duration:duration,
+          weekday:dayofweek,
+          class_number:class_number,
+          subject:subject
+        }
+      let res = HttpPost("/deleteArrangement",param)
+      res.then(res => {
+          console.log(res.data)
+          if(res.data == 1){
+            this.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+            this.getTimetable()
+          }else {
+            this.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+          }
+      })
+
+    },
+
     goOff () {
       this.$router.go(-1);
     },
@@ -687,7 +719,7 @@ export default {
 .class_element_1{
   background-color: rgb(177, 245, 242);
   border-radius: 5%;
-  height: 180px;
+  height: 200px;
   margin-bottom: 20px;
 }
 
@@ -700,7 +732,7 @@ export default {
 .class_element_2{
   background-color: rgb(147, 236, 181);
   border-radius: 5%;
-  height: 180px;
+  height: 200px;
   margin-bottom: 20px;
 }
 
