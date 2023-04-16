@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
       <div style="display: flex;direction: row;margin-bottom: 5px;">
         <i class="el-icon-arrow-left" @click="goOff()"></i>
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
@@ -46,10 +46,10 @@
                 <div v-for="(item,index) in props.row.children" :key="index">
                   <div style="display: flex;flex-direction: row;margin-left: 20px;justify-content: left;margin-bottom: 20px;">
                     <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
-                    <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
-                    <el-button @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
+                    <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
+                    <el-button @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
 
-                    <el-button @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
+                    <el-button @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
                   </div>
                 </div>
             </template>
@@ -63,36 +63,79 @@
       </el-table>
 
 
+      <div v-if="isComment">
       <div>
-        <el-upload
-          list-type="picture-card"
-          style="display: inline"
-          :auto-upload="false"
-          :on-change="handleChange"
-          :file-list="fileList"
-          :multiple="true"
-          :type="file"
-          action="#">
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{file}">
-              <img
-                class="el-upload-list__item-thumbnail"
-                :src="file.url" alt=""
-              >
-            </div>
-        </el-upload>
-
-
-
+        <el-button type="text"  @click="back">取消</el-button>
+      </div>
+      <el-upload
+        list-type="picture-card"
+        style="display: inline"
+        :auto-upload="false"
+        :on-change="handleChange"
+        :file-list="fileList"
+        :multiple="true"
+        :type="file"
+        action="#">
+          <i slot="default" class="el-icon-plus"></i>
+          <div slot="file" slot-scope="{file}">
+            <img
+              class="el-upload-list__item-thumbnail"
+              :src="file.url" alt=""
+            >
+          </div>
+      </el-upload>
+      <div>学生名: {{ leave_student }}</div>
+      <div>时间段: {{ leave_duration }}</div>
+      <el-input
+        placeholder="请输入课堂名称"
+        v-model="class_name"
+        clearable>
+      </el-input>
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 4}"
+        placeholder="请输入课堂目标"
+        v-model="class_target">
+      </el-input>
+      <div>
+        积极度:
+        <el-rate
+          v-model="positive"
+          show-text>
+        </el-rate>
+      </div>
+      <div>
+        纪律性:
+        <el-rate
+          v-model="discipline"
+          show-text>
+        </el-rate>
+      </div>
+      <div>
+        开心值:
+        <el-rate
+          v-model="happiness"
+          show-text>
+        </el-rate>
+      </div>
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 4}"
+        placeholder="请输入老师点评"
+        v-model="class_comment">
+      </el-input>
+      <el-button type="primary" @click="comment">提交</el-button>
       </div>
 
     </div>
+
+    
 </template>
 
 <script>
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
-import { uploadImgToBase64 } from '@/api'
+import { HttpPostData } from '@/api'
 import { UploadFile } from '@/api'
 
 
@@ -112,7 +155,7 @@ export default {
       dialogFormVisible: false,
       leave_value:true,
       leave_student:'',
-      leave_duration:'',
+      leave_duration:'00:00-00:00',
       leave_type:'',
       mark_leave:'',
       leave_subject:'',
@@ -120,11 +163,18 @@ export default {
       index2:'',
       isLeave:false,
       isSignIn:false,
+      isComment:false,
       class_count:1,
       sign_class_number:'',
       button:'',
       fileList:[],
-      uuids:[]
+      uuids:[],
+      positive:5,
+      discipline:5,
+      happiness:5,
+      class_target:'',
+      class_comment:'',
+      class_name:'',
     }
   },
 
@@ -178,7 +228,7 @@ export default {
         }
       const lessons = await HttpPost('/getSchedule', param)
       let lessons_data = lessons.data;
-      console.log(lessons_data)
+      // console.log(lessons_data)
       that.tableData = []
       let tmp = []
       for( var i=1; i < lessons_data.length; i++ ){
@@ -206,9 +256,7 @@ export default {
               class_number:class_number.replace('(插班生)','')
             }
             const details = await HttpPost('/getScheduleByClass', param)
-            console.log(class_number)
             let details_data = details.data;
-            console.log(details_data)
             
             var children = []
             for(var i=0; i < details_data.length; i++ ){
@@ -236,16 +284,15 @@ export default {
             that.tableData.push(json)
           }
       }
-      console.log(that.tableData)
+      // console.log(that.tableData)
     },
 
-    dialogFunction (type,sign_up,class_number,student_name,subject,leave,duration,index1,index2) {
+    dialogFunction (type,sign_up,class_number,student_name,subject,leave,duration,index1,index2,comment_status) {
       let that = this
       that.isLeave = false
       that.isSignIn = false
       that.mark_leave = ''
       that.class_count = 1
-      console.log(leave,index1,index2)
       if(type =='leave'){
         if(leave == '缺席'){
           that.button = 'leave'
@@ -279,8 +326,44 @@ export default {
             type: 'warning'
           });
         }
+      }else if(type == 'comment'){
+        if(comment_status == '课评'){
+          that.button = 'comment'
+          that.isComment = true
+          that.leave_student = student_name
+          that.leave_subject = subject
+          that.leave_duration = duration
+          that.sign_class_number = class_number
+          that.index1 = index1
+          that.index2 = index2
+          that.uuids = []
+          that.positive = 5
+          that.discipline = 5
+          that.happiness = 5
+          that.class_target = ''
+          that.class_comment = ''
+          that.class_name = ''
+      
+        }else{
+          that.$message({
+            message: '学生' + comment_status,
+            type: 'warning'
+          });
+        }
       }
       
+    },
+
+    back () {
+      let that = this
+      that.isComment = false
+      that.uuids = []
+      that.positive = 5
+      that.discipline = 5
+      that.happiness = 5
+      that.class_target = ''
+      that.class_comment = ''
+      that.class_name = ''
     },
 
     async addLeave () {
@@ -294,7 +377,7 @@ export default {
       if(that.mark_leave.trim().length == 0  || that.mark_leave == null){
         that.mark_leave = '无备注'
       }
-      console.log(that.leave_type,that.leave_subject,this.leave_student,this,this.leave_duration,that.mark_leave)
+      // console.log(that.leave_type,that.leave_subject,this.leave_student,this,this.leave_duration,that.mark_leave)
       
       let param ={
         student_name: that.leave_student,
@@ -320,7 +403,6 @@ export default {
       }
       const leave_verify = await HttpPost('/getLeaveByDateDuration', param1)
       let data = leave_verify.data[0]
-      console.log(data)
       let leave_type_get = data.leave_type
       that.tableData[that.index1].children[that.index2].leave = '已'+leave_type_get
       
@@ -345,7 +427,7 @@ export default {
         class_count:that.class_count,
       }
 
-      console.log(param)
+      // console.log(param)
       await HttpPost('/signUpSchedule', param)
       that.$message({
         message: '操作成功',
@@ -358,9 +440,8 @@ export default {
         student_name:that.leave_student,
         duration:that.leave_duration,
       }
-      const leave_verify = await HttpPost('/getSignUpByDateDuration', param1)
-      let data = leave_verify.data[0]
-      console.log(data)
+      const signin_verify = await HttpPost('/getSignUpByDateDuration', param1)
+      let data = signin_verify.data[0]
       let id = data.id
       if(id){
         that.tableData[that.index1].children[that.index2].sign_up = '已签到'
@@ -369,24 +450,50 @@ export default {
 
     async comment () {
       let that = this
-      if(that.mark_leave.trim().length == 0  || that.mark_leave == null){
-        that.mark_leave = '无备注'
+      let uuids = ''
+      for(var i in that.uuids){
+        if(uuids==''){
+          uuids = that.uuids[i]
+        }else{
+          uuids = uuids.concat(',' + that.uuids[i])
+        }
       }
-
       let param ={
+        class_name:that.class_name,
         student_name:that.leave_student,
+        class_target:that.class_target,
+        class_target_bak:'课评',
+        comment:that.class_comment,
         studio:that.studio,
         date_time:that.date_time,
         duration:that.leave_duration,
-        class_number:that.sign_class_number,
-        subject:that.leave_subject,
-        openid:that.openid,
-        mark:that.mark_leave,
-        class_count:that.class_count,
+        positive:that.positive,
+        discipline:that.discipline,
+        happiness:that.happiness,
+        uuids:uuids
+      }
+      await HttpPost('/push', param)
+
+      let param1 = {
+        date_time: that.date_time,
+        studio:that.studio,
+        student_name:that.leave_student,
+        duration:that.leave_duration,
+      }
+      const comment_verify = await HttpPost('/getCommentByDateDuration', param1)
+      let data = comment_verify.data[0]
+      console.log(data)
+      let student_name = data.student_name
+      if(student_name == that.leave_student){
+        that.tableData[that.index1].children[that.index2].comment_status = '已课评'
+        that.isComment = false
+      }else{
+        that.$message({
+        message: '发布失败',
+        type: 'danger'
+      });
       }
 
-      console.log(param)
-      await HttpPost('/signUpSchedule', param)
     },
 
     async confirm_buttom () {
@@ -401,21 +508,15 @@ export default {
     },
 
     async handleChange(file, fileList) {
-        this.fileList = fileList;
-        console.log(file)
-
         let that = this
-        const response = await uploadImgToBase64(file.raw)
-        let image = response.result.replace(/.*;base64,/, '')
-
-        console.log(response)
-
         let formdata ={
           photo: file.raw
         }
 
         let res = await UploadFile('/push_photo', formdata)
-        console.log(res)
+        let uuid  = res.data.split("/")[3]
+        that.uuids.push(uuid)
+        console.log(that.uuids)
     },
     
     goOff () {

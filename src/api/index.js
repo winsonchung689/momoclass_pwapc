@@ -6,11 +6,22 @@ export function HttpGet (param) {
   return axios.get(`${baseUrl}` + param)
 }
 
-export function HttpPost (url, data) {
+export function HttpPost (url, params ) {
   return axios({
     url: `${baseUrl}` + url,
     method: 'POST',
-    params: data
+    params: params
+  })
+}
+
+export function HttpPostData (url, data ) {
+  return axios({
+    url: `${baseUrl}` + url,
+    method: 'POST',
+    data: data,
+    header: {
+      'content-type': 'application/json'
+    },
   })
 }
 
