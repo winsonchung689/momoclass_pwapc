@@ -6,19 +6,21 @@
       </div>
 
       <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
-          <div class="lesson">
-            <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
 
-            <div style="margin-left: 40px;margin-top: 10px;">
+        <div class="card">
+          <div class="lesson">
+            <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
+            <div style="margin-left: 10px;margin-top: 10px;">
               <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
                 <div style="margin-right: 5px;color: #4d67e8;">科目: {{ item.subject }} </div>
               </div>
 
-              <div style="font-weight: bolder;font-size: medium;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
-              <div style="font-weight: bold;color: #a0a3a7;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                <div style="margin-right: 5px;">总积分: {{ item.points }} </div>
-                <div style="margin-right: 5px;">扣课: {{ item.minus }}/次 </div>
-                <div style="margin-right: 5px;">积分: {{ item.coins }}/课</div>
+              <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
+
+              <div style="font-weight: bold;color: #a0a3a7;display: flex;direction: row;margin-top: 5px;">
+                <div style="margin-right: 5px;font-size: smaller;">总积分: {{ item.points }} </div>
+                <div style="margin-right: 5px;font-size: smaller;">扣课: {{ item.minus }}/次 </div>
+                <div style="margin-right: 5px;font-size: smaller;">积分: {{ item.coins }}/课</div>
               </div>
               <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
                 <div style="color: #4d67e8;margin-right: 5px;">总课时: {{ item.left_amount }} </div>
@@ -26,8 +28,12 @@
               </div>
               <el-progress :percentage="item.percentage"></el-progress>
             </div>
-
           </div>
+          <div style="margin-left: 80%;">
+            <el-button style="font-size: smaller;" smaller @click="deleteRow(item.id,item.student_name)" type="danger" icon="el-icon-delete"></el-button>
+          </div>
+        </div>
+          
       </div>
     </div>
 </template>
@@ -81,6 +87,7 @@ export default {
           const percentage = lessons_data[i].percent
           const minus = lessons_data[i].minus
           const coins = lessons_data[i].coins
+          const id = lessons_data[i].id
 
 
           var json ={}
@@ -95,12 +102,38 @@ export default {
           json.percentage = percentage
           json.minus = minus
           json.coins = coins
+          json.id = id
           
           that.items.push(json)
       }
+    },
 
-     
-
+    deleteRow(id,student_name){
+      let param ={
+        id:id,
+        role:this.role,
+        studio:this.studio,
+        openid:this.openid,
+        student_name:student_name
+      }
+      console.log(id,student_name)
+      let res = HttpPost("/deleteLesson",param)
+      res.then(res => {
+          console.log(res.data)
+          if(res.data == 1){
+            this.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+            this.getUser()
+          }else {
+            this.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+            this.getUser()
+          }
+      })
     },
 
     goOff() {
@@ -122,12 +155,18 @@ export default {
 .lesson{
   background-color: rgb(226, 235, 217);
   width: 85%;
-  height: 150px;
+  height: 100px;
   border-radius: 0.5rem;
   margin-bottom: 6px;
   flex-direction: row;
   display: flex;
   color: #a0a3a7;
+}
+
+.card{
+  background-color: rgb(226, 235, 217);
+  width: 85%;
+  border-radius: 0.5rem;
 }
 
 .el-icon-arrow-left{
