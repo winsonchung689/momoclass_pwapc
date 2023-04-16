@@ -63,13 +63,16 @@
       </el-table>
 
 
-
-
-      <!-- <div>
+      <div>
         <el-upload
           list-type="picture-card"
+          style="display: inline"
+          :auto-upload="false"
+          :on-change="handleChange"
           :file-list="fileList"
-          :auto-upload="false">
+          :multiple="true"
+          :type="file"
+          action="#">
             <i slot="default" class="el-icon-plus"></i>
             <div slot="file" slot-scope="{file}">
               <img
@@ -78,11 +81,10 @@
               >
             </div>
         </el-upload>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="beforeAvatarUpload">上传到服务器</el-button>
 
 
 
-      </div> -->
+      </div>
 
     </div>
 </template>
@@ -90,6 +92,10 @@
 <script>
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import { uploadImgToBase64 } from '@/api'
+import { UploadFile } from '@/api'
+
+
 export default {
   name: 'Timetable',
   data () {
@@ -114,10 +120,11 @@ export default {
       index2:'',
       isLeave:false,
       isSignIn:false,
-      class_count:0,
+      class_count:1,
       sign_class_number:'',
       button:'',
-      fileList:[]
+      fileList:[],
+      uuids:[]
     }
   },
 
@@ -237,7 +244,7 @@ export default {
       that.isLeave = false
       that.isSignIn = false
       that.mark_leave = ''
-      that.class_count = 0
+      that.class_count = 1
       console.log(leave,index1,index2)
       if(type =='leave'){
         if(leave == '缺席'){
@@ -393,37 +400,22 @@ export default {
 
     },
 
-    handleRemove (file) {
-      const url = "https://www.momoclasss.xyz:443/push_photo"
+    async handleChange(file, fileList) {
+        this.fileList = fileList;
+        console.log(file)
 
-      console.log(file)
-    },
+        let that = this
+        const response = await uploadImgToBase64(file.raw)
+        let image = response.result.replace(/.*;base64,/, '')
 
-    // handleImageSuccess (res, file,fileList) {
-    //   let imageUrl = URL.createObjectURL(file.raw);
-    //   console.log(imageUrl)
-      
-    // },
+        console.log(response)
 
+        let formdata ={
+          photo: file.raw
+        }
 
-    handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-    },
-
-    beforeAvatarUpload() {
-      console.log(this.fileList)
-    },
-
-
-    async upLoadFile (file) {
-      let that = this
-      // const url = "https://www.momoclasss.xyz:443/push_photo"
-
-      let param ={
-        file: file
-      }
-      await HttpPost('/push_photo', param)
-
+        let res = await UploadFile('/push_photo', formdata)
+        console.log(res)
     },
     
     goOff () {
