@@ -136,7 +136,7 @@ export default {
       that.weekday = weekday
 
       let num = parseInt(month/4)
-      console.log(that.today,num)
+      // console.log(that.today,num)
       that.today_img = that.seasons[num].img
       that.today_season = that.seasons[num].name
       that.images = that.images_all[num]
@@ -165,7 +165,7 @@ export default {
         that.mode = '未登录'
       }
 
-      console.log(that.studio,that.weekday,that.date,that.openid)
+      // console.log(that.studio,that.weekday,that.date,that.openid)
 
 
       let param ={
@@ -177,7 +177,7 @@ export default {
         }
       const schedule = await HttpPost('/getArrangement', param)
       let schedule_data = schedule.data;
-      console.log(schedule_data)
+      // console.log(schedule_data)
       that.schedule_data = schedule_data
 
     },

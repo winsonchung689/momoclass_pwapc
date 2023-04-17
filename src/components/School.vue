@@ -4,8 +4,45 @@
         <i class="el-icon-arrow-left" @click="goOff()"></i>
         <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
       </div>
+    
+      <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;">
+        <el-button-group>
+          <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
+          <!-- <el-button type="primary">批量新增<i class="el-icon-upload el-icon--right"></i></el-button> -->
+        </el-button-group>
+      </div>
 
-      <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
+      <div v-if="isAdd" style="margin-bottom: 30px;">
+        <div>
+          <el-button type="text"  @click="back">取消</el-button>
+        </div>
+
+        <div style="width: 50%;">
+            <el-input
+            placeholder="请输入科目"
+            v-model="subject"
+            clearable>
+          </el-input>
+          <el-input
+            placeholder="请输入学生名"
+            v-model="student_name"
+            clearable>
+          </el-input>
+        </div>
+
+        <div style="font-size: small;font-weight: bolder;">
+          总课时:
+          <el-input-number v-model="total_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
+        </div>
+        <div style="font-size: small;font-weight: bolder;">
+          余课时:
+          <el-input-number v-model="left_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
+        </div>
+
+        <el-button type="primary" @click="submit_add">提交</el-button>
+      </div>
+      
+      <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
 
         <div class="card">
           <div class="lesson">
@@ -35,6 +72,7 @@
         </div>
           
       </div>
+
     </div>
 </template>
 
@@ -51,7 +89,13 @@ export default {
       openid: this.$route.query.openid,
       role: this.$route.query.role,
       studio: this.$route.query.studio,
-      header:'学生专区'
+      header:'学员管理',
+      isAdd:false,
+      total_amount:1,
+      left_amount:1,
+      student_name:'',
+      subject:'',
+      isStudent:true
     }
   },
 
@@ -70,7 +114,7 @@ export default {
       }
       const lessons = await HttpPost('/getLesson', param)
       const lessons_data = lessons.data
-      console.log(lessons_data)
+      // console.log(lessons_data)
       that.items =[]
       for( var i in lessons_data){
           const total_amount = lessons_data[i].total_amount
@@ -116,10 +160,9 @@ export default {
         openid:this.openid,
         student_name:student_name
       }
-      console.log(id,student_name)
+      // console.log(id,student_name)
       let res = HttpPost("/deleteLesson",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '删除成功',
@@ -144,8 +187,68 @@ export default {
       this.$router.push({ path: '/records', query: { studio: studio,subject: subject,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
-  }
+    submit_add () {
+      let that = this
 
+      if(that.subject == ''){
+          that.$message({
+            message: '科目不能为空',
+            type: 'warning'
+          });
+        return
+      }
+
+      if(that.student_name == ''){
+          that.$message({
+            message: '学生名不能为空',
+            type: 'warning'
+          });
+        return
+      }
+
+      let param ={
+        studio:that.studio,
+        subject: that.subject,
+        student_name: that.student_name,
+        total_amount: that.total_amount,
+        left_amount: that.left_amount
+      }
+      // console.log(param)
+      let res = HttpPost("/singleAdd",param)
+      res.then(res => {
+          if(res.data == 1){
+            that.$message({
+                message: '新增成功',
+                type: 'success'
+            });
+            that.getUser()
+          }else {
+            that.$message({
+                message: '新增失败',
+                type: 'warning'
+            });
+            that.getUser()
+          }
+      })
+
+      this.isStudent = true
+      this.isAdd = false
+
+    },
+
+    singleAdd() {
+      this.student_name = ''
+      this.subject = ''
+      this.isAdd = true
+      this.isStudent = false
+    },
+
+    back () {
+      this.isStudent = true
+      this.isAdd = false
+    },
+
+  }
 }
 </script>
 

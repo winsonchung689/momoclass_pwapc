@@ -75,7 +75,7 @@ export default {
       const leave = await HttpPost('/getLeaveRecord', param)
       let leave_data = leave.data;
 
-      console.log(leave_data)
+      // console.log(leave_data)
       that.tableData =[]
       for( var i in leave_data){
           const rank = leave_data[i].rank
@@ -113,7 +113,6 @@ export default {
         }
       let res = HttpPost("/deleteLeaveRecord",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '删除成功',
@@ -142,7 +141,6 @@ export default {
         }
       let res = HttpPost("/deleteLeaveAllRecord",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '清空成功',

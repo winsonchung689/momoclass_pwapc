@@ -22,13 +22,13 @@ export default {
     getCookie () {
       if (document.cookie.length > 0) {
         var arr = document.cookie.split('; ')
-        console.log(arr)
+        // console.log(arr)
         for (var i = 0; i < arr.length; i++) {
           var arr2 = arr[i].split('=')
           if (arr2[0] === 'openid') {
             this.openid = arr2[1]
             if (this.openid !== '') {
-              console.log('cookie_openid:' + this.openid)
+              // console.log('cookie_openid:' + this.openid)
               setTimeout(() => {
                 this.$router.replace({ path: '/Home', query: { openid: this.openid } })
               }, 3000)

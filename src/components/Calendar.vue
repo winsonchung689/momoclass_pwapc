@@ -193,7 +193,7 @@ export default {
         }
         let date_time = year + '-' + month + '-' + date
         this.date_time = date_time
-        console.log(year + '-' + month + '-' + date) 
+        // console.log(year + '-' + month + '-' + date) 
         this.getLesson()
 
     }
@@ -485,7 +485,7 @@ export default {
       }
       const comment_verify = await HttpPost('/getCommentByDateDuration', param1)
       let data = comment_verify.data[0]
-      console.log(data)
+      // console.log(data)
       let student_name = data.student_name
       if(student_name == that.leave_student){
         that.tableData[that.index1].children[that.index2].comment_status = '已课评'
@@ -520,7 +520,7 @@ export default {
         let res = await UploadFile('/push_photo', formdata)
         let uuid  = res.data.split("/")[3]
         that.uuids.push(uuid)
-        console.log(that.uuids)
+        // console.log(that.uuids)
     },
     
     goOff () {

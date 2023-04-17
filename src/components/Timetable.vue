@@ -484,7 +484,7 @@ export default {
     async addArrangement () {
       let that = this
       let duration = that.start_time + '-' + that.end_time
-      console.log(that.value,duration,that.subject_add,that.class_number_add)
+      // console.log(that.value,duration,that.subject_add,that.class_number_add)
 
       if(that.value == ''){
           that.$message({
@@ -549,7 +549,7 @@ export default {
       }
       const students = await HttpPost('/getScheduleDetail', param)
       let students_data = students.data;
-      console.log(students_data)
+      // console.log(students_data)
       that.gridData = []
       for(var i in students_data){
         let json={}
@@ -572,7 +572,6 @@ export default {
         }
       let res = HttpPost("/deleteSchedule",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '删除成功',
@@ -625,10 +624,10 @@ export default {
         student_name:'all',
         subject:'全科目'
       }
-      console.log(param)
+      // console.log(param)
       const students = await HttpPost('/getLesson', param)
       let students_data = students.data;
-      console.log(students_data)
+      // console.log(students_data)
       that.allstudents = []
       for(var i in students_data){
         let json={}
@@ -638,7 +637,7 @@ export default {
         json.subject = subject
         that.allstudents.push(json)
       }
-      console.log(that.allstudents)
+      // console.log(that.allstudents)
 
     },
 
@@ -648,11 +647,11 @@ export default {
         this.week_select = dayofweek
         this.index_select = index
         this.class_select = '星期'+dayofweek + ',' + class_number + ',' + duration + ',' + subject
-        console.log(this.class_select)
+        // console.log(this.class_select)
     },
 
     handleSelect(item) {
-      console.log(item);
+      // console.log(item);
       const subject = item.subject
       const student_name = item.student_name
       this.state = student_name
@@ -681,7 +680,6 @@ export default {
 
     deleteArrangement (id,dayofweek,subject,class_number,duration) {
       let that = this 
-      console.log(id)
       let param ={
           id:id,
           studio:that.studio,
@@ -694,7 +692,6 @@ export default {
         }
       let res = HttpPost("/deleteArrangement",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '删除成功',

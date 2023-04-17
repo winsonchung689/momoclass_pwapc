@@ -53,7 +53,7 @@ export default {
         }
         const users = await HttpPost('/getUser', param)
         let user_data = users.data[0]
-        console.log(user_data)
+        // console.log(user_data)
         that.avatarurl = user_data.avatarurl
         that.nick_name = user_data.nick_name
         if(that.role === 'boss'){

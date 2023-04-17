@@ -80,7 +80,7 @@ export default {
       const signins = await HttpPost('/getSignUp', param)
       let signin_data = signins.data;
 
-      console.log(signin_data)
+      // console.log(signin_data)
       that.tableData =[]
       for( var i in signin_data){
           const rank = signin_data[i].rank
@@ -116,9 +116,6 @@ export default {
 
     deleteRow (index, tableData) {
       const id = tableData[index].id
-      console.log(id)
-      console.log(this.studio)
-      console.log(this.role)
       let param ={
           studio:this.studio,
           id:id,
@@ -127,7 +124,6 @@ export default {
         }
       let res = HttpPost("/deleteSignUpRecord",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '删除成功',
@@ -153,7 +149,6 @@ export default {
         }
       let res = HttpPost("/deleteSignUpAllRecord",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '清空成功',

@@ -87,7 +87,6 @@ export default {
             growth_data[i]["images"] = images;
           }
       }
-      console.log(growth_data)
       that.items = growth_data
 
     },
@@ -112,7 +111,6 @@ export default {
     },
 
     handleCurrentChange (val) {
-      console.log(val)
       this.page = val
       this.getGrowthRecord(this.page)
 

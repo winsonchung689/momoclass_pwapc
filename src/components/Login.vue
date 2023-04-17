@@ -51,7 +51,7 @@ export default {
             studio: studio,
             nick_name: nick_name,
         };
-        console.log(loginParams)
+        // console.log(loginParams)
 
         if (studio == '') {
             this.$message({
@@ -71,7 +71,7 @@ export default {
 
         let res = HttpPost("/getUserByNickStudioEq", loginParams);
         res.then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             try {
                 that.openid = res.data[0].openid
             } catch (error) {
@@ -126,7 +126,7 @@ export default {
         HttpPost("/insertUser", loginParams);
         let res = HttpPost("/getUserByNickStudioEq", loginParams);
         res.then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             try {
                 that.openid = res.data[0].openid
             } catch (error) {

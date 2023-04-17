@@ -106,7 +106,7 @@ export default {
       }
       const comments = await HttpPost('/getMessage', param)
       let comments_data = comments.data;
-      console.log(comments_data)
+      // console.log(comments_data)
       for( var i in comments_data){
           const uuids = comments_data[i].uuids
           let images =[]
@@ -122,7 +122,7 @@ export default {
             comments_data[i]["images"] = images;
           }
       }
-      console.log(comments_data)
+      // console.log(comments_data)
       that.items = comments_data
 
     },
@@ -147,7 +147,6 @@ export default {
     },
 
     handleCurrentChange (val) {
-      console.log(val)
       this.page = val
       this.getComment(this.page)
     },
@@ -162,7 +161,6 @@ export default {
         }
       let res = HttpPost("/deleteComment",param)
       res.then(res => {
-          console.log(res.data)
           if(res.data == 1){
             this.$message({
                 message: '删除成功',

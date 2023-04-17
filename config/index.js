@@ -11,6 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
+    pubicPath:'/',
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -33,7 +34,8 @@ module.exports = {
      */
 
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-module-eval-source-map',
+    devtool:'nosources-source-map',
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
@@ -61,6 +63,7 @@ module.exports = {
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
+    // evtool:'nosources-source-map',
 
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
