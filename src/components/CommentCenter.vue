@@ -29,7 +29,7 @@
               <el-rate
                 disabled
                 v-model= "item.positive"
-                show-text>
+                >
               </el-rate>
             </div>
             <div>
@@ -37,7 +37,7 @@
               <el-rate
                 disabled
                 v-model="item.discipline"
-                show-text>
+                >
               </el-rate>
             </div>
             <div>
@@ -45,13 +45,13 @@
               <el-rate
                 disabled
                 v-model="item.happiness"
-                show-text>
+                >
               </el-rate>
             </div>
 
             <div>老师点评: {{ item.comment }}</div>
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
-            <div @click=deleteRow(item.id) style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
+            <div v-if="isBoss" @click=deleteRow(item.id) style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
             <el-divider></el-divider>
           </div> 
         </div>
@@ -90,7 +90,8 @@ export default {
       MinDisplay:'flex',
       ShowIndex:0,
       display: 'none',
-      page:1
+      page:1,
+      isBoss:false
     }
   },
 
@@ -101,6 +102,9 @@ export default {
   methods: {
     async getComment (page) {
       let that = this;
+      if(that.role == 'boss'){
+        that.isBoss = true
+      }
       let param ={
         studio:that.studio,
         comment_style:that.comment_style,

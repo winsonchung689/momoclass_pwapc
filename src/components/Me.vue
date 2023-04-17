@@ -18,13 +18,16 @@
         <div style="display: flex;justify-content: center;font-size: small;font-weight: bold;color: #afb3b1;"> 过期时间:{{ expired_time }}</div>
       </div>
       <el-divider ></el-divider>
-      <div style="margin-top: 10px;">
+
+      <div v-if="isBoss" style="margin-top: 10px;">
         <div style="display: flex;justify-content: row;">
           <img style="width: 40px;height: 40px;margin-right: 20px;" src="@/assets/access.png" alt="">
           <div style="margin-top: 10px;font-weight: bolder;font-size: medium;color: #4b415f5c;">权限管理</div>
         </div>
         <el-divider bolder-style="dashed"></el-divider>
-      </div>      
+      </div>    
+      
+      
       </div>
     </div>
     
@@ -45,7 +48,8 @@ export default {
       header:'个人中心',
       avatarurl:'',
       nick_name:'',
-      expired_time:'unlimited'
+      expired_time:'unlimited',
+      isBoss:false
     }
   },
 
@@ -66,6 +70,7 @@ export default {
         that.nick_name = user_data.nick_name
         if(that.role === 'boss'){
           that.expired_time = user_data.expired_time
+          that.isBoss = true
         }
     },
 

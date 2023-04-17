@@ -53,7 +53,7 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span style="font-weight: bolder;color: #767e69;font-size: medium;margin-top: 5px;">科目: {{ item.subject }}</span>
-              <el-button @click="calender(item.subject)" style="float: right;border-color: white; " type="text">签到</el-button>
+              <el-button v-if="isBoss" @click="calender(item.subject)" style="float: right;border-color: white; " type="text">签到</el-button>
             </div>
             <div style="font-weight: bolder;color: #767e69;font-size: medium;">班级: {{ item.class_number }}</div>
             <div style="font-weight: bolder;color: #767e69;font-size: medium;">上课时间: {{ item.duration }}</div>
@@ -127,7 +127,8 @@ export default {
       weekday:'',
       date:'',
       schedule_data:[],
-      comment_style:''
+      comment_style:'',
+      isBoss:false
     }
   },
   created () {
@@ -169,6 +170,7 @@ export default {
       
       if('boss' == that.role){
         that.mode = '老师模式'
+        that.isBoss = true
       }else if('client' == that.role){
         that.mode = '家长模式'
       }else if('visit' == that.role){

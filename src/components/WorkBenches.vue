@@ -10,6 +10,7 @@
       <div style="margin-top: 15%;">
           <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
             <div class="container">
+
               <div class="item" @click="timeTable(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
@@ -27,28 +28,29 @@
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">签到处</div>
                 </div>
               </div>
+
             </div>
           </div>
 
-          <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;">
+          <div style="justify-content: center;display: flex;margin-bottom: 15px;">
             <div class="container">
-              <div class="item" @click="school(subject)">
-                <div class="content">
-                  <div style="display: flex;justify-content: center;">
-                    <img style="width: 40px;height: 40px;" src="@/assets/school.png" alt="">
+                <div v-if="isBoss" class="item" @click="school(subject)">
+                  <div class="content">
+                    <div style="display: flex;justify-content: center;">
+                      <img style="width: 40px;height: 40px;" src="@/assets/school.png" alt="">
+                    </div>
+                    <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
                   </div>
-                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
                 </div>
-              </div>
 
-              <div class="item" @click="commentCenter(subject)">
-                <div class="content">
-                  <div style="display: flex;justify-content: center;">
-                    <img style="width: 40px;height: 40px;" src="@/assets/comment.png" alt="">
-                  </div>
-                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
+                <div class="item" @click="commentCenter(subject)">
+                    <div class="content">
+                      <div style="display: flex;justify-content: center;">
+                        <img style="width: 40px;height: 40px;" src="@/assets/comment.png" alt="">
+                      </div>
+                      <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
+                    </div>
                 </div>
-              </div>
             </div>
           </div>
       </div>
