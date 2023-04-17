@@ -1,58 +1,70 @@
 <template>
-  <div @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
-    <div class="avatar">
-      <div style="margin-top: auto;">
-        <h1>HI,{{ nick_name }} ({{ mode }})</h1>
-      </div>
-      <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
-    </div>
-
-    <h2 @click="$router.push('/Login')">{{ hello }}</h2>
-
-    <div style="display: flex;justify-content: center;margin-bottom: 5px;">
-      <div class="today">
-        <h3>{{ today }}  {{ today_season }}</h3>
-        <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
-      </div>
-    </div>
-    
-    <div class="banner">
-      <div class="banner_wrap">
-        <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
-        <swiper :options="swiperOption" v-if="images.length > 1" class="banner-swiper-container swiper-container">
-          <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-            
-            <div @click="click(item.url)" style="display: flex;justify-content: center; flex-direction: row;">
-              <div style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
-                <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div>
-              </div>
-              <div style="width: 80%;">
-                <img :src="item.img" alt="" style="border-radius: 0rem; scale: 1;">
-              </div>
-            </div>
-
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
-
-    <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
-
-    <div v-for="(item ,index) in schedule_data" :key="index">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span style="font-weight: bolder;color: #767e69;font-size: medium;margin-top: 5px;">科目: {{ item.subject }}</span>
-          <el-button @click="calender(item.subject)" style="float: right;border-color: white; " type="text">签到</el-button>
+    <div>
+      <div style="display: block;position: fixed;background-color: #fff;width: 100%;top: 0;">
+        <div class="avatar">
+          <div style="margin-top: auto;">
+            <h1>HI,{{ nick_name }} ({{ mode }})</h1>
+          </div>
+          <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
         </div>
-        <div style="font-weight: bolder;color: #767e69;font-size: medium;">班级: {{ item.class_number }}</div>
-        <div style="font-weight: bolder;color: #767e69;font-size: medium;">上课时间: {{ item.duration }}</div>
-        <div style="font-weight: bolder;color: #767e69;font-size: medium;">人数: {{ item.classes_count }}</div>
-        <div style="font-weight: bolder;color: #767e69;font-size: medium;">已签到: {{ item.sign_count }}</div>
-      </el-card>
-    </div>
-     
+      </div>
 
-  </div>
+      <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
+
+          <!-- <div class="avatar">
+            <div style="margin-top: auto;">
+              <h1>HI,{{ nick_name }} ({{ mode }})</h1>
+            </div>
+            <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
+          </div> -->
+
+          <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+
+          <div style="display: flex;justify-content: center;margin-bottom: 5px;">
+            <div class="today">
+              <h3>{{ today }}  {{ today_season }}</h3>
+              <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
+            </div>
+          </div>
+        
+        <div class="banner">
+          <div class="banner_wrap">
+            <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
+            <swiper :options="swiperOption" v-if="images.length > 1" class="banner-swiper-container swiper-container">
+              <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
+                
+                <div @click="click(item.url)" style="display: flex;justify-content: center; flex-direction: row;">
+                  <div style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
+                    <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div>
+                  </div>
+                  <div style="width: 80%;">
+                    <img :src="item.img" alt="" style="border-radius: 0rem; scale: 1;">
+                  </div>
+                </div>
+
+              </swiper-slide>
+            </swiper>
+          </div>
+        </div>
+
+        <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
+
+        <div v-for="(item ,index) in schedule_data" :key="index">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span style="font-weight: bolder;color: #767e69;font-size: medium;margin-top: 5px;">科目: {{ item.subject }}</span>
+              <el-button @click="calender(item.subject)" style="float: right;border-color: white; " type="text">签到</el-button>
+            </div>
+            <div style="font-weight: bolder;color: #767e69;font-size: medium;">班级: {{ item.class_number }}</div>
+            <div style="font-weight: bolder;color: #767e69;font-size: medium;">上课时间: {{ item.duration }}</div>
+            <div style="font-weight: bolder;color: #767e69;font-size: medium;">人数: {{ item.classes_count }}</div>
+            <div style="font-weight: bolder;color: #767e69;font-size: medium;">已签到: {{ item.sign_count }}</div>
+          </el-card>
+        </div>
+        
+
+      </div>
+    </div>
 </template>
 
 <script>

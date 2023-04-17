@@ -57,9 +57,9 @@
         </div>
 
 
-          <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 0;margin-left: 27%;">
+          <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;margin-left: 17%;background-color: #fff;">
             <el-pagination
-              small
+              medium
               layout="prev, pager, next"
               :total="50"
               @current-change="handleCurrentChange">

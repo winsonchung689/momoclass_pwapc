@@ -1,10 +1,13 @@
 <template>
-    <div>
-      <div style="display: flex;direction: row;margin-bottom: 15px;">
+  <div>
+    <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+      <div>
         <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ student_name }}({{ subject }})</div>
       </div>
+      <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ student_name }}({{ subject }})</div>
+    </div>
 
+    <div style="margin-top: 15%;">
       <div style="justify-content: center;display: flex;margin-bottom: 15px;">
         <div class="container">
           <div class="item" @click="signInRecord(subject,studio,student_name)">
@@ -51,6 +54,8 @@
       
 
     </div>
+    
+  </div>
 </template>
 
 <script>

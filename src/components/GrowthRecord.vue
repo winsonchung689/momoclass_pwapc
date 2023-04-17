@@ -27,9 +27,9 @@
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
           </div>
         </div>
-        <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 0;margin-left: 27%;">
+        <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;margin-left: 17%;background-color: #fff;">
           <el-pagination
-            small
+            medium
             layout="prev, pager, next"
             :total="50"
             @current-change="handleCurrentChange">
