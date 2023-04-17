@@ -8,8 +8,6 @@
       </div>
 
       <div style="margin-top: 15%;">
-
-
         <el-dialog title="排课中" :visible.sync="dialogFormVisible">
           <el-autocomplete
             popper-class="my-autocomplete"
@@ -656,7 +654,7 @@ export default {
         this.week_select = dayofweek
         this.index_select = index
         this.class_select = '星期'+dayofweek + ',' + class_number + ',' + duration + ',' + subject
-        // console.log(this.class_select)
+        console.log(this.class_select)
     },
 
     handleSelect(item) {
