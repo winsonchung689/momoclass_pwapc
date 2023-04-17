@@ -1,11 +1,14 @@
 <template>
     <div>
-      <div style="display: flex;direction: row;">
-        <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+        <div>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
+        </div>
+        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
+      <div style="margin-top: 15%;">
+        <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
           <div class="lesson" @click="goIn(item.studio,item.subject,item.student_name)">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
             <div style="margin-left: 40px;margin-top: 20px;">
@@ -17,7 +20,9 @@
               </div>
             </div>
           </div>
+        </div>
       </div>
+      
     </div>
 </template>
 

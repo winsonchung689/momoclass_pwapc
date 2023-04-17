@@ -1,80 +1,84 @@
 <template>
     <div>
-      <div style="display: flex;direction: row;">
-        <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
-      </div>
-    
-      <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;">
-        <el-button-group>
-          <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
-          <!-- <el-button type="primary">批量新增<i class="el-icon-upload el-icon--right"></i></el-button> -->
-        </el-button-group>
-      </div>
-
-      <div v-if="isAdd" style="margin-bottom: 30px;">
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
         <div>
-          <el-button type="text"  @click="back">取消</el-button>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-
-        <div style="width: 50%;">
-            <el-input
-            placeholder="请输入科目"
-            v-model="subject"
-            clearable>
-          </el-input>
-          <el-input
-            placeholder="请输入学生名"
-            v-model="student_name"
-            clearable>
-          </el-input>
-        </div>
-
-        <div style="font-size: small;font-weight: bolder;">
-          总课时:
-          <el-input-number v-model="total_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
-        </div>
-        <div style="font-size: small;font-weight: bolder;">
-          余课时:
-          <el-input-number v-model="left_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
-        </div>
-
-        <div style="display: flex;justify-content: center; margin-top: 20px;">
-          <el-button type="primary" @click="submit_add">提交</el-button>
-        </div>
+        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
       </div>
-      
-      <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
 
-        <div class="card">
-          <div class="lesson">
-            <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
-            <div style="margin-left: 10px;margin-top: 10px;">
-              <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
-                <div style="margin-right: 5px;color: #4d67e8;">科目: {{ item.subject }} </div>
-              </div>
+      <div style="margin-top: 15%;">
+        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;">
+          <el-button-group>
+            <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
+            <!-- <el-button type="primary">批量新增<i class="el-icon-upload el-icon--right"></i></el-button> -->
+          </el-button-group>
+        </div>
 
-              <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
+        <div v-if="isAdd" style="margin-bottom: 30px;">
+          <div>
+            <el-button type="text"  @click="back">取消</el-button>
+          </div>
 
-              <div style="font-weight: bold;color: #a0a3a7;display: flex;direction: row;margin-top: 5px;">
-                <div style="margin-right: 5px;font-size: smaller;">总积分: {{ item.points }} </div>
-                <div style="margin-right: 5px;font-size: smaller;">扣课: {{ item.minus }}/次 </div>
-                <div style="margin-right: 5px;font-size: smaller;">积分: {{ item.coins }}/课</div>
+          <div style="width: 50%;">
+              <el-input
+              placeholder="请输入科目"
+              v-model="subject"
+              clearable>
+            </el-input>
+            <el-input
+              placeholder="请输入学生名"
+              v-model="student_name"
+              clearable>
+            </el-input>
+          </div>
+
+          <div style="font-size: small;font-weight: bolder;">
+            总课时:
+            <el-input-number v-model="total_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
+          </div>
+          <div style="font-size: small;font-weight: bolder;">
+            余课时:
+            <el-input-number v-model="left_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
+          </div>
+
+          <div style="display: flex;justify-content: center; margin-top: 20px;">
+            <el-button type="primary" @click="submit_add">提交</el-button>
+          </div>
+        </div>
+        
+        <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
+
+          <div class="card">
+            <div class="lesson">
+              <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
+              <div style="margin-left: 10px;margin-top: 10px;">
+                <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
+                  <div style="margin-right: 5px;color: #4d67e8;">科目: {{ item.subject }} </div>
+                </div>
+
+                <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
+
+                <div style="font-weight: bold;color: #a0a3a7;display: flex;direction: row;margin-top: 5px;">
+                  <div style="margin-right: 5px;font-size: smaller;">总积分: {{ item.points }} </div>
+                  <div style="margin-right: 5px;font-size: smaller;">扣课: {{ item.minus }}/次 </div>
+                  <div style="margin-right: 5px;font-size: smaller;">积分: {{ item.coins }}/课</div>
+                </div>
+                <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                  <div style="color: #4d67e8;margin-right: 5px;">总课时: {{ item.left_amount }} </div>
+                  <div style="color: #4d67e8;margin-right: 5px;">余课时: {{ item.total_amount }} </div>
+                </div>
+                <el-progress :percentage="item.percentage"></el-progress>
               </div>
-              <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                <div style="color: #4d67e8;margin-right: 5px;">总课时: {{ item.left_amount }} </div>
-                <div style="color: #4d67e8;margin-right: 5px;">余课时: {{ item.total_amount }} </div>
-              </div>
-              <el-progress :percentage="item.percentage"></el-progress>
+            </div>
+            <div style="margin-left: 80%;">
+              <el-button style="font-size: smaller;" smaller @click="deleteRow(item.id,item.student_name)" type="danger" icon="el-icon-delete"></el-button>
             </div>
           </div>
-          <div style="margin-left: 80%;">
-            <el-button style="font-size: smaller;" smaller @click="deleteRow(item.id,item.student_name)" type="danger" icon="el-icon-delete"></el-button>
-          </div>
+            
         </div>
-          
-      </div>
 
+      </div>
     </div>
 </template>
 

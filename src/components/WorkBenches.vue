@@ -1,55 +1,58 @@
 <template>
     <div>
-      <div style="display: flex;direction: row;margin-bottom: 5px;">
-        <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 40%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
-      </div>
-
-      <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
-        <div class="container">
-          <div class="item" @click="timeTable(subject)">
-            <div class="content">
-              <div style="display: flex;justify-content: center;">
-                <img style="width: 40px;height: 40px;" src="@/assets/timetable.png" alt="">
-              </div>
-              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程表</div>
-            </div>
-          </div>
-
-          <div class="item" @click="calender(subject,studio,student_name)">
-            <div class="content">
-              <div style="display: flex;justify-content: center;">
-                <img style="width: 40px;height: 40px;" src="@/assets/tosignin.png" alt="">
-              </div>
-              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">签到处</div>
-            </div>
-          </div>
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+        <div>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
+        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;">
-        <div class="container">
-          <div class="item" @click="school(subject)">
-            <div class="content">
-              <div style="display: flex;justify-content: center;">
-                <img style="width: 40px;height: 40px;" src="@/assets/school.png" alt="">
+      <div style="margin-top: 15%;">
+          <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
+            <div class="container">
+              <div class="item" @click="timeTable(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 40px;height: 40px;" src="@/assets/timetable.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程表</div>
+                </div>
               </div>
-              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
+
+              <div class="item" @click="calender(subject,studio,student_name)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 40px;height: 40px;" src="@/assets/tosignin.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">签到处</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="item" @click="commentCenter(subject)">
-            <div class="content">
-              <div style="display: flex;justify-content: center;">
-                <img style="width: 40px;height: 40px;" src="@/assets/comment.png" alt="">
+          <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;">
+            <div class="container">
+              <div class="item" @click="school(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 40px;height: 40px;" src="@/assets/school.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
+                </div>
               </div>
-              <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
+
+              <div class="item" @click="commentCenter(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 40px;height: 40px;" src="@/assets/comment.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
       </div>
-
-    </div>
+  </div>
 </template>
 
 <script>

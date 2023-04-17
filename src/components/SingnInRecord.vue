@@ -1,44 +1,47 @@
 <template>
     <div>
-      <div style="display: flex;direction: row;">
-        <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+        <div>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
+        </div>
+        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
-        <el-table-column fixed prop="rank" label="序号" width="50">
-        </el-table-column> 
-        <el-table-column prop="student_name" label="名字"  width="70">
-        </el-table-column>
-        <el-table-column prop="create_time" label="上课日" width="90">
-        </el-table-column>
-        <el-table-column prop="duration" label="时间段" width="90">
-        </el-table-column>
-        <el-table-column prop="sign_time" label="签到日" width="90">
-        </el-table-column>
-        <el-table-column prop="mark" label="备注" width="90">
-        </el-table-column>
-        <el-table-column prop="count" label="课时" width="60">
-        </el-table-column>
-        <el-table-column prop="status" label="状态" width="80">
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-          <template slot-scope="scope" >
-            <div style="justify-content: center;display: flex;flex-direction: column;">
-              <div>
-                <el-button @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+      <div style="margin-top: 15%;">
+        <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
+          <el-table-column fixed prop="rank" label="序号" width="50">
+          </el-table-column> 
+          <el-table-column prop="student_name" label="名字"  width="70">
+          </el-table-column>
+          <el-table-column prop="create_time" label="上课日" width="90">
+          </el-table-column>
+          <el-table-column prop="duration" label="时间段" width="90">
+          </el-table-column>
+          <el-table-column prop="sign_time" label="签到日" width="90">
+          </el-table-column>
+          <el-table-column prop="mark" label="备注" width="90">
+          </el-table-column>
+          <el-table-column prop="count" label="课时" width="60">
+          </el-table-column>
+          <el-table-column prop="status" label="状态" width="80">
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+            <template slot-scope="scope" >
+              <div style="justify-content: center;display: flex;flex-direction: column;">
+                <div>
+                  <el-button @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                </div>
+                <div>
+                  <el-button @click.native.prevent="deleteAll()" type="text" size="small" style="font-size:x-small">清空</el-button>
+                </div>
+                <div>
+                  <el-button @click.native.prevent="cancel(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">取消</el-button>
+                </div>
               </div>
-              <div>
-                <el-button @click.native.prevent="deleteAll()" type="text" size="small" style="font-size:x-small">清空</el-button>
-              </div>
-              <div>
-                <el-button @click.native.prevent="cancel(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">取消</el-button>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
 </template>
 

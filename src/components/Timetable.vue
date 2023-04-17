@@ -1,358 +1,363 @@
 <template>
     <div>
-      <div style="display: flex;direction: row;margin-bottom: 5px;">
-        <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+        <div>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
+        </div>
+        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
       </div>
 
+      <div style="margin-top: 15%;">
 
-      <el-dialog title="排课中" :visible.sync="dialogFormVisible">
-        <el-autocomplete
-          popper-class="my-autocomplete"
-          v-model="state"
-          :fetch-suggestions="querySearch"
-          placeholder="请选择学生"
-          @select="handleSelect">
-          <template slot-scope="{ item }">
-            <div class="name">{{ item.student_name }}</div>
-          </template>
-        </el-autocomplete>
-        <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="arrangeClass()">确 定</el-button>
-        </div>
-      </el-dialog>
 
-      <div v-if="isTimetable" >
-        <el-table :data="tableData" style="width: 100%;font-size: small;justify-content: center;" max-height="750">
-          <el-table-column prop="week1" label="周一"  width="150" style="text-align: center;">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week1" :key="index">
-                <div class="class_element_1">
+        <el-dialog title="排课中" :visible.sync="dialogFormVisible">
+          <el-autocomplete
+            popper-class="my-autocomplete"
+            v-model="state"
+            :fetch-suggestions="querySearch"
+            placeholder="请选择学生"
+            @select="handleSelect">
+            <template slot-scope="{ item }">
+              <div class="name">{{ item.student_name }}</div>
+            </template>
+          </el-autocomplete>
+          <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="arrangeClass()">确 定</el-button>
+          </div>
+        </el-dialog>
+
+        <div v-if="isTimetable" >
+          <el-table :data="tableData" style="width: 100%;font-size: small;justify-content: center;" max-height="750">
+            <el-table-column prop="week1" label="周一"  width="150" style="text-align: center;">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week1" :key="index">
+                  <div class="class_element_1">
+                      <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
+                      <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
+                      <div class="text"> {{ item.duration }} </div>
+                      <div class="text"> 报名: {{ item.classes_count }} </div>
+                      
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
+                                    <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
+                              </div>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
+                    </div>
+                      <div>
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
+                    
+
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="week2" label="周二" width="150">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week2" :key="index">
+                  <div class="class_element_2">
+                    <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
+                    <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
+                    <div class="text"> {{ item.duration }} </div>
+                    <div class="text"> 报名: {{ item.classes_count }} </div>
+
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
+                                  <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
+                              </div>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
+                    </div>
+
+                    <div>
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
+
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="week3" label="周三" width="150">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week3" :key="index">
+                  <div class="class_element_1">
                     <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
                     <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
                     <div class="text"> {{ item.duration }} </div>
                     <div class="text"> 报名: {{ item.classes_count }} </div>
                     
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
                                   <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
                               </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
-                  </div>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
+                    </div>
+
                     <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
-                    </div>
-                  
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
 
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="week2" label="周二" width="150">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week2" :key="index">
-                <div class="class_element_2">
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
-                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
-                  <div class="text"> {{ item.duration }} </div>
-                  <div class="text"> 报名: {{ item.classes_count }} </div>
-
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
-                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
-                              </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                   </div>
-
-                  <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
-                    </div>
-
                 </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="week3" label="周三" width="150">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week3" :key="index">
-                <div class="class_element_1">
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
-                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
-                  <div class="text"> {{ item.duration }} </div>
-                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                  
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
-                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+              </template>
+            </el-table-column>
+            <el-table-column prop="week4" label="周四" width="150">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week4" :key="index">
+                  <div class="class_element_2">
+                    <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
+                    <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
+                    <div class="text"> {{ item.duration }} </div>
+                    <div class="text"> 报名: {{ item.classes_count }} </div>
+
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
+                                  <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
                               </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
-                  </div>
-
-                  <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
+                    <div>
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
+                    
+                  </div>
                 </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="week4" label="周四" width="150">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week4" :key="index">
-                <div class="class_element_2">
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
-                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
-                  <div class="text"> {{ item.duration }} </div>
-                  <div class="text"> 报名: {{ item.classes_count }} </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="week5" label="周五" width="150">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week5" :key="index">
+                  <div class="class_element_1">
+                    <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
+                    <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
+                    <div class="text"> {{ item.duration }} </div>
+                    <div class="text"> 报名: {{ item.classes_count }} </div>
 
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
-                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
+                                  <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
                               </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
-                  </div>
-
-                  <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
-                  
-                </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="week5" label="周五" width="150">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week5" :key="index">
-                <div class="class_element_1">
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
-                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
-                  <div class="text"> {{ item.duration }} </div>
-                  <div class="text"> 报名: {{ item.classes_count }} </div>
 
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
-                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                    <div>
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
+
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="week6" label="周六" width="150">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week6" :key="index">
+                  <div class="class_element_2">
+                    <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
+                    <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
+                    <div class="text"> {{ item.duration }} </div>
+                    <div class="text"> 报名: {{ item.classes_count }} </div>
+
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
+                                  <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
                               </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
-                  </div>
-
-                  <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
+                    <div>
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
+                  </div>
                 </div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="week6" label="周六" width="150">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week6" :key="index">
-                <div class="class_element_2">
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
-                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
-                  <div class="text"> {{ item.duration }} </div>
-                  <div class="text"> 报名: {{ item.classes_count }} </div>
-
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
-                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+              </template>
+              
+            </el-table-column>
+            <el-table-column prop="week7" label="周日"  width="150">
+              <template slot-scope="scope">
+                <div v-for="(item,index) in scope.row.week7" :key="index">
+                  <div class="class_element_1">
+                    <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
+                    <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
+                    <div class="text"> {{ item.duration }} </div>
+                    <div class="text"> 报名: {{ item.classes_count }} </div>
+                    
+                    <div class="t_choose">
+                        <el-popover
+                          placement="right"
+                          width="120"
+                          trigger="click">
+                          <el-table :data="gridData">
+                            <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
+                            <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+                            <template slot-scope="scope" >
+                              <div style="justify-content: center;display: flex;flex-direction: column;">
+                                <div>
+                                  <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                                </div>
                               </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
-                  </div>
-
-                  <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
-                    </div>
-                </div>
-              </div>
-            </template>
-            
-          </el-table-column>
-          <el-table-column prop="week7" label="周日"  width="150">
-            <template slot-scope="scope">
-              <div v-for="(item,index) in scope.row.week7" :key="index">
-                <div class="class_element_1">
-                  <div class="t_choose" @click="chooseLesson(item.dayofweek,item.subject,item.class_number,item.duration,item.chooseLesson,index)">{{ item.chooseLesson }}</div>
-                  <div class="text"> {{ item.subject }}_{{ item.class_number }}</div>
-                  <div class="text"> {{ item.duration }} </div>
-                  <div class="text"> 报名: {{ item.classes_count }} </div>
-                  
-                  <div class="t_choose">
-                      <el-popover
-                        placement="right"
-                        width="120"
-                        trigger="click">
-                        <el-table :data="gridData">
-                          <el-table-column width="120" property="student_name" label="学生名"></el-table-column>
-                          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-                          <template slot-scope="scope" >
-                            <div style="justify-content: center;display: flex;flex-direction: column;">
-                              <div>
-                                <el-button @click.native.prevent="deleteRow(scope.$index, gridData)" type="text" size="small" style="font-size:x-small">移除</el-button>
-                              </div>
-                            </div>
-                          </template>
-                        </el-table-column>
-                        </el-table>
-                        <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
-                      </el-popover>
-                      <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
-                  </div>
-
-                  <div>
-                      <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                            </template>
+                          </el-table-column>
+                          </el-table>
+                          <el-button @click="getStudents(item.dayofweek,item.subject,item.class_number,item.duration)"  slot="reference" smaller style="font-size: smaller;font-weight: bolder;">明细</el-button>
+                        </el-popover>
+                        <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
+                    <div>
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      </div>
+
+                  </div>
                 </div>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        
-        <div style="margin-left: 70%;">
-          <el-button @click="showAdd" type="primary">新增课程</el-button>
-        </div>
-      </div>
-      
-      <div v-if="isAdd">
-        <div>
-        <el-button type="text"  @click="back">取消</el-button>
-      </div>
-
-        <div style="width: 50%;">
-          <el-select v-model="value" placeholder="请选择星期">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-
-          <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
-          <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
+              </template>
+            </el-table-column>
+          </el-table>
+          
+          <div style="margin-left: 70%;">
+            <el-button @click="showAdd" type="primary">新增课程</el-button>
+          </div>
         </div>
         
-        <div style="display: flex;flex-direction: row; width: 80%;"> 
-          <el-time-select
-            placeholder="起始时间"
-            v-model="start_time"
-            :picker-options="{
-              start: '00:00',
-              step: '00:15',
-              end: '23:59'
-            }">
-          </el-time-select>
-          <el-time-select
-            placeholder="结束时间"
-            v-model="end_time"
-            :picker-options="{
-              start: '00:00',
-              step: '00:15',
-              end: '23:59',
-              minTime: start_time
-            }">
-          </el-time-select>
+        <div v-if="isAdd">
+          <div>
+          <el-button type="text"  @click="back">取消</el-button>
         </div>
-        
-        <div style="margin-top: 20px;display: flex;justify-content: center;">
-          <el-button @click ="addArrangement" type="success" plain>确定</el-button>
+
+          <div style="width: 50%;">
+            <el-select v-model="value" placeholder="请选择星期">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+
+            <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
+            <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
+          </div>
+          
+          <div style="display: flex;flex-direction: row; width: 80%;"> 
+            <el-time-select
+              placeholder="起始时间"
+              v-model="start_time"
+              :picker-options="{
+                start: '00:00',
+                step: '00:15',
+                end: '23:59'
+              }">
+            </el-time-select>
+            <el-time-select
+              placeholder="结束时间"
+              v-model="end_time"
+              :picker-options="{
+                start: '00:00',
+                step: '00:15',
+                end: '23:59',
+                minTime: start_time
+              }">
+            </el-time-select>
+          </div>
+          
+          <div style="margin-top: 20px;display: flex;justify-content: center;">
+            <el-button @click ="addArrangement" type="success" plain>确定</el-button>
+          </div>
         </div>
+
+
+
       </div>
-
-
-
     </div>
 </template>
 

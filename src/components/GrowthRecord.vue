@@ -1,38 +1,44 @@
 <template>
+
     <div>
-      <div style="display: flex;direction: row;">
-        <i class="el-icon-arrow-left" @click="goOff()"></i>
-        <div style="font-size: medium;margin-left: 35%;margin-top: 5px;font-weight: bolder;">{{ header }}</div>
-      </div>
-      
-      <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
-        <div class="covers" :style="{display:MinDisplay}">
-            <div class="cover" v-for="(img,index) in item.images" :key='img'>
-              <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
-            </div>
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+        <div>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-
-        <div class="max" :style="{display:display}">
-            <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
-        </div>
-
-        <div  class="foot" :style="{display:MinDisplay}">
-          <div>学生: {{ subject }}_{{ student_name }}</div>
-          <div>课堂名称: {{ item.class_name }}</div>
-          <div>老师点评: {{ item.comment }}</div>
-          <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
-        </div>
-      </div>
-      <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 0;margin-left: 27%;">
-        <el-pagination
-          small
-          layout="prev, pager, next"
-          :total="50"
-          @current-change="handleCurrentChange">
-        </el-pagination>
+        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
       </div>
 
+      <div style="margin-top: 15%;">
+        <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
+          <div class="covers" :style="{display:MinDisplay}">
+              <div class="cover" v-for="(img,index) in item.images" :key='img'>
+                <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
+              </div>
+          </div>
+
+          <div class="max" :style="{display:display}">
+              <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
+          </div>
+
+          <div  class="foot" :style="{display:MinDisplay}">
+            <div>学生: {{ subject }}_{{ student_name }}</div>
+            <div>课堂名称: {{ item.class_name }}</div>
+            <div>老师点评: {{ item.comment }}</div>
+            <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
+          </div>
+        </div>
+        <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 0;margin-left: 27%;">
+          <el-pagination
+            small
+            layout="prev, pager, next"
+            :total="50"
+            @current-change="handleCurrentChange">
+          </el-pagination>
+        </div>
+
+      </div>
     </div>
+    
 </template>
 
 <script>
