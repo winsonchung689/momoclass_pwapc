@@ -86,17 +86,24 @@
         </el-upload>
         <div>学生名: {{ leave_student }}</div>
         <div>时间段: {{ leave_duration }}</div>
-        <el-input
-          placeholder="请输入课堂名称"
-          v-model="class_name"
-          clearable>
-        </el-input>
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入课堂目标"
-          v-model="class_target">
-        </el-input>
+
+        <div style="width: 40%;">
+          <el-input
+            placeholder="请输入课堂名称"
+            v-model="class_name"
+            clearable>
+          </el-input>
+        </div>
+        <div style="width: 60%;">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4}"
+            placeholder="请输入课堂目标"
+            v-model="class_target">
+          </el-input>
+        </div>
+
+
         <div>
           积极度:
           <el-rate
@@ -118,13 +125,20 @@
             show-text>
           </el-rate>
         </div>
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入老师点评"
-          v-model="class_comment">
-        </el-input>
-        <el-button type="primary" @click="comment">提交</el-button>
+
+        <div style="width: 80%;">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4}"
+            placeholder="请输入老师点评"
+            v-model="class_comment">
+          </el-input>
+        </div>
+        
+        <div style="display: flex;justify-content: center; margin-top: 20px;">
+          <el-button type="primary" @click="comment">提交</el-button>
+        </div>
+        
       </div>
 
     </div>
@@ -490,13 +504,17 @@ export default {
       if(student_name == that.leave_student){
         that.tableData[that.index1].children[that.index2].comment_status = '已课评'
         that.isComment = false
+          that.$message({
+          message: '发布成功',
+          type: 'success'
+        });
       }else{
         that.$message({
         message: '发布失败',
         type: 'danger'
       });
       }
-      that.isCalender = true
+      // that.isCalender = true
 
     },
 

@@ -309,18 +309,22 @@
         <div>
         <el-button type="text"  @click="back">取消</el-button>
       </div>
-         <el-select v-model="value" placeholder="请选择">
+
+        <div style="width: 50%;">
+          <el-select v-model="value" placeholder="请选择星期">
             <el-option
               v-for="item in options"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
-        </el-select>
-        <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
-        <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
+          </el-select>
 
-        <div style="display: flex;flex-direction: row;"> 
+          <el-input v-model="subject_add" placeholder="请输入科目"></el-input>
+          <el-input v-model="class_number_add" placeholder="请输入班号"></el-input>
+        </div>
+        
+        <div style="display: flex;flex-direction: row; width: 80%;"> 
           <el-time-select
             placeholder="起始时间"
             v-model="start_time"
@@ -342,7 +346,7 @@
           </el-time-select>
         </div>
         
-        <div style="margin-left: 50%;margin-top: 10px;">
+        <div style="margin-top: 20px;display: flex;justify-content: center;">
           <el-button @click ="addArrangement" type="success" plain>确定</el-button>
         </div>
       </div>

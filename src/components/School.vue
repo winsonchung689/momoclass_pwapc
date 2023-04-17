@@ -39,7 +39,9 @@
           <el-input-number v-model="left_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
         </div>
 
-        <el-button type="primary" @click="submit_add">提交</el-button>
+        <div style="display: flex;justify-content: center; margin-top: 20px;">
+          <el-button type="primary" @click="submit_add">提交</el-button>
+        </div>
       </div>
       
       <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
