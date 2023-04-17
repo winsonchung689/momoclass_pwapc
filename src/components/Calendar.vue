@@ -343,6 +343,15 @@ export default {
         }
       }else if(type == 'comment'){
         if(comment_status == '课评'){
+          let string1 = that.leave_subject + ',' +that.sign_class_number + ',' +that.leave_duration
+          let string2 = subject + ',' + class_number + ',' + duration
+          console.log(string1,string2)
+
+          if(string1 != string2){
+            that.class_target = ''
+            that.class_name = ''
+          }
+
           that.button = 'comment'
           that.isComment = true
           that.isCalender = false
@@ -356,10 +365,11 @@ export default {
           that.positive = 5
           that.discipline = 5
           that.happiness = 5
-          that.class_target = ''
-          that.class_comment = ''
-          that.class_name = ''
-      
+        
+          that.class_comment = '',
+          that.fileList = [],
+          that.uuids =[]
+
         }else{
           that.$message({
             message: '学生' + comment_status,
@@ -503,7 +513,7 @@ export default {
       let student_name = data.student_name
       if(student_name == that.leave_student){
         that.tableData[that.index1].children[that.index2].comment_status = '已课评'
-        that.isComment = false
+        // that.isComment = false
           that.$message({
           message: '发布成功',
           type: 'success'
