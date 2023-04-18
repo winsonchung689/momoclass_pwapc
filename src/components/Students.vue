@@ -17,12 +17,12 @@
           </el-button-group>
         </div>
 
-        <div style="margin-left: 10%;"> 
+        <div v-if="isBoss" style="margin-left: 10%;"> 
           <el-autocomplete
             popper-class="my-autocomplete"
             v-model="state"
             :fetch-suggestions="querySearch"
-            placeholder="请输入内容"
+            placeholder="请输入学生名"
             @select="handleSelect">
             <template slot-scope="{ item }">
               <div class="name">{{ item.student_name }}</div>
@@ -62,7 +62,8 @@ export default {
       studio: this.$route.query.studio,
       header:'学生专区',
       allstudents:[],
-      state:''
+      state:'',
+      isBoss:false
     }
   },
 
@@ -75,10 +76,11 @@ export default {
       let that = this
 
       if(that.role === 'boss'){
+        that.isBoss = true
         let param = {
           studio: that.studio,
           student_name: 'all',
-          subject:'全科目'
+          subject:'全科目',
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data
