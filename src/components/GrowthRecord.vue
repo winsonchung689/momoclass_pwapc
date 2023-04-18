@@ -25,10 +25,9 @@
             <div>课堂名称: {{ item.class_name }}</div>
             <div>老师点评: {{ item.comment }}</div>
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
+            <el-divider></el-divider>
           </div>
-          <el-divider></el-divider>
         </div>
-
 
         <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;margin-left: 17%;background-color: #fff;">
           <el-pagination
