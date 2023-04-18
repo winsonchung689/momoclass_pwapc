@@ -71,7 +71,7 @@
                 <el-progress :percentage="item.percentage"></el-progress>
               </div>
             </div>
-            <div style="margin-left: 80%;">
+            <div style="margin-left: 83%;">
               <el-button style="font-size: smaller;" smaller @click="deleteRow(item.id,item.student_name)" type="danger" icon="el-icon-delete"></el-button>
             </div>
           </div>

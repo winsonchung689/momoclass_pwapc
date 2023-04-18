@@ -20,9 +20,9 @@
       <el-divider ></el-divider>
 
       <div v-if="isBoss" style="margin-top: 10px;">
-        <div style="display: flex;justify-content: row;">
-          <img style="width: 40px;height: 40px;margin-right: 20px;" src="@/assets/access.png" alt="">
-          <div style="margin-top: 10px;font-weight: bolder;font-size: medium;color: #4b415f5c;">权限管理</div>
+        <div @click="authorization()" class="card">
+          <img style="width: 40px;height: 40px;margin-right: 20px;margin-left: 30px;margin-top: 15px;" src="@/assets/access.png" alt="">
+          <div style="margin-top: 25px;font-weight: bolder;font-size: medium;color: #4b415f5c;">权限管理</div>
         </div>
         <el-divider bolder-style="dashed"></el-divider>
       </div>    
@@ -45,6 +45,8 @@ export default {
       openid: this.$route.query.openid,
       role: this.$route.query.role,
       studio: this.$route.query.studio,
+      subject: this.$route.query.subject,
+      comment_style: this.$route.query.comment_style,
       header:'个人中心',
       avatarurl:'',
       nick_name:'',
@@ -58,6 +60,7 @@ export default {
   },
 
   methods: {
+
     async getUser () {
       let that = this;
       let param = {
@@ -72,6 +75,10 @@ export default {
           that.expired_time = user_data.expired_time
           that.isBoss = true
         }
+    },
+
+    authorization () {
+      this.$router.push({ path: '/authorization', query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style } })
     },
 
     goOff() {
@@ -108,7 +115,16 @@ export default {
   justify-content: center;
   margin-top: 20%;
   flex-direction: column;
+}
 
+.card{
+  display: flex;
+  justify-content: row;
+  background-color:#d3e7e6;
+  width: 80%;
+  border-radius: 0.5rem;
+  height: 80px;
+  margin-left: 15px;
 }
 
 </style>
