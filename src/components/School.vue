@@ -8,12 +8,27 @@
       </div>
 
       <div style="margin-top: 15%;">
-        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;">
+
+        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;">
           <el-button-group>
             <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
-            <!-- <el-button type="primary">批量新增<i class="el-icon-upload el-icon--right"></i></el-button> -->
+            <el-button @click="getUser()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
         </div>
+
+        <div style="margin-left: 10%;"> 
+          <el-autocomplete
+            popper-class="my-autocomplete"
+            v-model="state"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入内容"
+            @select="handleSelect">
+            <template slot-scope="{ item }">
+              <div class="name">{{ item.student_name }}</div>
+            </template>
+          </el-autocomplete>
+        </div>
+
 
         <div v-if="isAdd" style="margin-bottom: 30px;">
           <div>
@@ -101,7 +116,9 @@ export default {
       left_amount:1,
       student_name:'',
       subject:'',
-      isStudent:true
+      isStudent:true,
+      state:'',
+      allstudents:[],
     }
   },
 
@@ -122,6 +139,7 @@ export default {
       const lessons_data = lessons.data
       // console.log(lessons_data)
       that.items =[]
+      that.allstudents = []
       for( var i in lessons_data){
           const total_amount = lessons_data[i].total_amount
           const left_amount = lessons_data[i].left_amount
@@ -154,6 +172,7 @@ export default {
           json.coins = coins
           json.id = id
           
+          that.allstudents.push(json)
           that.items.push(json)
       }
     },
@@ -252,6 +271,76 @@ export default {
     back () {
       this.isStudent = true
       this.isAdd = false
+    },
+
+    async handleSelect (item) {
+      let that = this
+      const student_name = item.student_name
+      let subject_get = student_name.split('_')[1]
+      let student_name_get = student_name.split('_')[0]
+      let param = {
+          studio: that.studio,
+          student_name: student_name_get,
+          subject:subject_get
+        }
+        const lessons = await HttpPost('/getLesson', param)
+        const lessons_data = lessons.data
+        that.items =[]
+        for( var i in lessons_data){
+          const total_amount = lessons_data[i].total_amount
+          const left_amount = lessons_data[i].left_amount
+          const subject = lessons_data[i].subject
+          const points = lessons_data[i].points
+          const studio = lessons_data[i].studio
+          const student_name = lessons_data[i].student_name
+          let avatarurl = lessons_data[i].avatarurl
+          if(avatarurl=='未绑定'){
+            avatarurl = "https://www.momoclasss.xyz:443/file/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
+          }
+          const parent = lessons_data[i].parent
+          const percentage = lessons_data[i].percent
+          const minus = lessons_data[i].minus
+          const coins = lessons_data[i].coins
+          const id = lessons_data[i].id
+
+
+          var json ={}
+          json.studio = studio
+          json.subject = subject
+          json.student_name = student_name
+          json.total_amount = total_amount
+          json.left_amount = left_amount
+          json.points = points
+          json.avatarurl = avatarurl
+          json.parent = parent
+          json.percentage = percentage
+          json.minus = minus
+          json.coins = coins
+          json.id = id
+          
+          that.items.push(json)
+        }
+    },
+
+    createFilter(queryString) {
+      return (list) => {
+        return (list.student_name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+
+    querySearch(queryString,cb) {
+      let that = this;      
+      var list = []
+      for(var i in that.allstudents){
+        let json ={}
+        let student_name = that.allstudents[i].student_name
+        let subject = that.allstudents[i].subject
+        json.student_name = student_name + '_' + subject
+        list.push(json)
+      }
+      var results = queryString ? list.filter(this.createFilter(queryString)) : list;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
     },
 
   }

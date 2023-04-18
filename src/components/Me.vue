@@ -121,10 +121,10 @@ export default {
   display: flex;
   justify-content: row;
   background-color:#d3e7e6;
-  width: 80%;
+  width: 90%;
   border-radius: 0.5rem;
   height: 80px;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
 </style>
