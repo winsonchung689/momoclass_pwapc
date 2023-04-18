@@ -174,7 +174,7 @@ export default {
       leave_student:'',
       leave_duration:'00:00-00:00',
       leave_type:'',
-      mark_leave:'',
+      mark_leave:'无备注',
       leave_subject:'',
       index1:'',
       index2:'',
@@ -326,6 +326,8 @@ export default {
             message: '学生' + leave,
             type: 'warning'
           });
+
+          that.leaveRecord(subject,that.studio,student_name,leave.replace('已',''))
         }
       }else if(type == 'signin'){
         if(sign_up == '签到'){
@@ -343,6 +345,7 @@ export default {
             message: '学生' + sign_up,
             type: 'warning'
           });
+          that.signInRecord(subject,that.studio,student_name)
         }
       }else if(type == 'comment'){
         if(comment_status == '课评'){
@@ -378,6 +381,7 @@ export default {
             message: '学生' + comment_status,
             type: 'warning'
           });
+          that.growthRecord(subject,that.studio,student_name)
         }
       }
       
@@ -556,6 +560,18 @@ export default {
     
     goOff () {
       this.$router.go(-1);
+    },
+
+    signInRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
+    },
+
+    growthRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/growthrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
+    },
+
+    leaveRecord (subject,studio,student_name,leave_type) {
+      this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:leave_type } })
     },
 
   }
