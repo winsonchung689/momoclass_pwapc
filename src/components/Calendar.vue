@@ -164,6 +164,7 @@ export default {
       studio:this.$route.query.studio,
       role:this.$route.query.role,
       openid:this.$route.query.openid,
+      student_string:this.$route.query.student_string,
       header: '签到处',
       tableData: [],
       isShow:false,
@@ -192,7 +193,7 @@ export default {
       class_target:'',
       class_comment:'',
       class_name:'',
-      isCalender:true
+      isCalender:true,
     }
   },
 
@@ -279,24 +280,52 @@ export default {
             var children = []
             for(var i=0; i < details_data.length; i++ ){
               var json_detail = {}
-              const student_name = details_data[i].student_name
-              const id = details_data[i].id
-              const leave = details_data[i].leave
-              const sign_up = details_data[i].sign_up
-              const comment_status = details_data[i].comment_status
-              const subject = details_data[i].subject
-              const duration = details_data[i].duration
-              const class_number = details_data[i].class_number
+              if(that.role == 'boss'){
+                  const student_name = details_data[i].student_name
+                  const id = details_data[i].id
+                  const leave = details_data[i].leave
+                  const sign_up = details_data[i].sign_up
+                  const comment_status = details_data[i].comment_status
+                  const subject = details_data[i].subject
+                  const duration = details_data[i].duration
+                  const class_number = details_data[i].class_number
 
-              json_detail.student_name = student_name
-              json_detail.leave = leave
-              json_detail.sign_up = sign_up
-              json_detail.comment_status = comment_status
-              json_detail.id = id
-              json_detail.subject = subject
-              json_detail.duration = duration
-              json_detail.class_number = class_number
-              children.push(json_detail)
+                  json_detail.student_name = student_name
+                  json_detail.leave = leave
+                  json_detail.sign_up = sign_up
+                  json_detail.comment_status = comment_status
+                  json_detail.id = id
+                  json_detail.subject = subject
+                  json_detail.duration = duration
+                  json_detail.class_number = class_number
+                  children.push(json_detail)
+              }else if (that.role == 'client'){
+                  console.log(that.student_string)
+                  let studentlist = that.student_string.split(',')
+
+                  const student_name = details_data[i].student_name
+                  let index = studentlist.indexOf(student_name)
+
+                  if(index > 0){
+                    const id = details_data[i].id
+                    const leave = details_data[i].leave
+                    const sign_up = details_data[i].sign_up
+                    const comment_status = details_data[i].comment_status
+                    const subject = details_data[i].subject
+                    const duration = details_data[i].duration
+                    const class_number = details_data[i].class_number
+
+                    json_detail.student_name = student_name
+                    json_detail.leave = leave
+                    json_detail.sign_up = sign_up
+                    json_detail.comment_status = comment_status
+                    json_detail.id = id
+                    json_detail.subject = subject
+                    json_detail.duration = duration
+                    json_detail.class_number = class_number
+                    children.push(json_detail)
+                }
+              }
             }
             json.children = children
             that.tableData.push(json)

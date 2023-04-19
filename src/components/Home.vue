@@ -54,6 +54,7 @@
             <div slot="header" class="clearfix">
               <span style="font-weight: bolder;color: #767e69;font-size: medium;margin-top: 5px;">科目: {{ item.subject }}</span>
               <el-button v-if="isBoss" @click="calender(item.subject)" style="float: right;border-color: white; " type="text">签到</el-button>
+              <el-button v-if="isClient" @click="calender(item.subject,student_string)" style="float: right;border-color: white; " type="text">请假</el-button>
             </div>
             <div style="font-weight: bolder;color: #767e69;font-size: medium;">班级: {{ item.class_number }}</div>
             <div style="font-weight: bolder;color: #767e69;font-size: medium;">上课时间: {{ item.duration }}</div>
@@ -128,7 +129,9 @@ export default {
       date:'',
       schedule_data:[],
       comment_style:'',
-      isBoss:false
+      isBoss:false,
+      isClient:false,
+      student_string:''
     }
   },
   created () {
@@ -173,6 +176,7 @@ export default {
         that.isBoss = true
       }else if('client' == that.role){
         that.mode = '家长模式'
+        that.isClient = true
       }else if('visit' == that.role){
         that.mode = '游客模式'
       }else {
@@ -188,12 +192,22 @@ export default {
           date:that.date,
           openid:that.openid,
           subject: that.subject
-        }
+      }
+
       const schedule = await HttpPost('/getArrangement', param)
       let schedule_data = schedule.data;
-      // console.log(schedule_data)
-      that.schedule_data = schedule_data
+      console.log(schedule_data)
+      that.student_string = schedule_data[0].student_string
+      console.log(that.student_string)
 
+      that.schedule_data = []
+      for( var i in schedule_data){
+        let classes_count = schedule_data[i].classes_count
+        console.log(classes_count)
+        if(classes_count > 0){
+          that.schedule_data.push(schedule_data[i])
+        } 
+      }
     },
 
     click (url) {
@@ -223,7 +237,7 @@ export default {
     },
 
     calender (subject) {
-      this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+      this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
   }
