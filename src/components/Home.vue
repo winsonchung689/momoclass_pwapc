@@ -11,28 +11,18 @@
 
       <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
 
-          <!-- <div class="avatar">
-            <div style="margin-top: auto;">
-              <h1>HI,{{ nick_name }} ({{ mode }})</h1>
-            </div>
-            <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
-          </div> -->
-
-          <h2 @click="$router.push('/Login')">{{ hello }}</h2>
-
-          <div style="display: flex;justify-content: center;margin-bottom: 5px;">
-            <div class="today">
-              <h3>{{ today }}  {{ today_season }}</h3>
-              <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
-            </div>
+        <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+        <div style="display: flex;justify-content: center;margin-bottom: 5px;">
+          <div class="today">
+            <h3>{{ today }}  {{ today_season }}</h3>
+            <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
           </div>
+        </div>
         
         <div class="banner">
           <div class="banner_wrap">
-            <!-- 加上v-if="banner_data.length > 1" 来防止swiper出现无法循环播放的效果 -->
-            <swiper :options="swiperOption" v-if="images.length > 1" class="banner-swiper-container swiper-container">
+            <swiper :options="swiperOption" v-if="images.length > 1">
               <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-                
                 <div @click="click(item.url)" style="display: flex;justify-content: center; flex-direction: row;">
                   <div style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
                     <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div>
@@ -106,7 +96,8 @@ export default {
         observeParents: true,
         autoplay: {
           delay: 3000,
-          disableOnInteraction: false
+          disableOnInteraction: false,
+          reverseDirection:true
         }
       },
       openid: this.$route.query.openid,
@@ -314,6 +305,29 @@ header {
   width: 100%;
   height: 100%;
 }
+
+.banner .swiper-container .swiper-wrapper .swiper-slide-prev {
+    scale: 0.8 !important;
+}
+
+.banner .swiper-container  .swiper-wrapper .swiper-slide-next {
+    scale: 0.8 !important;
+}
+
+.banner .swiper-container .swiper-wrapper .swiper-slide-prev img {
+    scale: 0.8 !important;
+}
+
+.banner .swiper-container .swiper-wrapper .swiper-slide-next img {
+   scale: 0.8 !important;
+}
+
+.banner .swiper-container .swiper-wrapper .swiper-slide-active {
+   scale: 0.9;
+}
+
+
+
 
 .banner .swiper-container .swiper-wrapper .swiper-slide {
   height: 100%;
