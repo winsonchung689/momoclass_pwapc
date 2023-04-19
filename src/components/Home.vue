@@ -94,11 +94,11 @@ export default {
         speed: 800,
         observer: true,
         observeParents: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-          reverseDirection:false
-        }
+        // autoplay: {
+        //   delay: 3000,
+        //   disableOnInteraction: false,
+        //   reverseDirection:false
+        // }
       },
       openid: this.$route.query.openid,
       role: this.$route.query.role,
