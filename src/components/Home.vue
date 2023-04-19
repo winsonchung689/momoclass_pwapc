@@ -90,7 +90,7 @@ export default {
       nick_name: '你好',
       avatarurl: '',
       swiperOption: {
-        loop: true,
+        loop: false,
         speed: 800,
         observer: true,
         observeParents: true,
