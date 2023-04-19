@@ -24,11 +24,11 @@
             <swiper :options="swiperOption" v-if="images.length > 1">
               <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
                 <div @click="click(item.url)" style="display: flex;justify-content: center; flex-direction: row;">
-                  <div style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
+                  <div @click="click(item.url)" style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
                     <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div>
                   </div>
-                  <div style="width: 80%;">
-                    <img :src="item.img" alt="" style="border-radius: 0rem; scale: 1;">
+                  <div @click="click(item.url)" style="width: 80%;">
+                    <img :src="item.img" alt="" style="border-radius: 2rem; scale: 1;">
                   </div>
                 </div>
 
@@ -91,13 +91,13 @@ export default {
       avatarurl: '',
       swiperOption: {
         loop: true,
-        speed: 500,
+        speed: 800,
         observer: true,
         observeParents: true,
         autoplay: {
           delay: 3000,
           disableOnInteraction: false,
-          reverseDirection:true
+          reverseDirection:false
         }
       },
       openid: this.$route.query.openid,
@@ -219,6 +219,8 @@ export default {
 
     touchEnd(e) {
       if(this.diff >= 200){
+        this.isBoss = false
+        this.isClient = false
         this.getUser()
         this.$message({
         message: '刷新成功',
