@@ -50,9 +50,9 @@
                   <div style="display: flex;flex-direction: row;margin-left: 20px;justify-content: left;margin-bottom: 20px;">
                     <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
                     <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
-                    <el-button @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
+                    <el-button v-if="isBoss" @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
 
-                    <el-button @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
+                    <el-button v-if="isBoss" @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
                   </div>
                 </div>
             </template>
@@ -167,7 +167,7 @@ export default {
       student_string:this.$route.query.student_string,
       header: '签到处',
       tableData: [],
-      isShow:false,
+      isBoss:true,
       value: new Date(),
       date_time: '',
       dialogFormVisible: false,
@@ -223,7 +223,12 @@ export default {
 
   methods: {
     async getLesson () {
-      let that = this;
+      let that = this
+
+      if(that.role == 'client'){
+        that.isBoss = false
+      }
+
       if(that.date_time == ''){
         var year = new Date().getFullYear()
         var month = new Date().getMonth() + 1
