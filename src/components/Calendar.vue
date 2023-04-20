@@ -144,12 +144,12 @@
           <el-button @click="startRecorder" type="primary" >开始录音</el-button>
           <el-button @click="pauseRecorder" type="primary" >暂停录音</el-button>
           <el-button @click="resumeRecorder" type="primary" >继续录音</el-button>
-          <el-button @click="stopRecorder" type="primary" >停止录音</el-button>
           </el-button-group>
         </div>
 
         <div>
           <el-button-group>
+            <el-button @click="stopRecorder" type="primary" >停止录音</el-button>
           <el-button @click="playRecorder" type="success" >播放录音</el-button>
           <el-button @click="stopPlayRecorder" type="success" >停止播放</el-button>
           </el-button-group>
