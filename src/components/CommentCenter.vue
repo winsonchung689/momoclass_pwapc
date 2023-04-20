@@ -50,8 +50,8 @@
             </div>
 
             <div>老师点评: {{ item.comment }}</div>
-            <div >
-              <audio controls ref="audio" class="aud" :src="item.mp3_url"></audio>
+            <div v-if="item.isMp3">
+              <audio  controls ref="audio" class="aud" :src="item.mp3_url"></audio>
             </div>
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
             <div v-if="isBoss" @click=deleteRow(item.id) style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
@@ -124,9 +124,12 @@ export default {
       for( var i in comments_data){
           const uuids = comments_data[i].uuids
           const mp3_url_get = comments_data[i].mp3_url
-          if(mp3_url_get){
+          comments_data[i]["isMp3"] = false
+          console.log(mp3_url_get)
+          if(mp3_url_get.replace('undefined','').replace('no_mp3_url','').length > 0){
             let mp3_url = Mp3Url + mp3_url_get
             comments_data[i]["mp3_url"] = mp3_url
+            comments_data[i]["isMp3"] = true
           }
           
 

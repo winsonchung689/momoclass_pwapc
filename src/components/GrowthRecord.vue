@@ -24,7 +24,7 @@
             <div>学生: {{ subject }}_{{ student_name }}</div>
             <div>课堂名称: {{ item.class_name }}</div>
             <div>老师点评: {{ item.comment }}</div>
-            <div >
+            <div v-if="item.isMp3">
               <audio controls ref="audio" class="aud" :src="item.mp3_url"></audio>
             </div>
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
@@ -87,11 +87,13 @@ export default {
       let growth_data = growth.data;
       for( var i in growth_data){
           const uuids = growth_data[i].uuids
-
+          growth_data[i]["isMp3"] = false
           const mp3_url_get = growth_data[i].mp3_url
-          if(mp3_url_get){
+          console.log(mp3_url_get)
+          if(mp3_url_get.replace('undefined','').replace('no_mp3_url','').length > 0){
             let mp3_url = Mp3Url + mp3_url_get
             growth_data[i]["mp3_url"] = mp3_url
+            growth_data[i]["isMp3"] = true
           }
           
           let comment = growth_data[i].comment
@@ -113,7 +115,7 @@ export default {
           }
       }
       that.items = growth_data
-
+      console.log(growth_data)
     },
 
     goOff() {
