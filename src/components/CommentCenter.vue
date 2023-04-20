@@ -50,6 +50,9 @@
             </div>
 
             <div>老师点评: {{ item.comment }}</div>
+            <div >
+              <audio controls ref="audio" class="aud" :src="item.mp3_url"></audio>
+            </div>
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
             <div v-if="isBoss" @click=deleteRow(item.id) style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
             <el-divider></el-divider>
@@ -61,7 +64,7 @@
             <el-pagination
               medium
               layout="prev, pager, next"
-              :total="50"
+              :total="500"
               @current-change="handleCurrentChange">
             </el-pagination>
           </div>
@@ -74,6 +77,7 @@
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import { ImageUrl } from '@/api'
+import { Mp3Url } from '@/api'
 
 export default {
   name: 'GrowthRecord',
@@ -91,7 +95,7 @@ export default {
       ShowIndex:0,
       display: 'none',
       page:1,
-      isBoss:false
+      isBoss:false,
     }
   },
 
@@ -118,6 +122,18 @@ export default {
       // console.log(comments_data)
       for( var i in comments_data){
           const uuids = comments_data[i].uuids
+          const mp3_url_get = comments_data[i].mp3_url
+          if(mp3_url_get){
+            let mp3_url = Mp3Url + mp3_url_get
+            comments_data[i]["mp3_url"] = mp3_url
+          }
+          
+
+          let comment = comments_data[i].comment
+          if(comment == 'no_comment'){
+            comments_data[i]["comment"] = '暂无文字点评'
+          }
+
           let images =[]
           if(uuids){
             let uuidslist =uuids.split(",");
@@ -128,10 +144,11 @@ export default {
                 }
                 images.push(json);
             }
-            comments_data[i]["images"] = images;
+            comments_data[i]["images"] = images
           }
       }
-      // console.log(comments_data)
+      
+      console.log(comments_data)
       that.items = comments_data
 
     },

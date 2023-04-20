@@ -37,6 +37,8 @@ export function UploadFile (url, formData) {
 
 export const ImageUrl = baseUrl + '/file/uploadimages/'
 
+export const Mp3Url = baseUrl + '/file/uploadMP3/'
+
 export function uploadImgToBase64 (file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()

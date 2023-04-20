@@ -24,6 +24,9 @@
             <div>学生: {{ subject }}_{{ student_name }}</div>
             <div>课堂名称: {{ item.class_name }}</div>
             <div>老师点评: {{ item.comment }}</div>
+            <div >
+              <audio controls ref="audio" class="aud" :src="item.mp3_url"></audio>
+            </div>
             <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
             <el-divider></el-divider>
           </div>
@@ -47,6 +50,7 @@
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import { ImageUrl } from '@/api'
+import { Mp3Url } from '@/api'
 
 export default {
   name: 'GrowthRecord',
@@ -82,6 +86,18 @@ export default {
       let growth_data = growth.data;
       for( var i in growth_data){
           const uuids = growth_data[i].uuids
+
+          const mp3_url_get = growth_data[i].mp3_url
+          if(mp3_url_get){
+            let mp3_url = Mp3Url + mp3_url_get
+            growth_data[i]["mp3_url"] = mp3_url
+          }
+          
+          let comment = growth_data[i].comment
+          if(comment == 'no_comment'){
+            growth_data[i]["comment"] = '暂无文字点评'
+          }
+
           let images =[]
           if(uuids){
             let uuidslist =uuids.split(",");
