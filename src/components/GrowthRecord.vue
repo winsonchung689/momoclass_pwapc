@@ -32,11 +32,12 @@
           </div>
         </div>
 
-        <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;margin-left: 17%;background-color: #fff;">
+        <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;background-color: #fff;width: 100%;">
           <el-pagination
             medium
+            background
             layout="prev, pager, next"
-            :total="50"
+            :total="500"
             @current-change="handleCurrentChange">
           </el-pagination>
         </div>
