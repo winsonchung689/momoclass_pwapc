@@ -30,6 +30,7 @@ export default {
     sendDataToServer(){
         if(this.webSocket.readyState === 1){
             this.webSocket.send('来自前端的数据')
+            console.log('客户端')
         }else{
             throw Error('未连接')
         }
@@ -63,6 +64,7 @@ export default {
     },
 
     wsMessageHandler(e){
+        console.log('收到信息')
         console.log(e)
     },
 
