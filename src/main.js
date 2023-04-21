@@ -10,7 +10,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
+import Notifications from 'vue-notification'
 
+Vue.use(Notifications)
 Vue.use(Preview)
 Vue.use(ElementUI)
 Vue.config.productionTip = false

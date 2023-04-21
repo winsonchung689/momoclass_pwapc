@@ -39,6 +39,13 @@
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
+        <div>
+        推送
+        <WebSocket></WebSocket>
+        <button @click="push"> push</button>
+        </div>
+
+
         <div v-for="(item ,index) in schedule_data" :key="index">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -52,22 +59,24 @@
             <div style="font-weight: bolder;color: #767e69;font-size: medium;">已签到: {{ item.sign_count }}</div>
           </el-card>
         </div>
-        
 
       </div>
     </div>
 </template>
 
 <script>
+
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import WebSocket from '@/components/WebSocket'
 
 export default {
   name: 'Home',
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
+    WebSocket
   },
   data () {
     return {
@@ -187,14 +196,14 @@ export default {
 
       const schedule = await HttpPost('/getArrangement', param)
       let schedule_data = schedule.data;
-      console.log(schedule_data)
+      // console.log(schedule_data)
       that.student_string = schedule_data[0].student_string
-      console.log(that.student_string)
+      // console.log(that.student_string)
 
       that.schedule_data = []
       for( var i in schedule_data){
         let classes_count = schedule_data[i].classes_count
-        console.log(classes_count)
+        // console.log(classes_count)
         if(classes_count > 0){
           that.schedule_data.push(schedule_data[i])
         } 
@@ -232,6 +241,13 @@ export default {
     calender (subject) {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
+
+    async push(){
+      let param = {
+        
+      }
+      await HttpGet('/websocket/pushone', param)
+    }
 
   }
 }
