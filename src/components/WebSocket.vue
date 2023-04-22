@@ -1,5 +1,8 @@
 <template>
-
+  <div>
+    <audio src='../assets/notification.mp3' ref="audio" class="aud">
+    </audio>
+  </div>
 </template>
 
 <script>
@@ -12,7 +15,9 @@ export default {
         webSocket:null,
         ws:'',
         wsTimer:null,
-        openid:''
+        openid:'',
+        isAudio:false,
+        mp3url:''
     }
   },
 
@@ -23,6 +28,9 @@ export default {
 
   created () {
 
+  },
+
+  sockets:{
   },
 
   methods: {
@@ -90,9 +98,18 @@ export default {
                 message: data,
                 duration: 0
             });
+        this.audio();
         }
     },
 
+    audio(){
+
+      new Audio("../assets/notification.wav").play(); 
+      // let music = new Audio("../assets/notification.mp3"); 
+      // music = require("../assets/notification.mp3");
+      // this.$refs.audio.src = music;
+      // this.$refs.audio.play();
+    },
 
     wsErrorHandler(event){
         console.log(event,'error')

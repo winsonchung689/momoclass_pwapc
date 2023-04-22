@@ -37,10 +37,14 @@
           </div>
         </div>
 
+
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
-        <WebSocket></WebSocket>
-
+        <div>
+          <WebSocket></WebSocket>
+          
+        </div>
+        
         <div v-for="(item ,index) in schedule_data" :key="index">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -126,7 +130,8 @@ export default {
       comment_style:'',
       isBoss:false,
       isClient:false,
-      student_string:''
+      student_string:'',
+      mp3url:''
     }
   },
   created () {
@@ -237,11 +242,12 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
-    // async push(){
-    //   let param = {}
-    //   await HttpGet('/websocket/sendNotification?openid='+ this.openid + '&message=aaa', param)
+    // audio(){
+    //   let music = new Audio(); 
+    //   music = require("../assets/notification.mp3");
+    //   this.$refs.audio.src = music;
+    //   this.$refs.audio.play();
     // }
-
   }
 }
 </script>
