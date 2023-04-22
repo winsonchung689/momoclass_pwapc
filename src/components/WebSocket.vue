@@ -1,12 +1,10 @@
 <template>
-    <el-button @click="sendDataToServer">click</el-button>
 
 </template>
 
 <script>
 export default {
   name: 'Websocket',
-
 
   data () {
     return {
@@ -16,7 +14,6 @@ export default {
         wsTimer:null,
         openid:''
     }
-  
   },
 
   async mounted(){
@@ -26,11 +23,9 @@ export default {
 
   created () {
 
-
   },
 
   methods: {
-
     getCookie () {
       if (document.cookie.length > 0) {
         var arr = document.cookie.split('; ')
@@ -59,15 +54,11 @@ export default {
     },
 
     wsInit() {
-
         this.getCookie()
-
         const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
         this.ws = wsuri
         if(!this.wsIsRun) return
-
         this.wsDestroy()
-
         this.webSocket = new WebSocket(this.ws)
         this.webSocket.addEventListener('open',this.wsOpenHandler)
         this.webSocket.addEventListener('message',this.wsMessageHandler)

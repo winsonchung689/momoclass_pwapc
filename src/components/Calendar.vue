@@ -613,9 +613,10 @@ export default {
       if(id){
         that.tableData[that.index1].children[that.index2].sign_up = '已签到'
 
-      let message = that.leave_student +'同学签到成功!  本次扣课:' + that.class_count + '课时'
-      let param = {}
-      await HttpGet('/websocket/sendNotification?openid='+ 'oRRfU5TCmjXtbw9WsxnekwJAa72M' + '&message=' + message, param)
+        let message = that.leave_student +'同学已签到!(本次扣课:' + that.class_count + '课时)'
+        let param = {}
+        await HttpGet('/websocket/sendNotification?openid='+ that.openid + '&message=' + message, param)
+        await HttpGet('/websocket/sendNotification?openid='+ openid + '&message=' + message, param)
       }
     },
 
