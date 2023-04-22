@@ -14,6 +14,7 @@ export default {
         webSocket:null,
         ws:'',
         wsTimer:null,
+        openid:''
     }
   
   },
@@ -24,20 +25,44 @@ export default {
   },
 
   created () {
+
+
   },
 
   methods: {
+
+    getCookie () {
+      if (document.cookie.length > 0) {
+        var arr = document.cookie.split('; ')
+        // console.log(arr)
+        for (var i = 0; i < arr.length; i++) {
+          var arr2 = arr[i].split('=')
+          if (arr2[0] === 'openid') {
+            this.openid = arr2[1]
+          }
+        }
+      } else {
+        console.log('cookie_openid 为空!')
+        setTimeout(() => {
+          this.$router.replace('/Login')
+        }, 3000)
+      }
+    },
+
     sendDataToServer(){
         if(this.webSocket.readyState === 1){
             this.webSocket.send('来自前端的数据')
-            console.log('客户端')
+            console.log('客户端已连接')
         }else{
             throw Error('未连接')
         }
     },
 
     wsInit() {
-        const wsuri = 'wss://www.momoclasss.xyz:443/websocket/baoba'
+
+        this.getCookie()
+
+        const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
         this.ws = wsuri
         if(!this.wsIsRun) return
 
@@ -65,8 +90,18 @@ export default {
 
     wsMessageHandler(e){
         console.log('收到信息')
-        console.log(e)
+        // console.log(e)
+        let data = e.data
+        console.log(data)
+        if(data != '成功'){
+            this.$notify({
+                title: '通知',
+                message: data,
+                duration: 0
+            });
+        }
     },
+
 
     wsErrorHandler(event){
         console.log(event,'error')

@@ -39,11 +39,11 @@
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
-        <div>
+        <!-- <div>
         推送
         <WebSocket></WebSocket>
         <button @click="push"> push</button>
-        </div>
+        </div> -->
 
 
         <div v-for="(item ,index) in schedule_data" :key="index">
@@ -242,12 +242,10 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
-    async push(){
-      let param = {
-        
-      }
-      await HttpGet('/websocket/pushone', param)
-    }
+    // async push(){
+    //   let param = {}
+    //   await HttpGet('/websocket/sendNotification?openid='+ this.openid + '&message=aaa', param)
+    // }
 
   }
 }

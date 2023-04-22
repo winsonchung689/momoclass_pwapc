@@ -607,9 +607,15 @@ export default {
       }
       const signin_verify = await HttpPost('/getSignUpByDateDuration', param1)
       let data = signin_verify.data[0]
+      console.log(data)
       let id = data.id
+      let openid = data.openid
       if(id){
         that.tableData[that.index1].children[that.index2].sign_up = '已签到'
+
+      let message = that.leave_student +'同学签到成功!  本次扣课:' + that.class_count + '课时'
+      let param = {}
+      await HttpGet('/websocket/sendNotification?openid='+ 'oRRfU5TCmjXtbw9WsxnekwJAa72M' + '&message=' + message, param)
       }
     },
 
