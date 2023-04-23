@@ -7,13 +7,13 @@
   "background_color": "white",
   "icons": [
     {
-      "src": "/assets/144.png",
-      "sizes": "144x144",
+      "src": "/assets/90.png",
+      "sizes": "90x90",
       "type": "image/png"
     },
     {
-      "src": "/assets/192.png",
-      "sizes": "192x192",
+      "src": "/assets/144.png",
+      "sizes": "144x144",
       "type": "image/png"
     },
     {
