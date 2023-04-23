@@ -101,6 +101,7 @@ export default {
         let loginParams = {
             studio: studio,
             nick_name: nick_name,
+            student_name:student_name
         };
 
         if (studio == '') {
