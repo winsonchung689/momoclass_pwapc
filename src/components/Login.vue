@@ -86,8 +86,6 @@ export default {
                     type: 'warning'
                 });
             }
-
-            that.clearCookie()
             that.setCookie(that.openid, 7)
         })
     },
@@ -135,17 +133,16 @@ export default {
             }
 
             that.$router.push({ path: '/Home', query: { openid: that.openid } })
-            that.clearCookie()
             that.setCookie(that.openid, 7)
         })
-
-
     },
 
     setCookie (openid, days) {
-      let date = new Date()
-      date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days)
-      window.document.cookie = 'openid=' + openid + ';path=/;expires=' + date.toGMTString()
+        let that = this
+        that.clearCookie()
+        let date = new Date()
+        date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days)
+        window.document.cookie = 'openid=' + openid + ';path=/;expires=' + date.toGMTString()
     },
 
     clearCookie () {
