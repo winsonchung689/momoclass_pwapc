@@ -1,11 +1,12 @@
 <template>
   <div>
-    <audio src='../assets/notification.mp3' ref="audio" class="aud">
-    </audio>
+    <!-- <audio id="audio" controls="controls" hidden src='../assets/notification.mp3' ref="audio" muted></audio> -->
+    <!-- <button @click="audio">test</button> -->
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'Websocket',
 
@@ -30,7 +31,8 @@ export default {
 
   },
 
-  sockets:{
+  watch:{
+
   },
 
   methods: {
@@ -88,27 +90,30 @@ export default {
     },
 
     wsMessageHandler(e){
+        let that = this
         console.log('收到信息')
         // console.log(e)
         let data = e.data
         console.log(data)
         if(data != '成功'){
-            this.$notify({
+          that.$notify({
                 title: '通知',
                 message: data,
                 duration: 0
             });
-        this.audio();
+          // that.audio();
+          this.audioPlay();
         }
     },
 
-    audio(){
-
-      new Audio("../assets/notification.wav").play(); 
+    async audio(){
+      // let that = this
+      // await audioPlay();
+      // await new Audio("../assets/notification.mp3").play(); 
       // let music = new Audio("../assets/notification.mp3"); 
       // music = require("../assets/notification.mp3");
-      // this.$refs.audio.src = music;
-      // this.$refs.audio.play();
+      // that.$refs.audio.currentTime = 0;
+      // that.$refs.audio.play();
     },
 
     wsErrorHandler(event){

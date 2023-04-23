@@ -197,9 +197,10 @@ export default {
       const schedule = await HttpPost('/getArrangement', param)
       let schedule_data = schedule.data;
       // console.log(schedule_data)
-      that.student_string = schedule_data[0].student_string
+      if(schedule_data.length > 0){
+        that.student_string = schedule_data[0].student_string
+      }
       // console.log(that.student_string)
-
       that.schedule_data = []
       for( var i in schedule_data){
         let classes_count = schedule_data[i].classes_count

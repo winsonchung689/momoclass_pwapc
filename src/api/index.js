@@ -49,3 +49,11 @@ export function uploadImgToBase64 (file) {
     reader.onerror = reject
   })
 }
+
+export function audioPlay() {
+   new Audio("../assets/notification.wav").play(); 
+  // let music = new Audio("../assets/notification.mp3"); 
+  // music = require("../assets/notification.mp3");
+  // this.$refs.audio.src = music;
+  // this.$refs.audio.play();
+}
