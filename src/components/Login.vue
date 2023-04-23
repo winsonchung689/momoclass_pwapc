@@ -74,7 +74,6 @@ export default {
             // console.log(res.data)
             try {
                 that.openid = res.data[0].openid
-                that.setCookie(that.openid, 7)
             } catch (error) {
                 console.log(error)
             }
@@ -87,6 +86,7 @@ export default {
                     type: 'warning'
                 });
             }
+            that.setCookie(that.openid, 7)
         })
     },
 
@@ -128,18 +128,18 @@ export default {
             // console.log(res.data)
             try {
                 that.openid = res.data[0].openid
-                that.setCookie(that.openid, 7)
             } catch (error) {
                 console.log(error)
             }
 
             that.$router.push({ path: '/Home', query: { openid: that.openid } })
+            that.setCookie(that.openid, 7)
         })
     },
 
     setCookie (openid, days) {
         let that = this
-        that.clearCookie()
+        // that.clearCookie()
         let date = new Date()
         date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days)
         window.document.cookie = 'openid=' + openid + ';path=/;expires=' + date.toGMTString()
