@@ -145,11 +145,15 @@ export default {
       const year = date.getFullYear()
       const month = date.getMonth()+1
       const day = date.getDate()
-      const weekday = date.getDay()
+      let weekday = date.getDay()
       that.today = year+'年'+month+'月'+day+'日'
       that.date = year+'-'+month+'-'+day
-      
+
+      if(weekday == 0){
+        weekday = 7
+      }
       that.weekday = weekday
+      console.log(weekday)
 
       let num = parseInt(month/4)
       // console.log(that.today,num)
