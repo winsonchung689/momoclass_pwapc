@@ -18,7 +18,12 @@ export default {
         wsTimer:null,
         openid:'',
         isAudio:false,
-        mp3url:''
+        mp3url:'',
+        lockReconnect:false,
+        timeoustObj:null,
+        timeout:28*1000,
+        serverTimeoutObj:null,
+        timeoutnum:null
     }
   },
 
@@ -75,6 +80,8 @@ export default {
         this.webSocket.addEventListener('error',this.wsErrorHandler)
         this.webSocket.addEventListener('close',this.wsCloseHandler)
 
+
+
         clearInterval(this.wsTimer)
         this.wsTimer = setInterval(()=>{
             if(this.webSocket.readyState === 1){
@@ -85,8 +92,51 @@ export default {
         },3000)
     },
 
+    reconnect() {
+        console.log('reconnecting...')
+        var that = this;
+        if(that.lockReconnect) {
+          return;
+        }
+        that.lockReconnect = true;
+        that.timeoutnum && clearTimeout(that.timeoutnum);
+        that.timeoutnum = setTimeout(function () {
+          that.wsInit();
+          that.lockReconnect = false;
+        },5000);
+    },
+
+
+    reset(){
+      let that = this
+      clearTimeout(that.timeoustObj)
+      clearTimeout(that.serverTimeoutObj)
+      that.start()
+    },
+
+    start(){
+      console.log('heartbeat is starting...')
+      var self = this
+      self.timeoustObj && clearTimeout(self.timeoustObj)
+      self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj)
+      self.timeoustObj = setTimeout(function(){
+        if(self.ws.readyState == 1){
+          self.ws.send("heartCheck")
+        }else{
+          self.reconnect()
+        }
+
+        self.serverTimeoutObj = setTimeout(function() {
+          self.ws.close()
+        },self.timeout)
+      },self.timeout)
+
+    },
+
+
     wsOpenHandler(event){
         console.log('ws builded')
+        this.start()
     },
 
     wsMessageHandler(e){
@@ -104,6 +154,7 @@ export default {
           // that.audio();
           this.audioPlay();
         }
+        that.reset();
     },
 
     async audio(){
@@ -118,10 +169,12 @@ export default {
 
     wsErrorHandler(event){
         console.log(event,'error')
+        this.reconnect();
     },
     
     wsCloseHandler(event){
         console.log('closed')
+        this.reconnect();
     },
 
     wsDestroy(){
