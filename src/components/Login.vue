@@ -74,6 +74,7 @@ export default {
             // console.log(res.data)
             try {
                 that.openid = res.data[0].openid
+                that.setCookie(that.openid, 7)
             } catch (error) {
                 console.log(error)
             }
@@ -86,7 +87,6 @@ export default {
                     type: 'warning'
                 });
             }
-            that.setCookie(that.openid, 7)
         })
     },
 
@@ -128,12 +128,12 @@ export default {
             // console.log(res.data)
             try {
                 that.openid = res.data[0].openid
+                that.setCookie(that.openid, 7)
             } catch (error) {
                 console.log(error)
             }
 
             that.$router.push({ path: '/Home', query: { openid: that.openid } })
-            that.setCookie(that.openid, 7)
         })
     },
 
@@ -146,7 +146,10 @@ export default {
     },
 
     clearCookie () {
-      this.setCookie('', '', 0)
+        let openid = ''
+        let date = -1
+        window.document.cookie = 'openid=' + openid + ';path=/;expires=' + date.toGMTString()
+
     }
   }
 }
