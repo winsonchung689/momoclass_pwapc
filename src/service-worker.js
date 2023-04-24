@@ -43,13 +43,16 @@ workbox.routing.registerRoute(
 // workbox.precaching.precacheAndRoute(self.__precacheManifest || [])
 
 
-self.addEventListener('visibilitychange', function() {
-  if (document.visibilityState === 'visible') {
-      console.log('APP resumed');
-      window.location.reload();
-  }
-});
+// self.addEventListener('visibilitychange', function() {
+//   if (document.visibilityState === 'visible') {
+//       console.log('APP resumed');
+//       window.location.reload();
+//   }
+// });
 
+self.addEventListener('install', function(e) {
+  console.log('[Service Worker] Install');
+});
 
 
 self.addEventListener('push', function (event) {

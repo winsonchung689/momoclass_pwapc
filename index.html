@@ -9,6 +9,17 @@
     <link rel="manifest" href="./manifest.json" />
     <link rel="shortcut icon" type="image/x-icon" href="./src/assets/favicon.ico" /> 
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "3518c27c-1aa0-474b-9e72-08175cde90f6",
+        });
+      });
+    </script>
+
   </head>
   <body>
     <div id="app"></div>
@@ -30,19 +41,17 @@
       } 
 
       function subscribeUser(swRegistration) {
-          console.log('aa')
-          const applicationServerPublicKey = "BBlY_5OeDkp2zl_Hx9jFxymKyK4kQKZdzoCoe0L5RqpiV2eK0t4zx-d3JPHlISZ0P1nQdSZsxuA5SRlDB0MZWLw";
+          console.log(swRegistration)
+          
+          const applicationServerPublicKey = "BDdM_dKNwrUOLmJ9DGv_jdjZeO6oo8cDYoZ8_Cj6HGBixcHlAMwdhsZozE7djsP_ugz1SeRCv-4IbIA_v38J67U";
           const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+          // console.log(applicationServerKey)
           swRegistration.pushManager.subscribe({
               userVisibleOnly: true,
               applicationServerKey: applicationServerKey
-          })
-          // 用户同意
-          .then(function(subscription) {
+          }).then(function(subscription) {
+              console.log('aa')
               console.log('User is subscribed:', JSON.stringify(subscription));
-              jQuery.post("/add-subscription.php", {subscription: JSON.stringify(subscription)}, function(result) {
-                  console.log(result);
-              });
           })
           // 用户不同意或者生成失败
           .catch(function(err) {
@@ -52,24 +61,25 @@
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
+          // console.log(registration)
 
           Notification.requestPermission().then(status => {
+            console.log(status)
           if (status === 'granted') {
               registration.showNotification('title')
             }
           })
 
-          if (window.PushManager) {
-            registration.pushManager.getSubscription().then(subscription => {
-                  // 如果用户没有订阅
-                  if (!subscription) {
-                      subscribeUser(registration);
-                      // console.log("You don't have subscribed our notification");
-                  } else {
-                      console.log("You have subscribed our notification");
-                  }       
-              });     
-          }
+          registration.pushManager.getSubscription()
+              .then(function(subscription) {
+                console.log(subscription)
+                if (subscription) {
+                  console.log(JSON.stringify(subscription));
+                } else {
+                  console.log('没有订阅');
+                  // subscribeUser(registration);
+                }
+              });
 
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
         }).catch(function (err) {

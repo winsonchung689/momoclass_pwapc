@@ -39,10 +39,10 @@
 
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
-
+<!-- 
         <div>
           <WebSocket></WebSocket>
-        </div>
+        </div> -->
         
         <div v-for="(item ,index) in schedule_data" :key="index">
           <el-card class="box-card">
