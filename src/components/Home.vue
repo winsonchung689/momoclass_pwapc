@@ -42,7 +42,6 @@
 
         <div>
           <WebSocket></WebSocket>
-          
         </div>
         
         <div v-for="(item ,index) in schedule_data" :key="index">

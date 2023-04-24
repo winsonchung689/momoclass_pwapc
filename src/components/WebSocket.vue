@@ -144,7 +144,6 @@ export default {
         console.log('收到信息')
         // console.log(e)
         let data = e.data
-        console.log(data)
         if(data != '成功'){
           that.$notify({
                 title: '通知',
