@@ -75,7 +75,8 @@
 
           Notification.requestPermission().then(status => {
             console.log('notification: ',status)
-          if (status === 'granted') {
+          if (status == 'granted') {
+              console.log('show title')
               registration.showNotification('title')
             }
           })
