@@ -24,7 +24,6 @@
   <body>
     <div id="app"></div>
     <script>
-      import { HttpGet } from '@/api'
 
       function urlB64ToUint8Array(base64String) {
           const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -86,7 +85,6 @@
                 console.log(subscription)
                 if (subscription) {
                   console.log(JSON.stringify(subscription));
-                  HttpGet('/websocket/send?subscriptionJson='+ JSON.stringify(subscription) )
                 } else {
                   console.log('没有订阅');
                   subscribeUser(registration);

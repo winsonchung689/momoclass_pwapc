@@ -247,36 +247,11 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
-    test(){
-      console.log('massage is sending ...')
-      const webpush = require('web-push')
+   async test(){
 
-      const VAPIDKeys = {
-        publicKey : 'BLCgkVlBgC37Mk-8n0G0GMXyXiLVJDudK6A1DCGqLvaeu87B-GZw9jzzybRJ4vZE5BxYGhNGePeiDRWj06bit2o',
-        privateKey : 'NulDpKbxecsYor6p1DVhWOm1j3e2VGHRxxmP__B3f-w'
-      }
+      let subscription = '{"endpoint":"https://fcm.googleapis.com/fcm/send/chI5EHyMVGc:APA91bGVbVuCd6j4VifKCivmVeh76Fxo9PZaBC6I8bidS67xUOkWb4qj0JmRtkZACjUkml89W72yre0WPpwoI4moUImWoEzzYM8dL61IgDNVvbmgMJde5R3wxVG02R3Ouuimpt_TVk_c","expirationTime":null,"keys":{"p256dh":"BP6BsEuxwaXbf8VKVGm2WHXebDjEf68ieKfPfPKx6r7ZTeEc1DqSJtaiJAst_WavQy9JkUcKpxYR0a0kAIpqBvQ","auth":"3rvUSabrlI2KTLWrWaaeag"}}'
+      await HttpGet('/websocket/send?subscriptionJson='+ subscription )
 
-      webpush.setVapidDetails(
-        'mailto:winsonchung0215@icloud.com',
-        VAPIDKeys.publicKey,
-        VAPIDKeys.privateKey,
-      )
-
-
-      let subscription={
-        endpoint:"https://web.push.apple.com/QAIj5rycemg6uuU3YkbSHV7gvzSyGe2XZ4uEfCjl-CxlgCBGl43buYledZK-ykSOqhcfeMy-Vp44I33wfAMQcJQU1z8DFYhhLYQrwv7BhbTI1_C2V0Pkt63feiGPscZBr_RNjrHgtMyiwZ9OnkDvOeaW9HvbWMNmDtc1wKq6-Pw",
-        expirationTime:null,
-        keys:{
-          auth:"7AdVTWugiGfFygcbs9vgoA",
-          p256dh:"BNpN8Boxt48ZMXoGllBtD8lI81QNqQw6C3OleQNbAGmHKmgxoesuhZbYV1QeeEh362VpsTZCtdOqiyUP1TU-MYo"
-        }
-        }
-
-      let data = 'Your Push Payload Text'
-
-      webpush.sendNotification(subscription,data).then((res) => {
-        console.log(res)
-      })
       
     }
   }
