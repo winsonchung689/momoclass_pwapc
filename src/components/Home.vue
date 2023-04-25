@@ -39,10 +39,11 @@
 
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
-<!-- 
+
         <div>
-          <WebSocket></WebSocket>
-        </div> -->
+          <!-- <WebSocket></WebSocket> -->
+          <button @click="test()">test</button>
+        </div>
         
         <div v-for="(item ,index) in schedule_data" :key="index">
           <el-card class="box-card">
@@ -246,12 +247,35 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
-    // audio(){
-    //   let music = new Audio(); 
-    //   music = require("../assets/notification.mp3");
-    //   this.$refs.audio.src = music;
-    //   this.$refs.audio.play();
-    // }
+    test(){
+      const webpush = require('web-push')
+
+      const VAPIDKeys = {
+        publicKey : 'BLCgkVlBgC37Mk-8n0G0GMXyXiLVJDudK6A1DCGqLvaeu87B-GZw9jzzybRJ4vZE5BxYGhNGePeiDRWj06bit2o',
+        privateKey : 'NulDpKbxecsYor6p1DVhWOm1j3e2VGHRxxmP__B3f-w'
+      }
+
+      webpush.setVapidDetails(
+        'mailto:winsonchung0215@icloud.com',
+        VAPIDKeys.publicKey,
+        VAPIDKeys.privateKey,
+      )
+
+      let subscription={
+        endpoint:"https://updates.push.services.mozilla.com/wpush/v2/gAAAAABkRn683oignTvDt7Ph7G8Gxp0jlmrG0XqRoXoVtYD8O1na46lZrLvDGTNHwYPik3aLAoxfuJTg00ZHpt4f8EWP27unXCdBlzgFktDdcqLpVSn_oK7vTRYOQ-0Iiv-siqkhslv7o02EvvdYRgVm32k3oIC6KttHdgZZqstMj_We31R_Zrw",
+        expirationTime:null,
+        keys:{
+          auth:"vICNWlg_ANzjtrGGwZ_ILA",
+          p256dh:"BKb0vuN4pC9TSVfbIxQ1fBEps_SP2u6Nhq_h_lkZD6sIAUVtHB7DGt2xf0AVUc4xb5qBk-31t8oPsj07fEENALk"}
+      }
+
+      let data = 'Your Push Payload Text'
+
+      webpush.sendNotification(subscription,data).then((res) => {
+        console.log(res)
+      })
+      
+    }
   }
 }
 </script>

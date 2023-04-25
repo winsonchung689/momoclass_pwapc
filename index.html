@@ -43,7 +43,7 @@
       function subscribeUser(swRegistration) {
           console.log(swRegistration)
           
-          const applicationServerPublicKey = "BDdM_dKNwrUOLmJ9DGv_jdjZeO6oo8cDYoZ8_Cj6HGBixcHlAMwdhsZozE7djsP_ugz1SeRCv-4IbIA_v38J67U";
+          const applicationServerPublicKey = "BLCgkVlBgC37Mk-8n0G0GMXyXiLVJDudK6A1DCGqLvaeu87B-GZw9jzzybRJ4vZE5BxYGhNGePeiDRWj06bit2o";
           const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
           // console.log(applicationServerKey)
           swRegistration.pushManager.permissionState({
@@ -67,7 +67,7 @@
                     console.log('no subscribed: ', err);
                 });
               }
-              
+
           })
           // 用户不同意或者生成失败
           .catch(function(err) {
