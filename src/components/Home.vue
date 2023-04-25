@@ -263,11 +263,11 @@ export default {
       )
 
       let subscription={
-        endpoint:"https://web.push.apple.com/QIQjuojDg2lqzPvtDK2DXTKJa7Q620XArv5bN8osR1h8eB9z6PA-c__tj2jq9HRMkEMDu1D2gRRqwWogOTZQurJb3X4KDdrKOZh_ULo4-e-nZR5-_2tnsRICSyJVI7WqmsIwqWTKavUhFaVyjiTJJsN_5e5aJknIyYokOry_hYA",
+        endpoint:"https://web.push.apple.com/QAIj5rycemg6uuU3YkbSHV7gvzSyGe2XZ4uEfCjl-CxlgCBGl43buYledZK-ykSOqhcfeMy-Vp44I33wfAMQcJQU1z8DFYhhLYQrwv7BhbTI1_C2V0Pkt63feiGPscZBr_RNjrHgtMyiwZ9OnkDvOeaW9HvbWMNmDtc1wKq6-Pw",
         expirationTime:null,
         keys:{
-          auth:"dn1LbpfSgHkysA0duyPm-w",
-          p256dh:"BNPwtC88mIDycURv7mvZKkW9cs7cgpqF_wRxHO0EYqBGWL854GnpFPCO-yXP_zyG8ThVlP2vGPM2s_gB1s-ylNU"
+          auth:"7AdVTWugiGfFygcbs9vgoA",
+          p256dh:"BNpN8Boxt48ZMXoGllBtD8lI81QNqQw6C3OleQNbAGmHKmgxoesuhZbYV1QeeEh362VpsTZCtdOqiyUP1TU-MYo"
         }
         }
 
