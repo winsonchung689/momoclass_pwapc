@@ -262,6 +262,7 @@ export default {
         VAPIDKeys.privateKey,
       )
 
+
       let subscription={
         endpoint:"https://web.push.apple.com/QAIj5rycemg6uuU3YkbSHV7gvzSyGe2XZ4uEfCjl-CxlgCBGl43buYledZK-ykSOqhcfeMy-Vp44I33wfAMQcJQU1z8DFYhhLYQrwv7BhbTI1_C2V0Pkt63feiGPscZBr_RNjrHgtMyiwZ9OnkDvOeaW9HvbWMNmDtc1wKq6-Pw",
         expirationTime:null,
