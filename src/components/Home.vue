@@ -262,12 +262,13 @@ export default {
       )
 
       let subscription={
-        endpoint:"https://updates.push.services.mozilla.com/wpush/v2/gAAAAABkRn683oignTvDt7Ph7G8Gxp0jlmrG0XqRoXoVtYD8O1na46lZrLvDGTNHwYPik3aLAoxfuJTg00ZHpt4f8EWP27unXCdBlzgFktDdcqLpVSn_oK7vTRYOQ-0Iiv-siqkhslv7o02EvvdYRgVm32k3oIC6KttHdgZZqstMj_We31R_Zrw",
+        endpoint:"https://updates.push.services.mozilla.com/wpush/v2/gAAAAABkRy4ckWSiyBgT6PGVsto01_ZnUMM5vM6UY01t1Sxz5MgK9WWl-0aTXkp22lheaQH9u97_J3PjDGb3uTXAa8dBQOFSS71diyuKdE9l74AEKMTC1F-QVlCaVDyHELQhsleaOOtq_dkpe8yLwtPs8t8-JTy4sUqYPI5Qp5zix-ltLNu2hMM",
         expirationTime:null,
         keys:{
-          auth:"vICNWlg_ANzjtrGGwZ_ILA",
-          p256dh:"BKb0vuN4pC9TSVfbIxQ1fBEps_SP2u6Nhq_h_lkZD6sIAUVtHB7DGt2xf0AVUc4xb5qBk-31t8oPsj07fEENALk"}
-      }
+          auth:"BU3xkd6_DneIUs6UfmfXRw",
+          p256dh:"BMA4W8_8ZnKdl0I9ktbVbSF5VvAIygAYmAC_PEt2owp-WAlDSj6SIwPaYyvtrka_w85xVOg3f4WTgw7mT3UOcvE"
+        }
+        }
 
       let data = 'Your Push Payload Text'
 
