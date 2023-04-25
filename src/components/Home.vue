@@ -248,6 +248,7 @@ export default {
     },
 
     test(){
+      console.log('massage is sending ...')
       const webpush = require('web-push')
 
       const VAPIDKeys = {
@@ -262,11 +263,11 @@ export default {
       )
 
       let subscription={
-        endpoint:"https://updates.push.services.mozilla.com/wpush/v2/gAAAAABkRy4ckWSiyBgT6PGVsto01_ZnUMM5vM6UY01t1Sxz5MgK9WWl-0aTXkp22lheaQH9u97_J3PjDGb3uTXAa8dBQOFSS71diyuKdE9l74AEKMTC1F-QVlCaVDyHELQhsleaOOtq_dkpe8yLwtPs8t8-JTy4sUqYPI5Qp5zix-ltLNu2hMM",
+        endpoint:"https://fcm.googleapis.com/fcm/send/chI5EHyMVGc:APA91bGVbVuCd6j4VifKCivmVeh76Fxo9PZaBC6I8bidS67xUOkWb4qj0JmRtkZACjUkml89W72yre0WPpwoI4moUImWoEzzYM8dL61IgDNVvbmgMJde5R3wxVG02R3Ouuimpt_TVk_c",
         expirationTime:null,
         keys:{
-          auth:"BU3xkd6_DneIUs6UfmfXRw",
-          p256dh:"BMA4W8_8ZnKdl0I9ktbVbSF5VvAIygAYmAC_PEt2owp-WAlDSj6SIwPaYyvtrka_w85xVOg3f4WTgw7mT3UOcvE"
+          auth:"3rvUSabrlI2KTLWrWaaeag",
+          p256dh:"BP6BsEuxwaXbf8VKVGm2WHXebDjEf68ieKfPfPKx6r7ZTeEc1DqSJtaiJAst_WavQy9JkUcKpxYR0a0kAIpqBvQ"
         }
         }
 

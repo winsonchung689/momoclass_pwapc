@@ -40,27 +40,22 @@
           return outputArray;
       } 
 
-      function subscribeUser(swRegistration) {
-          console.log(swRegistration)
-          
+      function subscribeUser(swRegistration) {          
           const applicationServerPublicKey = "BLCgkVlBgC37Mk-8n0G0GMXyXiLVJDudK6A1DCGqLvaeu87B-GZw9jzzybRJ4vZE5BxYGhNGePeiDRWj06bit2o";
           const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
-          // console.log(applicationServerKey)
+
           swRegistration.pushManager.permissionState({
               userVisibleOnly: true,
               applicationServerKey: applicationServerKey
           })
           .then(function(permission) {
-              console.log(permission)
               console.log('User is granted:', JSON.stringify(permission));
-
               if (permission === 'granted') {
                 swRegistration.pushManager.subscribe({
                     userVisibleOnly: true,
                     applicationServerKey: applicationServerKey
                 })
                 .then(function(subscription) {
-                    console.log(subscription)
                     console.log('User is subscribed:', JSON.stringify(subscription));
                 })
                 .catch(function(err) {
@@ -77,17 +72,15 @@
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
-          console.log(registration)
 
           Notification.requestPermission().then(status => {
-            console.log(status)
+            console.log('notification: ',status)
           if (status === 'granted') {
               registration.showNotification('title')
             }
           })
-
+          
           registration.pushManager.getSubscription().then(function(subscription) {
-                console.log(subscription)
                 if (subscription) {
                   console.log(JSON.stringify(subscription));
                 } else {
