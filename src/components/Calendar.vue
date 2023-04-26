@@ -618,16 +618,6 @@ export default {
         let param = {}
         await HttpGet('/websocket/sendNotification?openid='+ that.openid + '&message=' + message, param)
         await HttpGet('/websocket/sendNotification?openid='+ openid + '&message=' + message, param)
-        
-        Notification.requestPermission().then(status => {
-          console.log('notification: ',status)
-        if (status == 'granted') {
-            console.log('show title')
-            registration.showNotification(message)
-          }else{
-            
-          }
-        })
       }
     },
 
