@@ -43,7 +43,7 @@
         <div>
           <!-- <WebSocket></WebSocket> -->
           <button @click="test()">test</button>
-          <div class='onesignal-customlink-container'></div>
+          <!-- <div class='onesignal-customlink-container'></div> -->
         </div>
         
         <div v-for="(item ,index) in schedule_data" :key="index">
@@ -138,7 +138,7 @@ export default {
   },
   created () {
     this.getUser()
-    // this.toSubscription()
+    this.toSubscription()
   },
   methods: {
 
@@ -252,20 +252,20 @@ export default {
     },
 
    async test(){
-    console.log('aa')
-    this.$OneSignalVue.on('subscriptionChange', function(isSubscribed) {
-      console.log("The user's subscription state is now:", isSubscribed);
-    });
-      // let that = this
-      // let subscription = that.subscription
-      // let param ={
-      //   subscriptionJson:subscription,
-      //   payload:'test',
-      //   public_key: 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k',
-      //   private_key: '8M0ZLA-YgFcLfe8Rh9zwXC35US9eb9JRThCoYce6_yQ'
-      // }
-      // console.log(param)
-      // await HttpPost('/sendSubscriptionJson', param )
+    // console.log('aa')
+    // this.$OneSignalVue.on('subscriptionChange', function(isSubscribed) {
+    //   console.log("The user's subscription state is now:", isSubscribed);
+    // });
+      let that = this
+      let subscription = that.subscription
+      let param ={
+        subscriptionJson:subscription,
+        payload:'test',
+        public_key: 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k',
+        private_key: '8M0ZLA-YgFcLfe8Rh9zwXC35US9eb9JRThCoYce6_yQ'
+      }
+      console.log(param)
+      await HttpPost('/sendSubscriptionJson', param )
     },
 
 
