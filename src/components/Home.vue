@@ -254,7 +254,10 @@ export default {
       let that = this
       let subscription = that.subscription
       let param ={
-        subscriptionJson:subscription
+        subscriptionJson:subscription,
+        payload:'test',
+        public_key: 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k',
+        private_key: '8M0ZLA-YgFcLfe8Rh9zwXC35US9eb9JRThCoYce6_yQ'
       }
       console.log(param)
       await HttpPost('/sendSubscriptionJson', param )
@@ -277,8 +280,8 @@ export default {
     },
 
     subscribeUser(swRegistration) {          
-        const applicationServerPublicKey = "BLCgkVlBgC37Mk-8n0G0GMXyXiLVJDudK6A1DCGqLvaeu87B-GZw9jzzybRJ4vZE5BxYGhNGePeiDRWj06bit2o";
-        const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+        const applicationServerPublicKey = 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k'
+        const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey)
 
         swRegistration.pushManager.permissionState({
             userVisibleOnly: true,

@@ -69,3 +69,13 @@ self.addEventListener('push', function (event) {
    );
  });
 
+ self.onpush = pushEvent => {
+  // 服务器推送的消息文本
+  console.log(pushEvent.data.text())
+  // 保持 service worker 活动到显示通知 resolve
+  pushEvent.waitUntil(
+    // 将服务器推送的消息作为通知显示
+    self.registration.showNotification(pushEvent.data.text())
+  )
+}
+
