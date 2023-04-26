@@ -252,16 +252,20 @@ export default {
     },
 
    async test(){
-      let that = this
-      let subscription = that.subscription
-      let param ={
-        subscriptionJson:subscription,
-        payload:'test',
-        public_key: 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k',
-        private_key: '8M0ZLA-YgFcLfe8Rh9zwXC35US9eb9JRThCoYce6_yQ'
-      }
-      console.log(param)
-      await HttpPost('/sendSubscriptionJson', param )
+    console.log('aa')
+    this.$OneSignalVue.on('subscriptionChange', function(isSubscribed) {
+      console.log("The user's subscription state is now:", isSubscribed);
+    });
+      // let that = this
+      // let subscription = that.subscription
+      // let param ={
+      //   subscriptionJson:subscription,
+      //   payload:'test',
+      //   public_key: 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k',
+      //   private_key: '8M0ZLA-YgFcLfe8Rh9zwXC35US9eb9JRThCoYce6_yQ'
+      // }
+      // console.log(param)
+      // await HttpPost('/sendSubscriptionJson', param )
     },
 
 
