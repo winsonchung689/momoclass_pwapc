@@ -281,7 +281,7 @@ export default {
 
     subscribeUser(swRegistration) {          
         const applicationServerPublicKey = 'BIMoLG9qAvOHPSq1aWqNcsQY-saqypwEuCufqOXde-ajAKYqoYCogsZiXo1nh0cWdGVxvMqfUQVmADhZ3btjg3k'
-        const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey)
+        const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
 
         swRegistration.pushManager.permissionState({
             userVisibleOnly: true,
