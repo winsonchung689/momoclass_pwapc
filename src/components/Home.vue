@@ -329,6 +329,8 @@ export default {
         if (status == 'granted') {
             console.log('show title')
             registration.showNotification('title')
+          }else{
+            
           }
         })
         registration.pushManager.getSubscription().then(function(subscription) {
