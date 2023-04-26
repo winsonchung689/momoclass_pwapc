@@ -50,6 +50,11 @@ workbox.routing.registerRoute(
 //   }
 // });
 
+self.addEventListener("click", () => {
+  let promise = Notification.requestPermission();
+  // wait for permission
+});
+
 self.addEventListener('install', function(e) {
   console.log('[Service Worker] Install');
   self.registration.showNotification('[Service Worker] Install')
