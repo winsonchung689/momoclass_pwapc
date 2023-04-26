@@ -338,7 +338,7 @@ export default {
                   that.HttpPost('/updateSubscription',param)
               } else {
                 console.log('没有订阅');
-                subscribeUser(registration);
+                that.subscribeUser(registration);
               }
           });
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
