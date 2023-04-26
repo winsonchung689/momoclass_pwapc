@@ -13,10 +13,10 @@ import 'vue-photo-preview/dist/skin.css'
 import Notifications from 'vue-notification'
 import { audioPlay } from '@/api'
 import { HttpPost } from '@/api'
-// import Vue from 'vue'
-// import OneSignalVue from 'onesignal-vue'
+import Vue from 'vue'
+import OneSignalVue from 'onesignal-vue'
 
-// Vue.use(OneSignalVue)
+Vue.use(OneSignalVue)
 Vue.prototype.HttpPost = HttpPost  
 Vue.prototype.audioPlay = audioPlay  
 Vue.use(Notifications)
@@ -31,6 +31,10 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
-})
+  template: '<App/>',
+  render: h => h(App),
+  beforeMount() {
+    this.$OneSignal.init({ appId: '3518c27c-1aa0-474b-9e72-08175cde90f6' });
+  }
+}).$mount('#app')
 
