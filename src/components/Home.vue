@@ -43,6 +43,7 @@
         <div>
           <!-- <WebSocket></WebSocket> -->
           <button @click="test()">test</button>
+          <div class='onesignal-customlink-container'></div>
         </div>
         
         <div v-for="(item ,index) in schedule_data" :key="index">
