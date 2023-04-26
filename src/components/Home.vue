@@ -324,13 +324,12 @@ export default {
       let openid = this.openid
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
+        
         Notification.requestPermission().then(status => {
           console.log('notification: ',status)
         if (status == 'granted') {
             console.log('show title')
-            registration.showNotification('title')
-          }else{
-            
+            registration.showNotification('通知已授权')
           }
         })
         registration.pushManager.getSubscription().then(function(subscription) {
