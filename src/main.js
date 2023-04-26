@@ -12,7 +12,9 @@ import Preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
 import Notifications from 'vue-notification'
 import { audioPlay } from '@/api'
+import { HttpPost } from '@/api'
 
+Vue.prototype.HttpPost = HttpPost  
 Vue.prototype.audioPlay = audioPlay  
 Vue.use(Notifications)
 Vue.use(Preview)

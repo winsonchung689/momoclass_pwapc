@@ -131,11 +131,13 @@ export default {
       isBoss:false,
       isClient:false,
       student_string:'',
-      mp3url:''
+      mp3url:'',
+      subscription:''
     }
   },
   created () {
-    this.getUser()
+    this.getUser(),
+    this.toSubscription()
   },
   methods: {
 
@@ -163,6 +165,7 @@ export default {
 
       const users = await HttpGet('/getUser?openid=' + this.openid)
       that.studio = users.data[0].studio
+      that.subscription = users.data[0].subscription
       if(that.studio.length>0){
         that.hello = '欢迎来到《' + that.studio + "》！"
       }else {
@@ -248,12 +251,100 @@ export default {
     },
 
    async test(){
+      let that = this
+      let subscription = that.subscription
+      let param ={
+        subscriptionJson:subscription
+      }
+      console.log(param)
+      await HttpPost('/sendSubscriptionJson', param )
+    },
 
-      let subscription = '{"endpoint":"https://fcm.googleapis.com/fcm/send/chI5EHyMVGc:APA91bGVbVuCd6j4VifKCivmVeh76Fxo9PZaBC6I8bidS67xUOkWb4qj0JmRtkZACjUkml89W72yre0WPpwoI4moUImWoEzzYM8dL61IgDNVvbmgMJde5R3wxVG02R3Ouuimpt_TVk_c","expirationTime":null,"keys":{"p256dh":"BP6BsEuxwaXbf8VKVGm2WHXebDjEf68ieKfPfPKx6r7ZTeEc1DqSJtaiJAst_WavQy9JkUcKpxYR0a0kAIpqBvQ","auth":"3rvUSabrlI2KTLWrWaaeag"}}'
-      await HttpGet('/websocket/send?subscriptionJson='+ subscription )
 
-      
+    urlB64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+          .replace(/\-/g, '+')
+          .replace(/_/g, '/');
+
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    },
+
+    subscribeUser(swRegistration) {          
+        const applicationServerPublicKey = "BLCgkVlBgC37Mk-8n0G0GMXyXiLVJDudK6A1DCGqLvaeu87B-GZw9jzzybRJ4vZE5BxYGhNGePeiDRWj06bit2o";
+        const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+
+        swRegistration.pushManager.permissionState({
+            userVisibleOnly: true,
+            applicationServerKey: applicationServerKey
+        })
+        .then(function(permission) {
+            console.log('User is granted:', JSON.stringify(permission));
+            if (permission === 'granted') {
+              swRegistration.pushManager.subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: applicationServerKey
+              })
+              .then(function(subscription) {
+                  console.log('User is subscribed:', JSON.stringify(subscription));
+                  let param = {
+                    openid:this.openid,
+                    subscription:JSON.stringify(subscription)
+                  }
+                  this.HttpPost('/updateSubscription',param)
+              })
+              .catch(function(err) {
+                  console.log('no subscribed: ', err);
+              });
+            }
+
+        })
+        // 用户不同意或者生成失败
+        .catch(function(err) {
+            console.log('no permission: ', err);
+        });
+    },
+
+    toSubscription(){
+      let that = this
+      let openid = this.openid
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
+        Notification.requestPermission().then(status => {
+          console.log('notification: ',status)
+        if (status == 'granted') {
+            console.log('show title')
+            registration.showNotification('title')
+          }
+        })
+        registration.pushManager.getSubscription().then(function(subscription) {
+              // console.log(subscription)
+              if (subscription) {
+                console.log('已经订阅');
+                console.log(JSON.stringify(subscription));
+                let param = {
+                    openid:openid,
+                    subscription:JSON.stringify(subscription)
+                  }
+                  that.HttpPost('/updateSubscription',param)
+              } else {
+                console.log('没有订阅');
+                subscribeUser(registration);
+              }
+          });
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function (err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+      }
     }
+
   }
 }
 </script>
