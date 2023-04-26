@@ -137,8 +137,8 @@ export default {
     }
   },
   created () {
-    this.getUser(),
-    this.toSubscription()
+    this.getUser()
+    // this.toSubscription()
   },
   methods: {
 

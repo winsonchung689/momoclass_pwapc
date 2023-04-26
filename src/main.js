@@ -13,7 +13,10 @@ import 'vue-photo-preview/dist/skin.css'
 import Notifications from 'vue-notification'
 import { audioPlay } from '@/api'
 import { HttpPost } from '@/api'
+// import Vue from 'vue'
+// import OneSignalVue from 'onesignal-vue'
 
+// Vue.use(OneSignalVue)
 Vue.prototype.HttpPost = HttpPost  
 Vue.prototype.audioPlay = audioPlay  
 Vue.use(Notifications)
@@ -30,3 +33,4 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
