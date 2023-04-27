@@ -284,9 +284,8 @@ export default {
       })
       .then(function () {
         console.log('取消订阅！')
+        subscriptionInit()
       })
-
-    this.subscriptionInit()
     },
 
     urlB64ToUint8Array(base64String) {
@@ -306,7 +305,6 @@ export default {
 
     subscribeUser() {     
         let that = this  
-        let subscriptionInit = that.subscriptionInit()
         let swRegistration = this.registration
         const applicationServerPublicKey = this.pulickey
         const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
@@ -324,7 +322,7 @@ export default {
               })
               .then(function(subscription) {
                   console.log('User is subscribed:', JSON.stringify(subscription));
-                  subscriptionInit
+                  subscriptionInit()
               })
               .catch(function(err) {
                   console.log('no subscribed: ', err);
