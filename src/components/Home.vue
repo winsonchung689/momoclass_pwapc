@@ -252,34 +252,30 @@ export default {
     },
 
    async test(){
-    // console.log('aa')
-    // this.$OneSignalVue.on('subscriptionChange', function(isSubscribed) {
-    //   console.log("The user's subscription state is now:", isSubscribed);
-    // });
-      // let that = this
+      let that = this
       let subscription = that.subscription
-      let param ={
-        subscriptionJson:subscription,
-        payload:'test',
-        public_key: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
-        private_key: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
-      }
-      console.log(param)
-      await HttpPost('/sendSubscriptionJson', param )
-
-      // const webpush = require('web-push')
-      // const vapidKeys = {
-      //   publicKey: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
-      //   privateKey: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
+      // let param ={
+      //   subscription:subscription,
+      //   message:'test',
+      //   // public_key: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
+      //   // private_key: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
       // }
-      // webpush.setVapidDetails(
-      //   'mailto:your-email@provider.com',
-      //   vapidKeys.publicKey,
-      //   vapidKeys.privateKey
-      // )
-      // webpush.setGCMAPIKey('<Your GCM API Key Here>')
+      // // console.log(param)
+      // await HttpPost('/sendSubscriptionJson', param )
 
-      // webpush.sendNotification(subscription, 'aaa')
+      const webpush = require('web-push')
+      const vapidKeys = {
+        publicKey: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
+        privateKey: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
+      }
+      webpush.setVapidDetails(
+        'mailto:your-email@provider.com',
+        vapidKeys.publicKey,
+        vapidKeys.privateKey
+      )
+      webpush.setGCMAPIKey('BBTlFdrD-2wGu50fiPgO2eMw2L9JW7Y6BGrt6nXmkXqxHnyX2SlXSy7EfFXCOzz0rxuubJcJFA86hQaTfdA0jXk')
+
+      webpush.sendNotification(JSON.parse(subscription), 'aaa')
 
     },
 
@@ -357,6 +353,15 @@ export default {
                     subscription:JSON.stringify(subscription)
                   }
                   that.HttpPost('/updateSubscription',param)
+
+                  let param1 ={
+                    subscription:JSON.stringify(subscription),
+                    message:'test'
+                    // public_key: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
+                    // private_key: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
+                  }
+                  // console.log(param)
+                  HttpPost('/sendSubscriptionJson', param1)
               } else {
                 console.log('没有订阅');
                 that.subscribeUser(registration);
