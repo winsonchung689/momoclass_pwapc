@@ -40,13 +40,11 @@
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
-        <div>
+        <div >
           <!-- <WebSocket></WebSocket> -->
-          <button @click="test()">test</button>
-          <button @click="subscribeUser()">subscribe</button>
-          <button @click="unsubscribeUser()">unsubscribe</button>
-          <div>{{ subsctiption_status }}</div>
-          <!-- <div class='onesignal-customlink-container'></div> -->
+          <div style="margin-left: 70%;">
+          <el-button @click="subscribe_button()" type="primary" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
+          </div>
         </div>
         
         <div v-for="(item ,index) in schedule_data" :key="index">
@@ -271,6 +269,14 @@ export default {
       console.log(res)
     },
 
+    subscribe_button(){
+      let that = this
+      if(that.subsctiption_status === '未订阅'){
+        that.subscribeUser()
+      }else{
+        that.unsubscribeUser()
+      }
+    },
 
     unsubscribeUser(){
       let swRegistration = this.registration
@@ -284,8 +290,10 @@ export default {
       })
       .then(function () {
         console.log('取消订阅！')
-        subscriptionInit()
       })
+
+      this.subsctiption_status='未订阅'
+
     },
 
     urlB64ToUint8Array(base64String) {
@@ -304,11 +312,9 @@ export default {
     },
 
     subscribeUser() {     
-        let that = this  
         let swRegistration = this.registration
         const applicationServerPublicKey = this.pulickey
         const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
-
         swRegistration.pushManager.permissionState({
             userVisibleOnly: true,
             applicationServerKey: applicationServerKey
@@ -322,7 +328,6 @@ export default {
               })
               .then(function(subscription) {
                   console.log('User is subscribed:', JSON.stringify(subscription));
-                  subscriptionInit()
               })
               .catch(function(err) {
                   console.log('no subscribed: ', err);
@@ -335,30 +340,21 @@ export default {
             console.log('no permission: ', err);
         });
 
-        
+        this.subsctiption_status='已订阅'
     },
 
-    subscriptionInit(){
+    async subscriptionInit(){
       let that = this
       let openid = that.openid
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
         
-        Notification.requestPermission().then(status => {
-          console.log('notification: ',status)
-        if (status == 'granted') {
-            console.log('通知已授权')
-            // registration.showNotification('通知已授权')
-          }else{
-            Notification.requestPermission();
-          }
-        })
         that.registration = registration
-        console.log(registration)
+        // console.log(registration)
 
         registration.pushManager.getSubscription().then(function(subscription) {
               if (subscription) {
-                console.log('已经订阅');
+                console.log('已订阅');
                 that.subsctiption_status = '已订阅'
                 console.log(JSON.stringify(subscription));
                 let param = {
@@ -367,13 +363,10 @@ export default {
                 }
                 that.HttpPost('/updateSubscription',param)
               } else {
-                console.log('没有订阅');
-                // that.subscribeUser(registration);
+                console.log('未订阅');
               }
           });
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-
-
       }).catch(function (err) {
         console.log('ServiceWorker registration failed: ', err);
       });
