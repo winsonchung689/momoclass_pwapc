@@ -342,7 +342,7 @@ export default {
           console.log('notification: ',status)
         if (status == 'granted') {
             console.log('show title')
-            registration.showNotification('通知已授权')
+            // registration.showNotification('通知已授权')
           }else{
             Notification.requestPermission();
           }

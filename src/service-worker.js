@@ -57,7 +57,7 @@ self.addEventListener("click", () => {
 
 self.addEventListener('install', function(e) {
   console.log('[Service Worker] Install');
-  self.registration.showNotification('[Service Worker] Install')
+  // self.registration.showNotification('[Service Worker] Install')
 });
 
 
