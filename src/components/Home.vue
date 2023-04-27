@@ -254,12 +254,6 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
-    async cancel(){
-      pushSubscription.unsubscribe().then(function () {
-        console.log('取消订阅成功！')
-      })
-    },
-
    async test(){
       let that = this
       let subscription = that.subscription
@@ -269,10 +263,24 @@ export default {
         privatekey: that.privatekey,
         payload:'test',
       }
-      let res = await HttpPost('/sendSubscriptionJson', param )
+      let res = await HttpPost('/sendSubscription', param )
       console.log(res)
     },
 
+
+    unsubscribeUser(swRegistration){
+      swRegistration.pushManager.getSubscription().then(function (pushSubscription) {
+      if (!pushSubscription) {
+        // 用户尚未订阅
+        return
+      }
+      // 取消订阅
+      return pushSubscription.unsubscribe()
+    })
+    .then(function () {
+      console.log('取消订阅！')
+    })
+    },
 
     urlB64ToUint8Array(base64String) {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -335,27 +343,35 @@ export default {
         if (status == 'granted') {
             console.log('show title')
             registration.showNotification('通知已授权')
+          }else{
+            Notification.requestPermission();
           }
         })
+
         registration.pushManager.getSubscription().then(function(subscription) {
               // console.log(subscription)
               if (subscription) {
                 console.log('已经订阅');
                 console.log(JSON.stringify(subscription));
-                let param = {
-                    openid:openid,
-                    subscription:JSON.stringify(subscription)
-                  }
-                  that.HttpPost('/updateSubscription',param)
+                that.unsubscribeUser(registration)
+                // let param = {
+                //     openid:openid,
+                //     subscription:JSON.stringify(subscription)
+                //   }
+                  // that.HttpPost('/updateSubscription',param)
               } else {
                 console.log('没有订阅');
-                that.subscribeUser(registration);
+                // that.subscribeUser(registration);
               }
           });
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
+
+
       }).catch(function (err) {
         console.log('ServiceWorker registration failed: ', err);
       });
+
+
       }
     }
 
