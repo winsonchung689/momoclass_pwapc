@@ -43,7 +43,9 @@
         <div>
           <!-- <WebSocket></WebSocket> -->
           <button @click="test()">test</button>
-          <button @click="cancel()">cancel</button>
+          <button @click="subscribeUser()">subscribe</button>
+          <button @click="unsubscribeUser()">unsubscribe</button>
+          <div>{{ subsctiption_status }}</div>
           <!-- <div class='onesignal-customlink-container'></div> -->
         </div>
         
@@ -134,14 +136,16 @@ export default {
       isClient:false,
       student_string:'',
       mp3url:'',
-      subscription:'',
+      subscription_get:'',
       pulickey:'BGVksyYnr7LQ2tjLt8Y6IELBlBS7W8IrOvVszRVuE0F97qvcV6qB_41BJ-pXPaDf6Ktqdg6AogGK_UUc3zf8Snw',
-      privatekey:'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE'
+      privatekey:'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE',
+      subsctiption_status:'未订阅',
+      registration:''
     }
   },
   created () {
     this.getUser()
-    this.toSubscription()
+    this.subscriptionInit()
   },
   methods: {
 
@@ -169,7 +173,7 @@ export default {
 
       const users = await HttpGet('/getUser?openid=' + this.openid)
       that.studio = users.data[0].studio
-      that.subscription = users.data[0].subscription
+      that.subscription_get = users.data[0].subscription
       if(that.studio.length>0){
         that.hello = '欢迎来到《' + that.studio + "》！"
       }else {
@@ -256,9 +260,9 @@ export default {
 
    async test(){
       let that = this
-      let subscription = that.subscription
+      let subscription_get = that.subscription_get
       let param ={
-        subscription:subscription,
+        subscription:subscription_get,
         publickey: that.pulickey,
         privatekey: that.privatekey,
         payload:'test',
@@ -268,18 +272,21 @@ export default {
     },
 
 
-    unsubscribeUser(swRegistration){
+    unsubscribeUser(){
+      let swRegistration = this.registration
       swRegistration.pushManager.getSubscription().then(function (pushSubscription) {
-      if (!pushSubscription) {
-        // 用户尚未订阅
-        return
-      }
-      // 取消订阅
-      return pushSubscription.unsubscribe()
-    })
-    .then(function () {
-      console.log('取消订阅！')
-    })
+          if (!pushSubscription) {
+              // 用户尚未订阅
+              return
+            }
+            // 取消订阅
+            return pushSubscription.unsubscribe()
+      })
+      .then(function () {
+        console.log('取消订阅！')
+      })
+
+    this.subscriptionInit()
     },
 
     urlB64ToUint8Array(base64String) {
@@ -297,7 +304,10 @@ export default {
         return outputArray;
     },
 
-    subscribeUser(swRegistration) {          
+    subscribeUser() {     
+        let that = this  
+        let subscriptionInit = that.subscriptionInit()
+        let swRegistration = this.registration
         const applicationServerPublicKey = this.pulickey
         const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
 
@@ -314,11 +324,7 @@ export default {
               })
               .then(function(subscription) {
                   console.log('User is subscribed:', JSON.stringify(subscription));
-                  let param = {
-                    openid:this.openid,
-                    subscription:JSON.stringify(subscription)
-                  }
-                  this.HttpPost('/updateSubscription',param)
+                  subscriptionInit
               })
               .catch(function(err) {
                   console.log('no subscribed: ', err);
@@ -330,35 +336,38 @@ export default {
         .catch(function(err) {
             console.log('no permission: ', err);
         });
+
+        
     },
 
-    toSubscription(){
+    subscriptionInit(){
       let that = this
-      let openid = this.openid
+      let openid = that.openid
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
         
         Notification.requestPermission().then(status => {
           console.log('notification: ',status)
         if (status == 'granted') {
-            console.log('show title')
+            console.log('通知已授权')
             // registration.showNotification('通知已授权')
           }else{
             Notification.requestPermission();
           }
         })
+        that.registration = registration
+        console.log(registration)
 
         registration.pushManager.getSubscription().then(function(subscription) {
-              // console.log(subscription)
               if (subscription) {
                 console.log('已经订阅');
+                that.subsctiption_status = '已订阅'
                 console.log(JSON.stringify(subscription));
-                that.unsubscribeUser(registration)
-                // let param = {
-                //     openid:openid,
-                //     subscription:JSON.stringify(subscription)
-                //   }
-                  // that.HttpPost('/updateSubscription',param)
+                let param = {
+                  openid:openid,
+                  subscription:JSON.stringify(subscription)
+                }
+                that.HttpPost('/updateSubscription',param)
               } else {
                 console.log('没有订阅');
                 // that.subscribeUser(registration);
