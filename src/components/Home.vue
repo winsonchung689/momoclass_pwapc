@@ -43,6 +43,7 @@
         <div>
           <!-- <WebSocket></WebSocket> -->
           <button @click="test()">test</button>
+          <button @click="cancel()">cancel</button>
           <!-- <div class='onesignal-customlink-container'></div> -->
         </div>
         
@@ -133,7 +134,9 @@ export default {
       isClient:false,
       student_string:'',
       mp3url:'',
-      subscription:''
+      subscription:'',
+      pulickey:'BGVksyYnr7LQ2tjLt8Y6IELBlBS7W8IrOvVszRVuE0F97qvcV6qB_41BJ-pXPaDf6Ktqdg6AogGK_UUc3zf8Snw',
+      privatekey:'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE'
     }
   },
   created () {
@@ -251,14 +254,23 @@ export default {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
     },
 
+    async cancel(){
+      pushSubscription.unsubscribe().then(function () {
+        console.log('取消订阅成功！')
+      })
+    },
+
    async test(){
       let that = this
       let subscription = that.subscription
       let param ={
         subscription:subscription,
-        message:'test',
+        publickey: that.pulickey,
+        privatekey: that.privatekey,
+        payload:'test',
       }
-      await HttpPost('/sendSubscriptionJson', param )
+      let res = await HttpPost('/sendSubscriptionJson', param )
+      console.log(res)
     },
 
 
@@ -278,7 +290,7 @@ export default {
     },
 
     subscribeUser(swRegistration) {          
-        const applicationServerPublicKey = 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg'
+        const applicationServerPublicKey = this.pulickey
         const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
 
         swRegistration.pushManager.permissionState({
