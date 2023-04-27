@@ -254,28 +254,37 @@ export default {
    async test(){
       let that = this
       let subscription = that.subscription
-      // let param ={
-      //   subscription:subscription,
-      //   message:'test',
-      //   // public_key: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
-      //   // private_key: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
-      // }
-      // // console.log(param)
-      // await HttpPost('/sendSubscriptionJson', param )
+      //  const vapidHeaders = vapidHelper.getVapidHeaders(
+      //   audience,
+      //   'mailto: example@web-push-node.org',
+      //   vapidDetails.publicKey,
+      //   vapidDetails.privateKey,
+      //   'aes128gcm'
+      // );
 
-      const webpush = require('web-push')
-      const vapidKeys = {
-        publicKey: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
-        privateKey: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
+      // console.log(vapidHeaders)
+      let param ={
+        subscription:subscription,
+        message:'test',
+        // public_key: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
+        // private_key: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
       }
-      webpush.setVapidDetails(
-        'mailto:your-email@provider.com',
-        vapidKeys.publicKey,
-        vapidKeys.privateKey
-      )
-      webpush.setGCMAPIKey('BBTlFdrD-2wGu50fiPgO2eMw2L9JW7Y6BGrt6nXmkXqxHnyX2SlXSy7EfFXCOzz0rxuubJcJFA86hQaTfdA0jXk')
+      // console.log(param)
+      await HttpPost('/sendSubscriptionJson', param )
 
-      webpush.sendNotification(JSON.parse(subscription), 'aaa')
+      // const webpush = require('web-push')
+      // const vapidKeys = {
+      //   publicKey: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
+      //   privateKey: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
+      // }
+      // webpush.setVapidDetails(
+      //   'mailto:your-email@provider.com',
+      //   vapidKeys.publicKey,
+      //   vapidKeys.privateKey
+      // )
+      // webpush.setGCMAPIKey('BBTlFdrD-2wGu50fiPgO2eMw2L9JW7Y6BGrt6nXmkXqxHnyX2SlXSy7EfFXCOzz0rxuubJcJFA86hQaTfdA0jXk')
+
+      // webpush.sendNotification(JSON.parse(subscription), 'aaa')
 
     },
 
@@ -353,15 +362,6 @@ export default {
                     subscription:JSON.stringify(subscription)
                   }
                   that.HttpPost('/updateSubscription',param)
-
-                  let param1 ={
-                    subscription:JSON.stringify(subscription),
-                    message:'test'
-                    // public_key: 'BP75YB6apr3U36uUoAGd_oEF4pK3QLu4RQl5jKA7SBvjPs5ssoQzVZKccSqKH-PXBgB5AAp_F4knCx3QRR9Pavg',
-                    // private_key: '6ZAkoZHBvfPRq-0KLIK2ePLZ6HBmpOWVWae2DEuz0Lg'
-                  }
-                  // console.log(param)
-                  HttpPost('/sendSubscriptionJson', param1)
               } else {
                 console.log('没有订阅');
                 that.subscribeUser(registration);
