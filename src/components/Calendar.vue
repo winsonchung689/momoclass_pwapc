@@ -170,7 +170,7 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
-import { HttpPostData } from '@/api'
+import { sendNotification } from '@/api'
 import { UploadFile } from '@/api'
 import Recorder from 'js-audio-recorder'
 
@@ -596,7 +596,7 @@ export default {
       // console.log(param)
       await HttpPost('/signUpSchedule', param)
       that.$message({
-        message: '操作成功',
+        message: '签到成功',
         type: 'success'
       });
 
@@ -611,13 +611,28 @@ export default {
       console.log(data)
       let id = data.id
       let openid = data.openid
+      let subscription = data.subscription
       if(id){
         that.tableData[that.index1].children[that.index2].sign_up = '已签到'
 
-        let message = that.leave_student +'同学已签到!(本次扣课:' + that.class_count + '课时)'
-        let param = {}
-        await HttpGet('/websocket/sendNotification?openid='+ that.openid + '&message=' + message, param)
-        await HttpGet('/websocket/sendNotification?openid='+ openid + '&message=' + message, param)
+        let message = that.leave_student +'同学已签到 !!!\n日期:'+ that.date_time +'\n时间:'+ that.leave_duration+'\n本次扣课:' + that.class_count + '课时'
+        // let param = {}
+        // await HttpGet('/websocket/sendNotification?openid='+ that.openid + '&message=' + message, param)
+        // await HttpGet('/websocket/sendNotification?openid='+ openid + '&message=' + message, param)
+      
+        let json = {
+          title:that.studio,
+          message:message
+        }
+        console.log(subscription)
+        let res = await sendNotification(subscription, JSON.stringify(json))
+        console.log(res)
+        if(res.status == 200){
+            that.$message({
+            message: '通知成功',
+            type: 'success'
+        });
+        }
       }
     },
 

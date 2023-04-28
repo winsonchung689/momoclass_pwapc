@@ -37,17 +37,32 @@
           </div>
         </div>
 
-
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
-        <div >
+        <div style="display: flex;flex-direction: row;">
           <!-- <WebSocket></WebSocket> -->
-          <div style="margin-left: 70%;">
-          <button @click="test()">test</button>
-          <!-- <button @click="cancel()">cancel</button>
-          <button @click="subscribeUser()">subscribe</button>
-          <button @click="unsubscribeUser()">unsubscribe</button> -->
-          <el-button @click="subscribe_button()" type="primary" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
+          <el-dialog
+            title="提示"
+            :visible.sync="centerDialogVisible"
+            width="80%"
+            center>
+            <!-- <span>需要注意的是内容是默认不居中的</span> -->
+            <el-input
+              type="textarea"
+              :rows="4"
+              placeholder="请输入内容"
+              v-model="textarea">
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="centerDialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+            </span>
+          </el-dialog>
+          <div style="margin-left:5% ;">
+            <el-button @click="announcement()" type="primary" size="mini" round>发通知<i class="el-icon-mic el-icon--right"></i></el-button>
+          </div>
+          <div >
+            <el-button @click="subscribe_button()" type="success" size="mini" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
           </div>
         </div>
         
@@ -73,6 +88,7 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import { sendNotification } from '@/api'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import WebSocket from '@/components/WebSocket'
 
@@ -138,11 +154,13 @@ export default {
       isClient:false,
       student_string:'',
       mp3url:'',
-      subscription_get:'',
+      subscription:'',
       pulickey:'BGVksyYnr7LQ2tjLt8Y6IELBlBS7W8IrOvVszRVuE0F97qvcV6qB_41BJ-pXPaDf6Ktqdg6AogGK_UUc3zf8Snw',
       privatekey:'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE',
       subsctiption_status:'未订阅',
-      registration:''
+      registration:'',
+      centerDialogVisible: false,
+      textarea: ''
     }
   },
   created () {
@@ -150,7 +168,6 @@ export default {
     this.subscriptionInit()
   },
   methods: {
-
     async getUser () {
       let that = this
       const date = new Date
@@ -175,7 +192,7 @@ export default {
 
       const users = await HttpGet('/getUser?openid=' + this.openid)
       that.studio = users.data[0].studio
-      that.subscription_get = users.data[0].subscription
+      that.subscription = users.data[0].subscription
       if(that.studio.length>0){
         that.hello = '欢迎来到《' + that.studio + "》！"
       }else {
@@ -258,23 +275,6 @@ export default {
 
     calender (subject) {
       this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
-    },
-
-   async test(){
-      let that = this
-      let subscription_get = that.subscription_get
-      let json = {
-        title:'大雄工作室',
-        message:'winson is going to the moon!'
-      }
-      let param ={
-        subscription:subscription_get,
-        publickey: that.pulickey,
-        privatekey: that.privatekey,
-        payload:JSON.stringify(json)
-      }
-      let res = await HttpPost('/sendSubscription', param )
-      console.log(res)
     },
 
     subscribe_button(){
@@ -390,8 +390,35 @@ export default {
 
 
       }
-    }
+    },
 
+    announcement(){
+      let that = this
+      that.centerDialogVisible=true
+      that.textarea = ''
+    },
+
+    async announcement_confirm(){
+      let that = this
+      const users = await HttpGet('/getUserByStudio?studio=' + that.studio)
+      for( var i in users){
+        subscription = users.data[i].subscription
+        let message = that.textarea
+        let json = {
+          title:that.studio,
+          message:message
+        }
+        let res = await sendNotification(that.subscription, JSON.stringify(json))
+        console.log(res)
+          if(res.status == 200){
+              that.$message({
+              message: '通知成功',
+              type: 'success'
+          });
+          centerDialogVisible = false
+        }
+      }
+    }
   }
 }
 </script>

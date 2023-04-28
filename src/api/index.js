@@ -52,8 +52,19 @@ export function uploadImgToBase64 (file) {
 
 export function audioPlay() {
    new Audio("../assets/notification.wav").play(); 
-  // let music = new Audio("../assets/notification.mp3"); 
-  // music = require("../assets/notification.mp3");
-  // this.$refs.audio.src = music;
-  // this.$refs.audio.play();
 }
+
+
+export function sendNotification(subscription,json){
+  let param ={
+    subscription:subscription,
+    publickey: 'BGVksyYnr7LQ2tjLt8Y6IELBlBS7W8IrOvVszRVuE0F97qvcV6qB_41BJ-pXPaDf6Ktqdg6AogGK_UUc3zf8Snw',
+    privatekey: 'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE',
+    payload:json
+  }
+  let res = HttpPost('/sendSubscription', param )
+  
+  return res
+}
+
+     
