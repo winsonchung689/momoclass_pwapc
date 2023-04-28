@@ -76,3 +76,10 @@ self.addEventListener('push', function (event) {
  });
 
 
+ self.addEventListener('notificationclick', function (event) {
+      event.waitUntil(clients.openWindow('https://www.momoclass.xyz:8080/'))
+ })
+
+
+
+
