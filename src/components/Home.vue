@@ -400,18 +400,21 @@ export default {
 
     async announcement_confirm(){
       let that = this
-      centerDialogVisible = false
+      that.centerDialogVisible=false
       const users = await HttpGet('/getUserByStudio?studio=' + that.studio)
-      console.log(users)
-      for( var i in users){
-        subscription = users.data[i].subscription
-        let message = that.textarea
-        let json = {
-          title:that.studio,
-          message:message
-        }
-        let res = await sendNotification(that.subscription, JSON.stringify(json))
-        console.log(res)
+      // console.log(users.data)
+      for( var i in users.data){
+          let subscription = users.data[i].subscription
+          let message = that.textarea
+          let json = {
+            title:that.studio,
+            message:message
+          }
+          if(subscription){
+            let res = await sendNotification(subscription, JSON.stringify(json))
+            console.log(res)
+          }
+          
       }
 
       that.$message({
