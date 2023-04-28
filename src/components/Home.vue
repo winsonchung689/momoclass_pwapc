@@ -44,9 +44,9 @@
           <!-- <WebSocket></WebSocket> -->
           <div style="margin-left: 70%;">
           <button @click="test()">test</button>
-          <button @click="cancel()">cancel</button>
+          <!-- <button @click="cancel()">cancel</button>
           <button @click="subscribeUser()">subscribe</button>
-          <button @click="unsubscribeUser()">unsubscribe</button>
+          <button @click="unsubscribeUser()">unsubscribe</button> -->
           <el-button @click="subscribe_button()" type="primary" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
           </div>
         </div>
