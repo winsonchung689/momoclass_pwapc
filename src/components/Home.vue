@@ -400,6 +400,7 @@ export default {
 
     async announcement_confirm(){
       let that = this
+      centerDialogVisible = false
       const users = await HttpGet('/getUserByStudio?studio=' + that.studio)
       console.log(users)
       for( var i in users){
@@ -411,14 +412,12 @@ export default {
         }
         let res = await sendNotification(that.subscription, JSON.stringify(json))
         console.log(res)
-          if(res.status == 200){
-              that.$message({
-              message: '通知成功',
-              type: 'success'
-          });
-          centerDialogVisible = false
-        }
       }
+
+      that.$message({
+        message: '通知成功',
+        type: 'success'
+      });   
     }
   }
 }
