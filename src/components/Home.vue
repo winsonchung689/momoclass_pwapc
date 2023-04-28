@@ -55,7 +55,7 @@
             </el-input>
             <span slot="footer" class="dialog-footer">
               <el-button @click="centerDialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+              <el-button type="primary" @click="announcement_confirm()">确 定</el-button>
             </span>
           </el-dialog>
           <div style="margin-left:5% ;">
@@ -401,6 +401,7 @@ export default {
     async announcement_confirm(){
       let that = this
       const users = await HttpGet('/getUserByStudio?studio=' + that.studio)
+      console.log(users)
       for( var i in users){
         subscription = users.data[i].subscription
         let message = that.textarea
