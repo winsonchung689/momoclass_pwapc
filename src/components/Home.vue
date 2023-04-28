@@ -263,11 +263,15 @@ export default {
    async test(){
       let that = this
       let subscription_get = that.subscription_get
+      let json = {
+        title:'大雄工作室',
+        message:'winson is going to the moon!'
+      }
       let param ={
         subscription:subscription_get,
         publickey: that.pulickey,
         privatekey: that.privatekey,
-        payload: 'winsonqweqeqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqwe'
+        payload:JSON.stringify(json)
       }
       let res = await HttpPost('/sendSubscription', param )
       console.log(res)
