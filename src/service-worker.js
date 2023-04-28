@@ -67,8 +67,7 @@ self.addEventListener('push', function (event) {
    console.log(payload)
    var title = '通知';
    var options  = {
-        body:'test',
-        icon:'/assets/90.png'
+        body:payload.msg,
    }
    event.waitUntil(
      // 使用提供的信息来显示 Web 推送通知
