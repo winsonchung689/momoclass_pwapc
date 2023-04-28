@@ -66,13 +66,13 @@ self.addEventListener('push', function (event) {
    var payload = event.data ? JSON.parse(event.data.text()) : 'no payload';
    console.log(payload)
    var title = '通知';
+   var options  = {
+        body:'test',
+        icon:'/assets/90.png'
+   }
    event.waitUntil(
      // 使用提供的信息来显示 Web 推送通知
-     self.registration.showNotification(title, {                           
-       body: payload.msg,
-       url: payload.url,
-       icon: payload.icon
-     })
+     self.registration.showNotification(title,options )
    );
  });
 
