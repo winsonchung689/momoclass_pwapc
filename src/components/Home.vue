@@ -59,7 +59,7 @@
             </span>
           </el-dialog>
           <div style="margin-left:5% ;">
-            <el-button @click="announcement()" type="primary" size="mini" round>发通知<i class="el-icon-mic el-icon--right"></i></el-button>
+            <el-button  v-if="isBoss" @click="announcement()" type="primary" size="mini" round>发通知<i class="el-icon-mic el-icon--right"></i></el-button>
           </div>
           <div >
             <el-button @click="subscribe_button()" type="success" size="mini" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
@@ -320,6 +320,7 @@ export default {
     },
 
     subscribeUser() {     
+        let openid = this.openid
         let swRegistration = this.registration
         const applicationServerPublicKey = this.pulickey
         const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
@@ -336,22 +337,28 @@ export default {
               })
               .then(function(subscription) {
                   console.log('User is subscribed:', JSON.stringify(subscription));
-                  this.subscriptionInit()
+                  if (subscription) {
+                    console.log('已订阅');
+                    console.log(JSON.stringify(subscription));
+                    let param = {
+                      openid:openid,
+                      subscription:JSON.stringify(subscription)
+                    }
+                    HttpPost('/updateSubscription',param)
+                  } 
               })
               .catch(function(err) {
                   console.log('no subscribed: ', err);
               });
             }
-
         })
-        // 用户不同意或者生成失败
         .catch(function(err) {
             console.log('no permission: ', err);
         });
-
+        this.subsctiption_status = '已订阅'
     },
 
-    async subscriptionInit(){
+    subscriptionInit(){
       let that = this
       let openid = that.openid
       if ('serviceWorker' in navigator) {
@@ -368,11 +375,11 @@ export default {
                   openid:openid,
                   subscription:JSON.stringify(subscription)
                 }
-                that.HttpPost('/updateSubscription',param)
+                HttpPost('/updateSubscription',param)
               } else {
                 console.log('未订阅');
               }
-          });
+        });
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
       }).catch(function (err) {
         console.log('ServiceWorker registration failed: ', err);
