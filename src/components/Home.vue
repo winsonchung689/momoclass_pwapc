@@ -267,9 +267,7 @@ export default {
         subscription:subscription_get,
         publickey: that.pulickey,
         privatekey: that.privatekey,
-        payload: JSON.stringify({
-            msg: 'winson'
-          }),
+        payload: 'winson'
       }
       let res = await HttpPost('/sendSubscription', param )
       console.log(res)
