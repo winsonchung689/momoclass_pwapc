@@ -336,6 +336,7 @@ export default {
               })
               .then(function(subscription) {
                   console.log('User is subscribed:', JSON.stringify(subscription));
+                  this.subscriptionInit()
               })
               .catch(function(err) {
                   console.log('no subscribed: ', err);
@@ -348,7 +349,6 @@ export default {
             console.log('no permission: ', err);
         });
 
-        this.subsctiption_status='已订阅'
     },
 
     async subscriptionInit(){
@@ -357,17 +357,7 @@ export default {
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
         that.registration = registration
-        console.log(registration)
-
-        // Notification.requestPermission().then(status => {
-        //   console.log('notification: ',status)
-        // if (status == 'granted') {
-        //     console.log('show title')
-        //     registration.showNotification('通知已授权')
-        //   }else{
-        //     Notification.requestPermission();
-        //   }
-        // })
+        // console.log(registration)
 
         registration.pushManager.getSubscription().then(function(subscription) {
               if (subscription) {
