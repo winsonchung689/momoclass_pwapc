@@ -43,6 +43,10 @@
         <div >
           <!-- <WebSocket></WebSocket> -->
           <div style="margin-left: 70%;">
+          <button @click="test()">test</button>
+          <button @click="cancel()">cancel</button>
+          <button @click="subscribeUser()">subscribe</button>
+          <button @click="unsubscribeUser()">unsubscribe</button>
           <el-button @click="subscribe_button()" type="primary" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
           </div>
         </div>
@@ -348,9 +352,18 @@ export default {
       let openid = that.openid
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
-        
         that.registration = registration
-        // console.log(registration)
+        console.log(registration)
+
+        // Notification.requestPermission().then(status => {
+        //   console.log('notification: ',status)
+        // if (status == 'granted') {
+        //     console.log('show title')
+        //     registration.showNotification('通知已授权')
+        //   }else{
+        //     Notification.requestPermission();
+        //   }
+        // })
 
         registration.pushManager.getSubscription().then(function(subscription) {
               if (subscription) {
