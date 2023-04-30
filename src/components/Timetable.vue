@@ -57,8 +57,14 @@
                         </el-popover>
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
-                      <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                      <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                        <div style="justify-content: center;margin-top: 12px;">
+                          <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+                        </div>
+                        <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                          <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                          <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        </div>
                       </div>
                     
 
@@ -97,9 +103,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                      <div style="justify-content: center;margin-top: 12px;">
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                       </div>
+                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                      </div>
+                    </div>
 
                   </div>
                 </div>
@@ -136,9 +148,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                      <div style="justify-content: center;margin-top: 12px;">
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                       </div>
+                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                      </div>
+                    </div>
 
                   </div>
                 </div>
@@ -175,9 +193,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                      <div style="justify-content: center;margin-top: 12px;">
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                       </div>
+                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                      </div>
+                    </div>
                     
                   </div>
                 </div>
@@ -214,9 +238,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                      <div style="justify-content: center;margin-top: 12px;">
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                       </div>
+                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                      </div>
+                    </div>
 
                   </div>
                 </div>
@@ -253,9 +283,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                      <div style="justify-content: center;margin-top: 12px;">
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                       </div>
+                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -292,9 +328,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div>
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" style="color: rgba(222, 121, 53, 0.843);margin-top: 10px;font-size: small;font-weight: bolder;" type="text">删除</el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                      <div style="justify-content: center;margin-top: 12px;">
+                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
                       </div>
+                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                      </div>
+                    </div>
 
                   </div>
                 </div>
@@ -413,7 +455,9 @@ export default {
       end_time:'00:00',
       class_number_add:'',
       subject_add:'',
-      isTimetable:true
+      isTimetable:true,
+      Remind:true,
+      isRemind:false
     }
   },
 
@@ -440,6 +484,7 @@ export default {
           }
           const leave = await HttpPost('/getArrangement', param)
           let leave_data = leave.data;
+          console.log(leave_data)
           if(i == 0){
             json.week1 = leave_data
           }else if(i == 1){
@@ -714,6 +759,36 @@ export default {
           }
       })
 
+    },
+
+    updateRemind(remind,subject,duration,class_number,dayofweek){
+      console.log(dayofweek)
+      let that = this 
+      let subject_class =subject + ',' + class_number.replace('(插班生)','') + ','+ duration;
+      let type = 'reremind'
+      if(remind == 1 ){
+        type = 'cancel'
+      }
+      if(dayofweek == 7){
+        dayofweek = 1
+      }else{
+        dayofweek = dayofweek + 1
+      }
+      let param ={
+        subject_class:subject_class,
+        studio:that.studio,
+        type:type,
+        dayofweek:dayofweek
+      }
+      let res = HttpPost("/updateRemind",param)
+      res.then(res => {
+        // console.log(res.data)
+        this.$message({
+                message: '操作成功',
+                type: 'success'
+            });
+            this.getTimetable()
+        })
     },
 
     back () {

@@ -142,6 +142,7 @@ export default {
     async handleSelect (item) {
       let that = this
       const student_name = item.student_name
+      that.state = student_name
       let subject_get = student_name.split('_')[1]
       let student_name_get = student_name.split('_')[0]
       // console.log(subject_get,student_name_get)
