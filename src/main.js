@@ -14,6 +14,8 @@ import Notifications from 'vue-notification'
 import { audioPlay } from '@/api'
 import { HttpPost } from '@/api'
 import OneSignalVue from 'onesignal-vue'
+import window from '@/utils'
+window()
 
 Vue.use(OneSignalVue)
 Vue.prototype.HttpPost = HttpPost  

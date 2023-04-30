@@ -7,13 +7,25 @@
             </div>
             <!-- 输入框 -->
             <div class="lgD">
-                <input type="text" v-model="ruleForm.studio" placeholder="输入工作室名" />
+                <el-input
+                placeholder="输入工作室名"
+                v-model="ruleForm.studio"
+                clearable>
+                </el-input>
             </div>
             <div class="lgD">
-                <input type="text" v-model="ruleForm.student_name" placeholder="输入学生名" />
+                <el-input
+                placeholder="输入学生名"
+                v-model="ruleForm.student_name"
+                clearable>
+                </el-input>
             </div>
             <div class="lgD">
-                <input type="text" v-model="ruleForm.nick_name" placeholder="输入用户名" />
+                <el-input
+                placeholder="输入用户名"
+                v-model="ruleForm.nick_name"
+                clearable>
+                </el-input>
             </div>
             <div class="logC">
                 <a><button @click="login">登 录</button></a>
@@ -26,31 +38,6 @@
 </template>
 
 <script>
-
-window.onload = function(){
-    document.addEventListener('touchstart',function(event){
-        if(event.touches.length>1){
-            event.preventDefault()
-        }
-    });
-
-    document.addEventListener('gesturestart',function(event){
-        if(event.touches.length>1){
-            event.preventDefault()
-        }
-    });
-
-    var lastTouchEnd = 0;
-    document.documentElement.addEventListener('touchend', function(event){
-        var now =  (new Date()).getTime()
-        if(now - lastTouchEnd <= 300){
-            event.preventDefault()
-        }
-        lastTouchEnd = now
-    },false)
-}
-
-
 import { HttpPost } from '@/api'
 
 export default {
@@ -269,7 +256,7 @@ body {
 }
 
 #wrap .logGet .lgD {
-    width: 86%;
+    width: 88%;
     position: relative;
     margin-bottom: 30px;
     margin-top: 30px;
