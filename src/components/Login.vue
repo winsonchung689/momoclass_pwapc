@@ -15,7 +15,7 @@
             </div>
             <div class="lgD">
                 <el-input
-                placeholder="输入学生名"
+                placeholder="输入学生名(老师免填)"
                 v-model="ruleForm.student_name"
                 clearable>
                 </el-input>
