@@ -71,6 +71,7 @@ export default {
       role:this.$route.query.role,
       openid:this.$route.query.openid,
       comment_style:this.$route.query.comment_style,
+      send_time:this.$route.query.send_time,
       header: '工作台',
       isBoss:false
     }
@@ -90,7 +91,7 @@ export default {
     },
 
     timeTable (subject) {
-      this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+      this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,send_time:this.send_time } })
     },
 
     calender (subject) {

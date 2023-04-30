@@ -344,15 +344,28 @@
             </el-table-column>
           </el-table>
           
-          <div style="margin-left: 70%;">
+          <div style="display: flex;flex-direction: row;justify-content: space-between;">
+            <div>
+              <el-time-select
+                style="width: 80%;"
+                v-model="send_time"
+                :picker-options="{
+                  start: '00:00',
+                  step: '00:15',
+                  end: '23:59'
+                }"
+                placeholder="选择时间">
+              </el-time-select>
+              <el-button @click="updateSendTime()" type="primary" icon="el-icon-thumb" circle></el-button>
+            </div>
             <el-button @click="showAdd" type="primary">新增课程</el-button>
           </div>
         </div>
         
         <div v-if="isAdd">
           <div>
-          <el-button type="text"  @click="back">取消</el-button>
-        </div>
+            <el-button type="text"  @click="back">取消</el-button>
+          </div>
 
           <div style="width: 50%;">
             <el-select v-model="value" placeholder="请选择星期">
@@ -413,6 +426,7 @@ export default {
       studio:this.$route.query.studio,
       role:this.$route.query.role,
       openid:this.$route.query.openid,
+      send_time:this.$route.query.send_time,
       header: '课程表',
       tableData: [],
       leave_data:[],
@@ -484,7 +498,7 @@ export default {
           }
           const leave = await HttpPost('/getArrangement', param)
           let leave_data = leave.data;
-          console.log(leave_data)
+          // console.log(leave_data)
           if(i == 0){
             json.week1 = leave_data
           }else if(i == 1){
@@ -799,6 +813,30 @@ export default {
     goOff () {
       this.$router.go(-1);
     },
+
+    async updateSendTime(){
+      let that = this
+      let param ={
+          studio:that.studio,
+          openid:that.openid,
+          send_time:that.send_time
+        }
+      let res = await HttpPost("/updateSendTime",param)
+      // console.log(res)
+      if(res.status == 200){
+            this.$message({
+                message: '操作成功',
+                type: 'success'
+            });
+            this.getTimetable()
+          }else {
+            this.$message({
+                message: '操作失败',
+                type: 'warning'
+            });
+          }
+
+    }
 
   }
 

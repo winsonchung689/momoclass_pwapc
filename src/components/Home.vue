@@ -160,7 +160,8 @@ export default {
       subsctiption_status:'未订阅',
       registration:'',
       centerDialogVisible: false,
-      textarea: ''
+      textarea: '',
+      send_time:''
     }
   },
   created () {
@@ -204,6 +205,8 @@ export default {
       that.role = users.data[0].role
       that.subject = users.data[0].subjects
       that.comment_style = users.data[0].comment_style
+      that.send_time = users.data[0].send_time
+      console.log(that.send_time)
       
       if('boss' == that.role){
         that.mode = '老师模式'
@@ -246,7 +249,7 @@ export default {
     },
 
     click (url) {
-      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style } })
+      this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style,send_time:this.send_time } })
     },
 
     touchStart(e) {
