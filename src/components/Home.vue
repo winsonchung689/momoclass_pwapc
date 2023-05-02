@@ -19,7 +19,7 @@
           </div>
         </div>
         
-        <div class="banner">
+        <!-- <div class="banner">
           <div class="banner_wrap">
             <swiper :options="swiperOption" v-if="images.length > 1">
               <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
@@ -35,7 +35,43 @@
               </swiper-slide>
             </swiper>
           </div>
+        </div> -->
+
+        <div style="display: flex;justify-content: center;">
+          <div class="main_buttons">
+            <div @click="click('/students')" class="items">
+              <div style="display: flex;justify-content: center;">
+                <img class="icon" src="../assets/student.png" alt="" >
+              </div>
+              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">学生专区</div>
+            </div>
+            <div @click="click('/workbenches')" class="items">
+              <div style="display: flex;justify-content: center;">
+                <img class="icon" src="../assets/work.png" alt="" >
+              </div>
+              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">工作台</div>
+            </div>
+            <div @click="click('me')" class="items">
+              <div style="display: flex;justify-content: center;">
+                <img class="icon" src="../assets/me.png" alt="" >
+              </div>
+              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">个人中心</div>
+            </div>
+          </div>
         </div>
+
+        <div style="display: flex;justify-content: center;">
+          <div class="main_buttons">     
+            <div class="items">
+              <div style="display: flex;justify-content: center;">
+                <img class="icon" src="../assets/chat.png" alt="" >
+              </div>
+              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">吹水站</div>
+            </div>
+          </div>
+        </div>
+
+
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
@@ -427,6 +463,33 @@ export default {
 </script>
 
 <style scoped>
+.main_buttons{
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+   width: 90%;
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
+.items{
+  width: 100px;
+  height: 100px;
+  /* margin-right: 6%; */
+  background-color:rgb(149, 224, 218);
+  border-radius: 1rem;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon{
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5rem;
+}
+
 h1 {
   font-weight: bold;
   font-size: medium;
