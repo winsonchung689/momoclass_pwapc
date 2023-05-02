@@ -16,6 +16,7 @@ const Timetable = () => import('@/components/Timetable')
 const Calendar = () => import('@/components/Calendar')
 const School = () => import('@/components/School')
 const Me = () => import('@/components/Me')
+const ChatRoom = () => import('@/components/ChatRoom')
 const CommentCenter = () => import('@/components/CommentCenter')
 const Authorization = () => import('@/components/Authorization')
 
@@ -97,6 +98,11 @@ export default new Router({
       path: '/authorization',
       name: 'Authorization',
       component: Authorization
+    },
+    {
+      path: '/chatroom',
+      name: 'ChatRoom',
+      component: ChatRoom
     }
   ]
 })

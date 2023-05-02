@@ -62,7 +62,7 @@
 
         <div style="display: flex;justify-content: center;">
           <div class="main_buttons">     
-            <div class="items">
+            <div @click="click('chatroom')" class="items">
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/chat.png" alt="" >
               </div>

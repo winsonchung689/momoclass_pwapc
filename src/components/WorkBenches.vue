@@ -14,7 +14,7 @@
               <div class="item" @click="timeTable(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 40px;height: 40px;" src="@/assets/timetable.png" alt="">
+                    <img style="width: 50px;height: 50px;" src="@/assets/timetable.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程表</div>
                 </div>
@@ -23,7 +23,7 @@
               <div class="item" @click="calender(subject,studio,student_name)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 40px;height: 40px;" src="@/assets/tosignin.png" alt="">
+                    <img style="width: 50px;height: 50px;" src="@/assets/tosignin.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">签到处</div>
                 </div>
@@ -37,7 +37,7 @@
                 <div v-if="isBoss" class="item" @click="school(subject)">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
-                      <img style="width: 40px;height: 40px;" src="@/assets/school.png" alt="">
+                      <img style="width: 50px;height: 50px;" src="@/assets/school.png" alt="">
                     </div>
                     <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
                   </div>
@@ -46,7 +46,7 @@
                 <div class="item" @click="commentCenter(subject)">
                     <div class="content">
                       <div style="display: flex;justify-content: center;">
-                        <img style="width: 40px;height: 40px;" src="@/assets/comment.png" alt="">
+                        <img style="width: 50px;height: 50px;" src="@/assets/comment.png" alt="">
                       </div>
                       <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
                     </div>
@@ -121,7 +121,7 @@ export default {
 .container{
   flex-direction: row;
   display: flex;
-  width: 80%;
+  width: 90%;
   justify-content: space-between;
   margin-bottom: 15px;
   
