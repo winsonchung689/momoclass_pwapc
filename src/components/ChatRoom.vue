@@ -9,7 +9,7 @@
 
     <!-- <WebSocket ref="WebSocket"></WebSocket> -->
     <div ref="scrolldIV" class="chatAppBody">
-        <div class="chatTitle">吹水站💬！！！ 哩度讲哩度散啦～～🤫🤫🤫</div>
+        <div class="chatTitle">吹水站💬！！！ 哩度讲哩度散啦～～🤫🤫🤫(在线:{{ onlinecount }})</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
               <el-avatar class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
@@ -65,6 +65,7 @@ export default {
         timeout:280*1000,
         serverTimeoutObj:null,
         timeoutnum:null,
+        onlinecount:10
     };
   },
 
@@ -90,7 +91,8 @@ export default {
     methods: {
 
       wsInit() {
-        console.log(this.openid)
+        // console.log(this.openid)
+        this.message_list = []
         const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
         this.ws = wsuri
         if(!this.wsIsRun) return
@@ -133,7 +135,10 @@ export default {
         let that = this
         let data = e.data
         console.log(data)
-        if(data != 'connected'){
+        let str = data.split(':')[0]
+        let count = data.split(':')[1]
+        that.onlinecount = count
+        if(str != 'online'){
           let openid = data.split('_')[0]
           let msg = data.split('_')[1]
 
