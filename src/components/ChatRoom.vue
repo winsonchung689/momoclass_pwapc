@@ -7,9 +7,9 @@
         <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
     </div>
 
-
+    <WebSocket ref="WebSocket"></WebSocket>
     <div class="chatAppBody">
-        <div class="chatTitle">通风报信,哩度讲哩度散~~xu</div>
+        <div class="chatTitle">吹水站,哩度讲哩度散🤫🤫🤫</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
               <el-avatar class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
@@ -34,7 +34,6 @@
       <el-button @click="sendMessage" type="primary">发送</el-button>
     </div>
     
-
   </div>
 
 </template>
@@ -48,23 +47,26 @@ import WebSocket from '@/components/WebSocket'
 
 export default {
     name: "ChatRoom",
+    components: {
+      WebSocket
+    },
     data() {
-        return {
-            header: "吹水站",
-            subject: this.$route.query.subject,
-            studio: this.$route.query.studio,
-            role: this.$route.query.role,
-            openid: this.$route.query.openid,
-            textarea: "",
-            message_list: [
-                { msg: "aaa", direction: 1 },
-                { msg: "aaa", direction: 1 },
-                { msg: "aaa", direction: 1 },
-                { msg: "bbbb", direction: 2 },
-                { msg: "bbbb", direction: 2 },
-                { msg: "aaa", direction: 1 },
-            ]
-        };
+      return {
+        header: "吹水站",
+        subject: this.$route.query.subject,
+        studio: this.$route.query.studio,
+        role: this.$route.query.role,
+        openid: this.$route.query.openid,
+        textarea: "",
+        message_list: [
+            { msg: "aaa", direction: 1 },
+            { msg: "aaa", direction: 1 },
+            { msg: "aaa", direction: 1 },
+            { msg: "bbbb", direction: 2 },
+            { msg: "bbbb", direction: 2 },
+            { msg: "aaa", direction: 1 },
+        ]
+    };
     },
 
     created() {
@@ -80,13 +82,14 @@ export default {
         let that = this
         let textarea = that.textarea
         let openid = that.openid
+        
+        console.log(this.$refs.WebSocket.message)
 
-        let param = {
-          message: textarea,
-          openid: openid
-        }
-        await HttpPost('/sendNotification', param)
-      }
+        await HttpGet('/websocket/sendNotification?message='+ textarea + '&openid=' + openid)
+      },
+
+
+
     },
 }
 </script>

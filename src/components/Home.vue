@@ -52,11 +52,11 @@
           <div class="banner_wrap">
           <swiper :options="swiperOption" v-if="images.length > 1">
             <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-              <div @click="click(item.url)" style="display: flex;justify-content: left; flex-direction: row;">
+              <div  style="display: flex;justify-content: left; flex-direction: row;">
                 <!-- <div @click="click(item.url)" style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;"> -->
                   <!-- <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div> -->
                 <!-- </div> -->
-                <div @click="click(item.url)" style="width: 80%;">
+                <div style="width: 80%;">
                   <img :src="item.img" alt="" style="border-radius: 2rem; scale: 1;">
                 </div>
               </div>
@@ -69,7 +69,7 @@
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
         <div style="display: flex;flex-direction: row;">
-          <WebSocket></WebSocket>
+          <!-- <WebSocket></WebSocket> -->
           <el-dialog
             title="提示"
             :visible.sync="centerDialogVisible"

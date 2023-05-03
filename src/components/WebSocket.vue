@@ -22,7 +22,8 @@ export default {
         timeoustObj:null,
         timeout:28*1000,
         serverTimeoutObj:null,
-        timeoutnum:null
+        timeoutnum:null,
+        message:''
     }
   },
 
@@ -68,7 +69,7 @@ export default {
     },
 
     wsInit() {
-        // this.getCookie()
+        this.getCookie()
         const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
         this.ws = wsuri
         if(!this.wsIsRun) return
@@ -138,17 +139,17 @@ export default {
 
     wsMessageHandler(e){
         let that = this
-        console.log('收到信息')
-        // console.log(e)
         let data = e.data
-        if(data != '成功'){
+        console.log(data)
+        if(data != 'connect successfully!'){
           that.$notify({
-                title: '通知',
-                message: data,
-                duration: 0
-            });
-          // that.audio();
-          this.audioPlay();
+              title: '通知',
+              message: data,
+              duration: 0
+          });
+          that.audioPlay();
+
+          that.message = data;
         }
         that.reset();
     },
