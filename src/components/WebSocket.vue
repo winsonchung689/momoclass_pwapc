@@ -143,11 +143,12 @@ export default {
         console.log(data)
         if(data != 'connected'){
           that.message = data;
-          // that.$notify({
-          //     title: '通知',
-          //     message: data,
-          //     duration: 0
-          // });
+          that.message_list
+          that.$notify({
+              title: '通知',
+              message: data,
+              duration: 0
+          });
           // that.audioPlay();
         }
         

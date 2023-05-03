@@ -7,9 +7,9 @@
         <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
     </div>
 
-    <WebSocket ref="WebSocket"></WebSocket>
+    <!-- <WebSocket ref="WebSocket"></WebSocket> -->
     <div ref="scrolldIV" class="chatAppBody">
-        <div class="chatTitle">吹水站,哩度讲哩度散🤫🤫🤫</div>
+        <div class="chatTitle">吹水站💬！！！ 哩度讲哩度散啦～～🤫🤫🤫</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
               <el-avatar class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
@@ -42,13 +42,9 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
-import WebSocket from '@/components/WebSocket'
 
 export default {
     name: "ChatRoom",
-    components: {
-      WebSocket
-    },
     data() {
       return {
         header: "吹水站",
@@ -57,60 +53,142 @@ export default {
         role: this.$route.query.role,
         openid: this.$route.query.openid,
         textarea: "",
-        message_list: [
-            { msg: "aaa", direction: 1 },
-            { msg: "aaa", direction: 1 },
-            { msg: "aaa", direction: 1 },
-            { msg: "bbbb", direction: 2 },
-            { msg: "bbbb", direction: 2 },
-            { msg: "aaa", direction: 1 },
-        ]
+        message_list: [],
+        message :'',
+        wsIsRun:false,
+        webSocket:null,
+        ws:'',
+        wsTimer:null,
+        isAudio:false,
+        lockReconnect:false,
+        timeoustObj:null,
+        timeout:28*1000,
+        serverTimeoutObj:null,
+        timeoutnum:null,
     };
-    },
+  },
+
+  async mounted(){
+    this.wsIsRun = true
+    this.wsInit()
+  },
 
     created() {
 
     },
 
-    methods: {
-      goOff() {
-          this.$router.go(-1);
-      },
-
-      async sendMessage(){
-        let that = this
-
+    watch:{
+      message_list: function(){
         let div = this.$refs.scrolldIV
         setTimeout(()=> {
           div.scrollTop = div.scrollHeight;
           console.log(div.scrollTop)
         })
-        // this.$nextTick(() => {
-        //   div.$el.scrollTop = 0;
-        // })
-
-        let textarea = that.textarea
-        let openid = that.openid
-        let msg = this.$refs.WebSocket.message
-        
-        console.log(msg)
-        console.log(openid)
-        let json = {}
-        json.msg = msg
-        json.direction = 2
-
-        let res = await HttpGet('/websocket/sendNotification?message='+ textarea + '&openid=' + openid)
-        console.log(res.data)
-        if(res.data == 200){
-          that.message_list.push(json)
-          console.log(that.message_list)
-          that.textarea = ''
-        }
-
       },
+    },
 
+    methods: {
 
+      wsInit() {
+        console.log(this.openid)
+        const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
+        this.ws = wsuri
+        if(!this.wsIsRun) return
+        this.wsDestroy()
+        this.webSocket = new WebSocket(this.ws)
+        this.webSocket.addEventListener('open',this.wsOpenHandler)
+        this.webSocket.addEventListener('message',this.wsMessageHandler)
+        this.webSocket.addEventListener('error',this.wsErrorHandler)
+        this.webSocket.addEventListener('close',this.wsCloseHandler)
 
+        clearInterval(this.wsTimer)
+        this.wsTimer = setInterval(()=>{
+            if(this.webSocket.readyState === 1){
+                clearInterval(this.wsTimer)
+            }else{
+                console.log('ws buiding up')
+            }
+        },3000)
+    },
+
+    reconnect() {
+        console.log('reconnecting...')
+        var that = this;
+        if(that.lockReconnect) {
+          return;
+        }
+        that.lockReconnect = true;
+        that.timeoutnum && clearTimeout(that.timeoutnum);
+        that.timeoutnum = setTimeout(function () {
+          that.wsInit();
+          that.lockReconnect = false;
+        },5000);
+    },
+
+    wsOpenHandler(event){
+        console.log('ws builded')
+    },
+
+    wsMessageHandler(e){
+        let that = this
+        let data = e.data
+        console.log(data)
+        if(data != 'connected'){
+          let openid = data.split('_')[0]
+          let msg = data.split('_')[1]
+
+          let json = {}
+          json.msg = msg
+          json.direction = 1
+          if(openid == that.openid){
+            json.direction = 2
+          }
+          that.message_list.push(json)
+        }
+    },
+
+    wsDestroy(){
+        if(this.webSocket !== null){
+            this.webSocket.removeEventListener('open',this.wsOpenHandler)
+            this.webSocket.removeEventListener('message',this.wsMessageHandler)
+            this.webSocket.removeEventListener('error',this.wsErrorHandler)
+            this.webSocket.removeEventListener('close',this.wsCloseHandler)
+            this.webSocket.close()
+            this.webSocket = null
+            clearInterval(this.wsTimer)
+        }
+    },
+
+    wsErrorHandler(event){
+        console.log(event,'error')
+        this.reconnect();
+    },
+    
+    wsCloseHandler(event){
+        console.log('closed')
+        this.reconnect();
+    },
+
+    goOff() {
+        this.$router.go(-1);
+    },
+    
+    async sendMessage(){
+      let that = this
+      let textarea = that.textarea
+      let openid = that.openid
+      let message = openid + '_' + textarea
+      
+      console.log(textarea)
+      console.log(openid)
+
+      let res = await HttpGet('/websocket/sendNotification?message='+ message + '&openid=' + openid)
+      console.log(res.data)
+      if(res.data == 200){
+        that.textarea =  ''
+      }
+
+    },
     },
 }
 </script>
