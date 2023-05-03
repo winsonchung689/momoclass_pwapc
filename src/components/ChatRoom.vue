@@ -62,7 +62,7 @@ export default {
         isAudio:false,
         lockReconnect:false,
         timeoustObj:null,
-        timeout:280*1000,
+        timeout:28*1000,
         serverTimeoutObj:null,
         timeoutnum:null,
         onlinecount:10
@@ -91,8 +91,6 @@ export default {
     methods: {
 
       wsInit() {
-        // console.log(this.openid)
-        this.message_list = []
         const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
         this.ws = wsuri
         if(!this.wsIsRun) return
@@ -129,6 +127,26 @@ export default {
 
     wsOpenHandler(event){
         console.log('ws builded')
+         this.start()
+    },
+
+    start(){
+      console.log('heartbeat is starting...')
+      var self = this
+      self.timeoustObj && clearTimeout(self.timeoustObj)
+      self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj)
+      self.timeoustObj = setTimeout(function(){
+        if(self.ws.readyState == 1){
+          self.ws.send("heartCheck")
+        }else{
+          self.reconnect()
+        }
+
+        self.serverTimeoutObj = setTimeout(function() {
+          self.ws.close()
+        },self.timeout)
+      },self.timeout)
+
     },
 
     wsMessageHandler(e){
