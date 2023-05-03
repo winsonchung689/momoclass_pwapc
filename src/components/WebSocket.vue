@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Websocket',
 
@@ -69,7 +68,7 @@ export default {
     },
 
     wsInit() {
-        this.getCookie()
+        // this.getCookie()
         const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
         this.ws = wsuri
         if(!this.wsIsRun) return
@@ -79,8 +78,6 @@ export default {
         this.webSocket.addEventListener('message',this.wsMessageHandler)
         this.webSocket.addEventListener('error',this.wsErrorHandler)
         this.webSocket.addEventListener('close',this.wsCloseHandler)
-
-
 
         clearInterval(this.wsTimer)
         this.wsTimer = setInterval(()=>{

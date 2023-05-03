@@ -18,24 +18,6 @@
             <img :src="today_img" alt="" style="border-radius: 20%;width: 55px;height: 70px;background-color:  #b7f4d9;">
           </div>
         </div>
-        
-        <!-- <div class="banner">
-          <div class="banner_wrap">
-            <swiper :options="swiperOption" v-if="images.length > 1">
-              <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-                <div @click="click(item.url)" style="display: flex;justify-content: center; flex-direction: row;">
-                  <div @click="click(item.url)" style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;">
-                    <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div>
-                  </div>
-                  <div @click="click(item.url)" style="width: 80%;">
-                    <img :src="item.img" alt="" style="border-radius: 2rem; scale: 1;">
-                  </div>
-                </div>
-
-              </swiper-slide>
-            </swiper>
-          </div>
-        </div> -->
 
         <div style="display: flex;justify-content: center;">
           <div class="main_buttons">
@@ -43,40 +25,51 @@
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/student.png" alt="" >
               </div>
-              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">学生专区</div>
+              <div class="itemtext">学生专区</div>
             </div>
             <div @click="click('/workbenches')" class="items">
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/work.png" alt="" >
               </div>
-              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">工作台</div>
+              <div class="itemtext">工作台</div>
             </div>
             <div @click="click('me')" class="items">
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/me.png" alt="" >
               </div>
-              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">个人中心</div>
+              <div class="itemtext">个人中心</div>
             </div>
-          </div>
-        </div>
-
-        <div style="display: flex;justify-content: center;">
-          <div class="main_buttons">     
             <div @click="click('chatroom')" class="items">
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/chat.png" alt="" >
               </div>
-              <div style="display: flex;justify-content: center;color: #ffffff;font-weight: bolder;margin-top: 5px;">吹水站</div>
+              <div class="itemtext">吹水站</div>
             </div>
           </div>
         </div>
 
+        <div class="banner">
+          <div class="banner_wrap">
+          <swiper :options="swiperOption" v-if="images.length > 1">
+            <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
+              <div @click="click(item.url)" style="display: flex;justify-content: left; flex-direction: row;">
+                <!-- <div @click="click(item.url)" style="width: 20px;background-color:#b7f4d9;border-radius: 1rem;height: 40%;margin-top: 5px;"> -->
+                  <!-- <div style="font-size: large;margin-top: 5%;font-weight: bolder;color: #adad63f1;">{{ item.name }}</div> -->
+                <!-- </div> -->
+                <div @click="click(item.url)" style="width: 80%;">
+                  <img :src="item.img" alt="" style="border-radius: 2rem; scale: 1;">
+                </div>
+              </div>
 
+            </swiper-slide>
+          </swiper>
+          </div>
+        </div>
 
         <el-divider content-position="center" style="font-weight: bolder;">今日课程</el-divider>
 
         <div style="display: flex;flex-direction: row;">
-          <!-- <WebSocket></WebSocket> -->
+          <WebSocket></WebSocket>
           <el-dialog
             title="提示"
             :visible.sync="centerDialogVisible"
@@ -156,15 +149,17 @@ export default {
       nick_name: '你好',
       avatarurl: '',
       swiperOption: {
-        loop: false,
+        loop: true,
         speed: 800,
         observer: true,
         observeParents: true,
-        // autoplay: {
-        //   delay: 3000,
-        //   disableOnInteraction: false,
-        //   reverseDirection:false
-        // }
+        slidesPerView:1.2,
+        loopedSlides:2,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+          reverseDirection:false
+        }
       },
       openid: this.$route.query.openid,
       role: this.$route.query.role,
@@ -468,7 +463,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-   width: 90%;
+   width: 95%;
    margin-top: 20px;
    margin-bottom: 20px;
 }
@@ -477,7 +472,7 @@ export default {
   width: 100px;
   height: 100px;
   /* margin-right: 6%; */
-  background-color:rgb(149, 224, 218);
+  /* background-color:rgb(149, 224, 218); */
   border-radius: 1rem;
   justify-content: center;
   display: flex;
@@ -485,9 +480,18 @@ export default {
 }
 
 .icon{
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 0.5rem;
+}
+
+.itemtext {
+  font-size:small;
+  display: flex;
+  justify-content: center;
+  color:#767e69;
+  font-weight: bolder;
+  margin-top: 5px;
 }
 
 h1 {
@@ -561,22 +565,23 @@ header {
 }
 
 .banner .swiper-container .swiper-wrapper .swiper-slide-prev {
-    scale: 0.8 !important;
+    scale: 0.9 !important;
 }
 
 .banner .swiper-container  .swiper-wrapper .swiper-slide-next {
-    scale: 0.8 !important;
+    scale: 0.9 !important;
 }
 
 .banner .swiper-container .swiper-wrapper .swiper-slide-prev img {
-    scale: 0.8 !important;
+    scale: 0.9 !important;
 }
 
 .banner .swiper-container .swiper-wrapper .swiper-slide-next img {
-   scale: 0.8 !important;
+   scale: 0.9 !important;
 }
 
 .banner .swiper-container .swiper-wrapper .swiper-slide-active {
+   width: 90%;
    scale: 0.9;
 }
 
