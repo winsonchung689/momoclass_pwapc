@@ -9,7 +9,7 @@
 
     <!-- <WebSocket ref="WebSocket"></WebSocket> -->
     <div ref="scrolldIV" class="chatAppBody">
-        <div class="chatTitle">吹水站💬！！！ 哩度讲哩度散啦～～🤫🤫🤫(在线:{{ onlinecount }})</div>
+        <div class="chatTitle">吹水站💬 随便聊聊～～(在线:{{ onlinecount }})</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
               <el-avatar class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
@@ -27,11 +27,15 @@
     <div style="position: fixed;width: 100%;margin-top: 20px;">
       <el-input
         type="textarea"
-        :rows="4"
+        :rows="2"
         placeholder="请输入内容"
         v-model="textarea">
       </el-input>
-      <el-button @click="sendMessage" type="primary">发送</el-button>
+      <!-- <input type="text" v-model="textarea" placeholder="请输入内容"> -->
+      <div style="display: flex;justify-content: right;">
+        <el-button @click="sendMessage" type="primary">发送</el-button>
+      </div>
+     
     </div>
     
   </div>
@@ -155,18 +159,21 @@ export default {
         console.log(data)
         let str = data.split(':')[0]
         let count = data.split(':')[1]
-        that.onlinecount = count
+        if(count){
+          that.onlinecount = count
+        }
         if(str != 'online'){
           let openid = data.split('_')[0]
           let msg = data.split('_')[1]
-
-          let json = {}
-          json.msg = msg
-          json.direction = 1
-          if(openid == that.openid){
-            json.direction = 2
+          if(msg){
+            let json = {}
+            json.msg = msg
+            json.direction = 1
+            if(openid == that.openid){
+              json.direction = 2
+            }
+            that.message_list.push(json)
           }
-          that.message_list.push(json)
         }
     },
 
