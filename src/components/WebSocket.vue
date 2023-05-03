@@ -23,7 +23,7 @@ export default {
         timeout:28*1000,
         serverTimeoutObj:null,
         timeoutnum:null,
-        message:''
+        message:'',
     }
   },
 
@@ -134,24 +134,24 @@ export default {
 
     wsOpenHandler(event){
         console.log('ws builded')
-        this.start()
+        // this.start()
     },
 
     wsMessageHandler(e){
         let that = this
         let data = e.data
         console.log(data)
-        if(data != 'connect successfully!'){
-          that.$notify({
-              title: '通知',
-              message: data,
-              duration: 0
-          });
-          that.audioPlay();
-
+        if(data != 'connected'){
           that.message = data;
+          // that.$notify({
+          //     title: '通知',
+          //     message: data,
+          //     duration: 0
+          // });
+          // that.audioPlay();
         }
-        that.reset();
+        
+        // that.reset();
     },
 
     async audio(){

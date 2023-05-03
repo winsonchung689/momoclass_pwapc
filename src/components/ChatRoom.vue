@@ -8,7 +8,7 @@
     </div>
 
     <WebSocket ref="WebSocket"></WebSocket>
-    <div class="chatAppBody">
+    <div ref="scrolldIV" class="chatAppBody">
         <div class="chatTitle">吹水站,哩度讲哩度散🤫🤫🤫</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
@@ -43,7 +43,6 @@
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import WebSocket from '@/components/WebSocket'
-
 
 export default {
     name: "ChatRoom",
@@ -80,12 +79,34 @@ export default {
 
       async sendMessage(){
         let that = this
+
+        let div = this.$refs.scrolldIV
+        setTimeout(()=> {
+          div.scrollTop = div.scrollHeight;
+          console.log(div.scrollTop)
+        })
+        // this.$nextTick(() => {
+        //   div.$el.scrollTop = 0;
+        // })
+
         let textarea = that.textarea
         let openid = that.openid
+        let msg = this.$refs.WebSocket.message
         
-        console.log(this.$refs.WebSocket.message)
+        console.log(msg)
+        console.log(openid)
+        let json = {}
+        json.msg = msg
+        json.direction = 2
 
-        await HttpGet('/websocket/sendNotification?message='+ textarea + '&openid=' + openid)
+        let res = await HttpGet('/websocket/sendNotification?message='+ textarea + '&openid=' + openid)
+        console.log(res.data)
+        if(res.data == 200){
+          that.message_list.push(json)
+          console.log(that.message_list)
+          that.textarea = ''
+        }
+
       },
 
 
