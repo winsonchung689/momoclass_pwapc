@@ -472,7 +472,7 @@ export default {
   width: 100px;
   height: 100px;
   /* margin-right: 6%; */
-  /* background-color:rgb(149, 224, 218); */
+  background-color:#ffffff89;
   border-radius: 1rem;
   justify-content: center;
   display: flex;
