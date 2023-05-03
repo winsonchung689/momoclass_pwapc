@@ -33,17 +33,17 @@
               </div>
               <div class="itemtext">工作台</div>
             </div>
-            <div @click="click('me')" class="items">
-              <div style="display: flex;justify-content: center;">
-                <img class="icon" src="../assets/me.png" alt="" >
-              </div>
-              <div class="itemtext">个人中心</div>
-            </div>
             <div @click="click('chatroom')" class="items">
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/chat.png" alt="" >
               </div>
               <div class="itemtext">吹水站</div>
+            </div>
+            <div @click="click('me')" class="items">
+              <div style="display: flex;justify-content: center;">
+                <img class="icon" src="../assets/me.png" alt="" >
+              </div>
+              <div class="itemtext">个人中心</div>
             </div>
           </div>
         </div>
