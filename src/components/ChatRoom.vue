@@ -14,7 +14,8 @@
             <div v-if="item.direction === 1" class="chatRow">
               <el-avatar class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
               <div class="chatMsgContent">
-                  <div class="chatUsername">匿名</div>
+                  <div v-if="item.openid === oRRfU5TCmjXtbw9WsxnekwJAa72M" class="chatUsername">小桃子</div>
+                  <div v-if="item.openid != oRRfU5TCmjXtbw9WsxnekwJAa72M" class="chatUsername">匿名</div>
                   <div class="chatContent">{{ item.msg }}</div>
               </div>
             </div>
@@ -66,7 +67,7 @@ export default {
         isAudio:false,
         lockReconnect:false,
         timeoustObj:null,
-        timeout:3600*1000,
+        timeout:28*1000,
         serverTimeoutObj:null,
         timeoutnum:null,
         onlinecount:10
@@ -129,6 +130,13 @@ export default {
         },5000);
     },
 
+    reset(){
+      let that = this
+      clearTimeout(that.timeoustObj)
+      clearTimeout(that.serverTimeoutObj)
+      that.start()
+    },
+
     wsOpenHandler(event){
         console.log('ws builded')
          this.start()
@@ -169,12 +177,14 @@ export default {
             let json = {}
             json.msg = msg
             json.direction = 1
+            json.openid = openid
             if(openid == that.openid){
               json.direction = 2
             }
             that.message_list.push(json)
           }
         }
+        this.reset()
     },
 
     wsDestroy(){
