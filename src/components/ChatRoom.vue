@@ -66,7 +66,7 @@ export default {
         isAudio:false,
         lockReconnect:false,
         timeoustObj:null,
-        timeout:28*1000,
+        timeout:280*1000,
         serverTimeoutObj:null,
         timeoutnum:null,
         onlinecount:10
