@@ -12,10 +12,11 @@
         <div class="chatTitle">吹水站💬 随便聊聊～～(在线:{{ onlinecount }})</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
-              <el-avatar class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
+              <el-avatar v-if="item.openid != 'oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
+              <el-avatar v-if="item.openid==='oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatAvatar" :size="30" src="../assets/logo.png"></el-avatar>
               <div class="chatMsgContent">
-                  <div v-if="item.openid === oRRfU5TCmjXtbw9WsxnekwJAa72M" class="chatUsername">小桃子</div>
-                  <div v-if="item.openid != oRRfU5TCmjXtbw9WsxnekwJAa72M" class="chatUsername">匿名</div>
+                  <div v-if="item.openid==='oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatUsername">小桃子</div>
+                  <div v-if="item.openid != 'oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatUsername">匿名</div>
                   <div class="chatContent">{{ item.msg }}</div>
               </div>
             </div>
