@@ -89,7 +89,7 @@ export default {
         let div = this.$refs.scrolldIV
         setTimeout(()=> {
           div.scrollTop = div.scrollHeight;
-          console.log(div.scrollTop)
+          // console.log(div.scrollTop)
         })
       },
     },
@@ -165,7 +165,7 @@ export default {
     wsMessageHandler(e){
         let that = this
         let data = e.data
-        console.log(data)
+        console.log('11:' + data)
         let str = data.split(':')[0]
         let count = data.split(':')[1]
         if(count){
@@ -179,13 +179,11 @@ export default {
             json.msg = msg
             json.direction = 1
             json.openid = openid
-            if(openid == that.openid){
-              json.direction = 2
-            }
+            console.log(json)
             that.message_list.push(json)
+            this.reset()
           }
         }
-        this.reset()
     },
 
     wsDestroy(){
