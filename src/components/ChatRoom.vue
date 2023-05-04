@@ -182,7 +182,11 @@ export default {
             console.log(json)
             that.message_list.push(json)
             console.log(that.message_list)
-            that.reset()
+
+            setTimeout(function () {
+              that.reset()
+            },2000)
+            
           }
         }
     },
