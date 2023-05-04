@@ -392,7 +392,7 @@ export default {
         this.subsctiption_status = '已订阅'
     },
 
-    subscriptionInit(){
+    async subscriptionInit(){
       let that = this
       let openid = that.openid
       if ('serviceWorker' in navigator) {
