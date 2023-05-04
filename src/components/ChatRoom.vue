@@ -78,11 +78,10 @@ export default {
   async mounted(){
     this.wsIsRun = true
     this.wsInit()
-    this.message_list
   },
 
     created() {
-
+      this.message_list = []
     },
 
     watch:{
