@@ -101,7 +101,7 @@ export default {
       this.ws = wsuri
       if(!this.wsIsRun) return
       this.wsDestroy()
-      this.webSocket = new WebSocket(this.ws)
+      this.webSocket = new ReconnectingWebSocket(this.ws)
       this.webSocket.addEventListener('open',this.wsOpenHandler)
       this.webSocket.addEventListener('message',this.wsMessageHandler)
       this.webSocket.addEventListener('error',this.wsErrorHandler)
