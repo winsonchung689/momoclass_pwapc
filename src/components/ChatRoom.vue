@@ -219,9 +219,12 @@ export default {
       let textarea = that.textarea
       let openid = that.openid
       let message = openid + '_' + textarea
-      
-      console.log(textarea)
-      console.log(openid)
+
+      let json = {}
+      json.msg = textarea
+      json.direction = 2
+      json.openid = openid
+      that.message_list.push(json)
 
       let res = await HttpGet('/websocket/sendNotification?message='+ message + '&openid=' + openid)
       console.log(res.data)
