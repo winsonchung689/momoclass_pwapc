@@ -6,10 +6,10 @@
         </div>
         <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
     </div>
+    <div class="chatTitle">吹水站💬  同行通水，至紧要快～～(在线:{{ onlinecount }})</div>
 
     <!-- <WebSocket ref="WebSocket"></WebSocket> -->
     <div ref="scrolldIV" class="chatAppBody">
-        <div class="chatTitle">吹水站💬 随便聊聊～～(在线:{{ onlinecount }})</div>
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
               <el-avatar v-if="item.openid != 'oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
@@ -244,7 +244,7 @@ export default {
     flex-direction: column;
     height: 70vh;
     background-color: #f1f5f8;
-    margin-top: 40px;
+    margin-top: 5px;
     overflow: scroll;
 }
 .chatTitle{
@@ -252,6 +252,7 @@ export default {
     font-size: small;
     color: rgb(151, 160, 163);
     font-weight: bolder;
+    margin-top: 10%;
 }
 .chatBox{
     flex: 1;
