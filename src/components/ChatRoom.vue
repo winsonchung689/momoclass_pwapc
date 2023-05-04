@@ -71,7 +71,7 @@ export default {
         timeout:28*1000,
         serverTimeoutObj:null,
         timeoutnum:null,
-        onlinecount:10
+        onlinecount:0
     };
   },
 
