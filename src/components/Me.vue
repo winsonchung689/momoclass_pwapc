@@ -14,8 +14,9 @@
         <div style="display: flex;justify-content: center;">
           <el-avatar shape="square" :size="70" :fit="cover" :src="avatarurl"></el-avatar>
         </div>
-        <div style="display: flex;justify-content: center;font-size: larger;font-weight: bold;color: #4b415f5c;font-family: Helvetica Neue">{{ nick_name }}</div>
+        <div style="display: flex;justify-content: center;font-size: larger;font-weight: bold;color: #4b415f5c;font-family: Helvetica Neue;margin-bottom: 5px;">{{ nick_name }}</div>
         <div style="display: flex;justify-content: center;font-size: small;font-weight: bold;color: #afb3b1;"> 过期时间:{{ expired_time }}</div>
+        <div v-if="isBoss" style="display: flex;justify-content: center;font-size: small;font-weight: bold;color: #afb3b1;"> 会员身份:{{ member }}</div>
       </div>
       <el-divider ></el-divider>
 
@@ -52,7 +53,8 @@ export default {
       avatarurl:'',
       nick_name:'',
       expired_time:'unlimited',
-      isBoss:false
+      isBoss:false,
+      member:''
     }
   },
 
@@ -72,6 +74,7 @@ export default {
         // console.log(user_data)
         that.avatarurl = user_data.avatarurl
         that.nick_name = user_data.nick_name
+        that.member = user_data.member
         if(that.role === 'boss'){
           that.expired_time = user_data.expired_time
           that.isBoss = true
