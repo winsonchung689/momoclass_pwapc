@@ -48,6 +48,7 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export default {
     name: "ChatRoom",
