@@ -78,6 +78,7 @@ export default {
   async mounted(){
     this.wsIsRun = true
     this.wsInit()
+    this.message_list
   },
 
     created() {
@@ -215,6 +216,7 @@ export default {
 
     goOff() {
         this.$router.go(-1);
+        this.message_list = []
     },
     
     async sendMessage(){
