@@ -165,7 +165,7 @@ export default {
     wsMessageHandler(e){
         let that = this
         let data = e.data
-        console.log('11:' + data)
+        console.log(data)
         let str = data.split(':')[0]
         let count = data.split(':')[1]
         if(count){
