@@ -80,164 +80,164 @@ export default {
     this.wsInit()
   },
 
-    created() {
-      this.message_list = []
+  created() {
+    
+  },
+
+  watch:{
+    message_list: function(){
+      let div = this.$refs.scrolldIV
+      setTimeout(()=> {
+        div.scrollTop = div.scrollHeight;
+        // console.log(div.scrollTop)
+      })
     },
+  },
 
-    watch:{
-      message_list: function(){
-        let div = this.$refs.scrolldIV
-        setTimeout(()=> {
-          div.scrollTop = div.scrollHeight;
-          // console.log(div.scrollTop)
-        })
-      },
-    },
+  methods: {
 
-    methods: {
+    wsInit() {
+      const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
+      this.ws = wsuri
+      if(!this.wsIsRun) return
+      this.wsDestroy()
+      this.webSocket = new WebSocket(this.ws)
+      this.webSocket.addEventListener('open',this.wsOpenHandler)
+      this.webSocket.addEventListener('message',this.wsMessageHandler)
+      this.webSocket.addEventListener('error',this.wsErrorHandler)
+      this.webSocket.addEventListener('close',this.wsCloseHandler)
 
-      wsInit() {
-        const wsuri = 'wss://www.momoclasss.xyz:443/websocket/' + this.openid
-        this.ws = wsuri
-        if(!this.wsIsRun) return
-        this.wsDestroy()
-        this.webSocket = new WebSocket(this.ws)
-        this.webSocket.addEventListener('open',this.wsOpenHandler)
-        this.webSocket.addEventListener('message',this.wsMessageHandler)
-        this.webSocket.addEventListener('error',this.wsErrorHandler)
-        this.webSocket.addEventListener('close',this.wsCloseHandler)
-
-        clearInterval(this.wsTimer)
-        this.wsTimer = setInterval(()=>{
-            if(this.webSocket.readyState === 1){
-                clearInterval(this.wsTimer)
-            }else{
-                console.log('ws buiding up')
-            }
-        },3000)
-    },
-
-    reconnect() {
-        console.log('reconnecting...')
-        var that = this;
-        if(that.lockReconnect) {
-          return;
-        }
-        that.lockReconnect = true;
-        that.timeoutnum && clearTimeout(that.timeoutnum);
-        that.timeoutnum = setTimeout(function () {
-          that.wsInit();
-          that.lockReconnect = false;
-        },5000);
-    },
-
-    reset(){
-      let that = this
-      clearTimeout(that.timeoustObj)
-      clearTimeout(that.serverTimeoutObj)
-      that.start()
-    },
-
-    wsOpenHandler(event){
-        console.log('ws builded')
-         this.start()
-    },
-
-    start(){
-      console.log('heartbeat is starting...')
-      var self = this
-      self.timeoustObj && clearTimeout(self.timeoustObj)
-      self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj)
-      self.timeoustObj = setTimeout(function(){
-        if(self.ws.readyState == 1){
-          self.ws.send("heartCheck")
-        }else{
-          self.reconnect()
-        }
-
-        self.serverTimeoutObj = setTimeout(function() {
-          self.ws.close()
-        },self.timeout)
-      },self.timeout)
-
-    },
-
-    wsMessageHandler(e){
-        let that = this
-        let data = e.data
-        console.log(data)
-        let str = data.split(':')[0]
-        let count = data.split(':')[1]
-        if(count){
-          that.onlinecount = count
-        }
-        if(str != 'online'){
-          let openid = data.split('_')[0]
-          let msg = data.split('_')[1]
-          if(msg){
-            let json = {}
-            json.msg = msg
-            json.direction = 1
-            json.openid = openid
-            console.log(json)
-            that.message_list.push(json)
-            console.log(that.message_list)
-
-            setTimeout(function () {
-              that.reset()
-            },2000)
-            
+      clearInterval(this.wsTimer)
+      this.wsTimer = setInterval(()=>{
+          if(this.webSocket.readyState === 1){
+              clearInterval(this.wsTimer)
+          }else{
+              console.log('ws buiding up')
           }
-        }
-    },
+      },3000)
+  },
 
-    wsDestroy(){
-        if(this.webSocket !== null){
-            this.webSocket.removeEventListener('open',this.wsOpenHandler)
-            this.webSocket.removeEventListener('message',this.wsMessageHandler)
-            this.webSocket.removeEventListener('error',this.wsErrorHandler)
-            this.webSocket.removeEventListener('close',this.wsCloseHandler)
-            this.webSocket.close()
-            this.webSocket = null
-            clearInterval(this.wsTimer)
-        }
-    },
+  reconnect() {
+      console.log('reconnecting...')
+      var that = this;
+      if(that.lockReconnect) {
+        return;
+      }
+      that.lockReconnect = true;
+      that.timeoutnum && clearTimeout(that.timeoutnum);
+      that.timeoutnum = setTimeout(function () {
+        that.wsInit();
+        that.lockReconnect = false;
+      },5000);
+  },
 
-    wsErrorHandler(event){
-        console.log(event,'error')
-        this.reconnect();
-    },
-    
-    wsCloseHandler(event){
-        console.log('closed')
-        this.reconnect();
-    },
+  reset(){
+    let that = this
+    clearTimeout(that.timeoustObj)
+    clearTimeout(that.serverTimeoutObj)
+    that.start()
+  },
 
-    goOff() {
-        this.$router.go(-1);
-        this.message_list = []
-    },
-    
-    async sendMessage(){
-      let that = this
-      let textarea = that.textarea
-      let openid = that.openid
-      let message = openid + '_' + textarea
+  wsOpenHandler(event){
+      console.log('ws builded')
+        this.start()
+  },
 
-      let json = {}
-      json.msg = textarea
-      json.direction = 2
-      json.openid = openid
-      that.message_list.push(json)
-
-      let res = await HttpGet('/websocket/sendNotification?message='+ message + '&openid=' + openid)
-      console.log(res.data)
-      if(res.data == 200){
-        that.textarea =  ''
+  start(){
+    console.log('heartbeat is starting...')
+    var self = this
+    self.timeoustObj && clearTimeout(self.timeoustObj)
+    self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj)
+    self.timeoustObj = setTimeout(function(){
+      if(self.ws.readyState == 1){
+        self.ws.send("heartCheck")
+      }else{
+        self.reconnect()
       }
 
-    },
-    },
+      self.serverTimeoutObj = setTimeout(function() {
+        self.ws.close()
+      },self.timeout)
+    },self.timeout)
+
+  },
+
+  wsMessageHandler(e){
+      let that = this
+      let data = e.data
+      console.log(data)
+      let str = data.split(':')[0]
+      let count = data.split(':')[1]
+      if(count){
+        that.onlinecount = count
+      }
+      if(str != 'online'){
+        let openid = data.split('_')[0]
+        let msg = data.split('_')[1]
+        if(msg){
+          let json = {}
+          json.msg = msg
+          json.direction = 1
+          json.openid = openid
+          console.log(json)
+          that.message_list.push(json)
+          console.log(that.message_list)
+
+          setTimeout(function () {
+            that.reset()
+          },2000)
+          
+        }
+      }
+  },
+
+  wsDestroy(){
+      if(this.webSocket !== null){
+          this.webSocket.removeEventListener('open',this.wsOpenHandler)
+          this.webSocket.removeEventListener('message',this.wsMessageHandler)
+          this.webSocket.removeEventListener('error',this.wsErrorHandler)
+          this.webSocket.removeEventListener('close',this.wsCloseHandler)
+          this.webSocket.close()
+          this.webSocket = null
+          clearInterval(this.wsTimer)
+      }
+  },
+
+  wsErrorHandler(event){
+      console.log(event,'error')
+      this.reconnect();
+  },
+  
+  wsCloseHandler(event){
+      console.log('closed')
+      this.reconnect();
+  },
+
+  goOff() {
+      this.$router.go(-1);
+      this.message_list = []
+  },
+  
+  async sendMessage(){
+    let that = this
+    let textarea = that.textarea
+    let openid = that.openid
+    let message = openid + '_' + textarea
+
+    let json = {}
+    json.msg = textarea
+    json.direction = 2
+    json.openid = openid
+    that.message_list.push(json)
+
+    let res = await HttpGet('/websocket/sendNotification?message='+ message + '&openid=' + openid)
+    console.log(res.data)
+    if(res.data == 200){
+      that.textarea =  ''
+    }
+
+  },
+  },
 }
 </script>
 
