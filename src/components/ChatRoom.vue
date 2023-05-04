@@ -181,7 +181,7 @@ export default {
             json.openid = openid
             console.log(json)
             that.message_list.push(json)
-            this.reset()
+            that.reset()
           }
         }
     },
