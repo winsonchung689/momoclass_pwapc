@@ -108,7 +108,7 @@ export default {
   methods: {
     async getComment (page) {
       let that = this;
-      if(that.role == 'boss'){
+      if(that.role == 'boss' || that.role == 'teacher'){
         that.isBoss = true
       }
       let param ={

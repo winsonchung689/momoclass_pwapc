@@ -76,7 +76,7 @@ export default {
     async getStudents () {
       let that = this
 
-      if(that.role === 'boss'){
+      if(that.role === 'boss' || that.role == 'teacher'){
         that.isBoss = true
         let param = {
           studio: that.studio,

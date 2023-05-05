@@ -483,7 +483,7 @@ export default {
   methods: {
     async getTimetable () {
       let that = this;
-      if(that.role == 'boss'){
+      if(that.role == 'boss' || that.role == 'teacher'){
         that.isShow = true
       }
 

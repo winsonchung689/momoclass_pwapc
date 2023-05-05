@@ -383,7 +383,7 @@ export default {
             var children = []
             for(var i=0; i < details_data.length; i++ ){
               var json_detail = {}
-              if(that.role == 'boss'){
+              if(that.role == 'boss' || that.role === 'teacher'){
                   const student_name = details_data[i].student_name
                   const id = details_data[i].id
                   const leave = details_data[i].leave

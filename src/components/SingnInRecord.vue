@@ -72,7 +72,7 @@ export default {
   methods: {
     async getSignInRecord () {
       let that = this;
-      if(that.role == 'boss'){
+      if(that.role == 'boss' || that.role == 'teacher'){
         that.isShow = true
       }
       

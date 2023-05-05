@@ -70,7 +70,7 @@ export default {
   methods: {
     async getLeaveRecord () {
       let that = this;
-      if(that.role == 'boss'){
+      if(that.role == 'boss' || that.role == 'teacher'){
         that.isShow = true
       }
 

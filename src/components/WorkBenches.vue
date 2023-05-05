@@ -85,7 +85,7 @@ export default {
 
     onload () {
       let that = this
-      if(that.role=='boss'){
+      if(that.role=='boss' || that.role == 'teacher'){
         that.isBoss = true
       }
     },

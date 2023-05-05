@@ -131,7 +131,7 @@ export default {
     async getUser () {
       let that = this
 
-      if(that.role == 'boss'){
+      if(that.role == 'boss' || that.role == 'boss'){
         that.isBoss = true
       }
 

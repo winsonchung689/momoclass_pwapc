@@ -246,6 +246,9 @@ export default {
       console.log(that.send_time)
       
       if('boss' == that.role){
+        that.mode = '校长模式'
+        that.isBoss = true
+      }else if('teacher' == that.role){
         that.mode = '老师模式'
         that.isBoss = true
       }else if('client' == that.role){
