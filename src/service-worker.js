@@ -77,7 +77,8 @@ self.addEventListener('push', function (event) {
 
 
  self.addEventListener('notificationclick', function (event) {
-      event.waitUntil(clients.openWindow('https://www.momoclass.xyz:8080/announcementrecord'))
+      var title = event.notification.data.title
+      event.waitUntil(clients.openWindow('https://www.momoclass.xyz:8080/announcementrecord?studio=' + title))
  })
 
 
