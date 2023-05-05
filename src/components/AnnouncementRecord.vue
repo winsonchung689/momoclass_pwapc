@@ -48,7 +48,7 @@ export default {
       ShowIndex:0,
       display: 'none',
       page:1,
-      activeName: '1'
+      activeName: 0
     }
   },
 
