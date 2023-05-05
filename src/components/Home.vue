@@ -11,7 +11,13 @@
 
       <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
 
-        <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+        <div style="display: flex;flex-direction: row;justify-content: space-between;">
+          <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+          <div style="display: flex;margin-right: 5%;">
+            <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
+          </div>
+        </div>
+        
         <div style="display: flex;justify-content: center;margin-bottom: 5px;">
           <div class="today">
             <h3>{{ today }}  {{ today_season }}</h3>
@@ -445,7 +451,16 @@ export default {
             let res = await sendNotification(subscription, JSON.stringify(json))
             console.log(res)
           }
-          
+
+          if(i == 1){
+            let param ={
+                studio:that.studio,
+                content:message
+            }
+            let res = await HttpPost('/insertAnnouncement', param)
+            console.log(res)
+        }
+        
       }
 
       that.$message({
@@ -484,6 +499,14 @@ export default {
   height: 40px;
   border-radius: 0.5rem;
 }
+
+.notice{
+  width: 30px;
+  height: 30px;
+  border-radius: 0.5rem;
+  margin-top: 10px;
+}
+
 
 .itemtext {
   font-size:small;
