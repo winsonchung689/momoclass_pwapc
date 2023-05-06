@@ -20,9 +20,9 @@
           </div>
 
           <div  class="foot" :style="{display:MinDisplay}">
-            <div>学生: {{ item.student_name }}</div>
-            <div>课堂名称: {{ item.class_name }}</div>
-            <div>课堂目标: {{ item.class_target }}</div>
+            <div style="font-size: medium;color: rgb(90, 135, 231);">学生: {{ item.student_name }}</div>
+            <div style="font-size: medium;color: rgb(140, 224, 226);">课堂名称: {{ item.class_name }}</div>
+            <div style="font-size: medium;color: rgb(140, 219, 226);margin-bottom: 10px;">课堂目标: {{ item.class_target }}</div>
 
             <div>
               积极度:
@@ -49,11 +49,11 @@
               </el-rate>
             </div>
 
-            <div>老师点评: {{ item.comment }}</div>
+            <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 10px;margin-bottom: 10px;">老师点评: {{ item.comment }}</div>
             <div v-if="item.isMp3">
               <audio  controls ref="audio" class="aud" :src="item.mp3_url"></audio>
             </div>
-            <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
+            <div style="font-size: small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
             <div v-if="isBoss" @click=deleteRow(item.id) style="margin-top: 10px;margin-left: 85%;"><el-button type="danger" icon="el-icon-delete" circle></el-button></div>
             <el-divider></el-divider>
           </div> 

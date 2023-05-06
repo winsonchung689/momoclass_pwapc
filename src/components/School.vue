@@ -76,12 +76,14 @@
 
                 <div style="font-weight: bold;color: #a0a3a7;display: flex;direction: row;margin-top: 5px;">
                   <div style="margin-right: 5px;font-size: smaller;">总积分: {{ item.points }} </div>
-                  <div style="margin-right: 5px;font-size: smaller;">扣课: {{ item.minus }}/次 </div>
-                  <div style="margin-right: 5px;font-size: smaller;">积分: {{ item.coins }}/课</div>
                 </div>
                 <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                  <div style="color: #4d67e8;margin-right: 5px;">总课时: {{ item.left_amount }} </div>
-                  <div style="color: #4d67e8;margin-right: 5px;">余课时: {{ item.total_amount }} </div>
+                  <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">扣课: {{ item.minus }}/次 </div>
+                  <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 5px;">积分: {{ item.coins }}/课</div>
+                </div>
+                <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                  <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">总课时: {{ item.total_amount }} </div>
+                  <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 5px;">余课时: {{ item.left_amount }} </div>
                 </div>
                 <el-progress :percentage="item.percentage"></el-progress>
               </div>
@@ -90,6 +92,14 @@
               <el-button style="font-size: smaller;" smaller @click="deleteRow(item.id,item.student_name)" type="danger" icon="el-icon-delete"></el-button>
             </div>
           </div>
+
+          <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 400px">
+            <el-input v-model="number" :placeholder="mark"></el-input>
+            <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
+              <el-button @click="cancel_buttom()">取 消</el-button>
+              <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
+            </div>
+          </el-dialog>
             
         </div>
 
@@ -112,14 +122,25 @@ export default {
       studio: this.$route.query.studio,
       header:'学员管理',
       isAdd:false,
-      total_amount:1,
-      left_amount:1,
       student_name:'',
       subject:'',
       isStudent:true,
       state:'',
       allstudents:[],
-      isBoss:false
+      isBoss:false,
+      dialogFormVisible:false,
+      mark:'',
+      number:'',
+      subject_new:'全科目',
+      gift_name:'',
+      coins_amount:'',
+      minus_amount:'',
+      student_name_new:'',
+      total_amount:'',
+      modify_type:'',
+      lessons_amount:'',
+      consume_lesson_amount:'',
+      left_amount:'',
     }
   },
 
@@ -347,6 +368,89 @@ export default {
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
+
+    modifyFunction(type,student_name,subject){
+      let that = this
+      that.number = ''
+      that.student_name = student_name
+      that.subject = subject
+      that.dialogFormVisible = true
+      if(type == '扣课' ){
+        that.mark = '请输入单次扣课数'
+      }else if(type == '积分'){
+        that.mark = '请输入单课积分数'
+      }else if(type == '总课时'){
+        that.mark = '请输入总课时数'
+      }else if(type == '余课时'){
+        that.mark = '请输入余课时数'
+      }
+    },
+
+    cancel_buttom(){
+      this.dialogFormVisible = false
+      this.number = ''
+      this.student_name = ''
+    },
+    
+    async confirm_buttom(){
+      let that = this 
+      let param = {
+        studio: that.studio,
+        subject:that.subject,
+        student_name:that.student_name,
+        subject_new:'全科目',
+        gift_name:that.gift_name,
+        coins_amount:that.coins_amount,
+        minus_amount:that.minus_amount,
+        student_name_new:that.student_name_new,
+        modify_type:that.modify_type,
+        consume_lesson_amount:that.consume_lesson_amount,
+        lessons_amount:that.lessons_amount,
+        minus_amount:that.minus_amount,
+        coins_amount:that.coins_amount,
+        total_amount:that.total_amount,
+        left_amount:that.left_amount
+      }
+
+      let status = ''
+      if(that.mark == '请输入单次扣课数'){
+        param.minus_amount = that.number
+        // console.log(param)
+        let res = await HttpPost("/updateLesson",param)
+        status = res.status
+      }else if(that.mark == '请输入单课积分数'){
+        param.coins_amount = that.number
+        // console.log(param)
+        let res = await HttpPost("/updateLesson",param)
+        status = res.status
+      }else if(that.mark == '请输入总课时数'){
+        param.total_amount = that.number
+        // console.log(param)
+        let res = await HttpPost("/updateLesson",param)
+        status = res.status
+      }else if(that.mark == '请输入余课时数'){
+        param.left_amount = that.number
+        // console.log(param)
+        let res = await HttpPost("/updateLesson",param)
+        status = res.status
+      }
+
+      if(status == 200){
+        that.$message({
+            message: '操作成功',
+            type: 'success'
+        });
+        that.dialogFormVisible = false
+        that.getUser()
+      }else {
+        that.$message({
+            message: '操作失败',
+            type: 'warning'
+        });
+        that.dialogFormVisible = false
+        that.getUser()
+      }
+    }
 
   }
 }
