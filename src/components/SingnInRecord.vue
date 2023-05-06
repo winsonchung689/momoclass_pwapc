@@ -29,13 +29,20 @@
             <template slot-scope="scope" >
               <div style="justify-content: center;display: flex;flex-direction: column;">
                 <div>
-                  <el-button @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">移除</el-button>
+                  <el-popconfirm title="确定移除吗？" @confirm="deleteRow(scope.$index, tableData)">
+                    <el-button slot="reference" type="text" size="small" style="font-size:x-small">移除</el-button>
+                  </el-popconfirm>
                 </div>
                 <div>
-                  <el-button @click.native.prevent="deleteAll()" type="text" size="small" style="font-size:x-small">清空</el-button>
+                  <el-popconfirm title="确定清空吗？" @confirm="deleteAll()">
+                    <el-button slot="reference" type="text" size="small" style="font-size:x-small">清空</el-button>
+                  </el-popconfirm>
                 </div>
+
                 <div>
-                  <el-button @click.native.prevent="cancel(scope.$index, tableData)" type="text" size="small" style="font-size:x-small">取消</el-button>
+                  <el-popconfirm title="确定取消吗？" @confirm="cancel(scope.$index, tableData)">
+                    <el-button slot="reference" type="text" size="small" style="font-size:x-small">取消</el-button>
+                  </el-popconfirm>
                 </div>
               </div>
             </template>

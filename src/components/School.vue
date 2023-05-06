@@ -90,12 +90,12 @@
                   <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">总课时: {{ item.total_amount }} </div>
                   <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 5px;">余课时: {{ item.left_amount }} </div>
                 </div>
-                <el-progress :percentage="item.percentage"></el-progress>
+                <el-progress style="margin-top: 5px;" :percentage="item.percentage"></el-progress>
               </div>
             </div>
-            <div style="margin-left: 83%;">
-              <el-button style="font-size: smaller;" smaller @click="deleteRow(item.id,item.student_name)" type="danger" icon="el-icon-delete"></el-button>
-            </div>
+            <el-popconfirm title="确定删除吗？" style="margin-left: 90%;" @confirm="deleteRow(item.id,item.student_name)">
+              <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+            </el-popconfirm>
           </div>
 
           <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 400px">
@@ -473,7 +473,7 @@ export default {
 .lesson{
   background-color: rgb(226, 235, 217);
   width: 85%;
-  height: 100px;
+  height: 120px;
   border-radius: 0.5rem;
   margin-bottom: 6px;
   flex-direction: row;

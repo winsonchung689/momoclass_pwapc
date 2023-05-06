@@ -57,14 +57,14 @@
                         </el-popover>
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
-                      <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                        <div style="justify-content: center;margin-top: 12px;">
-                          <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                        </div>
+                      <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
                         <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
                           <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
                           <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
                         </div>
+                        <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                          <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                        </el-popconfirm>
                       </div>
                     
 
@@ -103,15 +103,15 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                      <div style="justify-content: center;margin-top: 12px;">
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
+                        <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
+                          <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
+                          <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
+                        </div>
+                        <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                          <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                        </el-popconfirm>
                       </div>
-                      <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
-                        <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
-                        <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
-                      </div>
-                    </div>
 
                   </div>
                 </div>
@@ -148,14 +148,14 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                      <div style="justify-content: center;margin-top: 12px;">
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                      </div>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
                       <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
                         <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
                         <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
                       </div>
+                      <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                        <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                      </el-popconfirm>
                     </div>
 
                   </div>
@@ -193,16 +193,16 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                      <div style="justify-content: center;margin-top: 12px;">
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                      </div>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
                       <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
                         <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
                         <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
                       </div>
+                      <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                        <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                      </el-popconfirm>
                     </div>
-                    
+                  
                   </div>
                 </div>
               </template>
@@ -238,14 +238,14 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                      <div style="justify-content: center;margin-top: 12px;">
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                      </div>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
                       <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
                         <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
                         <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
                       </div>
+                      <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                        <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                      </el-popconfirm>
                     </div>
 
                   </div>
@@ -283,14 +283,14 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                      <div style="justify-content: center;margin-top: 12px;">
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                      </div>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
                       <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
                         <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
                         <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
                       </div>
+                      <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                        <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                      </el-popconfirm>
                     </div>
                   </div>
                 </div>
@@ -328,14 +328,14 @@
                         <el-button type="primary" style="font-size: smaller;font-weight: bolder;height: 37px;" @click="dialogFunction(item.dayofweek,item.subject,item.class_number,item.duration,index)">排课</el-button>
                     </div>
 
-                    <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                      <div style="justify-content: center;margin-top: 12px;">
-                        <el-button @click="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                      </div>
+                    <div style="display: flex;flex-direction: row;justify-content: space-between;margin-top: 10px;">
                       <div @click="updateRemind(item.remind,item.subject,item.duration,item.class_number,item.dayofweek)" style="justify-content: center;margin-top: 12px;">
                         <el-button v-if="item.remind==0?true:false" icon="el-icon-message-solid" circle size="mini"></el-button>
                         <el-button v-if="item.remind==1?true:false" type="primary" icon="el-icon-message-solid" circle size="mini"></el-button>
                       </div>
+                      <el-popconfirm title="确定删除吗？" style="justify-content: center;margin-top: 12px;" @confirm="deleteArrangement(item.id,item.dayofweek,item.subject,item.class_number,item.duration)">
+                        <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                      </el-popconfirm>
                     </div>
 
                   </div>
