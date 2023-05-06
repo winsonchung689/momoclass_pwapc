@@ -8,7 +8,7 @@
       </div>
 
       <div style="margin-top: 15%;">
-          <div v-if="isBoss" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
+          <div v-if="isTeacher" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
             <div class="container">
 
               <div class="item" @click="timeTable(subject)">
@@ -34,7 +34,7 @@
 
           <div style="justify-content: center;display: flex;margin-bottom: 15px;">
             <div class="container">
-                <div v-if="isBoss" class="item" @click="school(subject)">
+                <div v-if="isTeacher" class="item" @click="school(subject)">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
                       <img style="width: 50px;height: 50px;" src="@/assets/school.png" alt="">
@@ -51,6 +51,20 @@
                       <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
                     </div>
                 </div>
+            </div>
+          </div>
+
+          <div style="justify-content: center;display: flex;margin-bottom: 15px;">
+            <div class="container">
+                <div v-if="isBoss" class="item">
+                  <div class="content">
+                    <div style="display: flex;justify-content: center;">
+                      <img style="width: 50px;height: 50px;" src="@/assets/account_book.png" alt="">
+                    </div>
+                    <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">账本</div>
+                  </div>
+                </div>
+
             </div>
           </div>
       </div>
@@ -73,7 +87,8 @@ export default {
       comment_style:this.$route.query.comment_style,
       send_time:this.$route.query.send_time,
       header: '工作台',
-      isBoss:false
+      isBoss:false,
+      isTeacher:false
     }
   },
 
@@ -86,6 +101,10 @@ export default {
     onload () {
       let that = this
       if(that.role=='boss' || that.role == 'teacher'){
+        that.isTeacher = true
+      }
+
+      if(that.role=='boss'){
         that.isBoss = true
       }
     },
