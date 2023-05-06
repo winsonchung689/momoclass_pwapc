@@ -15,6 +15,11 @@
             <el-button @click="getUser()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
         </div>
+        <div style="margin-left: 10%;margin-bottom: 10px;font-weight:bolder;font-size: medium;">
+          <div>总人数: {{ total_student }}</div>
+          <div>总课时数: {{ total_amount_all }}</div>
+          <div>余课时数: {{ left_amount_all }}</div>
+        </div>
 
         <div v-if="isBoss" style="margin-left: 10%;"> 
           <el-autocomplete
@@ -69,7 +74,7 @@
               <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
               <div style="margin-left: 10px;margin-top: 10px;">
                 <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
-                  <div style="margin-right: 5px;color: #4d67e8;">科目: {{ item.subject }} </div>
+                  <div style="margin-right: 5px;color: #43504a;">科目: {{ item.subject }} </div>
                 </div>
 
                 <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
@@ -141,6 +146,9 @@ export default {
       lessons_amount:'',
       consume_lesson_amount:'',
       left_amount:'',
+      total_amount_all:'',
+      left_amount_all:'',
+      total_student:''
     }
   },
 
@@ -152,7 +160,7 @@ export default {
     async getUser () {
       let that = this
 
-      if(that.role == 'boss' || that.role == 'boss'){
+      if(that.role == 'boss' || that.role == 'teacher'){
         that.isBoss = true
       }
 
@@ -163,7 +171,10 @@ export default {
       }
       const lessons = await HttpPost('/getLesson', param)
       const lessons_data = lessons.data
-      // console.log(lessons_data)
+      console.log(lessons_data)
+      that.total_student = lessons_data[0].total_student
+      that.total_amount_all = lessons_data[0].total_amount_all
+      that.left_amount_all = lessons_data[0].left_amount_all
       that.items =[]
       that.allstudents = []
       for( var i in lessons_data){
