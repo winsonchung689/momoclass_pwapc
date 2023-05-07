@@ -9,57 +9,93 @@
 
      
       <div style="margin-top: 15%;">
-        <div>
+        <div v-if="isBooking">
+          <el-switch
+            style="display: block"
+            v-model="type_input"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="收入"
+            inactive-text="支出">
+          </el-switch>
+          
+          <el-input style="width:200px; margin-top: 5px;margin-bottom: 5px;" v-model="amount_input" placeholder="请输金额"></el-input>
+          <el-input
+            style="width: 90%;"
+            type="textarea"
+            :rows="2"
+            placeholder="请输入备注"
+            v-model="mark_input">
+          </el-input>
+          <el-button @click="booking_confirm()" style="margin-left: 70%;margin-top: 5px;" type="primary">确定</el-button>
+        </div>
+
+        <div v-if="isTable">
+          <div>
+            <el-date-picker
+            v-model="stat_date"
+            type="date"
+            placeholder="开始时间"
+            style="width: 45%">
+          </el-date-picker>
           <el-date-picker
-          v-model="stat_date"
-          type="date"
-          placeholder="开始时间"
-          style="width: 45%">
-        </el-date-picker>
-        <el-date-picker
-          v-model="date_value"
-          type="date"
-          placeholder="结束时间"
-          style="width: 45%">
-        </el-date-picker>
+            v-model="date_value"
+            type="date"
+            placeholder="结束时间"
+            style="width: 45%">
+          </el-date-picker>
+          </div>
+          <div style="margin-top: 5px;">
+            <el-button-group>
+              <el-button @click="type ='' " type="primary">全部</el-button>
+              <el-button @click="type ='收入' " type="success">收入</el-button>
+              <el-button @click="type ='支出' " type="danger">支出</el-button>
+            </el-button-group>
+            <el-button @click="booking" style="margin-left: 20%;" type="primary " icon="el-icon-edit" plain>入账</el-button>
+          </div>
+          <div style="font-size: medium;font-weight: bolder;color: cornflowerblue;">总营收: {{ turnover }}</div>
+          <div class="echart" id="mychart" :style="myChartStyle"></div>
+          <template>
+            <el-table
+              :data="tableData"
+              style="width: 100%">
+              <el-table-column
+                prop="create_time"
+                label="日期"
+                width="90">
+              </el-table-column>
+              <el-table-column
+                prop="mark"
+                label="备注"
+                width="150">
+              </el-table-column>
+              <el-table-column
+                prop="amount"
+                label="金额"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                prop="type"
+                label="类型"
+                width="50">
+              </el-table-column>
+              <el-table-column fixed="right" label="操作" width="50">
+                <template slot-scope="scope" >
+                  <div style="justify-content: center;display: flex;flex-direction: column;">
+                    <div>
+                      <el-popconfirm title="确定移除吗？" @confirm="deleteRow(scope.$index, tableData)">
+                        <el-button slot="reference" type="text" size="small" style="font-size:x-small">移除</el-button>
+                      </el-popconfirm>
+                    </div>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </template>
         </div>
-        <div style="margin-top: 5px;">
-          <el-button-group>
-            <el-button @click="type ='' " type="primary">全部</el-button>
-            <el-button @click="type ='收入' " type="success">收入</el-button>
-            <el-button @click="type ='支出' " type="danger">支出</el-button>
-          </el-button-group>
-        </div>
-        <div style="font-size: medium;font-weight: bolder;color: cornflowerblue;">总营收: {{ turnover }}</div>
-        <div class="echart" id="mychart" :style="myChartStyle"></div>
-        
-        <template>
-          <el-table
-            :data="tableData"
-            style="width: 100%">
-            <el-table-column
-              prop="create_time"
-              label="日期"
-              width="100">
-            </el-table-column>
-            <el-table-column
-              prop="mark"
-              label="备注"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="amount"
-              label="金额"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              prop="type"
-              label="类型"
-              width="50">
-            </el-table-column>
-          </el-table>
-        </template>
       </div>
+
+      
 
       
     </div>
@@ -88,7 +124,12 @@ export default {
       pieData: [],
       pieName: [],
       turnover:'',
-      stat_date:''
+      stat_date:'',
+      type_input:true,
+      amount_input:'',
+      mark_input:'',
+      isBooking:false,
+      isTable:true
     }
   },
 
@@ -193,7 +234,7 @@ export default {
         }
       }
       that.turnover = turnover
-      console.log(turnover,expenditure,revenue)
+      // console.log(turnover,expenditure,revenue)
       let revenue_json = {
         value: revenue,
         name: "收入"
@@ -256,7 +297,63 @@ export default {
         this.myChart.resize();
       });
     },
+
+    booking(){
+      let that = this
+      that.isBooking = true
+      that.isTable = false
+    },
+
+    async booking_confirm(){
+      let that = this
+      that.isBooking = false
+      that.isTable = true
+      let type = '收入'
+      if(that.type_input == false){
+        type = '支出'
+      }
+      let param ={
+          studio: that.studio,
+          mark: that.mark_input,
+          amount:that.amount_input,
+          type: type
+      }
+      // console.log(param)
+      const res = await HttpPost('/bookkeeping', param)
+      console.log(res.data)
+      that.$message({
+          message: '操作成功',
+          type: 'success'
+      });
+      that.getAccountBook()
+    },
   
+    deleteRow (index, tableData) {
+      const id = tableData[index].id
+      let param ={
+          studio:this.studio,
+          id:id,
+          role:this.role,
+          openid:this.openid
+        }
+      let res = HttpPost("/deleteBookDetail",param)
+      res.then(res => {
+          if(res.data == 1){
+            this.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+            this.getAccountBook()
+          }else {
+            this.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+          }
+      })
+      
+    },
+
     goOff() {
       this.$router.go(-1);
     },
