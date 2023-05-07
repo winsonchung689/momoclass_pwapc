@@ -10,6 +10,9 @@
      
       <div style="margin-top: 15%;">
         <div v-if="isBooking">
+          <div>
+          <el-button type="text"  @click="cancel">取消</el-button>
+        </div>
           <el-switch
             style="display: block"
             v-model="type_input"
@@ -302,6 +305,14 @@ export default {
       let that = this
       that.isBooking = true
       that.isTable = false
+    },
+
+    cancel(){
+      let that = this
+      that.isBooking = false
+      that.isTable = true
+      that.getAccountBook()
+      // that.initEcharts()
     },
 
     async booking_confirm(){
