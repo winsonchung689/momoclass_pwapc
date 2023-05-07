@@ -9,6 +9,13 @@
 
      
       <div style="margin-top: 15%;">
+
+        <el-switch
+          v-model="isFilter"
+          active-text="按月筛选"
+          inactive-text="按日筛选">
+        </el-switch>
+
         <div v-if="isBooking">
           <div>
           <el-button type="text"  @click="cancel">取消</el-button>
@@ -34,9 +41,10 @@
         </div>
 
         <div v-if="isTable">
-          <div>
+          <div v-if="isFilterDay">
+            <!-- <div style="font-size: medium;font-weight: bolder;color:rgb(80, 147, 255)">按日筛选</div> -->
             <el-date-picker
-            v-model="stat_date"
+            v-model="start_date"
             type="date"
             placeholder="开始时间"
             style="width: 45%">
@@ -48,6 +56,17 @@
             style="width: 45%">
           </el-date-picker>
           </div>
+
+          <div v-if="isFilterMonth">
+            <!-- <div style="font-size: medium;font-weight: bolder;color:rgb(80, 147, 255)">按月筛选</div> -->
+            <el-date-picker
+              v-model="month_value"
+              type="month"
+              placeholder="选择月">
+            </el-date-picker>
+          </div>
+          
+
           <div style="margin-top: 5px;">
             <el-button-group>
               <el-button @click="type ='' " type="primary">全部</el-button>
@@ -127,17 +146,22 @@ export default {
       pieData: [],
       pieName: [],
       turnover:'',
-      stat_date:'',
+      start_date:'',
       type_input:true,
       amount_input:'',
       mark_input:'',
       isBooking:false,
-      isTable:true
+      isTable:true,
+      month_value:'',
+      isFilter:false,
+      isFilterDay:true,
+      isFilterMonth:false,
+      dayType:'day'
     }
   },
 
   created () {
-    this.getAccountBook()
+    this.getAccountBook(this.dayType)
   },
 
    mounted() {
@@ -147,27 +171,11 @@ export default {
   watch:{
     date_value: function() {
       let that = this
-      var year = that.date_value.getFullYear()
-      var month = that.date_value.getMonth() + 1
-      var date= that.date_value.getDate()
-      if (date >= 1 && date <= 9) {
-          date = "0" + date;
-      }
-      if (month >= 1 && month <= 9) {
-          month = "0" + month;
-      }
-      let date_time = year + '-' + month + '-' + date
-      // console.log(date_time)
-      that.date_time = date_time
-      that.getAccountBook()
-    },
-
-    stat_date: function() {
-      let that = this
-      if(that.stat_date.length<=10){
-        var year = that.stat_date.getFullYear()
-        var month = that.stat_date.getMonth() + 1
-        var date= that.stat_date.getDate()
+      console.log( 'date_value:' + that.date_value)
+      // if(that.date_value.length != 10 && that.date_value.length > 0){
+        var year = that.date_value.getFullYear()
+        var month = that.date_value.getMonth() + 1
+        var date= that.date_value.getDate()
         if (date >= 1 && date <= 9) {
             date = "0" + date;
         }
@@ -175,48 +183,125 @@ export default {
             month = "0" + month;
         }
         let date_time = year + '-' + month + '-' + date
-        // console.log(date_time)
-        that.stat_date = date_time
-      }
-      that.getAccountBook()
+        console.log(date_time)
+        that.date_time = date_time
+        that.getAccountBook(that.dayType)
+      // }
+    },
+
+    start_date: function() {
+      let that = this
+      console.log(that.start_date)
+      // if(that.start_date.length != 10 && that.start_date.length > 0){
+      //   var year = that.start_date.getFullYear()
+      //   var month = that.start_date.getMonth() + 1
+      //   var date= that.start_date.getDate()
+      //   if (date >= 1 && date <= 9) {
+      //       date = "0" + date;
+      //   }
+      //   if (month >= 1 && month <= 9) {
+      //       month = "0" + month;
+      //   }
+      //   let date_time = year + '-' + month + '-' + date
+      //   console.log(date_time)
+      //   that.start_date = date_time
+      // }
+      that.getAccountBook(that.dayType)
+    },
+
+    month_value: function() {
+      let that = this
+      console.log(that.month_value)
+    //   if(that.month_value.length != 10 && that.month_value.length > 0){
+    //     var year = that.month_value.getFullYear()
+    //     var month = that.month_value.getMonth() + 1
+    //     var date= that.month_value.getDate()
+    //     if (date >= 1 && date <= 9) {
+    //         date = "0" + date;
+    //     }
+    //     if (month >= 1 && month <= 9) {
+    //         month = "0" + month;
+    //     }
+    //     let date_time = year + '-' + month + '-' + date
+    //     console.log(date_time)
+    //     that.month_value = date_time
+    //     that.getAccountBook(that.dayType)
+    //  }
+    that.getAccountBook(that.dayType)
     },
 
     type:function(){
       let that = this
       console.log(that.type)
-      that.getAccountBook()
+      that.getAccountBook(that.dayType)
+    },
+
+    isFilter:function(){
+      let that = this
+      console.log(that.isFilter)
+      if(that.isFilter == true){
+          that.isFilterMonth = true
+          that.isFilterDay = false
+          that.month_value = ''
+          that.dayType = 'month'
+      }else if(that.isFilter == false){
+          that.isFilterMonth = false
+          that.isFilterDay = true
+          that.start_date = ''
+          that.date_value = ''
+          that.dayType = 'day'
+      }
     }
 
   },
 
   methods: {
-    async getAccountBook(){
+    async getAccountBook(dayType){
       let that = this
-      if(that.date_time == ''){
-        var year = new Date().getFullYear()
-        var month = new Date().getMonth() + 1
-        var date= new Date().getDate()
+      console.log(dayType)
+      if(dayType == 'day'){
+        if(that.date_time == ''){
+          var year = new Date().getFullYear()
+          var month = new Date().getMonth() + 1
+          var date= new Date().getDate()
+          if (date >= 1 && date <= 9) {
+              date = "0" + date;
+          }
+          if (month >= 1 && month <= 9) {
+              month = "0" + month;
+          }
+          let date_time = year + '-' + month + '-' + date
+          that.date_time = date_time
+       }
+     }else if (dayType == 'month'){
+        console.log(that.month_value)
+        var year = that.month_value.getFullYear()
+        var month = that.month_value.getMonth() + 1
+        var date= that.month_value.getDate()
         if (date >= 1 && date <= 9) {
             date = "0" + date;
         }
         if (month >= 1 && month <= 9) {
             month = "0" + month;
         }
-        let date_time = year + '-' + month + '-' + date
+        let date_time = year + '-' + month + '-31'
+        let start_date = year + '-' + month + '-01'
         that.date_time = date_time
-      }
+        that.start_date = start_date
+     }
+      
       
 
       if(that.type == ''){
         that.type = 'all'
       }
       let param ={
-          studio : that.studio,
-          create_time : that.date_time,
+          studio:that.studio,
+          create_time:that.date_time,
           type: that.type,
-          start_date:that.stat_date
+          start_date:that.start_date
       }
-      // console.log(param)
+      console.log(param)
       const res = await HttpPost('/getBookDetail', param)
       let res_data = res.data
       that.tableData = res_data
@@ -311,7 +396,7 @@ export default {
       let that = this
       that.isBooking = false
       that.isTable = true
-      that.getAccountBook()
+      that.getAccountBook(that.dayType)
       // that.initEcharts()
     },
 
@@ -336,7 +421,7 @@ export default {
           message: '操作成功',
           type: 'success'
       });
-      that.getAccountBook()
+      that.getAccountBook(that.dayType)
     },
   
     deleteRow (index, tableData) {
@@ -354,7 +439,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
             });
-            this.getAccountBook()
+            this.getAccountBook(this.dayType)
           }else {
             this.$message({
                 message: '删除失败',
