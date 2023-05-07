@@ -20,6 +20,7 @@ const ChatRoom = () => import('@/components/ChatRoom')
 const CommentCenter = () => import('@/components/CommentCenter')
 const Authorization = () => import('@/components/Authorization')
 const AnnouncementRecord = () => import('@/components/AnnouncementRecord')
+const AccountBook = () => import('@/components/AccountBook')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -109,6 +110,11 @@ export default new Router({
       path: '/announcementrecord',
       name: 'AnnouncementRecord',
       component: AnnouncementRecord
+    },
+    {
+      path: '/accountbook',
+      name: 'AccountBook',
+      component: AccountBook
     }
   ]
 })

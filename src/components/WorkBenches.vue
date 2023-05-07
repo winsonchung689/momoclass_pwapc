@@ -56,7 +56,7 @@
 
           <div style="justify-content: center;display: flex;margin-bottom: 15px;">
             <div class="container">
-                <div v-if="isBoss" class="item">
+                <div v-if="isBoss" class="item" @click="accountBook()">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
                       <img style="width: 50px;height: 50px;" src="@/assets/account_book.png" alt="">
@@ -123,6 +123,10 @@ export default {
 
     commentCenter (subject) {
       this.$router.push({ path: '/commentcenter', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,comment_style:this.comment_style } })
+    },
+
+    accountBook () {
+      this.$router.push({ path: '/accountbook', query: { studio: this.studio,role:this.role,openid:this.openid } })
     },
 
     goOff () {
