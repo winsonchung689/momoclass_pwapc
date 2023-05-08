@@ -5,7 +5,11 @@
           <div style="margin-top: auto;">
             <h1>HI,{{ nick_name }} ({{ mode }})</h1>
           </div>
-          <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
+          <div>
+            <img v-if="isBell1" @click="notifyMe()" class="notice" src="../assets/bell1.png" alt="" >
+            <img v-if="isBell2" @click="notifyMe()" class="notice" src="../assets/bell2.png" alt="" >
+            <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
+          </div>
         </div>
       </div>
 
@@ -14,6 +18,7 @@
         <div style="display: flex;flex-direction: row;justify-content: space-between;">
           <h2 @click="$router.push('/Login')">{{ hello }}</h2>
           <div style="display: flex;margin-right: 5%;">
+            
             <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
@@ -198,12 +203,15 @@ export default {
       registration:'',
       centerDialogVisible: false,
       textarea: '',
-      send_time:''
+      send_time:'',
+      isBell1:true,
+      isBell2:false
     }
   },
   created () {
     this.getUser()
     this.subscriptionInit()
+    this.notifyMe()
   },
   methods: {
     async getUser () {
@@ -470,7 +478,40 @@ export default {
         message: '通知成功',
         type: 'success'
       });   
-    }
+    },
+
+    async notifyMe(){
+      let that = this
+      if (!window.Notification) {
+        return Promise.reject('系统不支持桌面通知')
+      }
+
+      let promise = Notification.requestPermission()
+      console.log(promise)
+      promise.then(res => {
+        console.log(res)
+        if(res == 'granted'){
+          that.isBell1 = false
+          that.isBell2 = true
+        }else{
+          that.isBell1 = true
+          that.isBell2 = false
+        }
+      })
+       
+      
+
+      // return Notification.requestPermission().then(function (permission) {
+      //   if (permission === 'granted') {
+      //     return Promise.resolve()
+      //   }
+      //   return Promise.reject('用户已禁止桌面通知权限')
+      // })
+
+
+     }
+
+
   }
 }
 </script>
