@@ -331,6 +331,7 @@ export default {
     subscribe_button(){
       let that = this
       if(that.subsctiption_status === '未订阅'){
+        that.notifyMe()
         that.subscribeUser()
       }else{
         that.unsubscribeUser()
