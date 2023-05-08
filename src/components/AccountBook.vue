@@ -10,7 +10,7 @@
      
       <div style="margin-top: 15%;">
 
-        <el-switch
+        <el-switch v-if="isTable"
           v-model="isFilter"
           active-text="按月筛选"
           inactive-text="按日筛选">

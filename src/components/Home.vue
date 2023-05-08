@@ -211,7 +211,6 @@ export default {
   created () {
     this.getUser()
     this.subscriptionInit()
-    this.notifyMe()
   },
   methods: {
     async getUser () {
@@ -412,6 +411,7 @@ export default {
 
     async subscriptionInit(){
       let that = this
+      this.notifyMe()
       let openid = that.openid
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
