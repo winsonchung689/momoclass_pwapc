@@ -15,6 +15,13 @@
             </div>
             <div class="lgD">
                 <el-input
+                placeholder="输入用户名"
+                v-model="ruleForm.nick_name"
+                clearable>
+                </el-input>
+            </div>
+            <div class="lgD">
+                <el-input
                 placeholder="输入学生名(老师免填)"
                 v-model="ruleForm.student_name"
                 clearable>
@@ -22,8 +29,8 @@
             </div>
             <div class="lgD">
                 <el-input
-                placeholder="输入用户名"
-                v-model="ruleForm.nick_name"
+                placeholder="输入校区名(无分校区免填)"
+                v-model="ruleForm.campus"
                 clearable>
                 </el-input>
             </div>
@@ -47,7 +54,8 @@ export default {
         ruleForm: {
             studio: '',
             student_name: '',
-            nick_name: ''
+            nick_name: '',
+            campus:''
         },
         openid: ''
     };
@@ -103,17 +111,11 @@ export default {
     },
 
     signup () {
-        var that = this;
-        let studio = that.ruleForm.studio;
-        let student_name = that.ruleForm.student_name;
-        let nick_name = that.ruleForm.nick_name;
-
-        let loginParams = {
-            studio: studio,
-            nick_name: nick_name,
-            student_name:student_name,
-            openid:that.openid
-        };
+        var that = this
+        let studio = that.ruleForm.studio
+        let student_name = that.ruleForm.student_name
+        let nick_name = that.ruleForm.nick_name
+        let campus = that.ruleForm.campus
 
         if (studio == '') {
             this.$message({
@@ -127,12 +129,24 @@ export default {
             student_name = 'no_name'
         }
 
+        if (campus == '') {
+            campus = studio
+        }
+
         if (nick_name == '') {
             this.$message({
                 message: '用户名为空！',
                 type: 'warning'
             });
             return;
+        }
+
+        let loginParams = {
+            studio: studio,
+            nick_name: nick_name,
+            student_name:student_name,
+            openid:that.openid,
+            campus:campus
         }
 
         HttpPost("/insertUser", loginParams);

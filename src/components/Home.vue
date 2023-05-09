@@ -241,7 +241,7 @@ export default {
       that.images = that.images_all[num]
 
       const users = await HttpGet('/getUser?openid=' + this.openid)
-      console.log(users)
+      // console.log(users)
       that.studio = users.data[0].studio
       that.subscription = users.data[0].subscription
       that.campus = users.data[0].campus
