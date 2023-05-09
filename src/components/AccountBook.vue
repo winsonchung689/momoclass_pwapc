@@ -192,41 +192,12 @@ export default {
     start_date: function() {
       let that = this
       console.log(that.start_date)
-      // if(that.start_date.length != 10 && that.start_date.length > 0){
-      //   var year = that.start_date.getFullYear()
-      //   var month = that.start_date.getMonth() + 1
-      //   var date= that.start_date.getDate()
-      //   if (date >= 1 && date <= 9) {
-      //       date = "0" + date;
-      //   }
-      //   if (month >= 1 && month <= 9) {
-      //       month = "0" + month;
-      //   }
-      //   let date_time = year + '-' + month + '-' + date
-      //   console.log(date_time)
-      //   that.start_date = date_time
-      // }
       that.getAccountBook(that.dayType)
     },
 
     month_value: function() {
       let that = this
       console.log(that.month_value)
-    //   if(that.month_value.length != 10 && that.month_value.length > 0){
-    //     var year = that.month_value.getFullYear()
-    //     var month = that.month_value.getMonth() + 1
-    //     var date= that.month_value.getDate()
-    //     if (date >= 1 && date <= 9) {
-    //         date = "0" + date;
-    //     }
-    //     if (month >= 1 && month <= 9) {
-    //         month = "0" + month;
-    //     }
-    //     let date_time = year + '-' + month + '-' + date
-    //     console.log(date_time)
-    //     that.month_value = date_time
-    //     that.getAccountBook(that.dayType)
-    //  }
     that.getAccountBook(that.dayType)
     },
 
@@ -275,19 +246,21 @@ export default {
        }
      }else if (dayType == 'month'){
         console.log(that.month_value)
-        var year = that.month_value.getFullYear()
-        var month = that.month_value.getMonth() + 1
-        var date= that.month_value.getDate()
-        if (date >= 1 && date <= 9) {
-            date = "0" + date;
-        }
-        if (month >= 1 && month <= 9) {
-            month = "0" + month;
-        }
-        let date_time = year + '-' + month + '-31'
-        let start_date = year + '-' + month + '-01'
-        that.date_time = date_time
-        that.start_date = start_date
+        if(that.month_value){
+          var year = that.month_value.getFullYear()
+          var month = that.month_value.getMonth() + 1
+          var date= that.month_value.getDate()
+          if (date >= 1 && date <= 9) {
+              date = "0" + date;
+          }
+          if (month >= 1 && month <= 9) {
+              month = "0" + month;
+          }
+          let date_time = year + '-' + month + '-31'
+          let start_date = year + '-' + month + '-01'
+          that.date_time = date_time
+          that.start_date = start_date
+      }
      }
       
       
@@ -299,7 +272,8 @@ export default {
           studio:that.studio,
           create_time:that.date_time,
           type: that.type,
-          start_date:that.start_date
+          start_date:that.start_date,
+          openid:that.openid
       }
       console.log(param)
       const res = await HttpPost('/getBookDetail', param)
@@ -412,7 +386,8 @@ export default {
           studio: that.studio,
           mark: that.mark_input,
           amount:that.amount_input,
-          type: type
+          type: type,
+          openid:that.openid
       }
       // console.log(param)
       const res = await HttpPost('/bookkeeping', param)

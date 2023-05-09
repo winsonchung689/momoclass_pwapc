@@ -18,7 +18,6 @@
         <div style="display: flex;flex-direction: row;justify-content: space-between;">
           <h2 @click="$router.push('/Login')">{{ hello }}</h2>
           <div style="display: flex;margin-right: 5%;">
-            
             <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
@@ -205,7 +204,8 @@ export default {
       textarea: '',
       send_time:'',
       isBell1:true,
-      isBell2:false
+      isBell2:false,
+      campus:''
     }
   },
 
@@ -241,10 +241,15 @@ export default {
       that.images = that.images_all[num]
 
       const users = await HttpGet('/getUser?openid=' + this.openid)
+      console.log(users)
       that.studio = users.data[0].studio
       that.subscription = users.data[0].subscription
+      that.campus = users.data[0].campus
       if(that.studio.length>0){
         that.hello = '欢迎来到《' + that.studio + "》！"
+        if(that.campus != that.studio){
+          that.hello = '欢迎来到《' + that.studio+ "("+ that.campus +")" + "》！"
+        }
       }else {
         that.hello = '去登陆 👉'
       }
@@ -471,7 +476,8 @@ export default {
           if(i == 1){
             let param ={
                 studio:that.studio,
-                content:message
+                content:message,
+                openid:that.openid
             }
             let res = await HttpPost('/insertAnnouncement', param)
             console.log(res)

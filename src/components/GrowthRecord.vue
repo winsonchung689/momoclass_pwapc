@@ -81,7 +81,8 @@ export default {
       let param ={
           studio:that.studio,
           student_name:that.student_name,
-          page:page
+          page:page,
+          openid:that.openid
         }
       const growth = await HttpPost('/getGrowthRecord', param)
       let growth_data = growth.data;

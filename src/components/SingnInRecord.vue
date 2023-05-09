@@ -86,7 +86,8 @@ export default {
       let param ={
           studio:that.studio,
           student_name:that.student_name,
-          subject:that.subject
+          subject:that.subject,
+          openid:that.openid
         }
       const signins = await HttpPost('/getSignUp', param)
       let signin_data = signins.data;

@@ -82,6 +82,7 @@ export default {
           studio: that.studio,
           student_name: 'all',
           subject:'全科目',
+          openid:that.openid
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data
@@ -114,7 +115,8 @@ export default {
               const studio = user_data[i].studio
               let param ={
                 student_name:student_name,
-                studio:studio
+                studio:studio,
+                openid:that.openid
               }
               const lessons = await HttpPost('/getLessonByName',param)
               const lessons_data = lessons.data
@@ -149,7 +151,8 @@ export default {
       let param = {
           studio: that.studio,
           student_name: student_name_get,
-          subject:subject_get
+          subject:subject_get,
+          openid:that.openid
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data

@@ -375,7 +375,8 @@ export default {
               subject:subject,
               openid:that.openid,
               duration:duration,
-              class_number:class_number.replace('(插班生)','')
+              class_number:class_number.replace('(插班生)',''),
+              openid:that.openid
             }
             const details = await HttpPost('/getScheduleByClass', param)
             let details_data = details.data;
@@ -552,7 +553,8 @@ export default {
         duration: that.leave_duration,
         leave_type:that.leave_type,
         mark_leave:that.mark_leave,
-        subject:that.leave_subject
+        subject:that.leave_subject,
+        openid:that.openid
       }
       await HttpPost('/leaveRecord', param)
       that.$message({
@@ -566,6 +568,7 @@ export default {
         studio:that.studio,
         student_name:that.leave_student,
         duration:that.leave_duration,
+        openid:that.openid
       }
       const leave_verify = await HttpPost('/getLeaveByDateDuration', param1)
       let data = leave_verify.data[0]
@@ -605,6 +608,7 @@ export default {
         studio:that.studio,
         student_name:that.leave_student,
         duration:that.leave_duration,
+        openid:that.openid
       }
       const signin_verify = await HttpPost('/getSignUpByDateDuration', param1)
       let data = signin_verify.data[0]
@@ -616,10 +620,6 @@ export default {
         that.tableData[that.index1].children[that.index2].sign_up = '已签到'
 
         let message = that.leave_student +'同学已签到 !!!\n日期:'+ that.date_time +'\n时间:'+ that.leave_duration+'\n本次扣课:' + that.class_count + '课时'
-        // let param = {}
-        // await HttpGet('/websocket/sendNotification?openid='+ that.openid + '&message=' + message, param)
-        // await HttpGet('/websocket/sendNotification?openid='+ openid + '&message=' + message, param)
-      
         let json = {
           title:that.studio,
           message:message
@@ -668,6 +668,7 @@ export default {
         studio:that.studio,
         student_name:that.leave_student,
         duration:that.leave_duration,
+        openid:that.openid
       }
       const comment_verify = await HttpPost('/getCommentByDateDuration', param1)
       let data = comment_verify.data[0]

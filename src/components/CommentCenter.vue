@@ -119,7 +119,8 @@ export default {
         openid:that.openid,
         role:that.role,
         class_target:'课评',
-        page:page
+        page:page,
+        openid:that.openid
       }
       const comments = await HttpPost('/getMessage', param)
       let comments_data = comments.data;

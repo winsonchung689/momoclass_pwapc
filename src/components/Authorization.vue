@@ -20,7 +20,7 @@
             popper-class="my-autocomplete"
             v-model="state"
             :fetch-suggestions="querySearch"
-            placeholder="请输入学生名"
+            placeholder="请输入名字"
             @select="handleSelect">
             <template slot-scope="{ item }">
               <div class="name">{{ item.nick_name }}</div>
@@ -34,6 +34,7 @@
 
             <div style="margin-left: 40px;margin-top: 20px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.nick_name }} ({{ item.role }})</div>
+              <div @click="modifyFunction(item.openid)" style="color: #4d67e8;margin-right: 5px;">校区: {{ item.campus }} </div>
               <div style="color: #fff;font-size: small;display: flex;flex-direction: column;margin-top: 5px;">
                 <div style="margin-right: 5px;">过期时间: {{ item.expired_time }} </div>
                 <div style="margin-right: 5px;">工作室: {{ item.studio }} </div>
@@ -47,6 +48,14 @@
             </div>
           </div>
         </div>
+
+        <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 400px">
+          <el-input v-model="campus" placeholder="请输入校区"></el-input>
+          <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
+            <el-button @click="cancel_buttom()">取 消</el-button>
+            <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
       
     </div>
@@ -67,7 +76,10 @@ export default {
       header:'权限管理',
       allstudents:[],
       state:'',
-      isBoss:true
+      isBoss:true,
+      dialogFormVisible:false,
+      campus:'',
+      openid_get:''
     }
   },
 
@@ -80,10 +92,11 @@ export default {
         let that = this
         let param = {
           studio: that.studio,
+          openid:that.openid
         }
-        const users = await HttpPost('/getUserByStudio', param)
+        const users = await HttpPost('/getAllUserByStudio', param)
         const users_data = users.data
-        // console.log(users_data)
+        console.log(users_data)
         that.items =[]
         that.allstudents =[]
         for( var i in users_data){
@@ -99,6 +112,7 @@ export default {
             const subject = users_data[i].subjects
             const studio = users_data[i].studio
             const student_name = users_data[i].student_name
+            const campus = users_data[i].campus
             let avatarurl = users_data[i].avatarurl
             if(avatarurl=='未绑定'){
                 avatarurl = "https://www.momoclasss.xyz:443/file/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
@@ -114,13 +128,11 @@ export default {
             json.avatarurl = avatarurl
             json.role = role
             json.openid = openid
+            json.campus= campus
             
             that.allstudents.push(json)
             that.items.push(json)
         }
-
-      
-
     },
 
     async updateRole (openid) {
@@ -141,7 +153,8 @@ export default {
       const nick_name = item.nick_name
       let param = {
           studio: that.studio,
-          nick_name: nick_name
+          nick_name: nick_name,
+          openid:that.openid
         }
         const users = await HttpPost('/getUserByNickStudio', param)
         const users_data = users.data
@@ -199,6 +212,45 @@ export default {
       cb(results);
     },
 
+    modifyFunction(openid){
+      let that = this
+      that.campus = ''
+      that.openid_get = openid
+      that.dialogFormVisible = true
+    },
+
+    cancel_buttom(){
+      this.dialogFormVisible = false
+      this.campus = ''
+    },
+
+    async confirm_buttom(){
+      let that = this 
+      let param = {
+        openid: that.openid_get,
+        campus:that.campus
+      }
+
+      let status = ''
+      let res = await HttpPost("/updateCampus",param)
+      status = res.status
+
+      if(status == 200){
+        that.$message({
+            message: '操作成功',
+            type: 'success'
+        });
+        that.dialogFormVisible = false
+        that.getUsers()
+      }else {
+        that.$message({
+            message: '操作失败',
+            type: 'warning'
+        });
+        that.dialogFormVisible = false
+        that.getUsers()
+      }
+    }
 
   }
 

@@ -167,11 +167,12 @@ export default {
       let param = {
         studio: that.studio,
         student_name: 'all',
-        subject:'全科目'
+        subject:'全科目',
+        openid:that.openid
       }
       const lessons = await HttpPost('/getLesson', param)
       const lessons_data = lessons.data
-      console.log(lessons_data)
+      // console.log(lessons_data)
       that.total_student = lessons_data[0].total_student
       that.total_amount_all = lessons_data[0].total_amount_all
       that.left_amount_all = lessons_data[0].left_amount_all
@@ -273,7 +274,8 @@ export default {
         subject: that.subject,
         student_name: that.student_name,
         total_amount: that.total_amount,
-        left_amount: that.left_amount
+        left_amount: that.left_amount,
+        openid:that.openid
       }
       // console.log(param)
       let res = HttpPost("/singleAdd",param)
@@ -318,7 +320,8 @@ export default {
       let param = {
           studio: that.studio,
           student_name: student_name_get,
-          subject:subject_get
+          subject:subject_get,
+          openid:that.openid
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data
@@ -420,7 +423,8 @@ export default {
         minus_amount:that.minus_amount,
         coins_amount:that.coins_amount,
         total_amount:that.total_amount,
-        left_amount:that.left_amount
+        left_amount:that.left_amount,
+        openid:that.openid
       }
 
       let status = ''

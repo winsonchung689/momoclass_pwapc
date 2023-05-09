@@ -583,7 +583,8 @@ export default {
         duration:duration,
         limits:10,
         studio:that.studio,
-        subject:that.subject_add
+        subject:that.subject_add,
+        openid:that.openid
       }
       await HttpPost('/insertArrangement', param)
       that.$message({
@@ -613,6 +614,7 @@ export default {
         duration:duration,
         class_number:class_number,
         subject:subject,
+        openid:that.openid
       }
       const students = await HttpPost('/getScheduleDetail', param)
       let students_data = students.data;
@@ -689,7 +691,8 @@ export default {
       let param ={
         studio:that.studio,
         student_name:'all',
-        subject:'全科目'
+        subject:'全科目',
+        openid:that.openid
       }
       // console.log(param)
       const students = await HttpPost('/getLesson', param)
@@ -732,7 +735,8 @@ export default {
         student_name: that.student_select,
         class_select: that.class_select,
         studio:that.studio,
-        status:'1'
+        status:'1',
+        openid:that.openid
       }
       await HttpPost('/arrangeClass', param)
       that.$message({
@@ -792,7 +796,8 @@ export default {
         subject_class:subject_class,
         studio:that.studio,
         type:type,
-        dayofweek:dayofweek
+        dayofweek:dayofweek,
+        oepnid:that.openid
       }
       let res = HttpPost("/updateRemind",param)
       res.then(res => {

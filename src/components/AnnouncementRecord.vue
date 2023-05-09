@@ -60,7 +60,8 @@ export default {
     async getAnnouncementRecord () {
       let that = this;
       let param ={
-          studio:that.studio
+          studio:that.studio,
+          openid:that.openid
         }
       const res = await HttpPost('/getAnnouncement', param)
       let res_data = res.data
