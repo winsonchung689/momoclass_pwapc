@@ -42,9 +42,14 @@
               </div>
             </div>
             
-            <div @click="updateRole(item.openid)" style="width: 20%;margin-left: 10px;">
+            <div v-if="item.role != '校长'" style="width: 20%;margin-left: 10px;">
+              <div @click="updateRole(item.openid,item.role)">
                 <el-radio v-model="item.role" label="老师">老师角色</el-radio>
-                <el-radio v-model="item.role" label="普通">普通角色</el-radio>
+              </div>
+                <div @click="updateRole(item.openid,item.role)">
+                  <el-radio v-model="item.role" label="普通">普通角色</el-radio>
+                </div>
+                
             </div>
           </div>
         </div>
@@ -96,14 +101,16 @@ export default {
         }
         const users = await HttpPost('/getAllUserByStudio', param)
         const users_data = users.data
-        console.log(users_data)
+        // console.log(users_data)
         that.items =[]
         that.allstudents =[]
         for( var i in users_data){
             let role = users_data[i].role
             if(role == 'boss'){
-                role = '老师'
+                role = '校长'
                 that.isBoss = true
+            }else if(role == 'teacher' ){
+                role = '老师'
             }else if(role == 'client' ){
                 role = '普通'
             }
@@ -135,10 +142,19 @@ export default {
         }
     },
 
-    async updateRole (openid) {
+    async updateRole (openid,role) {
         let that = this
+        let role_input = 'client'
+        console.log(openid,role)
+        if(role=='老师'){
+          role_input = 'client'
+        }else if(role == '普通'){
+          role_input = 'teacher'
+        }
+
         let param = {
             openid:openid,
+            role:role_input
         }
         await HttpPost('/updateRole', param)
         that.getUsers()
