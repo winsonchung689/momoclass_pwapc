@@ -459,7 +459,7 @@ export default {
     async announcement_confirm(){
       let that = this
       that.centerDialogVisible=false
-      const users = await HttpGet('/getUserByStudio?studio=' + that.studio)
+      const users = await HttpGet('/getAllUserByStudio?studio=' + that.studio)
       // console.log(users.data)
       for( var i in users.data){
           let subscription = users.data[i].subscription
@@ -509,17 +509,6 @@ export default {
           that.isBell2 = false
         }
       })
-       
-      
-
-      // return Notification.requestPermission().then(function (permission) {
-      //   if (permission === 'granted') {
-      //     return Promise.resolve()
-      //   }
-      //   return Promise.reject('用户已禁止桌面通知权限')
-      // })
-
-
      }
 
 
