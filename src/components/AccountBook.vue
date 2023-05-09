@@ -275,7 +275,7 @@ export default {
           start_date:that.start_date,
           openid:that.openid
       }
-      console.log(param)
+      // console.log(param)
       const res = await HttpPost('/getBookDetail', param)
       let res_data = res.data
       that.tableData = res_data
@@ -391,7 +391,7 @@ export default {
       }
       // console.log(param)
       const res = await HttpPost('/bookkeeping', param)
-      console.log(res.data)
+      // console.log(res.data)
       that.$message({
           message: '操作成功',
           type: 'success'

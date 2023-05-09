@@ -347,7 +347,7 @@
           <div style="display: flex;flex-direction: row;justify-content: space-between;">
             <div>
               <el-time-select
-                style="width: 80%;"
+                style="width: 40%;"
                 v-model="send_time"
                 :picker-options="{
                   start: '00:00',

@@ -65,7 +65,6 @@ export default {
         }
       const res = await HttpPost('/getAnnouncement', param)
       let res_data = res.data
-      console.log(res_data)
       that.items = res_data
     },
 
