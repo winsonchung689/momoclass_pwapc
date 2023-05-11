@@ -1,10 +1,20 @@
 <template>
   <div id="app">
     <router-view/>
+    <bottom-navigation v-if="$route.meta.showTabBar"/>
   </div>
 </template>
 
-<script></script>
+<script>
+import BottomNavigation from '@/components/BottomNavigation'
+
+export default {
+  name: 'App',
+  components: {
+    BottomNavigation
+  }
+}
+</script>
 
 <style>
 #App {

@@ -99,7 +99,7 @@ export default {
             }
 
             if (that.openid !== '') {
-                that.$router.push({ path: '/Home', query: { openid: that.openid } })
+                that.$router.push({ path: '/Community', query: { openid: that.openid } })
             } else {
                 this.$message({
                     message: '用户不存在,请注册！',
@@ -159,7 +159,7 @@ export default {
                 console.log(error)
             }
 
-            that.$router.push({ path: '/Home', query: { openid: that.openid } })
+            that.$router.push({ path: '/Community', query: { openid: that.openid } })
             that.setCookie(that.openid, 7)
         })
     },

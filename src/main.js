@@ -33,9 +33,5 @@ new Vue({
   router,
   components: { App },
   template: '<App/>',
-  // render: h => h(App),
-  // beforeMount() {
-  //   this.$OneSignal.init({ appId: '3518c27c-1aa0-474b-9e72-08175cde90f6' });
-  // }
 })
 

@@ -1,13 +1,11 @@
 <template>
     <div>
-      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
+      <!-- <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
         <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
-      </div>
-
-     
+      </div> -->
 
       <div style="margin-top: 15%;">
 
@@ -55,6 +53,8 @@ import { HttpPost } from '@/api'
 
 export default {
   name: 'Students',
+  components: {
+  },
   data () {
     return {
       items:[],
@@ -86,6 +86,7 @@ export default {
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data
+        console.log(lessons_data)
         that.items =[]
         that.allstudents = []
         for( var i in lessons_data){
@@ -106,6 +107,7 @@ export default {
             that.allstudents.push(json)
             that.items.push(json)
         }
+        console.log(that.allstudents)
 
       }else {
           const users = await HttpGet('/getUserByOpenid?openid=' + that.openid)

@@ -30,12 +30,13 @@ export default {
             if (this.openid !== '') {
               // console.log('cookie_openid:' + this.openid)
               setTimeout(() => {
-                this.$router.replace({ path: '/Home', query: { openid: this.openid } })
+                this.$router.replace({ path: '/Community', query: { openid: this.openid } })
               }, 3000)
             } else {
               console.log('cookie_openid 为空!')
               setTimeout(() => {
-                this.$router.replace('/Login')
+                // this.$router.replace('/Login')
+                this.$router.replace({ path: '/Community', query: { openid: this.openid } })
               }, 3000)
             }
           }

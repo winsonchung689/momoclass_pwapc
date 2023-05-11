@@ -21,6 +21,7 @@ const CommentCenter = () => import('@/components/CommentCenter')
 const Authorization = () => import('@/components/Authorization')
 const AnnouncementRecord = () => import('@/components/AnnouncementRecord')
 const AccountBook = () => import('@/components/AccountBook')
+const Community = () => import('@/components/Community')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -29,92 +30,153 @@ export default new Router({
     {
       path: '/',
       name: 'Welcome',
-      component: Welcome
+      component: Welcome,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/Login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,meta:{
+        showTabBar:false
+      }
+    },
+    {
+      path: '/community',
+      name: 'Community',
+      component: Community,
+      meta:{
+        showTabBar:true
+      }
     },
     {
       path: '/students',
       name: 'Students',
-      component: Students
+      component: Students,
+      meta:{
+        showTabBar:true
+      }
     },
     {
       path: '/records',
       name: 'Records',
-      component: Records
+      component: Records,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/signinrecord',
       name: 'SingnInRecord',
-      component: SingnInRecord
+      component: SingnInRecord,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/leaverecord',
       name: 'LeaveRecord',
-      component: LeaveRecord
+      component: LeaveRecord,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/growthrecord',
       name: 'GrowthRecord',
-      component: GrowthRecord
+      component: GrowthRecord,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/workbenches',
       name: 'WorkBenches',
-      component: WorkBenches
+      component: WorkBenches,
+      meta:{
+        showTabBar:true
+      }
     },
     {
       path: '/timetable',
       name: 'Timetable',
-      component: Timetable
+      component: Timetable,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/calendar',
       name: 'Calendar',
-      component: Calendar
+      component: Calendar,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/school',
       name: 'School',
-      component: School
+      component: School,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/me',
       name: 'Me',
-      component: Me
+      component: Me,
+      meta:{
+        showTabBar:true
+      }
     },
     {
       path: '/commentcenter',
       name: 'CommentCenter',
-      component: CommentCenter
+      component: CommentCenter,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/authorization',
       name: 'Authorization',
-      component: Authorization
+      component: Authorization,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/chatroom',
       name: 'ChatRoom',
-      component: ChatRoom
+      component: ChatRoom,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/announcementrecord',
       name: 'AnnouncementRecord',
-      component: AnnouncementRecord
+      component: AnnouncementRecord,
+      meta:{
+        showTabBar:false
+      }
     },
     {
       path: '/accountbook',
       name: 'AccountBook',
-      component: AccountBook
+      component: AccountBook,
+      meta:{
+        showTabBar:false
+      }
     }
   ]
 })
