@@ -15,8 +15,11 @@ import { audioPlay } from '@/api'
 import { HttpPost } from '@/api'
 import OneSignalVue from 'onesignal-vue'
 import window from '@/utils'
-window()
+import infiniteScroll from 'vue-infinite-scroll'
 
+
+window()
+Vue.use(infiniteScroll)
 Vue.use(OneSignalVue)
 Vue.prototype.HttpPost = HttpPost  
 Vue.prototype.audioPlay = audioPlay  

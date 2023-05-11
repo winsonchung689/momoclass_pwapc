@@ -16,32 +16,41 @@
       <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
         <div style="display: flex;flex-direction: row;justify-content: space-between;">
           <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+          <div style="display: flex;margin-right: 0%;">
+            <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
+          </div>
           <div style="display: flex;margin-right: 5%;">
             <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
 
         <div>
-          <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
-            <div class="covers" :style="{display:MinDisplay}">
-                <div class="cover" v-for="(img,index) in item.images" :key='img'>
-                  <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
+          <div class="wrap" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
+
+            <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
+                <div style="display: flex;flex-direction: row;">
+                  <img :src="avatarurl" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
+                  <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ nick_name }}</div>
+                </div>
+                <div style="font-size: small;color: dimgray;margin-top: 10px;margin-bottom: 0px;margin-left: 5%;">{{ item.comment }}</div>
+                <div class="covers" :style="{display:MinDisplay}">
+                    <div class="cover" v-for="(img,index) in item.images" :key='img'>
+                      <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
+                    </div>
+                </div>
+                <div class="max" :style="{display:display}">
+                    <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
+                </div>
+                <div  class="foot" :style="{display:MinDisplay}">    
+                  <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
+                  <el-divider></el-divider>
                 </div>
             </div>
-
-            <div class="max" :style="{display:display}">
-                <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
-            </div>
-
-            <div  class="foot" :style="{display:MinDisplay}">
-              <div style="font-size: medium;color: rgb(140, 219, 226);margin-top: 5px;margin-bottom: 5px;">老师点评: {{ item.comment }}</div>
-    
-              <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
-              <el-divider></el-divider>
-            </div>
+          
           </div>
-        </div>
 
+
+        </div>
 
       </div>
 
@@ -97,7 +106,8 @@ export default {
       MinDisplay:'flex',
       ShowIndex:0,
       display: 'none',
-      page:1
+      page:0,
+      busy:false,
     }
   },
 
@@ -110,10 +120,16 @@ export default {
 
   },
   methods: {
-    // load () {
-    //     this.count += 20
-    //     // console.log(this.count)
-    // },
+    loadMore () {
+      let that = this
+      that.busy = true
+      setTimeout(() => {
+        that.page += 1
+        console.log(that.page)
+        that.getGrowthRecord(that.page)
+        that.busy = false;
+      }, 1000);
+    },
 
     async getUser () {
       let that = this
@@ -155,7 +171,8 @@ export default {
         that.mode = '未登录'
       }
 
-      that.getGrowthRecord(1)
+      that.items = []
+      that.getGrowthRecord(that.page)
 
 
     },
@@ -200,8 +217,11 @@ export default {
             growth_data[i]["images"] = images;
           }
       }
-      that.items = growth_data
-      console.log(growth_data)
+
+      for(var i in growth_data){
+        that.items.push(growth_data[i])
+      }
+      // console.log(that.items)
     },
 
     click (url) {
@@ -586,4 +606,8 @@ text{
     opacity: 1;
 }
 
+.wrap{
+  height: 100vh;
+  overflow-y: auto;
+}
 </style>

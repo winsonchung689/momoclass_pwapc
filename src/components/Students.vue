@@ -1,11 +1,8 @@
 <template>
     <div>
-      <!-- <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: row; width: 500px;">
-        <div>
-          <i class="el-icon-arrow-left" @click="goOff()"></i>
-        </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
-      </div> -->
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: center; width: 100%;">
+        <div style=" width: 100%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-top: 5px;">{{ header }}</div>
+      </div>
 
       <div style="margin-top: 15%;">
 

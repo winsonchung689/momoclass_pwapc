@@ -43,7 +43,7 @@
               </div>
               <div class="itemtext">工作台</div>
             </div>
-            <div v-if="isBoss" @click="click('chatroom')" class="items">
+            <div v-if="isBoss" @click="click('/chatroom')" class="items">
               <div style="display: flex;justify-content: center;">
                 <img class="icon" src="../assets/chat.png" alt="" >
               </div>

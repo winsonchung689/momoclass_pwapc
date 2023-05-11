@@ -1,26 +1,26 @@
 <template>
-    <div class="bottom-navigation">
-      <div style="margin-left: 5px;" @click="click('/community')">
-        <img class="icon" :src="home_url" alt="" >
-        <div class="icontext">主页</div>
+      <div class="bottom-navigation">
+        <div style="margin-left: 10px;" @click="click('/community')">
+          <img class="icon" :src="home_url" alt="" >
+          <div class="icontext">主页</div>
+        </div>
+        <div  @click="click('/workbenches')">
+          <img class="icon" :src="work_url" alt="" >
+          <div class="icontext">工作台</div>
+        </div>
+        <div >
+          <img class="icon" src="../assets/post.png" alt="" >
+          <div class="icontext">发布</div>
+        </div>
+        <div  @click="click('/students')">
+          <img class="icon" :src="student_url" alt="" >
+          <div class="icontext">学生区</div>
+        </div>
+        <div style="margin-right: 10px;"  @click="click('/me')">
+          <img class="icon" :src="me_url" alt="" >
+          <div class="icontext">我的</div>
+        </div>
       </div>
-      <div  @click="click('/workbenches')">
-        <img class="icon" :src="work_url" alt="" >
-        <div class="icontext">工作台</div>
-      </div>
-      <div >
-        <img class="icon" src="../assets/post.png" alt="" >
-        <div class="icontext">发布</div>
-      </div>
-      <div  @click="click('/students')">
-        <img class="icon" :src="student_url" alt="" >
-        <div class="icontext">学生区</div>
-      </div>
-      <div style="margin-right: 5px;"  @click="click('/me')">
-        <img class="icon" :src="me_url" alt="" >
-        <div class="icontext">我的</div>
-      </div>
-    </div>
   </template>
   
   <script>
@@ -125,7 +125,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 56px;
+    height: 70px;
     box-shadow: 0 3px 14px 2px rgba(0, 0, 0, .12);
     display: flex;
     background-color: #ffff;
@@ -133,15 +133,16 @@
   }
 
   .icon{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border-radius: 0.5rem;
   }
 
   .icontext{
-    font-size: small;
+    font-size: x-small;
     font-weight: bolder;
     justify-content: center;
+    color: dimgray;
   }
 
   </style>

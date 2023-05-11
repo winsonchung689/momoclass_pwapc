@@ -1,5 +1,8 @@
 <template>
     <div>
+      <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: center; width: 100%;">
+        <div style=" width: 100%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-top: 5px;">{{ header }}</div>
+      </div>
 
       <div style="margin-top: 5%;">
           <div v-if="isTeacher" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
