@@ -111,7 +111,7 @@
         let uuid  = res.data.split("/")[3]
         that.uuids.push(uuid)
         // console.log(that.uuids)
-    },
+      },
     
       
       goOff () {

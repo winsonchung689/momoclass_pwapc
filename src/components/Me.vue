@@ -8,9 +8,24 @@
       <div style="margin-top: 15%;">
 
       <div class="avatar">
+
         <div style="display: flex;justify-content: center;">
-          <el-avatar shape="square" :size="70" :fit="cover" :src="avatarurl"></el-avatar>
+          <el-upload
+            :auto-upload="false"
+            :on-change="handleChange"
+            :multiple="false"
+            :type="file"
+            :file-list="fileList"
+            action="#">
+
+            <el-button size="small">
+              <el-avatar @click="changeAvatar" shape="square" :size="70" :fit="cover" :src="avatarurl"></el-avatar>
+            </el-button>
+
+            
+          </el-upload>
         </div>
+
         <div style="display: flex;justify-content: center;font-size: larger;font-weight: bold;color: #4b415f5c;font-family: Helvetica Neue;margin-bottom: 5px;">{{ nick_name }}</div>
         <div style="display: flex;justify-content: center;font-size: small;font-weight: bold;color: #afb3b1;"> 过期时间:{{ expired_time }}</div>
         <div v-if="isShow" style="display: flex;justify-content: center;font-size: small;font-weight: bold;color: #afb3b1;"> 会员身份:{{ member }}</div>
@@ -35,6 +50,8 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import { UploadFile } from '@/api'
+import { ImageUrl } from '@/api'
 
 export default {
   name: 'Me',
@@ -54,7 +71,9 @@ export default {
       expired_time:'unlimited',
       isBoss:false,
       member:'',
-      isShow:false
+      isShow:false,
+      uuids:'',
+      fileList:[]
     }
   },
 
@@ -66,7 +85,8 @@ export default {
 
     async getUser () {
       let that = this;
-      let param = {
+      if(that.openid){
+        let param = {
           openid: that.openid,
         }
         const users = await HttpPost('/getUser', param)
@@ -83,10 +103,35 @@ export default {
         if(that.role === 'boss'){
           that.isBoss = true
         }
+      }
     },
 
     authorization () {
       this.$router.push({ path: '/authorization', query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style } })
+    },
+
+    async handleChange(file, fileList) {
+      let that = this
+      that.fileList = []
+      let formdata ={
+        photo: file.raw
+      }
+
+      let res = await UploadFile('/push_photo', formdata)
+      let uuid  = res.data.split("/")[3]
+      console.log(uuid)
+  
+      let param ={
+        avatarurl: ImageUrl + uuid,
+        openid: that.openid
+      }
+
+      console.log(param)
+
+      let resutl = await UploadFile('/updateAvatar', param)
+      if(resutl){
+        this.getUser()
+      }
     },
 
     goOff() {
