@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div style="display: block;position: fixed;background-color: #fff;width: 100%;top: 0;">
+      <div style="display: block;position: fixed;background-color: #ffff;width: 100%;top: 0;">
         <div class="avatar">
           <div style="margin-top: auto;">
             <h1>HI,{{ nick_name }} ({{ mode }})</h1>
@@ -175,41 +175,42 @@ export default {
 
     async getUser () {
       let that = this
+      if(this.openid){
+          const users = await HttpGet('/getUser?openid=' + this.openid)
+          // console.log(users)
+          that.studio = users.data[0].studio
+          that.subscription = users.data[0].subscription
+          that.campus = users.data[0].campus
+          if(that.studio.length>0){
+            that.hello = '欢迎来到《' + that.studio + "》！"
+            if(that.campus != that.studio){
+              that.hello = '欢迎来到《' + that.studio+ "("+ that.campus +")" + "》！"
+            }
+          }else {
+            that.hello = '去登陆 👉'
+          }
 
-      const users = await HttpGet('/getUser?openid=' + this.openid)
-      // console.log(users)
-      that.studio = users.data[0].studio
-      that.subscription = users.data[0].subscription
-      that.campus = users.data[0].campus
-      if(that.studio.length>0){
-        that.hello = '欢迎来到《' + that.studio + "》！"
-        if(that.campus != that.studio){
-          that.hello = '欢迎来到《' + that.studio+ "("+ that.campus +")" + "》！"
-        }
-      }else {
-        that.hello = '去登陆 👉'
-      }
-
-      that.nick_name = users.data[0].nick_name
-      that.avatarurl = users.data[0].avatarurl
-      that.role = users.data[0].role
-      that.subject = users.data[0].subjects
-      that.comment_style = users.data[0].comment_style
-      that.send_time = users.data[0].send_time
-      
-      if('boss' == that.role){
-        that.mode = '校长模式'
-        that.isBoss = true
-      }else if('teacher' == that.role){
-        that.mode = '老师模式'
-        that.isBoss = true
-      }else if('client' == that.role){
-        that.mode = '家长模式'
-        that.isClient = true
-      }else if('visit' == that.role){
-        that.mode = '游客模式'
-      }else {
-        that.mode = '未登录'
+          that.nick_name = users.data[0].nick_name
+          that.avatarurl = users.data[0].avatarurl
+          that.role = users.data[0].role
+          that.subject = users.data[0].subjects
+          that.comment_style = users.data[0].comment_style
+          that.send_time = users.data[0].send_time
+          
+          if('boss' == that.role){
+            that.mode = '校长模式'
+            that.isBoss = true
+          }else if('teacher' == that.role){
+            that.mode = '老师模式'
+            that.isBoss = true
+          }else if('client' == that.role){
+            that.mode = '家长模式'
+            that.isClient = true
+          }else if('visit' == that.role){
+            that.mode = '游客模式'
+          }else {
+            that.mode = '未登录'
+          }
       }
 
       that.items = []
@@ -580,6 +581,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   margin-left: 5%;
+  background-color: #ffff;
   
 }
 

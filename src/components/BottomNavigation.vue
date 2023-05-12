@@ -67,19 +67,19 @@
           console.log('cookie_openid 为空!')
         }
 
-
-        const users = await HttpGet('/getUser?openid=' + that.openid)
-        console.log(users)
-        that.studio = users.data[0].studio,
-        that.role = users.data[0].role,
-        that.subject = users.data[0].subject,
-        that.comment_style = users.data[0].comment_style,
-        that.send_time = users.data[0].send_time
+        if(that.openid){
+          const users = await HttpGet('/getUser?openid=' + that.openid)
+          console.log(users)
+          that.studio = users.data[0].studio,
+          that.role = users.data[0].role,
+          that.subject = users.data[0].subject,
+          that.comment_style = users.data[0].comment_style,
+          that.send_time = users.data[0].send_time
+        }
         
       },
 
       click (url) {
-        console.log(url)
         if(url == '/community'){
           this.home_url = '../assets/home2.png'
           this.work_url= '../assets/work1.png'
