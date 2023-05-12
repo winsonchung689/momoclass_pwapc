@@ -49,7 +49,7 @@
                 </div>
                 <div  class="foot" :style="{display:MinDisplay}">    
                   <div>
-                    <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ item.studio_get }}  {{ item.create_time}}</div>
+                    <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px; margin-left: 10px">{{ item.studio_get }}  {{ item.create_time}}</div>
                     <el-popconfirm v-if="item.openid_get == openid" title="确定删除吗？" style="margin-left: 90%;" @confirm="deleteRow(item.id)">
                       <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
                     </el-popconfirm>
@@ -596,6 +596,7 @@ text{
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
+    margin-left: 5%;
 }
 
 .cover{
