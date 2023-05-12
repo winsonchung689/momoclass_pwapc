@@ -262,7 +262,7 @@ export default {
       for(var i in post_data){
         that.items.push(post_data[i])
       }
-      console.log(that.items)
+      // console.log(that.items)
     },
 
     click (url) {
