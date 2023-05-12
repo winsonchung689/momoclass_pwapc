@@ -69,7 +69,6 @@
 
         if(that.openid){
           const users = await HttpGet('/getUser?openid=' + that.openid)
-          console.log(users)
           that.studio = users.data[0].studio,
           that.role = users.data[0].role,
           that.subject = users.data[0].subject,
