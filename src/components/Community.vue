@@ -27,7 +27,7 @@
 
         <el-tabs v-model="type" @tab-click="handleClick">
           <el-tab-pane label="公共社区" name="public"></el-tab-pane>
-          <el-tab-pane label="画室社区" name="private"></el-tab-pane>
+          <el-tab-pane label="我的社区" name="private"></el-tab-pane>
         </el-tabs>
 
         <div>
