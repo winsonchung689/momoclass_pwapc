@@ -159,7 +159,10 @@ export default {
                 console.log(error)
             }
 
-            that.$router.push({ path: '/Community', query: { openid: res.data[0].openid } })
+            setTimeout(function () {
+                that.$router.push({ path: '/Community', query: { openid: res.data[0].openid } })
+            },2000)
+
             that.setCookie(that.openid, 7)
         })
     },
