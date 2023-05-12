@@ -176,6 +176,8 @@ export default {
     async getUser () {
       let that = this
       if(this.openid){
+          that.page  = 1
+          that.type = 'public'
           const users = await HttpGet('/getUser?openid=' + this.openid)
           // console.log(users)
           that.studio = users.data[0].studio
