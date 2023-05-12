@@ -213,7 +213,7 @@ export default {
 <style scoped>
 
 .lesson{
-  background-color: #679cf2;
+  background-color: #1296db;
   width: 85%;
   height: 90px;
   border-radius: 0.5rem;

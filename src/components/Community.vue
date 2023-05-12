@@ -35,8 +35,8 @@
 
             <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
                 <div style="display: flex;flex-direction: row;">
-                  <img :src="avatarurl" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
-                  <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ nick_name }}</div>
+                  <img :src="item.avatar" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
+                  <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ item.nick_name }}</div>
                 </div>
                 <div style="font-size: small;color: dimgray;margin-top: 10px;margin-bottom: 0px;margin-left: 5%;">{{ item.content }}</div>
                 <div class="covers" :style="{display:MinDisplay}">
@@ -260,7 +260,7 @@ export default {
       for(var i in post_data){
         that.items.push(post_data[i])
       }
-      // console.log(that.items)
+      console.log(that.items)
     },
 
     click (url) {
