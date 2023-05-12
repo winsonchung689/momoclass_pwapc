@@ -44,7 +44,7 @@ export default {
       } else {
         console.log('cookie_openid 为空!')
         setTimeout(() => {
-          this.$router.replace('/Login')
+          this.$router.replace('/Community')
         }, 3000)
       }
     }
