@@ -35,13 +35,11 @@
 
             <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
 
-              <div :style="{display:MinDisplay}">
-                <div style="display: flex;flex-direction: row;">
+                <div class="name_avatar" :style="{display:MinDisplay}">
                   <img :src="item.avatar" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
                   <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ item.nick_name }}</div>
                 </div>
-                <div style="font-size: small;color: dimgray;margin-top: 10px;margin-bottom: 0px;margin-left: 5%;margin-right: 5%;">{{ item.content }}</div>
-              </div>
+                <div class="content" :style="{display:MinDisplay}">{{ item.content }}</div>
 
                 <div class="covers" :style="{display:MinDisplay}">
                     <div class="cover" v-for="(img,index) in item.images" :key='img'>
@@ -654,5 +652,19 @@ text{
 .wrap{
   height: 100vh;
   overflow-y: auto;
+}
+
+.name_avatar{
+  display: flex;
+  flex-direction: row
+}
+
+.content{
+  font-size: small;
+  color: dimgray;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 </style>
