@@ -8,7 +8,7 @@
           <img class="icon" :src="work_url" alt="" >
           <div class="icontext">工作台</div>
         </div>
-        <div >
+        <div @click="click('/post')" >
           <img class="icon" src="../assets/post.png" alt="" >
           <div class="icontext">发布</div>
         </div>
@@ -40,7 +40,9 @@
         role:'',
         subject:'',
         comment_style:'',
-        send_time:''
+        send_time:'',
+        drawer: false,
+        direction: 'btt',
 
       }
     },
@@ -109,9 +111,12 @@
           this.me_url = '../assets/me2.png'
 
           this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style,send_time:this.send_time } })
+        }else if(url == '/post'){
+          this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style,send_time:this.send_time } })
         }
 
       },
+
     }
   }
 

@@ -30,7 +30,7 @@
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
             <div style="margin-left: 40px;margin-top: 20px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
-              <div style="color: #c1c5c7;font-size: small;display: flex;direction: row;margin-top: 5px;">
+              <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
                 <div style="margin-right: 5px;">科目: {{ item.subject }} </div>
                 <div style="margin-right: 5px;">课时: {{ item.left_amount }}/{{ item.total_amount }} </div>
                 <div style="margin-right: 5px;">积分: {{ item.points }} </div>
@@ -213,7 +213,7 @@ export default {
 <style scoped>
 
 .lesson{
-  background-color: #b7f4d9;
+  background-color: #679cf2;
   width: 85%;
   height: 90px;
   border-radius: 0.5rem;

@@ -14,6 +14,7 @@
       </div>
 
       <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
+
         <div style="display: flex;flex-direction: row;justify-content: space-between;">
           <h2 @click="$router.push('/Login')">{{ hello }}</h2>
           <div style="display: flex;margin-right: 0%;">
@@ -24,6 +25,11 @@
           </div>
         </div>
 
+        <el-tabs v-model="type" @tab-click="handleClick">
+          <el-tab-pane label="公共社区" name="public"></el-tab-pane>
+          <el-tab-pane label="画室社区" name="private"></el-tab-pane>
+        </el-tabs>
+
         <div>
           <div class="wrap" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
 
@@ -32,7 +38,7 @@
                   <img :src="avatarurl" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
                   <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ nick_name }}</div>
                 </div>
-                <div style="font-size: small;color: dimgray;margin-top: 10px;margin-bottom: 0px;margin-left: 5%;">{{ item.comment }}</div>
+                <div style="font-size: small;color: dimgray;margin-top: 10px;margin-bottom: 0px;margin-left: 5%;">{{ item.content }}</div>
                 <div class="covers" :style="{display:MinDisplay}">
                     <div class="cover" v-for="(img,index) in item.images" :key='img'>
                       <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
@@ -42,7 +48,12 @@
                     <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
                 </div>
                 <div  class="foot" :style="{display:MinDisplay}">    
-                  <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
+                  <div>
+                    <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
+                    <el-popconfirm v-if="item.openid_get == openid" title="确定删除吗？" style="margin-left: 90%;" @confirm="deleteRow(item.id)">
+                      <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
+                    </el-popconfirm>
+                  </div>
                   <el-divider></el-divider>
                 </div>
             </div>
@@ -106,8 +117,10 @@ export default {
       MinDisplay:'flex',
       ShowIndex:0,
       display: 'none',
-      page:0,
+      page:1,
       busy:false,
+      type: 'public',
+      isMine:true
     }
   },
 
@@ -120,13 +133,42 @@ export default {
 
   },
   methods: {
+    deleteRow(id) {
+      let that = this;
+      let param ={
+          studio:that.studio,
+          id:id,
+          role:that.role,
+          openid:that.openid
+        }
+      let res = HttpPost("/deletePost",param)
+      res.then(res => {
+          if(res.data == 1){
+            that.$message({
+                message: '删除成功',
+                type: 'success'
+            });
+
+            that.items = []
+            that.page = 1
+            that.getPost(that.page,that.type)
+          }else {
+            that.$message({
+                message: '删除失败',
+                type: 'warning'
+            });
+          }
+      })
+    },
+
     loadMore () {
       let that = this
       that.busy = true
       setTimeout(() => {
         that.page += 1
         console.log(that.page)
-        that.getGrowthRecord(that.page)
+
+        that.getPost(that.page,that.type)
         that.busy = false;
       }, 1000);
     },
@@ -154,7 +196,6 @@ export default {
       that.subject = users.data[0].subjects
       that.comment_style = users.data[0].comment_style
       that.send_time = users.data[0].send_time
-      console.log(that.send_time)
       
       if('boss' == that.role){
         that.mode = '校长模式'
@@ -172,38 +213,35 @@ export default {
       }
 
       that.items = []
-      that.getGrowthRecord(that.page)
-
-
+      that.getPost(that.page,that.type)
     },
 
+    async handleClick() {
+      let that = this
+      that.items = []
+      that.page = 1
+      if(that.type == 'public'){
+        await that.getPost(that.page,that.type)
+      }else if(that.type == 'private'){
+        await that.getPost(that.page,that.type)
+      }
+    },
 
-    async getGrowthRecord (page) {
+    async getPost (page,type) {
       let that = this;
       let param ={
-          studio:that.studio,
-          student_name:'李冰冰',
-          page:page,
-          openid:that.openid
-        }
-      const growth = await HttpPost('/getGrowthRecord', param)
-      let growth_data = growth.data;
-      for( var i in growth_data){
-          const uuids = growth_data[i].uuids
-          growth_data[i]["isMp3"] = false
-          const mp3_url_get = growth_data[i].mp3_url
-          console.log(mp3_url_get)
-          if(mp3_url_get.replace('undefined','').replace('no_mp3_url','').length > 0){
-            let mp3_url = Mp3Url + mp3_url_get
-            growth_data[i]["mp3_url"] = mp3_url
-            growth_data[i]["isMp3"] = true
-          }
-          
-          let comment = growth_data[i].comment
-          if(comment == 'no_comment'){
-            growth_data[i]["comment"] = '暂无文字点评'
-          }
+        studio:that.studio,
+        page:page,
+        openid:that.openid,
+        type:type
+      }
+      // console.log(param)
+      const post = await HttpPost('/getPost', param)
+      let post_data = post.data;
+      // console.log(post_data)
 
+      for( var i in post_data){
+          const uuids = post_data[i].uuids
           let images =[]
           if(uuids){
             let uuidslist =uuids.split(",");
@@ -214,12 +252,12 @@ export default {
                 }
                 images.push(json);
             }
-            growth_data[i]["images"] = images;
+            post_data[i]["images"] = images;
           }
       }
 
-      for(var i in growth_data){
-        that.items.push(growth_data[i])
+      for(var i in post_data){
+        that.items.push(post_data[i])
       }
       // console.log(that.items)
     },
@@ -444,8 +482,6 @@ export default {
     select(i){
         this.ShowIndex=i;
     },
-
-
 
   }
 }

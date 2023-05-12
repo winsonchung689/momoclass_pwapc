@@ -4,7 +4,8 @@
         <div style=" width: 100%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 5%;">
+      <div style="margin-top: 15%;">
+        
           <div v-if="isTeacher" style="justify-content: center;display: flex;margin-bottom: 15px;margin-top: 5%;">
             <div class="container">
 

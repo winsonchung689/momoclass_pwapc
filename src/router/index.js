@@ -22,6 +22,7 @@ const Authorization = () => import('@/components/Authorization')
 const AnnouncementRecord = () => import('@/components/AnnouncementRecord')
 const AccountBook = () => import('@/components/AccountBook')
 const Community = () => import('@/components/Community')
+const Post = () => import('@/components/Post')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -174,6 +175,14 @@ export default new Router({
       path: '/accountbook',
       name: 'AccountBook',
       component: AccountBook,
+      meta:{
+        showTabBar:false
+      }
+    },
+    {
+      path: '/post',
+      name: 'Post',
+      component: Post,
       meta:{
         showTabBar:false
       }
