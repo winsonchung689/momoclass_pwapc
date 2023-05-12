@@ -34,11 +34,15 @@
           <div class="wrap" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
 
             <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
+
+              <div :style="{display:MinDisplay}">
                 <div style="display: flex;flex-direction: row;">
                   <img :src="item.avatar" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
                   <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ item.nick_name }}</div>
                 </div>
                 <div style="font-size: small;color: dimgray;margin-top: 10px;margin-bottom: 0px;margin-left: 5%;margin-right: 5%;">{{ item.content }}</div>
+              </div>
+
                 <div class="covers" :style="{display:MinDisplay}">
                     <div class="cover" v-for="(img,index) in item.images" :key='img'>
                       <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
