@@ -122,6 +122,7 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import { sendNotification } from '@/api'
 
 export default {
   name: 'WorkBenches',
