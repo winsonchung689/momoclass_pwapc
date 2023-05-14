@@ -49,6 +49,18 @@
                 <div class="max" :style="{display:display}">
                     <div @click="ZoomOut"  v-for="(img,index) in item.images" :key='img' :class="[index_out+'_'+index===ShowIndex?'active':'None']" ><img :src="img.src" width="100%"></div>
                 </div>
+
+
+                <div style="margin-left: 50%;display: flex;flex-direction: row;">
+                  <el-badge :value="12" class="comment_item">
+                    <el-button size="small">点赞</el-button>
+                  </el-badge>
+                  <el-badge :value="12" class="comment_item">
+                    <el-button size="small">评论</el-button>
+                  </el-badge>
+                </div>
+                
+
                 <div  class="foot" :style="{display:MinDisplay}">    
                   <div>
                     <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px; margin-left: 10px">{{ item.studio_get }}  {{ item.create_time}}</div>
@@ -56,6 +68,7 @@
                       <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
                     </el-popconfirm>
                   </div>
+
                   <el-divider></el-divider>
                 </div>
             </div>
@@ -666,5 +679,9 @@ text{
   margin-bottom: 0px;
   margin-left: 5%;
   margin-right: 5%;
+}
+.comment_item {
+  margin-top: 10px;
+  margin-right: 40px;
 }
 </style>

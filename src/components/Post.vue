@@ -9,8 +9,13 @@
     
       <div style="margin-top: 15%;">
   
+        <el-switch
+          v-model="is_private"
+          active-text="是否仅我的社区可见"
+          inactive-text="">
+        </el-switch>
   
-        <div style="margin-bottom: 30px;">
+        <div style="margin-bottom: 30px;margin-top: 10px;">
           <el-upload
             list-type="picture-card"
             style="display: inline"
@@ -70,7 +75,8 @@
         index2:'',
         fileList:[],
         uuids:[],
-        content:''
+        content:'',
+        is_private:false,
       }
     },
   
@@ -89,13 +95,19 @@
             uuids = uuids.concat(',' + that.uuids[i])
           }
         }
+        let is_private_value = 0 
+        if(that.is_private==true){
+          is_private_value = 1
+        }
+
         let param ={
             openid:that.openid,
             uuids:uuids,
             content:that.content,
-            studio:that.studio
+            studio:that.studio,
+            is_private:is_private_value
         }
-        console.log(param)
+        // console.log(param)
         await HttpPost('/insertPost', param)
 
         that.goOff()
