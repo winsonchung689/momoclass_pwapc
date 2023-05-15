@@ -16,12 +16,12 @@
       <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
 
         <div style="display: flex;flex-direction: row;justify-content: space-between;">
-          <h2 @click="$router.push('/Login')">{{ hello }}</h2>
-          <div style="display: flex;margin-right: 0%;">
-            <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
+          <h2>{{ hello }}</h2>
+          <div @click="warning()" style="display: flex;margin-right: 0%;">
+            <img class="notice" src="../assets/wechat.png" alt="" >
           </div>
           <div style="display: flex;margin-right: 5%;">
-            <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
+            <img class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
 
@@ -53,10 +53,10 @@
 
                 <div style="margin-left: 50%;display: flex;flex-direction: row;">
                   <el-badge :value="12" class="comment_item">
-                    <el-button size="small">点赞</el-button>
+                    <el-button @click="warning()" size="small">点赞</el-button>
                   </el-badge>
                   <el-badge :value="12" class="comment_item">
-                    <el-button size="small">评论</el-button>
+                    <el-button @click="warning()" size="small">评论</el-button>
                   </el-badge>
                 </div>
                 
@@ -148,6 +148,13 @@ export default {
 
   },
   methods: {
+    warning(){
+      that.$message({
+          message: '请安装社区版',
+          type: 'warning'
+      });
+    },
+
     deleteRow(id) {
       let that = this;
       let param ={
