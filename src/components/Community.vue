@@ -193,15 +193,27 @@ export default {
 
     async like_button(studio,post_id,index){
       let that = this
-      console.log(post_id)
-      let param ={
-        studio:studio,
-        openid:that.openid, 
-        post_id:post_id,
+      let param1 ={
+          openid:that.openid,
+          post_id:post_id
       }
-      const res = await HttpPost('/insertPostLike', param)
-      that.items[index].like_amount += 1
-    },
+      let res1 = await HttpPost("/getPostLikeByOpenid",param1)
+      let length = res1.data.length
+      if(length > 0){
+        that.$message({
+            message: '该帖已赞👍',
+            type: 'success'
+        });
+      }else {
+        let param ={
+          studio:studio,
+          openid:that.openid, 
+          post_id:post_id,
+        }
+        await HttpPost('/insertPostLike', param)
+        that.items[index].like_amount += 1
+        }
+      },
 
     async comment_confirm(){
       let that = this
@@ -211,13 +223,12 @@ export default {
         post_id:that.comment_postid,
         content:that.comment_input
       }
-      const res = await HttpPost('/insertPostComment', param)
-      console.log(res)
+      await HttpPost('/insertPostComment', param)
       that.items[that.index_out].comment_amount += 1
-      that.getComments(that.comment_postid)
+      that.getComments()
     },
 
-    getComments(id){
+    getComments(){
       let that = this
       that.comment_items = []
       let param ={
@@ -227,7 +238,6 @@ export default {
       res.then(res => {
         let data= res.data
         that.comment_items = data
-        console.log(that.comment_items)
       })
 
     },
@@ -239,7 +249,7 @@ export default {
       that.comment_nickname = nick_name
       that.comment_postid = post_id
       that.index_out  = index_out
-      that.getComments(post_id)
+      that.getComments()
     },
 
     deleteRow(id) {

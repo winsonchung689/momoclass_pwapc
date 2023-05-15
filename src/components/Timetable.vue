@@ -347,7 +347,7 @@
           <div style="display: flex;flex-direction: row;justify-content: space-between;">
             <div>
               <el-time-select
-                style="width: 40%;"
+                style="width: 50%;"
                 v-model="send_time"
                 :picker-options="{
                   start: '00:00',
@@ -418,6 +418,7 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import { send } from 'process';
 export default {
   name: 'Timetable',
   data () {
@@ -821,11 +822,15 @@ export default {
 
     async updateSendTime(){
       let that = this
+      let send_time = that.send_time
+      if(send_time.split(':').length == 2){
+        that.send_time = send_time + ':00'
+      }
       let param ={
           studio:that.studio,
           openid:that.openid,
           send_time:that.send_time
-        }
+      }
       let res = await HttpPost("/updateSendTime",param)
       // console.log(res)
       if(res.status == 200){
