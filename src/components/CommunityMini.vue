@@ -21,7 +21,7 @@
             <img class="notice" src="../assets/wechat.png" alt="" >
           </div>
           <div style="display: flex;margin-right: 5%;">
-            <img class="notice" src="../assets/notice.png" alt="" >
+            <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
 
