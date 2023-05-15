@@ -59,10 +59,10 @@
 
 
                 <div style="margin-left: 50%;display: flex;flex-direction: row;">
-                  <el-badge :value="12" class="comment_item">
+                  <el-badge value="new" class="comment_item">
                     <el-button @click="warning()" size="small">点赞</el-button>
                   </el-badge>
-                  <el-badge :value="12" class="comment_item">
+                  <el-badge value="new" class="comment_item">
                     <el-button @click="warning()" size="small">评论</el-button>
                   </el-badge>
                 </div>
