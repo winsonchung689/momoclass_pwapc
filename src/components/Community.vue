@@ -39,6 +39,7 @@
                   <img :src="item.avatar" alt="" style="width: 40px;height: 40px;border-radius: 50%; position: relative;margin-left: 10px;margin-top: 5px;">
                   <div style="margin-left: 15px;font-size: medium;font-weight: bolder;color:dimgray;">{{ item.nick_name }}</div>
                 </div>
+
                 <div class="content" :style="{display:MinDisplay}">{{ item.content }}</div>
 
                 <div class="covers" :style="{display:MinDisplay}">
@@ -52,13 +53,37 @@
 
 
                 <div style="margin-left: 50%;display: flex;flex-direction: row;">
-                  <el-badge :value="12" class="comment_item">
-                    <el-button size="small">点赞</el-button>
+                  <el-badge :value="item.like_amount" class="comment_item">
+                    <el-button @click="like_button(item.studio_get,item.id,index_out)" size="small">点赞</el-button>
                   </el-badge>
-                  <el-badge :value="12" class="comment_item">
-                    <el-button size="small">评论</el-button>
+                  <el-badge :value="item.comment_amount" class="comment_item">
+                    <el-button @click="comment_button(item.studio_get,item.nick_name,item.id,index_out)" size="small">评论</el-button>
                   </el-badge>
                 </div>
+
+                <el-drawer
+                  :visible.sync="drawer"
+                  :direction="direction"
+                  :with-header="false">
+
+                  <div style="font-size: medium;font-weight:bolder;color: rgb(22, 133, 229);">To： ({{ comment_studio }}){{ comment_nickname }}</div>
+                  <div>
+                    <el-input
+                      type="textarea"
+                      :rows="1"
+                      placeholder="请输入内容"
+                      v-model="comment_input">
+                    </el-input>
+                    <el-button style="margin-left: 90%;" @click="comment_confirm()" type="text">发送</el-button>
+                    <el-divider></el-divider>
+                    <div v-for="(item,index_out) in comment_items">
+                      <div style="display: flex;flex-direction: row;">
+                        <div style="font-size=smaller;color: #7d56cb;" >From {{ item.studio }} {{ item.nick_name }}： </div>
+                        <div style="font-size=small;color: #2160b7;">{{ item.content }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </el-drawer>
                 
 
                 <div  class="foot" :style="{display:MinDisplay}">    
@@ -92,7 +117,6 @@ import { sendNotification } from '@/api'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import WebSocket from '@/components/WebSocket'
 import { ImageUrl } from '@/api'
-import { Mp3Url } from '@/api'
 
 export default {
   name: 'Home',
@@ -129,13 +153,21 @@ export default {
       campus:'',
       count: 0,
       items: [],
+      comment_items:[],
       MinDisplay:'flex',
       ShowIndex:0,
       display: 'none',
       page:1,
       busy:false,
       type: 'public',
-      isMine:true
+      isMine:true,
+      drawer: false,
+      direction:'btt',
+      comment_input:'',
+      comment_studio:'',
+      comment_nickname:'',
+      comment_postid:'',
+      index_out:''
     }
   },
 
@@ -148,6 +180,58 @@ export default {
 
   },
   methods: {
+
+    async like_button(studio,post_id,index){
+      let that = this
+      console.log(post_id)
+      let param ={
+        studio:studio,
+        openid:that.openid, 
+        post_id:post_id,
+      }
+      const res = await HttpPost('/insertPostLike', param)
+      that.items[index].like_amount += 1
+    },
+
+    async comment_confirm(){
+      let that = this
+      let param ={
+        studio:that.studio,
+        openid:that.openid, 
+        post_id:that.comment_postid,
+        content:that.comment_input
+      }
+      const res = await HttpPost('/insertPostComment', param)
+      console.log(res)
+      that.items[that.index_out].comment_amount += 1
+      that.getComments(that.comment_postid)
+    },
+
+    getComments(id){
+      let that = this
+      that.comment_items = []
+      let param ={
+        post_id:that.comment_postid,
+      }
+      const res = HttpPost('/getPostComment', param)
+      res.then(res => {
+        let data= res.data
+        that.comment_items = data
+        console.log(that.comment_items)
+      })
+
+    },
+
+    comment_button(studio,nick_name,post_id,index_out){
+      let that = this
+      that.drawer = true
+      that.comment_studio = studio
+      that.comment_nickname = nick_name
+      that.comment_postid = post_id
+      that.index_out  = index_out
+      that.getComments(post_id)
+    },
+
     deleteRow(id) {
       let that = this;
       let param ={

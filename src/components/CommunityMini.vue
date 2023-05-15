@@ -28,9 +28,10 @@
         <el-tabs v-model="type" @tab-click="handleClick">
           <el-tab-pane label="公共社区" name="public"></el-tab-pane>
           <el-tab-pane label="我的社区" name="private"></el-tab-pane>
+          <el-tab-pane label="两步安装" name="install"></el-tab-pane>
         </el-tabs>
 
-        <div>
+        <div v-if="main">
           <div class="wrap" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
 
             <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
@@ -76,6 +77,12 @@
           </div>
 
 
+        </div>
+
+        <div v-if="sub">
+        <div>
+          <img style="width: 100%;" src="../assets/install.png"  alt="">
+        </div>
         </div>
 
       </div>
@@ -135,7 +142,9 @@ export default {
       page:1,
       busy:false,
       type: 'public',
-      isMine:true
+      isMine:true,
+      main:true,
+      sub:false
     }
   },
 
@@ -246,9 +255,16 @@ export default {
       that.items = []
       that.page = 1
       if(that.type == 'public'){
+        that.main = true
+        that.sub = false
         await that.getPost(that.page,that.type)
       }else if(that.type == 'private'){
+        that.main = true
+        that.sub = false
         await that.getPost(that.page,that.type)
+      }else if(that.type == 'install'){
+        that.main = false
+        that.sub = true
       }
     },
 
