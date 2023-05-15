@@ -62,9 +62,9 @@
                 
 
                 <div  class="foot" :style="{display:MinDisplay}">    
-                  <div>
-                    <div style="font-size: x-small;font-weight: bold;color: #a3b2b3;margin-top: 5px; margin-left: 10px">{{ item.studio_get }}  {{ item.create_time}}</div>
-                    <el-popconfirm v-if="item.openid_get == openid" title="确定删除吗？" style="margin-left: 90%;" @confirm="deleteRow(item.id)">
+                  <div style="display: flex;flex-direction: row;justify-content: space-between;width: 90%;margin-top: 10px;">
+                    <div style="display: flex;flex-direction: row;font-size: small;font-weight: bold;color: #a3b2b3;margin-top: 5px; margin-left: 10px">{{ item.studio_get }}  {{ item.create_time}}</div>
+                    <el-popconfirm v-if="item.openid_get == openid" title="确定删除吗？" style="margin-left:;" @confirm="deleteRow(item.id)">
                       <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
                     </el-popconfirm>
                   </div>
@@ -614,7 +614,7 @@ text{
 }
 
 .covers{
-    width: 60%;
+    width: 80%;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -624,7 +624,7 @@ text{
 .cover{
     display: flex;
     justify-content: center;
-    width: 33%;
+    width: 44%;
     margin: 10px 0;
 }
 
@@ -680,7 +680,7 @@ text{
 }
 
 .content{
-  font-size: small;
+  font-size: medium;
   color: dimgray;
   margin-top: 10px;
   margin-bottom: 0px;
