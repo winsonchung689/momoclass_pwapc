@@ -44,7 +44,13 @@
 
                 <div class="covers" :style="{display:MinDisplay}">
                     <div class="cover" v-for="(img,index) in item.images" :key='img'>
-                      <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
+                      <el-image 
+                        style="margin-right: 10px;"
+                        :src="img.src" 
+                        :preview-src-list=[img.src]>
+                      </el-image>
+
+                      <!-- <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt=""> -->
                     </div>
                 </div>
                 <div class="max" :style="{display:display}">
@@ -630,7 +636,7 @@ text{
 }
 
 .covers{
-    width: 80%;
+    width: 95%;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -640,7 +646,7 @@ text{
 .cover{
     display: flex;
     justify-content: center;
-    width: 44%;
+    width: 45%;
     margin: 10px 0;
 }
 

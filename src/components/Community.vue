@@ -44,7 +44,13 @@
 
                 <div class="covers" :style="{display:MinDisplay}">
                     <div class="cover" v-for="(img,index) in item.images" :key='img'>
-                      <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
+                      <el-image 
+                        style="margin-right: 10px;"
+                        :src="img.src" 
+                        :preview-src-list=[img.src]>
+                      </el-image>
+
+                      <!-- <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt=""> -->
                     </div>
                 </div>
                 <div class="max" :style="{display:display}">
@@ -167,7 +173,11 @@ export default {
       comment_studio:'',
       comment_nickname:'',
       comment_postid:'',
-      index_out:''
+      index_out:'',
+      srcList: [
+          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+        ]
     }
   },
 
@@ -691,7 +701,7 @@ text{
 }
 
 .covers{
-    width: 80%;
+    width: 95%;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -701,7 +711,7 @@ text{
 .cover{
     display: flex;
     justify-content: center;
-    width: 44%;
+    width: 45%;
     margin: 10px 0;
 }
 
