@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     warning(){
-      that.$message({
+      this.$message({
           message: '请安装社区版',
           type: 'warning'
       });
