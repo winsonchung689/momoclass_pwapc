@@ -245,6 +245,7 @@ export default {
     comment_button(studio,nick_name,post_id,index_out){
       let that = this
       that.drawer = true
+      that.comment_input = ''
       if(studio){
           that.comment_studio = '(' + studio + ')'
       }
