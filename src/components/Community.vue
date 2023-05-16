@@ -93,7 +93,7 @@
                 
 
                 <div  class="foot" :style="{display:MinDisplay}">    
-                  <div style="display: flex;flex-direction: row;justify-content: space-between;width: 90%;margin-top: 10px;">
+                  <div style="display: flex;flex-direction: row;justify-content: space-between;width: 98%;margin-top: 10px;">
                     <div style="display: flex;flex-direction: row;font-size: small;font-weight: bold;color: #a3b2b3;margin-top: 5px; margin-left: 10px">{{ item.studio_get }}  {{ item.create_time}}</div>
                     <el-popconfirm v-if="item.openid_get == openid" title="确定删除吗？" style="margin-left:;" @confirm="deleteRow(item.id)">
                       <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
