@@ -72,7 +72,7 @@
                   :direction="direction"
                   :with-header="false">
 
-                  <div style="font-size: medium;font-weight:bolder;color: rgb(22, 133, 229);">To： ({{ comment_studio }}){{ comment_nickname }}</div>
+                  <div style="font-size: medium;font-weight:bolder;color: rgb(22, 133, 229);">To： {{ comment_studio }}{{ comment_nickname }}</div>
                   <div>
                     <el-input
                       type="textarea"
@@ -84,7 +84,7 @@
                     <el-divider></el-divider>
                     <div v-for="(item,index_out) in comment_items">
                       <div style="display: flex;flex-direction: row;">
-                        <div style="font-size=smaller;color: #7d56cb;" >From {{ item.studio }} {{ item.nick_name }}： </div>
+                        <div style="font-size=smaller;color: #7d56cb;" >From {{ item.nick_name }}： </div>
                         <div style="font-size=small;color: #2160b7;">{{ item.content }}</div>
                       </div>
                     </div>
@@ -245,7 +245,10 @@ export default {
     comment_button(studio,nick_name,post_id,index_out){
       let that = this
       that.drawer = true
-      that.comment_studio = studio
+      if(studio){
+          that.comment_studio = '(' + studio + ')'
+      }
+      
       that.comment_nickname = nick_name
       that.comment_postid = post_id
       that.index_out  = index_out
