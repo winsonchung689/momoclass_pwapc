@@ -12,7 +12,13 @@
         <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
           <div class="covers" :style="{display:MinDisplay}">
               <div class="cover" v-for="(img,index) in item.images" :key='img'>
-                <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt="">
+                <el-image 
+                  style="margin-right: 10px;"
+                  :src="img.src" 
+                  :preview-src-list=[img.src]>
+                </el-image>
+
+                <!-- <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt=""> -->
               </div>
           </div>
 
@@ -23,7 +29,8 @@
           <div  class="foot" :style="{display:MinDisplay}">
             <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;">学生: {{ subject }}_{{ student_name }}</div>
             <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;">课堂名称: {{ item.class_name }}</div>
-            <div style="font-size: medium;color: rgb(140, 219, 226);margin-top: 5px;margin-bottom: 5px;">老师点评: {{ item.comment }}</div>
+            <div style="font-size: medium;color: rgb(140, 219, 226);margin-top: 5px;margin-bottom: 5px;">老师点评: </div>
+            <div style="font-size: medium;color: rgb(140, 219, 226);margin-top: 5px;margin-bottom: 5px;">{{ item.comment }}</div>
             <div v-if="item.isMp3">
               <audio controls ref="audio" class="aud" :src="item.mp3_url"></audio>
             </div>
@@ -170,7 +177,7 @@ export default {
 }
 
 .covers{
-    width: 60%;
+    width: 90%;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
@@ -178,7 +185,7 @@ export default {
 .cover{
     display: flex;
     justify-content: center;
-    width: 33%;
+    width: 40%;
     margin: 10px 0;
 }
 
