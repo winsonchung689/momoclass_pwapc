@@ -12,7 +12,7 @@
               <div class="item" @click="timeTable(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 50px;height: 50px;" src="@/assets/timetable.png" alt="">
+                    <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程表</div>
                 </div>
@@ -21,7 +21,7 @@
               <div class="item" @click="calender(subject,studio,student_name)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 50px;height: 50px;" src="@/assets/tosignin.png" alt="">
+                    <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">签到处</div>
                 </div>
@@ -30,7 +30,7 @@
               <div class="item" @click="commentCenter(subject)">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
-                      <img style="width: 50px;height: 50px;" src="@/assets/comment.png" alt="">
+                      <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
                     </div>
                     <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课评中心</div>
                   </div>
@@ -46,7 +46,7 @@
                 <div v-if="isBoss" class="item" @click="accountBook()">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
-                      <img style="width: 50px;height: 50px;" src="@/assets/account_book.png" alt="">
+                      <img style="width: 70px;height: 70px;" src="@/assets/account_book.png" alt="">
                     </div>
                     <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">账本</div>
                   </div>
@@ -55,7 +55,7 @@
                 <div v-if="isTeacher" class="item" @click="school(subject)">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
-                      <img style="width: 50px;height: 50px;" src="@/assets/school.png" alt="">
+                      <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
                     </div>
                     <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">学员管理</div>
                   </div>
