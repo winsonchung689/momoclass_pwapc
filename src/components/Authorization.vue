@@ -9,23 +9,23 @@
 
       <div style="margin-top: 15%;">
 
-        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;">
+        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;flex-direction: row;">
+          <div v-if="isBoss" style="margin-right: 15px;"> 
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="state"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入名字"
+              @select="handleSelect">
+              <template slot-scope="{ item }">
+                <div class="name">{{ item.nick_name }}</div>
+              </template>
+            </el-autocomplete>
+          </div>
+
           <el-button-group>
             <el-button @click="getUsers()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
-        </div>
-
-        <div v-if="isBoss" style="margin-left: 10%;"> 
-          <el-autocomplete
-            popper-class="my-autocomplete"
-            v-model="state"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入名字"
-            @select="handleSelect">
-            <template slot-scope="{ item }">
-              <div class="name">{{ item.nick_name }}</div>
-            </template>
-          </el-autocomplete>
         </div>
 
         <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
