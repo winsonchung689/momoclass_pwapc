@@ -83,7 +83,7 @@ export default {
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data
-        console.log(lessons_data)
+        // console.log(lessons_data)
         that.items =[]
         that.allstudents = []
         for( var i in lessons_data){
@@ -104,7 +104,7 @@ export default {
             that.allstudents.push(json)
             that.items.push(json)
         }
-        console.log(that.allstudents)
+        // console.log(that.allstudents)
 
       }else {
           const users = await HttpGet('/getUserByOpenid?openid=' + that.openid)
