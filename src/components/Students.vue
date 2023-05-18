@@ -4,25 +4,25 @@
         <div style=" width: 100%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%;">
+      <div style="margin-top: 15%; margin-bottom: 62px;">
 
-        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;">
+        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;flex-direction: row;">
+          <div v-if="isBoss" style="margin-right: 15px;"> 
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="state"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入学生名"
+              @select="handleSelect">
+              <template slot-scope="{ item }">
+                <div class="name">{{ item.student_name }}</div>
+              </template>
+            </el-autocomplete>
+          </div>
+          
           <el-button-group>
             <el-button @click="getStudents()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
-        </div>
-
-        <div v-if="isBoss" style="margin-left: 10%;"> 
-          <el-autocomplete
-            popper-class="my-autocomplete"
-            v-model="state"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入学生名"
-            @select="handleSelect">
-            <template slot-scope="{ item }">
-              <div class="name">{{ item.student_name }}</div>
-            </template>
-          </el-autocomplete>
         </div>
 
         <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
