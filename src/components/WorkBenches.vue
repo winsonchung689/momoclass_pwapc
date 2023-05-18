@@ -52,6 +52,15 @@
                   </div>
                 </div>
 
+                <div class="item" @click="classSystem()">
+                  <div class="content">
+                    <div style="display: flex;justify-content: center;">
+                      <img style="width: 70px;height: 70px;" src="@/assets/system.png" alt="">
+                    </div>
+                    <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程体系</div>
+                  </div>
+                </div>
+
                 <div v-if="isTeacher" class="item" @click="school(subject)">
                   <div class="content">
                     <div style="display: flex;justify-content: center;">
@@ -280,6 +289,10 @@ export default {
 
     accountBook () {
       this.$router.push({ path: '/accountbook', query: { studio: this.studio,role:this.role,openid:this.openid } })
+    },
+
+    classSystem(){
+      this.$router.push({ path: '/classsystem', query: { studio: this.studio,role:this.role,openid:this.openid } })
     },
 
     goOff () {
