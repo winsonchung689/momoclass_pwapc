@@ -415,7 +415,6 @@
 </template>
 
 <script>
-
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import { send } from 'process';
@@ -495,7 +494,8 @@ export default {
             studio:that.studio,
             dayofweek:i+1,
             subject:that.subject,
-            openid:that.openid
+            openid:that.openid,
+            student_name:'all'
           }
           const leave = await HttpPost('/getArrangement', param)
           let leave_data = leave.data;

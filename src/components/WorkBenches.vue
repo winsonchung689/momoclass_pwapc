@@ -238,7 +238,8 @@ export default {
           dayofweek:that.weekday,
           date:that.date,
           openid:that.openid,
-          subject: that.subject
+          subject: that.subject,
+          student_name:'all'
       }
 
       const schedule = await HttpPost('/getArrangement', param)
