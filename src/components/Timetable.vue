@@ -26,8 +26,8 @@
         </el-dialog>
 
         <div v-if="isTimetable" >
-          <el-table :data="tableData" style="width: 100%;font-size: small;justify-content: center;" max-height="750">
-            <el-table-column prop="week1" label="周一"  width="150" style="text-align: center;">
+          <el-table :data="tableData" style="width: 100%;font-size: small;justify-content: center;" max-height="750" :cell-style="{ textAlign:'top' }">
+            <el-table-column prop="week1" label="周一"  width="150" style="text-align: top;vertical-align: top;">
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week1" :key="index">
                   <div class="class_element_1">
@@ -67,11 +67,11 @@
                         </el-popconfirm>
                       </div>
                     
-
                   </div>
                 </div>
               </template>
             </el-table-column>
+
             <el-table-column prop="week2" label="周二" width="150">
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week2" :key="index">
@@ -342,6 +342,7 @@
                 </div>
               </template>
             </el-table-column>
+            
           </el-table>
           
           <div style="display: flex;flex-direction: row;justify-content: space-between;margin-bottom: 20px;">
@@ -854,7 +855,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .el-icon-arrow-left{
   margin-left: 5px;
   margin-top: 10px;
@@ -910,5 +911,8 @@ export default {
   color:rgba(222, 121, 53, 0.843) ;
 }
 
+.el-table .my-cell{
+  vertical-align: top;
+}
 
 </style>
