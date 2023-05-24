@@ -344,7 +344,7 @@
             </el-table-column>
           </el-table>
           
-          <div style="display: flex;flex-direction: row;justify-content: space-between;">
+          <div style="display: flex;flex-direction: row;justify-content: space-between;margin-bottom: 20px;">
             <div>
               <el-time-select
                 style="width: 50%;"
