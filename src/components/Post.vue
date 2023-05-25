@@ -14,6 +14,12 @@
           active-text="是否仅我的社区可见"
           inactive-text="">
         </el-switch>
+
+         <el-switch
+          v-model="is_anonymous"
+          active-text="是否游客发布"
+          inactive-text="">
+        </el-switch>
   
         <div style="margin-bottom: 30px;margin-top: 10px;">
           <el-upload
@@ -77,6 +83,7 @@
         uuids:[],
         content:'',
         is_private:false,
+        is_anonymous:false
       }
     },
   
@@ -106,6 +113,11 @@
             content:that.content,
             studio:that.studio,
             is_private:is_private_value
+        }
+
+         if(that.is_anonymous==true){
+            param.openid = ''
+            param.studio = ''
         }
         // console.log(param)
         await HttpPost('/insertPost', param)
