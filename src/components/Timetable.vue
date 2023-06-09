@@ -543,9 +543,11 @@ export default {
             studio: that.studio,
             dayofweek: dayofweek,
             subject: that.subject,
-            openid: that.openid
+            openid: that.openid,
+            student_name:'all'
         }
         const leave = await HttpPost('/getArrangement', param_1)
+        console.log(leave)
         let leave_data = leave.data[0]
         return leave_data
     },
@@ -740,6 +742,7 @@ export default {
         status:'1',
         openid:that.openid
       }
+      console.log(param)
       await HttpPost('/arrangeClass', param)
       that.$message({
         message: '排课成功',
@@ -747,6 +750,7 @@ export default {
       });
 
       let res = await that .getArrangement(that.week_select)
+      console.log(res)
       let classes_count = res.classes_count
       that.tableData[0]['week'+that.week_select][that.index_select].classes_count = classes_count
     },
