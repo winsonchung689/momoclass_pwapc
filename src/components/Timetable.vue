@@ -547,7 +547,6 @@ export default {
             student_name:'all'
         }
         const leave = await HttpPost('/getArrangement', param_1)
-        console.log(leave)
         let leave_data = leave.data[0]
         return leave_data
     },
@@ -750,7 +749,6 @@ export default {
       });
 
       let res = await that .getArrangement(that.week_select)
-      console.log(res)
       let classes_count = res.classes_count
       that.tableData[0]['week'+that.week_select][that.index_select].classes_count = classes_count
     },
