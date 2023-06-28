@@ -6,17 +6,20 @@
                 <img style="justify-content;: center" src="@/assets/logo.png" alt="">
             </div>
             <!-- 输入框 -->
+            
+            <div class="lgD">
+                <el-autocomplete
+                style="width: 100%;"
+                v-model="state"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="输入用户名"
+                @select="handleSelect"
+                ></el-autocomplete>
+            </div>
             <div class="lgD">
                 <el-input
                 placeholder="输入工作室名"
                 v-model="ruleForm.studio"
-                clearable>
-                </el-input>
-            </div>
-            <div class="lgD">
-                <el-input
-                placeholder="输入用户名"
-                v-model="ruleForm.nick_name"
                 clearable>
                 </el-input>
             </div>
@@ -57,11 +60,51 @@ export default {
             nick_name: '',
             campus:''
         },
-        openid: ''
+        openid: '',
+        restaurants: [],
+        state:''
     };
-  },  
+  }, 
+  
+  watch:{
+    state: function() {
+      let that = this
+      that.restaurants = []
+      console.log( 'state:' + that.state)
+      that.getUserByNickName(that.state)
+    },
+  },
+
 
   methods: {
+    async getUserByNickName (nickName) {
+        var that = this;
+        that.restaurants = []
+        let loginParams = {
+            nickName: nickName,
+        };
+        let res = HttpPost("/getUserByNickName",loginParams);
+        res.then(res => {
+            console.log(res.data)
+            for(var i in res.data){
+                let studio = res.data[i].studio
+                let nick_name = res.data[i].nick_name
+                let student_name = res.data[i].student_name
+                let campus = res.data[i].campus
+                let json = {
+                    value:nick_name+"("+ studio +")",
+                    nick_name:nick_name,
+                    studio :studio,
+                    student_name:student_name,
+                    campus:campus
+
+                }
+                that.restaurants.push(json)
+            }
+            console.log(that.restaurants)
+        })
+    },
+
     login () {
         var that = this;
         let studio = that.ruleForm.studio;
@@ -91,7 +134,7 @@ export default {
 
         let res = HttpPost("/getUserByNickStudioEq", loginParams);
         res.then(res => {
-            // console.log(res.data)
+            console.log(res.data)
             try {
                 that.openid = res.data[0].openid
             } catch (error) {
@@ -165,6 +208,32 @@ export default {
 
             that.setCookie(that.openid, 7)
         })
+    },
+
+    querySearchAsync(queryString, cb) {
+        let that = this
+        var restaurants = that.restaurants;
+        var results = queryString ? restaurants.filter(that.createStateFilter(queryString)) : restaurants;
+        clearTimeout(that.timeout);
+        that.timeout = setTimeout(() => {
+          cb(results);
+        }, 3000 * Math.random());
+    },
+
+    createStateFilter(queryString) {
+    return (state) => {
+        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+    };
+    },
+
+    handleSelect(item) {
+        let that = this
+        console.log(item);
+        that.ruleForm.studio = item.studio;
+        that.ruleForm.nick_name = item.nick_name;
+        that.ruleForm.student_name = item.student_name;
+        that.ruleForm.campus = item.campus;
+        that.state = item.nick_name;
     },
 
     setCookie (openid, days) {
