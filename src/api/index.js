@@ -66,5 +66,3 @@ export function sendNotification(subscription,json){
   
   return res
 }
-
-     
