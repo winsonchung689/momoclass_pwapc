@@ -10,15 +10,13 @@
 
       <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;">
 
-        <!-- <el-collapse-item :title="item.create_time" name="1">
-          <div>{{ item.content }}</div>
-        </el-collapse-item> -->
 
         <el-collapse v-model="activeName" accordion v-for="(item,index_out) in items">
           <el-collapse-item :title="item.create_time" :name='index_out'>
             <div>{{ item.content }}</div>
           </el-collapse-item>
         </el-collapse>
+
       </div>
 
 
