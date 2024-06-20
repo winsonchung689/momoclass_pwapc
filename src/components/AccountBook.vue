@@ -9,7 +9,6 @@
 
      
       <div style="margin-top: 15%;">
-
         <el-switch v-if="isTable"
           v-model="isFilter"
           active-text="按月筛选"
