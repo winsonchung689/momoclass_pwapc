@@ -4,9 +4,9 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
     </div>
-    <div class="chatTitle">吹水站💬  同行通水，至紧要快～～(在线:{{ onlinecount }})</div>
+    <div class="chatTitle">实时聊天(在线:{{ onlinecount }})</div>
 
     <!-- <WebSocket ref="WebSocket"></WebSocket> -->
     <div ref="scrolldIV" class="chatAppBody">
@@ -249,7 +249,7 @@ export default {
     flex-direction: column;
     height: 70vh;
     background-color: #f1f5f8;
-    margin-top: 5px;
+    margin-top: 2%;
     overflow: scroll;
 }
 .chatTitle{
@@ -257,7 +257,7 @@ export default {
     font-size: small;
     color: rgb(151, 160, 163);
     font-weight: bolder;
-    margin-top: 10%;
+    margin-top: 3%;
 }
 .chatBox{
     flex: 1;

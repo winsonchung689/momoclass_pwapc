@@ -49,7 +49,7 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home,meta:{
-        showTabBar:true
+        showTabBar:false
       }
     },
     {

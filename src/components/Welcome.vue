@@ -55,19 +55,16 @@ export default {
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
 .welcome {
-  position: fixed;
-  height: 100%;
   width: 100%;
-  /* background: url('@/assets/welcome.png') no-repeat; */
-  background-size: 100% 100%;
-  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .welcome img {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  width: 50%;
+  height: 50%;
+  margin-top: 0;
 }
 </style>

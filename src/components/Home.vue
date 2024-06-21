@@ -15,17 +15,20 @@
             <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
-      </div>
-      
-      <div style="width: 100%;background-color: #d4dfdf;">
-        <div style="margin-left: 15px;">
-          <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+
+        <div style="margin-left: 45%;">
+          <div style="margin-left: 15px;">
+            <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+          </div>
         </div>
       </div>
+      
+      
     </div>
 
     <el-col :span="2">
-      <div style="color: #517cf1;font-weight: bolder;font-size: large;margin-left: 20px;">菜单</div>
+      <div style="color: #b3b4b8;font-weight: bolder;font-size: large;margin-left: 30%;">菜单</div>
+      <!-- <img src="@/assets/logo.png" alt=""> -->
       <el-menu
         default-active="1"
         class="el-menu-vertical-demo"
