@@ -14,7 +14,7 @@
                   <div style="display: flex;justify-content: center;">
                     <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
                   </div>
-                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">课程表</div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: medium;color: #517cf1;">排课表</div>
                 </div>
               </div>
 

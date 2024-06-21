@@ -1,6 +1,6 @@
 <template>
       <div class="bottom-navigation">
-        <div style="margin-left: 10px;" @click="click('/community')">
+        <div style="margin-left: 10px;" @click="click('/Home')">
           <img class="icon" :src="home_url" alt="" >
           <div class="icontext">主页</div>
         </div>
@@ -79,15 +79,7 @@
       },
 
       click (url) {
-        if(url == '/community'){
-          this.home_url = '../assets/home2.png'
-          this.work_url= '../assets/work1.png'
-          this.student_url = '../assets/student1.png'
-          this.me_url = '../assets/me1.png'
-          console.log(this.home_url)
-
-          this.$router.push({ path: url, query: { openid: this.openid,role:this.role,studio:this.studio,subject:this.subject,comment_style:this.comment_style,send_time:this.send_time } })
-        }else if(url == '/workbenches'){
+       if(url == '/workbenches'){
           this.home_url = '../assets/home1.png'
           this.work_url= '../assets/work2.png'
           this.student_url = '../assets/student1.png'

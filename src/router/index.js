@@ -21,7 +21,6 @@ const CommentCenter = () => import('@/components/CommentCenter')
 const Authorization = () => import('@/components/Authorization')
 const AnnouncementRecord = () => import('@/components/AnnouncementRecord')
 const AccountBook = () => import('@/components/AccountBook')
-const Community = () => import('@/components/Community')
 const Post = () => import('@/components/Post')
 const CommunityMini = () => import('@/components/CommunityMini')
 const ClassSystem = () => import('@/components/ClassSystem')
@@ -50,14 +49,6 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home,meta:{
-        showTabBar:false
-      }
-    },
-    {
-      path: '/community',
-      name: 'Community',
-      component: Community,
-      meta:{
         showTabBar:true
       }
     },
@@ -66,7 +57,7 @@ export default new Router({
       name: 'Students',
       component: Students,
       meta:{
-        showTabBar:true
+        showTabBar:false
       }
     },
     {
