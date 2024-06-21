@@ -1,29 +1,28 @@
 <template>
   <div>
-    <div style="background-color: #ffff ;width: 100%;">
-      <div style="margin-top: auto;display: flex;flex-direction: row;margin-left: 1%;">
-        <div>
-          <img :src="avatarurl" alt="" style="width: 30px;height: 30px;border-radius: 50%; position: relative;margin-left: 0px;margin-top: 5px;">
-        </div>
-        <h1>HI,{{ nick_name }} ({{ mode }})</h1>
+    <div style="background-color: #a3c6d3 ;width: 100%;">
+      <div style="margin-top: auto;display: flex;flex-direction: row;">
 
-        <div style="display: flex;flex-direction: row;justify-content: space-between;width: 10%;margin-left: 10%;">
-          <div style="display: flex;margin-right: 0%;">
+        <div style="margin-top: auto;display: flex;flex-direction: row;width: 94%;">
+          <div style="margin-top: auto;display: flex;flex-direction: row;">
+              <div><img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative;"></div>
+              <div style="margin-left: 10px;margin-top: 5px;"><h1>HI,{{ nick_name }} ({{ mode }})</h1></div>
+          </div>
+          
+          <div style="margin-left: 2%;">
+              <h2 @click="$router.push('/Login')">{{ hello }}</h2>
+          </div>
+        </div>
+
+        <div style="display: flex;flex-direction: row;justify-content: space-between; width: 5%;">
+          <div >
             <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
           </div>
-          <div style="display: flex;margin-right: 5%;">
+          <div >
             <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
-
-        <div style="margin-left: 45%;">
-          <div style="margin-left: 15px;">
-            <h2 @click="$router.push('/Login')">{{ hello }}</h2>
-          </div>
-        </div>
       </div>
-      
-      
     </div>
 
     <el-col :span="2">
@@ -37,11 +36,11 @@
         background-color="rgb(251, 248, 246)"
         >
         <el-menu-item index="1" @click="bindSelect('教务工具')">
-            <i class="el-icon-menu"></i>
+            <i class="el-icon-school"></i>
             <span slot="title">教务工具</span>
         </el-menu-item>
         <el-menu-item index="2" @click="bindSelect('课后互动')">
-            <i class="el-icon-menu"></i>
+            <i class="el-icon-connection"></i>
             <span slot="title">课后互动</span>
         </el-menu-item>
       </el-menu>
@@ -49,7 +48,7 @@
 
     <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>
     
-    <div style="display: flex" v-if="this.title=='教务工具'">
+    <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
       <div class="item" @click="school(subject)">
           <div class="content">
             <div style="display: flex;justify-content: center;">
@@ -66,20 +65,20 @@
             </div>
             <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">排课表</div>
           </div>
-        </div>
+      </div>
 
-        <div class="item" @click="calender(subject,studio,student_name)">
-            <div class="content">
-              <div style="display: flex;justify-content: center;">
-                <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
-              </div>
-              <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">签到处</div>
+      <div class="item" @click="calender(subject,studio,student_name)">
+          <div class="content">
+            <div style="display: flex;justify-content: center;">
+              <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
             </div>
+            <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">签到处</div>
           </div>
+      </div>
 
     </div>
 
-    <div style="display: flex" v-if="this.title=='课后互动'">
+    <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
       <div class="item" @click="commentCenter(subject)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
@@ -498,13 +497,13 @@ margin-top: 5px;
 h1 {
 font-weight: bold;
 font-size: medium;
-color: #a1bfbf91;
+color: #ffffff;
 }
 
 h2 {
 font-weight: bolder;
 font-size: large;
-color: #5aabee;
+color: #e09f33;
 height: auto;
 }
 
