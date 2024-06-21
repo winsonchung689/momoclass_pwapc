@@ -4,10 +4,10 @@
       <div>
         <i class="el-icon-arrow-left" @click="goOff()"></i>
       </div>
-      <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+      <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
     </div>
   
-    <div style="margin-top: 15%;">
+    <div style="margin-top: 2%;">
       <div v-if="isCalender" style="height: 50%;width: 100%;">
         <el-calendar v-model="value">
         <template slot="dateCell" slot-scope="{data}">
@@ -57,11 +57,11 @@
                 </div>
             </template>
         </el-table-column>
-        <el-table-column prop="subject" label="科目" width="120">
+        <el-table-column prop="subject" label="科目" >
         </el-table-column>
-        <el-table-column prop="class_number" label="班号" width="120">
+        <el-table-column prop="class_number" label="班号" >
         </el-table-column>
-        <el-table-column prop="duration" label="时间段" width="120">
+        <el-table-column prop="duration" label="时间段" >
         </el-table-column>
       </el-table>
 

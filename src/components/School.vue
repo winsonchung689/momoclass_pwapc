@@ -4,37 +4,36 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%;">
+      <div style="margin-top: 2%;">
 
-        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;">
+        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 2%;margin-bottom: 10px;">
           <el-button-group>
             <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
             <el-button @click="getUser()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
+          <div v-if="isBoss" style="margin-left: 2%;"> 
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="state"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入学生名"
+              @select="handleSelect">
+              <template slot-scope="{ item }">
+                <div class="name">{{ item.student_name }}</div>
+              </template>
+            </el-autocomplete>
+          </div>
         </div>
-        <div style="margin-left: 10%;margin-bottom: 10px;font-weight:bolder;font-size: medium;">
+        <div style="margin-left: 2%;margin-bottom: 10px;font-weight:bolder;font-size: medium;">
           <div>总人数: {{ total_student }}</div>
           <div>总课时数: {{ total_amount_all }}</div>
           <div>余课时数: {{ left_amount_all }}</div>
         </div>
 
-        <div v-if="isBoss" style="margin-left: 10%;"> 
-          <el-autocomplete
-            popper-class="my-autocomplete"
-            v-model="state"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入学生名"
-            @select="handleSelect">
-            <template slot-scope="{ item }">
-              <div class="name">{{ item.student_name }}</div>
-            </template>
-          </el-autocomplete>
-        </div>
-
-
+        
         <div v-if="isAdd" style="margin-bottom: 30px;">
           <div>
             <el-button type="text"  @click="back">取消</el-button>
@@ -78,22 +77,18 @@
                 </div>
 
                 <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
-
-                <div style="font-weight: bold;color: #a0a3a7;display: flex;direction: row;margin-top: 5px;">
-                  <div style="margin-right: 5px;font-size: smaller;">总积分: {{ item.points }} </div>
+                <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                  <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #ea8c28;margin-right: 5px;font-size:medium;">余课时: {{ item.left_amount }} </div>
+                  <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #a4a499;margin-left: 15px;">历史课时: {{ item.total_amount }} </div>
                 </div>
                 <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                  <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">扣课: {{ item.minus }}/次 </div>
-                  <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 5px;">积分: {{ item.coins }}/课</div>
+                  <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
+                  <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-left: 5px;">单课积分: {{ item.coins }}</div>
                 </div>
-                <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                  <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">总课时: {{ item.total_amount }} </div>
-                  <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 5px;">余课时: {{ item.left_amount }} </div>
-                </div>
-                <el-progress style="margin-top: 5px;" :percentage="item.percentage"></el-progress>
+                <el-progress style="margin-top: 5px;width: 800%;" :percentage="item.percentage"></el-progress>
               </div>
             </div>
-            <el-popconfirm title="确定删除吗？" style="margin-left: 90%;" @confirm="deleteRow(item.id,item.student_name)">
+            <el-popconfirm title="确定删除吗？" style="margin-left: 98%;" @confirm="deleteRow(item.id,item.student_name)">
               <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
             </el-popconfirm>
           </div>
@@ -487,7 +482,7 @@ export default {
 
 .card{
   background-color: rgb(226, 235, 217);
-  width: 85%;
+  width: 95%;
   border-radius: 0.5rem;
 }
 

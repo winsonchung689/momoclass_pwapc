@@ -4,10 +4,10 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%;">
+      <div style="margin-top: 2%;margin-left: 2%;">
         <el-dialog title="排课中" :visible.sync="dialogFormVisible">
           <el-autocomplete
             popper-class="my-autocomplete"
@@ -27,7 +27,7 @@
 
         <div v-if="isTimetable" >
           <el-table :data="tableData" style="width: 100%;font-size: small;justify-content: center;" max-height="750" :cell-style="{ textAlign:'top' }">
-            <el-table-column prop="week1" label="周一"  width="150" style="text-align: top;vertical-align: top;">
+            <el-table-column prop="week1" label="周一"   style="text-align: top;vertical-align: top;">
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week1" :key="index">
                   <div class="class_element_1">
@@ -72,7 +72,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="week2" label="周二" width="150">
+            <el-table-column prop="week2" label="周二">
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week2" :key="index">
                   <div class="class_element_2">
@@ -117,7 +117,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="week3" label="周三" width="150">
+            <el-table-column prop="week3" label="周三" >
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week3" :key="index">
                   <div class="class_element_1">
@@ -162,7 +162,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="week4" label="周四" width="150">
+            <el-table-column prop="week4" label="周四" >
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week4" :key="index">
                   <div class="class_element_2">
@@ -207,7 +207,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="week5" label="周五" width="150">
+            <el-table-column prop="week5" label="周五" >
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week5" :key="index">
                   <div class="class_element_1">
@@ -252,7 +252,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="week6" label="周六" width="150">
+            <el-table-column prop="week6" label="周六" >
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week6" :key="index">
                   <div class="class_element_2">
@@ -297,7 +297,7 @@
               </template>
               
             </el-table-column>
-            <el-table-column prop="week7" label="周日"  width="150">
+            <el-table-column prop="week7" label="周日" >
               <template slot-scope="scope">
                 <div v-for="(item,index) in scope.row.week7" :key="index">
                   <div class="class_element_1">

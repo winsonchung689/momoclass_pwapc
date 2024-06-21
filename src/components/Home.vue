@@ -48,24 +48,44 @@
     
     <div style="display: flex" v-if="this.title=='教务工具'">
       <div class="item" @click="school(subject)">
-          <div class="content" style="width: 80px;">
+          <div class="content">
             <div style="display: flex;justify-content: center;">
               <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
             </div>
-            <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;color: #517cf1;">学员管理</div>
+            <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
           </div>
       </div>
 
       <div class="item" @click="timeTable(subject)">
-          <div class="content" style="width: 80px;">
+          <div class="content">
             <div style="display: flex;justify-content: center;">
               <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
             </div>
-            <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;color: #517cf1;">排课表</div>
+            <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">排课表</div>
           </div>
         </div>
 
+        <div class="item" @click="calender(subject,studio,student_name)">
+            <div class="content">
+              <div style="display: flex;justify-content: center;">
+                <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
+              </div>
+              <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">签到处</div>
+            </div>
+          </div>
 
+    </div>
+
+    <div style="display: flex" v-if="this.title=='课后互动'">
+      <div class="item" @click="commentCenter(subject)">
+            <div class="content">
+              <div style="display: flex;justify-content: center;">
+                <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
+              </div>
+              <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课评中心</div>
+            </div>
+        </div>
+    
     </div>
 
 
@@ -216,6 +236,10 @@ methods: {
   timeTable (subject) {
     this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,send_time:this.send_time } })
   },
+
+  commentCenter (subject) {
+      this.$router.push({ path: '/commentcenter', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,comment_style:this.comment_style } })
+    },
 
 
   click (url) {
@@ -587,10 +611,12 @@ flex-direction: row
 }
 
 .content{
-font-size: medium;
+font-size: small;
 color: dimgray;
 margin-top: 10px;
 margin-bottom: 0px;
+width: 80px;
+font-weight: bold;
 }
 .comment_item {
 margin-top: 10px;
