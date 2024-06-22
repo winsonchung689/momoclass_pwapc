@@ -25,71 +25,80 @@
       </div>
     </div>
 
-    <el-col :span="2">
-      <div style="color: #b3b4b8;font-weight: bolder;font-size: large;margin-left: 30%;">菜单</div>
-      <!-- <img src="@/assets/logo.png" alt=""> -->
-      <el-menu
-        default-active="1"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
-        background-color="rgb(251, 248, 246)"
-        >
-        <el-menu-item index="1" @click="bindSelect('教务工具')">
-            <i class="el-icon-school"></i>
-            <span slot="title">教务工具</span>
-        </el-menu-item>
-        <el-menu-item index="2" @click="bindSelect('课后互动')">
-            <i class="el-icon-connection"></i>
-            <span slot="title">课后互动</span>
-        </el-menu-item>
-      </el-menu>
-    </el-col>
-
-    <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>
-    
-    <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
-      <div class="item" @click="school(subject)">
-          <div class="content">
-            <div style="display: flex;justify-content: center;">
-              <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
-            </div>
-            <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
-          </div>
-      </div>
-
-      <div class="item" @click="timeTable(subject)">
-          <div class="content">
-            <div style="display: flex;justify-content: center;">
-              <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
-            </div>
-            <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">排课表</div>
-          </div>
-      </div>
-
-      <div class="item" @click="calender(subject,studio,student_name)">
-          <div class="content">
-            <div style="display: flex;justify-content: center;">
-              <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
-            </div>
-            <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">签到处</div>
-          </div>
-      </div>
-
-    </div>
-
-    <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
-      <div class="item" @click="commentCenter(subject)">
-            <div class="content">
-              <div style="display: flex;justify-content: center;">
-                <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
-              </div>
-              <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课评中心</div>
-            </div>
+    <div style="display: flex;flex-direction: row;width: 100%;">
+      <el-col style="width: 10%;">
+        <div style="color: #6c6c6e;font-weight: bolder;font-size: large;background-color: rgb(251, 248, 246);display: flex;justify-content: center;">
+          <div>菜单</div>
+          <!-- <img style="justify-content;: center;width:50px" src="@/assets/logo.png" alt=""> -->
         </div>
-    
+        <el-menu
+          default-active="1"
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="rgb(251, 248, 246)"
+          >
+          <el-menu-item index="1" @click="bindSelect('教务工具')">
+              <i class="el-icon-school"></i>
+              <span slot="title">教务工具</span>
+          </el-menu-item>
+          <el-menu-item index="2" @click="bindSelect('课后互动')">
+              <i class="el-icon-connection"></i>
+              <span slot="title">课后互动</span>
+          </el-menu-item>
+        </el-menu>
+      </el-col>
+
+      <div style="width: 90%;">
+        <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>
+        <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
+          <div class="item" @click="school(subject)">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
+                </div>
+                <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
+              </div>
+          </div>
+
+          <div class="item" @click="timeTable(subject)">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
+                </div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">排课表</div>
+              </div>
+          </div>
+
+          <div class="item" @click="calender(subject,studio,student_name)">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
+                </div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">签到处</div>
+              </div>
+          </div>
+
+        </div>
+
+        <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
+          <div class="item" @click="commentCenter(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课评中心</div>
+                </div>
+            </div>
+        
+        </div>
+      </div>
+
     </div>
 
+    
+
+  
 
 
   </div>
