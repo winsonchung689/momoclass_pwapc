@@ -268,11 +268,13 @@ body {
 
 #wrap {
     height: 600px;
-    width: 100%;
-    background-position: center center;
-    position: relative;
-    justify-content: center;
-    margin-top: 25%;
+    /* width: 100%; */
+    /* background-position: center center; */
+    /* position: relative; */
+    /* justify-content: center; */
+    display: flex;
+    margin-top: 2%;
+    margin-left:35%;
 
 }
 
@@ -289,7 +291,7 @@ body {
     width: 368px;
     background-color: #FFFFFF;
     top: 100px;
-    right: 15%;
+    right: 20%;
     justify-content: center;
 }
 
