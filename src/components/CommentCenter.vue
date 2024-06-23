@@ -101,7 +101,7 @@ export default {
       role: this.$route.query.role,
       openid: this.$route.query.openid,
       comment_style: this.$route.query.comment_style,
-      header:  '课评中心',
+      header:  '课后点评',
       items: [],
       MinDisplay:'flex',
       ShowIndex:0,
@@ -253,7 +253,7 @@ export default {
 .cover{
     display: flex;
     justify-content: center;
-    width: 40%;
+    width: 10%;
     margin: 10px 0;
 }
 

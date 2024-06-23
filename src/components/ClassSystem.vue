@@ -4,7 +4,7 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
       <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
@@ -13,8 +13,8 @@
           <swiper :options="swiperOption" v-if="images.length > 1">
             <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
               <div  style="display: flex;justify-content: left; flex-direction: row;">
-                <div style="width: 100%;">
-                  <img :src="item.img" alt="" style="border-radius: 1rem; scale: 1;">
+                <div style="width: 40%;">
+                  <el-image  :src="item.img" :preview-src-list=[item.img] alt="" style="border-radius: 1rem; scale: 1;"></el-image>
                 </div>
               </div>
 
@@ -50,7 +50,7 @@ export default {
         speed: 800,
         observer: true,
         observeParents: true,
-        slidesPerView:1.15,
+        slidesPerView:2,
         loopedSlides:2,
         autoplay: {
           delay: 3000,

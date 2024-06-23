@@ -3,46 +3,58 @@
         <div class="logGet">
             <!-- 头部提示信息 -->
             <div class="logD logDtip">
-                <img style="justify-content;: center" src="@/assets/logo.png" alt="">
+                <img style="width: 150px;" src="@/assets/logo.png" alt="">
             </div>
             <!-- 输入框 -->
             
-            <div class="lgD">
-                <el-autocomplete
-                style="width: 100%;"
-                v-model="state"
-                :fetch-suggestions="querySearchAsync"
-                placeholder="输入用户名"
-                @select="handleSelect"
-                ></el-autocomplete>
-            </div>
-            <div class="lgD">
-                <el-input
-                placeholder="输入工作室名"
-                v-model="ruleForm.studio"
-                clearable>
-                </el-input>
-            </div>
-            <div class="lgD">
-                <el-input
-                placeholder="输入学生名(老师免填)"
-                v-model="ruleForm.student_name"
-                clearable>
-                </el-input>
-            </div>
-            <div class="lgD">
-                <el-input
-                placeholder="输入校区名(无分校区免填)"
-                v-model="ruleForm.campus"
-                clearable>
-                </el-input>
-            </div>
-            <div class="logC">
-                <a><button @click="login">登 录</button></a>
-            </div>
-            <div class="logE">
-                <a><button @click="signup">注 册</button></a>
-            </div>
+            <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+                <el-tab-pane label="登陆" name="login"></el-tab-pane>
+                <el-tab-pane label="注册" name="signup"></el-tab-pane>
+            
+
+                <div class="lgD">
+                    <el-input
+                    placeholder="输入电话号码"
+                    v-model="ruleForm.phone_number"
+                    clearable>
+                    </el-input>
+                </div>
+
+                <div class="lgD">
+                    <el-input
+                    placeholder="输入工作室名"
+                    v-model="ruleForm.studio"
+                    clearable>
+                    </el-input>
+                </div>
+
+                <div v-if="activeName=='signup'" class="lgD">
+                    <el-input
+                    placeholder="输入用户名"
+                    v-model="ruleForm.nick_name"
+                    clearable>
+                    </el-input>
+                </div>
+
+                <div v-if="activeName=='signup'" class="lgD">
+                    <el-input
+                    placeholder="输入学生名(老师免填)"
+                    v-model="ruleForm.student_name"
+                    clearable>
+                    </el-input>
+                </div>
+                <div v-if="activeName=='signup'" class="lgD">
+                    <el-input
+                    placeholder="输入校区名(无分校区免填)"
+                    v-model="ruleForm.campus"
+                    clearable>
+                    </el-input>
+                </div>
+                <div class="logE">
+                    <a><button @click="loginSignup(activeName)">确 定</button></a>
+                </div>
+            </el-tabs>
+
         </div>
     </div>
 </template>
@@ -58,11 +70,13 @@ export default {
             studio: '',
             student_name: '',
             nick_name: '',
-            campus:''
+            campus:'',
+            phone_number:''
         },
         openid: '',
         restaurants: [],
-        state:''
+        state:'',
+        activeName: 'login'
     };
   }, 
   
@@ -105,109 +119,113 @@ export default {
         })
     },
 
-    login () {
-        var that = this;
-        let studio = that.ruleForm.studio;
-        let nick_name = that.ruleForm.nick_name;
-
-        let loginParams = {
-            studio: studio,
-            nick_name: nick_name,
-        };
-        // console.log(loginParams)
-
-        if (studio == '') {
-            this.$message({
-                message: '工作室为空！',
-                type: 'warning'
-            });
-            return;
-        }
-
-        if (nick_name == '') {
-            this.$message({
-                message: '用户名为空！',
-                type: 'warning'
-            });
-            return;
-        }
-
-        let res = HttpPost("/getUserByNickStudioEq", loginParams);
-        res.then(res => {
-            console.log(res.data)
-            try {
-                that.openid = res.data[0].openid
-            } catch (error) {
-                console.log(error)
-            }
-
-            if (that.openid !== '') {
-                that.$router.push({ path: '/Home', query: { openid: that.openid } })
-            } else {
-                this.$message({
-                    message: '用户不存在,请注册！',
-                    type: 'warning'
-                });
-            }
-            that.setCookie(that.openid, 7)
-        })
+    handleClick(tab, event) {
+        console.log(tab, event);
+        console.log(this.activeName)
     },
 
-    signup () {
-        var that = this
-        let studio = that.ruleForm.studio
-        let student_name = that.ruleForm.student_name
-        let nick_name = that.ruleForm.nick_name
-        let campus = that.ruleForm.campus
-
-        if (studio == '') {
-            this.$message({
-                message: '工作室为空！',
-                type: 'warning'
-            });
-            return;
-        }
-
-        if (student_name == '') {
-            student_name = 'no_name'
-        }
-
-        if (campus == '') {
-            campus = studio
-        }
-
-        if (nick_name == '') {
-            this.$message({
-                message: '用户名为空！',
-                type: 'warning'
-            });
-            return;
-        }
+    loginSignup (activeName) {
+        var that = this;
+        let studio = that.ruleForm.studio;
+        let student_name = that.ruleForm.student_name;
+        let nick_name = that.ruleForm.nick_name;
+        let phone_number = that.ruleForm.phone_number;
+        let campus = that.ruleForm.campus;
 
         let loginParams = {
             studio: studio,
-            nick_name: nick_name,
-            student_name:student_name,
-            openid:that.openid,
-            campus:campus
+            nick_name: phone_number
+        };
+
+        if (phone_number == '') {
+            this.$message({
+                message: '电话不能为空！',
+                type: 'warning'
+            });
+            return;
         }
 
-        HttpPost("/insertUser", loginParams);
-        let res = HttpPost("/getUserByNickStudioEq", loginParams);
-        res.then(res => {
-            // console.log(res.data)
-            try {
-                that.openid = res.data[0].openid
-            } catch (error) {
-                console.log(error)
+        if (studio == '') {
+            this.$message({
+                message: '工作室不能为空！',
+                type: 'warning'
+            });
+            return;
+        }
+
+        if(activeName == 'login'){
+            let res = HttpPost("/getUserByNickStudioEq", loginParams);
+            res.then(res => {
+                console.log(res.data)
+                try {
+                    that.openid = res.data[0].openid
+                } catch (error) {
+                    console.log(error)
+                }
+
+                if (that.openid !== '') {
+                    that.$router.push({ path: '/Home', query: { openid: that.openid } })
+                } else {
+                    this.$message({
+                        message: '用户不存在,请注册！',
+                        type: 'warning'
+                    });
+                }
+                that.setCookie(that.openid, 7)
+            })
+        }else if(activeName == 'signup'){
+            
+
+            if (student_name == '') {
+                student_name = 'no_name'
             }
 
-            setTimeout(function () {
-                that.$router.push({ path: '/Home', query: { openid: res.data[0].openid } })
-            },1000)
+            if (campus == '') {
+                campus = studio
+            }
 
-            that.setCookie(that.openid, 7)
-        })
+            if (nick_name == '') {
+                this.$message({
+                    message: '用户名不能为空！',
+                    type: 'warning'
+                });
+                return;
+            }
+
+            let loginParams = {
+                studio: studio,
+                nick_name: nick_name,
+                student_name:student_name,
+                openid:'',
+                campus:campus,
+                phone_number:phone_number
+            }
+            console.log(loginParams)
+
+            HttpPost("/webInsertUser", loginParams);
+
+            let Params = {
+                studio: studio,
+                nick_name: phone_number
+            }
+            let res = HttpPost("/getUserByNickStudioEq", Params);
+            res.then(res => {
+                console.log(res.data)
+                try {
+                    that.openid = res.data[0].openid
+                } catch (error) {
+                    console.log(error)
+                }
+
+                setTimeout(function () {
+                    that.$router.push({ path: '/Home', query: { openid: res.data[0].openid } })
+                },1000)
+
+                that.setCookie(that.openid, 7)
+            })
+
+        }
+        
     },
 
     querySearchAsync(queryString, cb) {
@@ -324,7 +342,7 @@ body {
 #wrap .logGet .logD.logDtip {
     width: 86%;
     border-bottom: 1px solid #e2a3cd;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     margin-top: 0px;
     margin-right: auto;
     margin-left: auto;

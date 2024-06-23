@@ -4,11 +4,11 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
      
-      <div style="margin-top: 15%;">
+      <div style="margin-top: 3%;">
         <el-switch v-if="isTable"
           v-model="isFilter"
           active-text="按月筛选"
@@ -17,8 +17,8 @@
 
         <div v-if="isBooking">
           <div>
-          <el-button type="text"  @click="cancel">取消</el-button>
-        </div>
+            <el-button type="text"  @click="cancel">取消</el-button>
+          </div>
           <el-switch
             style="display: block"
             v-model="type_input"
@@ -41,7 +41,6 @@
 
         <div v-if="isTable">
           <div v-if="isFilterDay">
-            <!-- <div style="font-size: medium;font-weight: bolder;color:rgb(80, 147, 255)">按日筛选</div> -->
             <el-date-picker
             v-model="start_date"
             type="date"
@@ -57,7 +56,6 @@
           </div>
 
           <div v-if="isFilterMonth">
-            <!-- <div style="font-size: medium;font-weight: bolder;color:rgb(80, 147, 255)">按月筛选</div> -->
             <el-date-picker
               v-model="month_value"
               type="month"
@@ -75,7 +73,10 @@
             <el-button @click="booking" style="margin-left: 20%;" type="primary " icon="el-icon-edit" plain>入账</el-button>
           </div>
           <div style="font-size: medium;font-weight: bolder;color: cornflowerblue;">总营收: {{ turnover }}</div>
-          <div class="echart" id="mychart" :style="myChartStyle"></div>
+          <div style="justify-content: left;display: flex;">
+            <div class="echart" id="mychart" :style="myChartStyle"></div>
+          </div>
+      
           <template>
             <el-table
               :data="tableData"

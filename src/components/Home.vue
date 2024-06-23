@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div style="background-color: #a3c6d3 ;width: 100%;">
-      <div style="margin-top: auto;display: flex;flex-direction: row;">
-
-        <div style="margin-top: auto;display: flex;flex-direction: row;width: 94%;">
+    <div style="background-color: #a3c6d3 ;width: 100%;margin-top: auto;display: flex;flex-direction: row;">
+        <div style="margin-top: auto;display: flex;flex-direction: row;width: 90%;">
           <div style="margin-top: auto;display: flex;flex-direction: row;">
               <div><img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative;"></div>
               <div style="margin-left: 10px;margin-top: 5px;"><h1>HI,{{ nick_name }} ({{ mode }})</h1></div>
@@ -14,7 +12,7 @@
           </div>
         </div>
 
-        <div style="display: flex;flex-direction: row;justify-content: space-between; width: 5%;">
+        <div style="display: flex;flex-direction: row;justify-content: space-around; width: 10%;">
           <div >
             <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
           </div>
@@ -22,7 +20,6 @@
             <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
           </div>
         </div>
-      </div>
     </div>
 
     <div style="display: flex;flex-direction: row;width: 100%;">
@@ -34,64 +31,83 @@
         <el-menu
           default-active="1"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="rgb(251, 248, 246)"
           >
-          <el-menu-item index="1" @click="bindSelect('教务工具')">
-              <i class="el-icon-school"></i>
-              <span slot="title">教务工具</span>
-          </el-menu-item>
-          <el-menu-item index="2" @click="bindSelect('课后互动')">
+          
+          <el-menu-item index="1" @click="bindSelect('课后互动')">
               <i class="el-icon-connection"></i>
               <span slot="title">课后互动</span>
           </el-menu-item>
+          <el-menu-item  v-if="role == 'boss' || role == 'teacher'" index="2" @click="bindSelect('教务工具')">
+              <i class="el-icon-school"></i>
+              <span slot="title">教务工具</span>
+          </el-menu-item>
+
         </el-menu>
       </el-col>
 
       <div style="width: 90%;">
         <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>
-        <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
-          <div class="item" @click="school(subject)">
+          <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
+            <div class="item" @click="school(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
+                  </div>
+                  <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
+                </div>
+            </div>
+
+            <div class="item" @click="timeTable(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">班级排课</div>
+                </div>
+            </div>
+
+            <div class="item" @click="calender(subject,studio,student_name)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">点名签到</div>
+                </div>
+            </div>
+
+            <div class="item" @click="accountBook()">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
-                  <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
+                  <img style="width: 70px;height: 70px;" src="@/assets/account_book.png" alt="">
                 </div>
-                <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">收入支出</div>
               </div>
+            </div>
+
           </div>
 
-          <div class="item" @click="timeTable(subject)">
-              <div class="content">
-                <div style="display: flex;justify-content: center;">
-                  <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
-                </div>
-                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">排课表</div>
-              </div>
-          </div>
-
-          <div class="item" @click="calender(subject,studio,student_name)">
-              <div class="content">
-                <div style="display: flex;justify-content: center;">
-                  <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
-                </div>
-                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">签到处</div>
-              </div>
-          </div>
-
-        </div>
-
-        <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
-          <div class="item" @click="commentCenter(subject)">
+          <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
+            <div class="item" @click="commentCenter(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
                     <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
                   </div>
-                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课评中心</div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
                 </div>
             </div>
-        
-        </div>
+
+            <div class="item" @click="classSystem()">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 70px;height: 70px;" src="@/assets/system.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课程体系</div>
+                </div>
+              </div>
+
+          
+          </div>
       </div>
 
     </div>
@@ -167,7 +183,7 @@ data () {
         'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
         'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
     ],
-    title:'教务工具'
+    title:'课后互动'
   }
 },
 
@@ -223,20 +239,8 @@ methods: {
         }
     }
 
-    that.items = []
-    that.getPost(that.page,that.type)
   },
-
-  async handleClick() {
-    let that = this
-    that.items = []
-    that.page = 1
-    if(that.type == 'public'){
-      await that.getPost(that.page,that.type)
-    }else if(that.type == 'private'){
-      await that.getPost(that.page,that.type)
-    }
-  },
+  
 
   bindSelect(item){
     let that = this;
@@ -247,6 +251,14 @@ methods: {
   timeTable (subject) {
     this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,send_time:this.send_time } })
   },
+
+  classSystem(){
+    this.$router.push({ path: '/classsystem', query: { studio: this.studio,role:this.role,openid:this.openid } })
+  },
+
+  accountBook () {
+      this.$router.push({ path: '/accountbook', query: { studio: this.studio,role:this.role,openid:this.openid } })
+    },
 
   commentCenter (subject) {
       this.$router.push({ path: '/commentcenter', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,comment_style:this.comment_style } })
