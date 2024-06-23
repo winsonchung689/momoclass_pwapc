@@ -4,7 +4,10 @@
         <div style="margin-top: auto;display: flex;flex-direction: row;width: 90%;">
           <div style="margin-top: auto;display: flex;flex-direction: row;">
               <div><img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative;"></div>
-              <div style="margin-left: 10px;margin-top: 5px;"><h1>HI,{{ nick_name }} ({{ mode }})</h1></div>
+              <div style="margin-left: 10px;margin-top: 5px;color:#ffffff;font-weight: bolder;">
+                <div style="font-size:medium;">HI,{{ nick_name }}</div>
+                <div style="font-size: small;">{{ mode }}</div>
+              </div>
           </div>
           
           <div style="margin-left: 2%;">
@@ -22,7 +25,12 @@
         </div>
     </div>
 
+    <div v-if="!isBoss" style="font-weight: bolder;">
+      <div>注册学生：{{sb}}</div>
+    </div>
+
     <div style="display: flex;flex-direction: row;width: 100%;">
+
       <el-col style="width: 10%;">
         <div style="color: #6c6c6e;font-weight: bolder;font-size: large;background-color: rgb(251, 248, 246);display: flex;justify-content: center;">
           <div>菜单</div>
@@ -34,15 +42,19 @@
           background-color="rgb(251, 248, 246)"
           >
           
-          <el-menu-item index="1" @click="bindSelect('课后互动')">
-              <i class="el-icon-connection"></i>
-              <span slot="title">课后互动</span>
+          <el-menu-item index="1" @click="bindSelect('了解我们')">
+              <i class="el-icon-camera"></i>
+              <span slot="title">了解我们</span>
           </el-menu-item>
           <el-menu-item  v-if="role == 'boss' || role == 'teacher'" index="2" @click="bindSelect('教务工具')">
               <i class="el-icon-school"></i>
               <span slot="title">教务工具</span>
           </el-menu-item>
-
+          <el-menu-item index="3" @click="bindSelect('课后互动')">
+              <i class="el-icon-connection"></i>
+              <span slot="title">课后互动</span>
+          </el-menu-item>
+          
         </el-menu>
       </el-col>
 
@@ -87,15 +99,7 @@
 
           </div>
 
-          <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
-            <div class="item" @click="commentCenter(subject)">
-                <div class="content">
-                  <div style="display: flex;justify-content: center;">
-                    <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
-                  </div>
-                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
-                </div>
-            </div>
+          <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='了解我们'">
 
             <div class="item" @click="classSystem()">
                 <div class="content">
@@ -105,9 +109,19 @@
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课程体系</div>
                 </div>
               </div>
-
-          
           </div>
+
+          <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
+            <div class="item" @click="commentCenter(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
+                </div>
+            </div>
+          </div>
+
       </div>
 
     </div>
@@ -183,7 +197,8 @@ data () {
         'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
         'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
     ],
-    title:'课后互动'
+    title:'了解我们',
+    sb:''
   }
 },
 
@@ -207,6 +222,7 @@ methods: {
         that.studio = users.data[0].studio
         that.subscription = users.data[0].subscription
         that.campus = users.data[0].campus
+        that.sb = users.data[0].sb
         if(that.studio.length>0){
           that.hello = '欢迎来到《' + that.studio + "》！"
           if(that.campus != that.studio){

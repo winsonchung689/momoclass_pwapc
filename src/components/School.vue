@@ -7,9 +7,9 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 2%;">
+      <div style="margin-top: 3%;">
 
-        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 2%;margin-bottom: 10px;">
+        <div style="display:flex;justify-content: left;margin-left: 2%;margin-bottom: 10px;">
           <el-button-group>
             <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
             <el-button @click="getUser()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
@@ -27,6 +27,7 @@
             </el-autocomplete>
           </div>
         </div>
+
         <div style="margin-left: 2%;margin-bottom: 10px;font-weight:bolder;font-size: medium;">
           <div>总人数: {{ total_student }}</div>
           <div>总课时数: {{ total_amount_all }}</div>
@@ -71,7 +72,7 @@
           <div class="card">
             <div class="lesson">
               <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
-              <div style="margin-left: 10px;margin-top: 10px;">
+              <div style="margin-left: 10px;margin-top: 20px;">
                 <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
                   <div style="margin-right: 5px;color: #43504a;">科目: {{ item.subject }} </div>
                 </div>
@@ -85,7 +86,7 @@
                   <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
                   <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-left: 5px;">单课积分: {{ item.coins }}</div>
                 </div>
-                <el-progress style="margin-top: 5px;width: 800%;" :percentage="item.percentage"></el-progress>
+                <!-- <el-progress style="margin-top: 5px;width: 70%;" :percentage="item.percentage"></el-progress> -->
               </div>
             </div>
             <el-popconfirm title="确定删除吗？" style="margin-left: 98%;" @confirm="deleteRow(item.id,item.student_name)">

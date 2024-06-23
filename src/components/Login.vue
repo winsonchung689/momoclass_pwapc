@@ -202,27 +202,42 @@ export default {
             }
             console.log(loginParams)
 
-            HttpPost("/webInsertUser", loginParams);
-
-            let Params = {
-                studio: studio,
-                nick_name: phone_number
-            }
-            let res = HttpPost("/getUserByNickStudioEq", Params);
-            res.then(res => {
+            let result = HttpPost("/webInsertUser", loginParams);
+            result.then(res => {
                 console.log(res.data)
-                try {
-                    that.openid = res.data[0].openid
-                } catch (error) {
-                    console.log(error)
+                if(res.data == '电话号码已被注册！'){
+                    this.$message({
+                        message: '电话号码已被注册!',
+                        type: 'warning'
+                    });
+                    return;
+                }else{
+                    let Params = {
+                        studio: studio,
+                        nick_name: phone_number
+                    }
+                    let res = HttpPost("/getUserByNickStudioEq", Params);
+                    res.then(res => {
+                        console.log(res.data)
+                        try {
+                            that.openid = res.data[0].openid
+                        } catch (error) {
+                            console.log(error)
+                        }
+
+                        setTimeout(function () {
+                            that.$router.push({ path: '/Home', query: { openid: res.data[0].openid } })
+                        },1000)
+
+                        that.setCookie(that.openid, 7)
+                    })
+
                 }
 
-                setTimeout(function () {
-                    that.$router.push({ path: '/Home', query: { openid: res.data[0].openid } })
-                },1000)
-
-                that.setCookie(that.openid, 7)
             })
+
+
+            
 
         }
         
