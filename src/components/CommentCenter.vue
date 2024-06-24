@@ -7,6 +7,7 @@
         </div>
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
+
       <div style="margin-top: 2%;">
         <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
           <div class="covers" :style="{display:MinDisplay}">
@@ -35,7 +36,7 @@
               积极度:
               <el-rate
                 disabled
-                v-model= "item.positive"
+                v-model= "item.happiness.split('_')[1]"
                 >
               </el-rate>
             </div>
@@ -43,7 +44,7 @@
               纪律性:
               <el-rate
                 disabled
-                v-model="item.discipline"
+                v-model="item.discipline.split('_')[1]"
                 >
               </el-rate>
             </div>
@@ -51,7 +52,7 @@
               开心值:
               <el-rate
                 disabled
-                v-model="item.happiness"
+                v-model="item.happiness.split('_')[1]"
                 >
               </el-rate>
             </div>
@@ -69,17 +70,18 @@
           </div> 
         </div>
 
-
-          <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;;background-color: #fff;width: 100%;">
-            <el-pagination
-              medium
-              background
-              layout="prev, pager, next"
-              :total="500"
-              @current-change="handleCurrentChange">
-            </el-pagination>
-          </div>
+        <div :style="{display:MinDisplay}" style="display: flex;justify-content: center;position: fixed;bottom: 10px;;background-color: #fff;width: 100%;">
+          <el-pagination
+            medium
+            background
+            layout="prev, pager, next"
+            :total="500"
+            @current-change="handleCurrentChange">
+          </el-pagination>
+        </div>
       </div>
+
+      <div v-if="items.length==0" style="margin-top: 10%;"><el-empty description="空空如也"></el-empty></div>
   </div>
 
 </template>
@@ -92,7 +94,7 @@ import { ImageUrl } from '@/api'
 import { Mp3Url } from '@/api'
 
 export default {
-  name: 'GrowthRecord',
+  name: 'CommentCenter',
   data () {
     return {
       subject: this.$route.query.subject,

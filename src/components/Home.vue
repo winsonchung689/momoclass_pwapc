@@ -25,9 +25,20 @@
         </div>
     </div>
 
-    <div v-if="!isBoss" style="font-weight: bolder;">
-      <div>注册学生：{{sb}}</div>
+    <div v-if="isBoss" style="font-weight: bolder;color: #a981aa;display: flex;flex-direction: row;align-items: center;">
+      <div >绑定学生：{{sb}}</div>
+      <div style="margin-left: 10px;color: rgb(111, 128, 139);margin-top: 2px;">
+          <i @click="modifyFunction()" class="el-icon-edit"></i>
+      </div>
     </div>
+
+    <el-dialog :visible.sync="dialogFormVisible" style="width: 400px">
+      <el-input v-model="student_name" :placeholder="mark"></el-input>
+      <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
+        <el-button @click="cancel_buttom()">取 消</el-button>
+        <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
+      </div>
+    </el-dialog>
 
     <div style="display: flex;flex-direction: row;width: 100%;">
 
@@ -198,7 +209,11 @@ data () {
         'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
     ],
     title:'了解我们',
-    sb:''
+    sb:'',
+    dialogFormVisible:false,
+    id:'',
+    student_name:'',
+    mark:''
   }
 },
 
@@ -223,6 +238,7 @@ methods: {
         that.subscription = users.data[0].subscription
         that.campus = users.data[0].campus
         that.sb = users.data[0].sb
+        that.id = users.data[0].id
         if(that.studio.length>0){
           that.hello = '欢迎来到《' + that.studio + "》！"
           if(that.campus != that.studio){
@@ -256,7 +272,48 @@ methods: {
     }
 
   },
-  
+
+  modifyFunction(type){
+      let that = this
+      that.dialogFormVisible = true
+      if(type == '学生' ){
+        that.mark = '请输入学生名'
+      }
+  },
+
+  cancel_buttom(){
+    this.dialogFormVisible = false
+    this.student_name = ''
+  },
+
+  async confirm_buttom(){
+      let that = this 
+      let param = {
+        id: that.id,
+        content:that.student_name,
+        type:'更新学生',
+        openid:that.openid
+      }
+
+      let status = ''
+      let res = await HttpPost("/updateLocation",param)
+      status = res.status
+      if(status == 200){
+        that.$message({
+            message: '操作成功',
+            type: 'success'
+        });
+        that.dialogFormVisible = false
+        that.getUser()
+      }else {
+        that.$message({
+            message: '操作失败',
+            type: 'warning'
+        });
+        that.dialogFormVisible = false
+        that.getUser()
+      }
+    },
 
   bindSelect(item){
     let that = this;
