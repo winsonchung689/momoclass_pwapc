@@ -345,20 +345,46 @@
             
           </el-table>
           
-          <div style="display: flex;flex-direction: row;justify-content: space-between;margin-bottom: 20px;">
-            <div>
-              <el-time-select
-                style="width: 50%;"
-                v-model="send_time"
-                :picker-options="{
-                  start: '00:00',
-                  step: '00:15',
-                  end: '23:59'
-                }"
-                placeholder="选择时间">
-              </el-time-select>
-              <el-button @click="updateSendTime()" type="primary" icon="el-icon-thumb" circle></el-button>
+          <div style="display: flex;flex-direction: row;justify-content: space-between;margin-bottom: 20px;margin-top: 20px;">
+
+            <div style="display: flex;flex-direction: column; justify-content: space-between;">
+              <div>
+                <el-switch
+                  v-model="remind_type"
+                  active-value="统一提醒次日"
+                  inactive-value="提前N小时提醒"
+                  active-text="统一提醒次日"
+                  inactive-text="提前N小时提醒">
+              </el-switch>
+              </div>
+              
+              <div style="display: flex;flex-direction: row;">
+                
+                <div  v-if="remind_type == '统一提醒次日'">
+                  <el-time-select
+                    style="width: 100%;"
+                    v-model="send_time"
+                    :picker-options="{
+                      start: '00:00',
+                      step: '00:15',
+                      end: '23:59'
+                    }"
+                    placeholder="选择时间">
+                  </el-time-select>
+                </div>
+
+                <div v-if="remind_type == '提前N小时提醒'">
+                  <el-input-number v-model="hours" :min="1" :max="23" ></el-input-number>
+                </div>
+                
+                <div><el-button @click="updateSendTime()" type="primary" icon="el-icon-thumb" circle></el-button></div>
+                
+              </div>
+
             </div>
+            
+            
+            
             <el-button @click="showAdd" type="primary">新增课程</el-button>
           </div>
         </div>
@@ -428,6 +454,8 @@ export default {
       role:this.$route.query.role,
       openid:this.$route.query.openid,
       send_time:this.$route.query.send_time,
+      remind_type:this.$route.query.remind_type,
+      hours:this.$route.query.hours,
       header: '课程表',
       tableData: [],
       leave_data:[],
@@ -500,7 +528,7 @@ export default {
           }
           const leave = await HttpPost('/getArrangement', param)
           let leave_data = leave.data;
-          // console.log(leave_data)
+          console.log(leave_data)
           if(i == 0){
             json.week1 = leave_data
           }else if(i == 1){
@@ -784,12 +812,11 @@ export default {
     },
 
     updateRemind(remind,subject,duration,class_number,dayofweek){
-      console.log(dayofweek)
       let that = this 
       let subject_class =subject + ',' + class_number.replace('(插班生)','') + ','+ duration;
-      let type = 'reremind'
+      let type = '否'
       if(remind == 1 ){
-        type = 'cancel'
+        type = '是'
       }
       if(dayofweek == 7){
         dayofweek = 1
@@ -801,8 +828,9 @@ export default {
         studio:that.studio,
         type:type,
         dayofweek:dayofweek,
-        oepnid:that.openid
+        openid:that.openid
       }
+      console.log(param)
       let res = HttpPost("/updateRemind",param)
       res.then(res => {
         // console.log(res.data)
@@ -826,14 +854,24 @@ export default {
     async updateSendTime(){
       let that = this
       let send_time = that.send_time
-      if(send_time.split(':').length == 2){
-        that.send_time = send_time + ':00'
+      let remind_type = that.remind_type
+      let openid = that.openid
+      let studio = that.studio
+      let hours = that.hours
+      let value=''
+      if(remind_type == '统一提醒次日'){
+        value = send_time + ':00'
+      }else if(remind_type == '提前N小时提醒'){
+        value = hours
       }
+
       let param ={
-          studio:that.studio,
-          openid:that.openid,
-          send_time:that.send_time
+          studio:studio,
+          openid:openid,
+          value:value,
+          remind_type:remind_type
       }
+      console.log(param)
       let res = await HttpPost("/updateSendTime",param)
       // console.log(res)
       if(res.status == 200){
@@ -885,14 +923,14 @@ export default {
 
 .t_choose{
   border-radius: 3rem;
-  background-color: rgb(221, 232, 184);
+  background-color: rgb(234, 222, 120);
   width: 60px;
   height: 25px;
   font-size: small;
-  margin-left: 25%;
   justify-content: center;
   display: flex;
   margin-top: 25px;
+  margin-left: 35%;
 }
 
 .t_detail{
@@ -906,7 +944,7 @@ export default {
 }
 
 .t_choose text {
-  color: white;
+  color: rgb(204, 238, 183);
 }
 
 .test{

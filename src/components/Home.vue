@@ -25,8 +25,8 @@
         </div>
     </div>
 
-    <div v-if="isBoss" style="font-weight: bolder;color: #a981aa;display: flex;flex-direction: row;align-items: center;">
-      <div >绑定学生：{{sb}}</div>
+    <div v-if="!isBoss" style="font-weight: bolder;color: #a981aa;display: flex;flex-direction: row;align-items: center;">
+      <div >学生：{{sb}}</div>
       <div style="margin-left: 10px;color: rgb(111, 128, 139);margin-top: 2px;">
           <i @click="modifyFunction()" class="el-icon-edit"></i>
       </div>
@@ -213,7 +213,8 @@ data () {
     dialogFormVisible:false,
     id:'',
     student_name:'',
-    mark:''
+    mark:'',
+    remind_type:''
   }
 },
 
@@ -233,12 +234,14 @@ methods: {
         that.page  = 1
         that.type = 'public'
         const users = await HttpGet('/getUser?openid=' + this.openid)
-        // console.log(users)
+        console.log(users.data[0])
         that.studio = users.data[0].studio
         that.subscription = users.data[0].subscription
         that.campus = users.data[0].campus
         that.sb = users.data[0].sb
         that.id = users.data[0].id
+        that.hours = users.data[0].hours
+        that.remind_type = users.data[0].remind_type
         if(that.studio.length>0){
           that.hello = '欢迎来到《' + that.studio + "》！"
           if(that.campus != that.studio){
@@ -322,7 +325,7 @@ methods: {
   },
 
   timeTable (subject) {
-    this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,send_time:this.send_time } })
+    this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,send_time:this.send_time,remind_type:this.remind_type,hours:this.hours } })
   },
 
   classSystem(){
