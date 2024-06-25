@@ -119,19 +119,23 @@
                   </div>
               </div>
 
-              <div style="display: flex;flex-direction: row;justify-content: space-between;width: 30%;margin-left: 5%;align-items: center;">
-                <div>
-                  <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
-                </div>
-                <div>
-                  <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
-                </div>
-                <div>
-                  <el-button @click="leaveRecord(item.subject,item.student_name)">报课记录</el-button>
-                </div>
-        
+              <div style="display: flex;flex-direction: row;justify-content: space-between;width: 50%;margin-left: 5%;margin-top: 2%;align-items: center;">
+                  <div>
+                    <el-button @click="signUpRecord(item.subject,item.student_name)">续课</el-button>
+                  </div>
+                  <div>
+                    <el-button @click="signUpRecord(item.subject,item.student_name)">划课</el-button>
+                  </div>
+                  <div>
+                    <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
+                  </div>
+                  <div>
+                    <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
+                  </div>
+                  <div>
+                    <el-button @click="lessonPackage(item.subject,item.student_name)">报课记录</el-button>
+                  </div>
               </div>
-
 
             </div>
 
@@ -457,6 +461,10 @@ export default {
 
     leaveRecord (subject,student_name) {
       this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'请假' } })
+    },
+
+    lessonPackage (subject,student_name) {
+      this.$router.push({ path: '/lessonPackage', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'报课' } })
     },
 
     querySearch(queryString,cb) {

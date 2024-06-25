@@ -33,17 +33,19 @@
                     <el-button slot="reference" type="text" size="small" style="font-size:small">移除</el-button>
                   </el-popconfirm>
                 </div>
-                <div>
-                  <el-popconfirm title="确定清空吗？" @confirm="deleteAll()">
-                    <el-button slot="reference" type="text" size="small" style="font-size:small">清空</el-button>
-                  </el-popconfirm>
-                </div>
 
                 <div>
                   <el-popconfirm title="确定取消吗？" @confirm="cancel(scope.$index, tableData)">
                     <el-button slot="reference" type="text" size="small" style="font-size:small">取消</el-button>
                   </el-popconfirm>
                 </div>
+
+                <div>
+                  <el-popconfirm title="确定清空吗？" @confirm="deleteAll()">
+                    <el-button slot="reference" type="text" size="small" style="font-size:small">清空</el-button>
+                  </el-popconfirm>
+                </div>
+                
               </div>
             </template>
           </el-table-column>
