@@ -9,11 +9,13 @@
 
       <div style="margin-top: 3%;">
 
-        <div style="display:flex;justify-content: left;margin-left: 2%;margin-bottom: 10px;">
+        <div style="display:flex;justify-content: left;margin-left: 3%;margin-bottom: 10px;">
+
           <el-button-group>
             <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
-            <el-button @click="getUser()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
+            <el-button @click="getUser()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
+
           <div v-if="isBoss" style="margin-left: 2%;"> 
             <el-autocomplete
               popper-class="my-autocomplete"
@@ -26,7 +28,32 @@
               </template>
             </el-autocomplete>
           </div>
+
+          <div style="margin-left: 50%;display: flex;flex-direction: row;">
+              <el-button @click="downloadExcel()" type="success" plain>模版下载<i class="el-icon-download"></i></el-button>
+                  
+              <div>
+                <el-upload
+                  class="upload-demo"
+                  action="#"
+                  :on-change="handleChange"
+                  :file-list="fileList"
+                  :multiple="false"
+                  :type="file"
+                  :auto-upload="false"
+                  >
+                  <el-button type="success">点击上传 <i class="el-icon-upload"></i></el-button>
+                </el-upload>
+              </div>
+
+              <el-button @click="submitBatch()" type="success" plain>批量录入<i class="el-icon-refresh"></i></el-button>
+                
+
+              
+          </div>
+
         </div>
+
 
         <div style="margin-bottom: 10px;font-weight:bolder;font-size: medium;display: flex;flex-direction: row;justify-content: space-around;">
           <div style="color: #4d67e8;">总人数: {{ total_student }}</div>
@@ -68,7 +95,6 @@
         </div>
         
         <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
-
           <div class="card">
             <div class="lesson">
               <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
@@ -107,7 +133,7 @@
             </el-popconfirm>
           </div>
 
-          <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 400px">
+          <el-dialog :title="student_name" :visible.sync="dialogFormVisible" style="width: 50%">
             <el-input v-model="number" :placeholder="mark"></el-input>
             <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
               <el-button @click="cancel_buttom()">取 消</el-button>
@@ -125,6 +151,8 @@
 
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
+import { UploadFile } from '@/api'
+
 
 export default {
   name: 'Students',
@@ -157,7 +185,10 @@ export default {
       left_amount:'',
       total_amount_all:'',
       left_amount_all:'',
-      total_student:''
+      total_student:'',
+      action_url:'',
+      fileList:[],
+      file:''
     }
   },
 
@@ -224,6 +255,28 @@ export default {
       }
     },
 
+    async handleChange(file,fileList){
+      let that = this
+      const formdata = new FormData();
+      formdata.append('file',file.raw);
+      formdata.append('file_name',file.name);
+      formdata.append('studio',that.studio);
+      let res =  await UploadFile('/push_excel', formdata)
+      this.$message({
+          message: '上传成功',
+          type: 'success'
+      });
+      console.log(res)
+
+    },
+
+    async downloadExcel(){
+      let param = {
+        file_name: '模板.xls'
+      }
+      window.location.href = 'https://www.momoclasss.xyz:443/file/uploadfiles/模板.xls'
+    },
+
     deleteRow(id,student_name){
       let param ={
         id:id,
@@ -249,6 +302,20 @@ export default {
             this.getUser()
           }
       })
+    },
+
+    submitBatch(){
+      let that = this;
+      let param ={
+        studio:that.studio,
+        openid:that.openid
+      }
+      let res = HttpPost("/submit_batch",param)
+      this.$message({
+          message: '录入成功',
+          type: 'success'
+      });
+      this.getUser()
     },
 
     goOff() {
@@ -494,7 +561,7 @@ export default {
 .lesson{
   background-color: rgb(226, 235, 217);
   width: 85%;
-  height: 120px;
+  height: 90px;
   border-radius: 0.5rem;
   margin-bottom: 6px;
   flex-direction: row;

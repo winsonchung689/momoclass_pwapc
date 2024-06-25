@@ -8,15 +8,13 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;">
-
-
+      <div style="justify-content: left;display: flex;margin-top: 2%;margin-bottom: 15px;flex-direction: column;">
         <el-collapse v-model="activeName" accordion v-for="(item,index_out) in items">
           <el-collapse-item :title="item.create_time" :name='index_out'>
+            <div style="font-size:medium;">{{ item.title }}</div>
             <div>{{ item.content }}</div>
           </el-collapse-item>
         </el-collapse>
-
       </div>
 
 
@@ -26,10 +24,7 @@
 </template>
 
 <script>
-import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
-import { ImageUrl } from '@/api'
-import { Mp3Url } from '@/api'
 
 export default {
   name: 'AnnouncementRecord',

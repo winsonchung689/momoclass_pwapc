@@ -33,7 +33,6 @@
         placeholder="请输入内容"
         v-model="textarea">
       </el-input>
-      <!-- <input type="text" v-model="textarea" placeholder="请输入内容"> -->
       <div style="display: flex;justify-content: right;">
         <el-button @click="sendMessage" type="primary">发送</el-button>
       </div>
