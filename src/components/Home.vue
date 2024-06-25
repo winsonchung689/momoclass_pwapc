@@ -120,9 +120,20 @@
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课程体系</div>
                 </div>
               </div>
+
           </div>
 
           <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
+
+            <div class="item" @click="students()">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 60px;height: 60px;" src="@/assets/students.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">学生列表</div>
+                </div>
+            </div>
+
             <div class="item" @click="commentCenter(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
@@ -131,6 +142,7 @@
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
                 </div>
             </div>
+
           </div>
 
       </div>
@@ -338,7 +350,11 @@ methods: {
 
   commentCenter (subject) {
       this.$router.push({ path: '/commentcenter', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,comment_style:this.comment_style } })
-    },
+  },
+
+  students () {
+    this.$router.push({ path: '/students', query: {studio: this.studio,role:this.role,openid:this.openid} })
+  },
 
 
   click (url) {

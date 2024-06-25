@@ -1,12 +1,14 @@
 <template>
     <div>
       <div style="background-color: #fff;;position: fixed; top: 0;display: flex;flex-direction: center; width: 100%;">
-        <div style=" width: 100%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-top: 5px;">{{ header }}</div>
+        <div>
+          <i class="el-icon-arrow-left" @click="goOff()"></i>
+        </div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%; margin-bottom: 62px;">
-
-        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 10%;margin-bottom: 10px;flex-direction: row;">
+      <div style="margin-top: 2%; margin-bottom: 30px;">
+        <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 2%;flex-direction: row;">
           <div v-if="isBoss" style="margin-right: 15px;"> 
             <el-autocomplete
               popper-class="my-autocomplete"
@@ -25,15 +27,19 @@
           </el-button-group>
         </div>
 
-        <div style="justify-content: center;display: flex;margin-top: 5%;" v-for="item of items">
+        <div style="justify-content: center;display: flex;margin-top: 1%;" v-for="item of items">
+
           <div class="lesson" @click="goIn(item.studio,item.subject,item.student_name)">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
-            <div style="margin-left: 40px;margin-top: 20px;">
+            <div style="margin-left: 40px;margin-top: 10px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
               <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
                 <div style="margin-right: 5px;">科目: {{ item.subject }} </div>
-                <div style="margin-right: 5px;">课时: {{ item.left_amount }}/{{ item.total_amount }} </div>
                 <div style="margin-right: 5px;">积分: {{ item.points }} </div>
+              </div>
+              <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                <div style="margin-right: 5px;">历史课时: {{ item.left_amount }} </div>
+                <div style="margin-right: 5px;">余课时: {{ item.left_amount }} </div>
               </div>
             </div>
           </div>
@@ -213,8 +219,8 @@ export default {
 <style scoped>
 
 .lesson{
-  background-color: #1296db;
-  width: 85%;
+  background-color: #ceab93;
+  width: 95%;
   height: 90px;
   border-radius: 0.5rem;
   margin-bottom: 6px;

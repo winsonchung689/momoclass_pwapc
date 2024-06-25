@@ -63,7 +63,7 @@
               <audio  controls ref="audio" class="aud" :src="item.mp3_url"></audio>
             </div>
             <div style="font-size: small;font-weight: bold;color: #a3b2b3;margin-top: 5px;">{{ studio }}  {{ item.create_time}}</div>
-            <el-popconfirm v-if="isBoss" title="确定删除吗？" style="margin-left: 90%;" @confirm="deleteRow(item.id)">
+            <el-popconfirm v-if="isBoss" title="确定删除吗？" style="margin-left: 98%;" @confirm="deleteRow(item.id)">
               <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
             </el-popconfirm>
             <el-divider></el-divider>
