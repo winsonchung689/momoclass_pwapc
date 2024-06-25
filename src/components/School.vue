@@ -124,7 +124,7 @@
                     <el-button @click="signUpRecord(item.subject,item.student_name)">续课</el-button>
                   </div>
                   <div>
-                    <el-button @click="signUpRecord(item.subject,item.student_name)">划课</el-button>
+                    <el-button @click="modifyFunction('划课',item.student_name,item.subject)">划课</el-button>
                   </div>
                   <div>
                     <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
@@ -496,6 +496,10 @@ export default {
         that.mark = '请输入总课时数'
       }else if(type == '余课时'){
         that.mark = '请输入余课时数'
+      }else if(type == '续课'){
+        that.mark = '请输入续课数'
+      }else if(type == '划课'){
+        that.mark = '请输入划课数'
       }
     },
 
@@ -547,7 +551,18 @@ export default {
         // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
+      }else if(that.mark == '请输入续课数'){
+        param.left_amount = that.number
+        // console.log(param)
+        let res = await HttpPost("/updateLesson",param)
+        status = res.status
+      }else if(that.mark == '请输入划课数'){
+        param.left_amount = that.number
+        // console.log(param)
+        let res = await HttpPost("/updateLesson",param)
+        status = res.status
       }
+      
 
       if(status == 200){
         that.$message({
