@@ -5,10 +5,10 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%;">
+      <div style="margin-top: 2%;">
         <div style="justify-content: left;display: flex;margin-top: 5%;margin-bottom: 15px;flex-direction: column;" v-for="(item,index_out) in items">
           <div class="covers" :style="{display:MinDisplay}">
               <div class="cover" v-for="(img,index) in item.images" :key='img'>
@@ -17,8 +17,6 @@
                   :src="img.src" 
                   :preview-src-list=[img.src]>
                 </el-image>
-
-                <!-- <img :src="img.src" width="90%" class="min" @click="ZoomIn(index_out+'_'+index)" alt=""> -->
               </div>
           </div>
 
@@ -185,7 +183,7 @@ export default {
 .cover{
     display: flex;
     justify-content: center;
-    width: 40%;
+    width: 10%;
     margin: 10px 0;
 }
 

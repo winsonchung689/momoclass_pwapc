@@ -29,8 +29,9 @@
 
         <div style="justify-content: center;display: flex;margin-top: 1%;" v-for="item of items">
 
-          <div class="lesson" @click="goIn(item.studio,item.subject,item.student_name)">
+          <div class="lesson">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
+            
             <div style="margin-left: 40px;margin-top: 10px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
               <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
@@ -42,6 +43,19 @@
                 <div style="margin-right: 5px;">余课时: {{ item.left_amount }} </div>
               </div>
             </div>
+
+            <div style="display: flex;flex-direction: row;justify-content: space-between;width: 30%;margin-left: 5%;align-items: center;">
+              <div>
+                <el-button @click="signInRecord(item.subject,item.student_name)">签到记录</el-button>
+              </div>
+              <div>
+                <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
+              </div>
+              <div>
+                <el-button @click="growthRecord(item.subject,item.student_name)">成长记录</el-button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -185,6 +199,22 @@ export default {
       return (list) => {
         return (list.student_name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
+    },
+
+    signInRecord (subject,student_name) {
+      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
+    },
+
+    leaveRecord (subject,student_name) {
+      this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'请假' } })
+    },
+
+    absentRecord (subject,student_name) {
+      this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'旷课' } })
+    },
+
+    growthRecord (subject,student_name) {
+      this.$router.push({ path: '/growthrecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     querySearch(queryString,cb) {

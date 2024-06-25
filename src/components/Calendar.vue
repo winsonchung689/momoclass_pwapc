@@ -19,17 +19,7 @@
       </el-calendar>
       </div>
 
-      <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 400px">
-        <div v-if="isLeave">
-          <el-switch
-            style="display: block"
-            v-model="leave_value"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            active-text="请假"
-            inactive-text="旷课">
-          </el-switch>
-        </div>
+      <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 80%;align-items: center;">
         <div v-if="isSignIn">
           <template>
             <el-input-number v-model="class_count" :precision="2" :step="0.1" :max="10" step-strictly></el-input-number>
@@ -138,27 +128,32 @@
           </el-input>
         </div>
 
-        <div>
-          <div style="color: pink;">录音时长: {{ record_duration }} 秒</div>
-          <el-button-group>
-          <el-button @click="startRecorder" type="primary" >开始录音</el-button>
-          <el-button @click="pauseRecorder" type="primary" >暂停录音</el-button>
-          <el-button @click="resumeRecorder" type="primary" >继续录音</el-button>
-          </el-button-group>
-        </div>
+        <div style="color: pink;">录音时长: {{ record_duration }} 秒</div>
+          <div style="display: flex;flex-direction: row;">
+            <div>
+              <el-button-group>
+              <el-button @click="startRecorder" type="primary" >开始录音</el-button>
+              <el-button @click="pauseRecorder" type="primary" >暂停录音</el-button>
+              <el-button @click="resumeRecorder" type="primary" >继续录音</el-button>
+              </el-button-group>
+            </div>
 
-        <div>
-          <el-button-group>
-            <el-button @click="stopRecorder" type="primary" >停止录音</el-button>
-          <el-button @click="playRecorder" type="success" >播放录音</el-button>
-          <el-button @click="stopPlayRecorder" type="success" >停止播放</el-button>
-          </el-button-group>
-        </div>
+            <div>
+              <el-button-group>
+                <el-button @click="stopRecorder" type="primary" >停止录音</el-button>
+              <el-button @click="playRecorder" type="success" >播放录音</el-button>
+              <el-button @click="stopPlayRecorder" type="success" >停止播放</el-button>
+              </el-button-group>
+            </div>
 
-        <div style="display: flex;justify-content: center; margin-top: 20px;">
-          <el-button type="primary" @click="comment">提交</el-button>
-        </div>
+            <div style="display: flex;justify-content: center; margin-left: 5%;">
+              <el-button type="primary" @click="comment">提交</el-button>
+            </div>
+          
+
+          </div>
         
+          
       </div>
 
     </div>
@@ -350,7 +345,7 @@ export default {
         }
       const lessons = await HttpPost('/getSchedule', param)
       let lessons_data = lessons.data;
-      // console.log(lessons_data)
+      console.log(lessons_data)
       that.tableData = []
       let tmp = []
       for( var i=1; i < lessons_data.length; i++ ){
@@ -445,7 +440,7 @@ export default {
       that.mark_leave = ''
       that.class_count = 1
       if(type =='leave'){
-        if(leave == '缺席'){
+        if(leave == '请假'){
           that.button = 'leave'
           that.dialogFormVisible = true
           that.isLeave = true
@@ -544,7 +539,7 @@ export default {
       if(that.mark_leave.trim().length == 0  || that.mark_leave == null){
         that.mark_leave = '无备注'
       }
-      // console.log(that.leave_type,that.leave_subject,this.leave_student,this,this.leave_duration,that.mark_leave)
+      console.log(that.leave_type,that.leave_subject,this.leave_student,this,this.leave_duration,that.mark_leave)
       
       let param ={
         student_name: that.leave_student,
@@ -646,6 +641,15 @@ export default {
           uuids = uuids.concat(',' + that.uuids[i])
         }
       }
+
+      if(uuids == ''){
+        that.$message({
+          message: '请先上传图片',
+          type: 'warning'
+        });
+        return
+      }
+
       let param ={
         class_name:that.class_name,
         student_name:that.leave_student,
@@ -659,8 +663,10 @@ export default {
         discipline:that.discipline,
         happiness:that.happiness,
         uuids:uuids,
-        mp3_url:that.mp3_url
+        mp3_url:that.mp3_url,
+        openid:that.openid
       }
+      console.log(param)
       await HttpPost('/push', param)
 
       let param1 = {

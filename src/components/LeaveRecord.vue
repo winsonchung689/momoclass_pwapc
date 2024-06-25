@@ -5,42 +5,40 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%;">
-
-      <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
-        <el-table-column fixed prop="rank" label="序号" width="50">
-        </el-table-column> 
-        <el-table-column prop="subject" label="科目"  width="70">
-        </el-table-column>
-        <el-table-column prop="student_name" label="名字"  width="70">
-        </el-table-column>
-        <el-table-column prop="mark_leave" label="备注" width="90">
-        </el-table-column>
-        <el-table-column prop="date_time" label="日期" width="90">
-        </el-table-column>
-        <el-table-column prop="duration" label="时间段" width="90">
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
-          <template slot-scope="scope" >
-            <div style="justify-content: center;display: flex;flex-direction: column;">
-              <div>
-                <el-popconfirm title="确定移除吗？" @confirm="deleteRow(scope.$index, tableData)">
-                  <el-button slot="reference" type="text" size="small" style="font-size:x-small">移除</el-button>
-                </el-popconfirm>
+      <div style="margin-top: 2%;">
+        <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
+          <el-table-column fixed prop="rank" label="序号" >
+          </el-table-column> 
+          <el-table-column prop="subject" label="科目"  >
+          </el-table-column>
+          <el-table-column prop="student_name" label="名字"  >
+          </el-table-column>
+          <el-table-column prop="mark_leave" label="备注" >
+          </el-table-column>
+          <el-table-column prop="date_time" label="日期" >
+          </el-table-column>
+          <el-table-column prop="duration" label="时间段" >
+          </el-table-column>
+          <el-table-column fixed="right" label="操作"  v-if="isShow">
+            <template slot-scope="scope" >
+              <div style="justify-content: center;display: flex;flex-direction: column;">
+                <div>
+                  <el-popconfirm title="确定移除吗？" @confirm="deleteRow(scope.$index, tableData)">
+                    <el-button slot="reference" type="text" size="small" style="font-size:small">移除</el-button>
+                  </el-popconfirm>
+                </div>
+                <div>
+                  <el-popconfirm title="确定清空吗？" @confirm="deleteAll()">
+                    <el-button slot="reference" type="text" size="small" style="font-size:small">清空</el-button>
+                  </el-popconfirm>
+                </div>
               </div>
-              <div>
-                <el-popconfirm title="确定清空吗？" @confirm="deleteAll()">
-                  <el-button slot="reference" type="text" size="small" style="font-size:x-small">清空</el-button>
-                </el-popconfirm>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
     </div>
     
@@ -79,11 +77,12 @@ export default {
       }
 
       let param ={
-          studio:that.studio,
-          student_name:that.student_name,
-          subject:that.subject,
-          leave_type:that.leave_type
-        }
+        studio:that.studio,
+        student_name:that.student_name,
+        subject:that.subject,
+        leave_type:that.leave_type,
+        openid:that.openid
+      }
       const leave = await HttpPost('/getLeaveRecord', param)
       let leave_data = leave.data;
 

@@ -4,44 +4,44 @@
         <div>
           <i class="el-icon-arrow-left" @click="goOff()"></i>
         </div>
-        <div style=" width: 50%;font-size: medium;font-weight: bolder;justify-content: center;display: flex;margin-left: 30px;margin-top: 5px;">{{ header }}</div>
+        <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 15%;">
-        <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
-          <el-table-column fixed prop="rank" label="序号" width="50">
+      <div style="margin-top: 2%;">
+        <el-table :data="tableData" style="width: 100%;font-size: small;" >
+          <el-table-column fixed prop="rank" label="序号">
           </el-table-column> 
-          <el-table-column prop="student_name" label="名字"  width="70">
+          <el-table-column prop="student_name" label="名字" >
           </el-table-column>
-          <el-table-column prop="create_time" label="上课日" width="90">
+          <el-table-column prop="create_time" label="上课日">
           </el-table-column>
-          <el-table-column prop="duration" label="时间段" width="90">
+          <el-table-column prop="duration" label="时间段" >
           </el-table-column>
-          <el-table-column prop="sign_time" label="签到日" width="90">
+          <el-table-column prop="sign_time" label="签到日">
           </el-table-column>
-          <el-table-column prop="mark" label="备注" width="90">
+          <el-table-column prop="mark" label="备注">
           </el-table-column>
-          <el-table-column prop="count" label="课时" width="60">
+          <el-table-column prop="count" label="课时">
           </el-table-column>
-          <el-table-column prop="status" label="状态" width="80">
+          <el-table-column prop="status" label="状态">
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="70" v-if="isShow">
+          <el-table-column fixed="right" label="操作" v-if="isShow">
             <template slot-scope="scope" >
               <div style="justify-content: center;display: flex;flex-direction: column;">
                 <div>
                   <el-popconfirm title="确定移除吗？" @confirm="deleteRow(scope.$index, tableData)">
-                    <el-button slot="reference" type="text" size="small" style="font-size:x-small">移除</el-button>
+                    <el-button slot="reference" type="text" size="small" style="font-size:small">移除</el-button>
                   </el-popconfirm>
                 </div>
                 <div>
                   <el-popconfirm title="确定清空吗？" @confirm="deleteAll()">
-                    <el-button slot="reference" type="text" size="small" style="font-size:x-small">清空</el-button>
+                    <el-button slot="reference" type="text" size="small" style="font-size:small">清空</el-button>
                   </el-popconfirm>
                 </div>
 
                 <div>
                   <el-popconfirm title="确定取消吗？" @confirm="cancel(scope.$index, tableData)">
-                    <el-button slot="reference" type="text" size="small" style="font-size:x-small">取消</el-button>
+                    <el-button slot="reference" type="text" size="small" style="font-size:small">取消</el-button>
                   </el-popconfirm>
                 </div>
               </div>

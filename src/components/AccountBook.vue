@@ -84,29 +84,29 @@
               <el-table-column
                 prop="create_time"
                 label="日期"
-                width="90">
+                >
               </el-table-column>
               <el-table-column
                 prop="mark"
                 label="备注"
-                width="150">
+               >
               </el-table-column>
               <el-table-column
                 prop="amount"
                 label="金额"
-                width="50">
+              >
               </el-table-column>
               <el-table-column
                 prop="type"
                 label="类型"
-                width="50">
+              >
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="50">
+              <el-table-column fixed="right" label="操作" >
                 <template slot-scope="scope" >
                   <div style="justify-content: center;display: flex;flex-direction: column;">
                     <div>
                       <el-popconfirm title="确定移除吗？" @confirm="deleteRow(scope.$index, tableData)">
-                        <el-button slot="reference" type="text" size="small" style="font-size:x-small">移除</el-button>
+                        <el-button slot="reference" type="text" size="small" style="font-size:small">移除</el-button>
                       </el-popconfirm>
                     </div>
                   </div>
