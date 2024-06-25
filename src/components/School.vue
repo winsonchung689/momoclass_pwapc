@@ -28,10 +28,10 @@
           </div>
         </div>
 
-        <div style="margin-left: 2%;margin-bottom: 10px;font-weight:bolder;font-size: medium;">
-          <div>总人数: {{ total_student }}</div>
-          <div>总课时数: {{ total_amount_all }}</div>
-          <div>余课时数: {{ left_amount_all }}</div>
+        <div style="margin-bottom: 10px;font-weight:bolder;font-size: medium;display: flex;flex-direction: row;justify-content: space-around;">
+          <div style="color: #4d67e8;">总人数: {{ total_student }}</div>
+          <div style="color: #4d67e8;">总课时数: {{ total_amount_all }}</div>
+          <div style="color: #4d67e8;">余课时数: {{ left_amount_all }}</div>
         </div>
 
         
@@ -72,23 +72,36 @@
           <div class="card">
             <div class="lesson">
               <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
+              
               <div style="margin-left: 10px;margin-top: 20px;">
                 <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
                   <div style="margin-right: 5px;color: #43504a;">科目: {{ item.subject }} </div>
                 </div>
 
                 <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
-                <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                  <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #ea8c28;margin-right: 5px;font-size:medium;">余课时: {{ item.left_amount }} </div>
-                  <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #a4a499;margin-left: 15px;">历史课时: {{ item.total_amount }} </div>
-                </div>
-                <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                  <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
-                  <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-left: 5px;">单课积分: {{ item.coins }}</div>
-                </div>
-                <!-- <el-progress style="margin-top: 5px;width: 70%;" :percentage="item.percentage"></el-progress> -->
+                  <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                    <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #ea8c28;margin-right: 5px;font-size:medium;">余课时: {{ item.left_amount }} </div>
+                    <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #a4a499;margin-left: 15px;">历史课时: {{ item.total_amount }} </div>
+                  </div>
+                  <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                    <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
+                    <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-left: 5px;">单课积分: {{ item.coins }}</div>
+                  </div>
               </div>
+
+              <div style="display: flex;flex-direction: row;justify-content: space-between;width: 30%;margin-left: 5%;align-items: center;">
+                <div>
+                  <el-button @click="signInRecord(item.subject,item.student_name)">签到记录</el-button>
+                </div>
+                <div>
+                  <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
+                </div>
+        
+              </div>
+
+
             </div>
+
             <el-popconfirm title="确定删除吗？" style="margin-left: 98%;" @confirm="deleteRow(item.id,item.student_name)">
               <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
             </el-popconfirm>
@@ -362,6 +375,14 @@ export default {
       return (list) => {
         return (list.student_name.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
+    },
+
+    signInRecord (subject,student_name) {
+      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
+    },
+
+    leaveRecord (subject,student_name) {
+      this.$router.push({ path: '/leaverecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid,leave_type:'请假' } })
     },
 
     querySearch(queryString,cb) {

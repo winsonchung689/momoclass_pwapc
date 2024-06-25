@@ -8,15 +8,15 @@
     </div>
   
     <div style="margin-top: 2%;">
-      <div v-if="isCalender" style="height: 50%;width: 100%;">
+      <div v-if="isCalender" style="height: 50%;width: 100%;font-size: large;">
         <el-calendar v-model="value">
-        <template slot="dateCell" slot-scope="{data}">
-        <!--自定义内容-->
-          <div>
-             <div class="calendar-day" >{{data.day.split('-').slice(2).join('-') }}</div>
-          </div>
-      </template>
-      </el-calendar>
+          <template slot="dateCell" slot-scope="{data}">
+          <!--自定义内容-->
+            <div>
+              <div class="calendar-day" >{{data.day.split('-').slice(2).join('-') }}</div>
+            </div>
+        </template>
+        </el-calendar>
       </div>
 
       <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 80%;align-items: center;">
@@ -41,7 +41,6 @@
                     <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
                     <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
                     <el-button v-if="isBoss" @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
-
                     <el-button v-if="isBoss" @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
                   </div>
                 </div>
