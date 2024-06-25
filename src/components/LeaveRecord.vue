@@ -50,7 +50,7 @@ import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 
 export default {
-  name: 'SignInRecord',
+  name: 'LeaveRecord',
   data () {
     return {
       subject: this.$route.query.subject,

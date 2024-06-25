@@ -201,8 +201,8 @@ export default {
       };
     },
 
-    signInRecord (subject,student_name) {
-      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
+    signUpRecord (subject,student_name) {
+      this.$router.push({ path: '/signUpRecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     leaveRecord (subject,student_name) {

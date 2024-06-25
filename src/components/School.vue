@@ -9,27 +9,31 @@
 
       <div style="margin-top: 3%;">
 
-        <div style="display:flex;justify-content: left;margin-left: 3%;margin-bottom: 10px;">
+        <div style="display:flex;justify-content: space-between;margin-left: 3%;margin-bottom: 10px;">
 
-          <el-button-group>
-            <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
-            <el-button @click="getUser()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
-          </el-button-group>
+          <div style="display: flex;flex-direction: row;">
+            <el-button-group>
+              <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
+              <el-button @click="getUser()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
+            </el-button-group>
 
-          <div v-if="isBoss" style="margin-left: 2%;"> 
-            <el-autocomplete
-              popper-class="my-autocomplete"
-              v-model="state"
-              :fetch-suggestions="querySearch"
-              placeholder="请输入学生名"
-              @select="handleSelect">
-              <template slot-scope="{ item }">
-                <div class="name">{{ item.student_name }}</div>
-              </template>
-            </el-autocomplete>
+            <div v-if="isBoss"> 
+              <el-autocomplete
+                popper-class="my-autocomplete"
+                v-model="state"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入学生名"
+                @select="handleSelect">
+                <template slot-scope="{ item }">
+                  <div class="name">{{ item.student_name }}</div>
+                </template>
+              </el-autocomplete>
+            </div>
           </div>
 
-          <div style="margin-left: 50%;display: flex;flex-direction: row;">
+         
+
+          <div style="display: flex;flex-direction: row;margin-right: 3%;">
               <el-button @click="downloadExcel()" type="success" plain>模版下载<i class="el-icon-download"></i></el-button>
                   
               <div>
@@ -117,10 +121,13 @@
 
               <div style="display: flex;flex-direction: row;justify-content: space-between;width: 30%;margin-left: 5%;align-items: center;">
                 <div>
-                  <el-button @click="signInRecord(item.subject,item.student_name)">签到记录</el-button>
+                  <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
                 </div>
                 <div>
                   <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
+                </div>
+                <div>
+                  <el-button @click="leaveRecord(item.subject,item.student_name)">报课记录</el-button>
                 </div>
         
               </div>
@@ -444,8 +451,8 @@ export default {
       };
     },
 
-    signInRecord (subject,student_name) {
-      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
+    signUpRecord (subject,student_name) {
+      this.$router.push({ path: '/signUpRecord', query: { subject: subject,studio: this.studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     leaveRecord (subject,student_name) {

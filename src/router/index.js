@@ -8,7 +8,7 @@ const Home = () => import('@/components/Home')
 const Students = () => import('@/components/Students')
 const Login = () => import('@/components/Login')
 const Records = () => import('@/components/Records')
-const SingnInRecord = () => import('@/components/SingnInRecord')
+const SignUpRecord = () => import('@/components/SignUpRecord')
 const LeaveRecord = () => import('@/components/LeaveRecord')
 const GrowthRecord = () => import('@/components/GrowthRecord')
 const WorkBenches = () => import('@/components/WorkBenches')
@@ -69,9 +69,9 @@ export default new Router({
       }
     },
     {
-      path: '/signinrecord',
-      name: 'SingnInRecord',
-      component: SingnInRecord,
+      path: '/signUpRecord',
+      name: 'SignUpRecord',
+      component: SignUpRecord,
       meta:{
         showTabBar:false
       }

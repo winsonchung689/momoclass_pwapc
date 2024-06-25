@@ -8,7 +8,7 @@
     </div>
   
     <div style="margin-top: 2%;">
-      <div v-if="isCalender" style="height: 50%;width: 100%;font-size: large;">
+      <div v-if="isCalender" style="height: 50%;width: 100%;font-size: large;justify-content: center;">
         <el-calendar v-model="value">
           <template slot="dateCell" slot-scope="{data}">
           <!--自定义内容-->
@@ -723,8 +723,8 @@ export default {
       this.$router.go(-1);
     },
 
-    signInRecord (subject,studio,student_name) {
-      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
+    signUpRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/signUpRecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     growthRecord (subject,studio,student_name) {

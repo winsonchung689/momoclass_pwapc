@@ -80,8 +80,8 @@ export default {
 
   methods: {
 
-    signInRecord (subject,studio,student_name) {
-      this.$router.push({ path: '/signinrecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
+    signUpRecord (subject,studio,student_name) {
+      this.$router.push({ path: '/signUpRecord', query: { subject: subject,studio: studio,student_name: student_name,role:this.role,openid:this.openid } })
     },
 
     leaveRecord (subject,studio,student_name) {
