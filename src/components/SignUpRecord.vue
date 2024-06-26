@@ -75,11 +75,11 @@ export default {
   },
 
   created () {
-    this.getSignInRecord()
+    this.getSignUpRecord()
   },
 
   methods: {
-    async getSignInRecord () {
+    async getSignUpRecord () {
       let that = this;
       if(that.role == 'boss' || that.role == 'teacher'){
         that.isShow = true
@@ -168,13 +168,13 @@ export default {
                 message: '清空成功',
                 type: 'success'
             });
-            this.getSignInRecord()
+            this.getSignUpRecord()
           }else {
             this.$message({
                 message: '清空失败',
                 type: 'warning'
             });
-            this.getSignInRecord()
+            this.getSignUpRecord()
           }
       })
 

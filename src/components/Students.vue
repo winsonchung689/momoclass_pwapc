@@ -7,7 +7,7 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 2%; margin-bottom: 30px;">
+      <div style="margin-top: 3%; margin-bottom: 30px;">
         <div style="display:flex;justify-content: left;margin-top: 5px;margin-left: 2%;flex-direction: row;">
           <div v-if="isBoss" style="margin-right: 15px;"> 
             <el-autocomplete
@@ -46,7 +46,7 @@
 
             <div style="display: flex;flex-direction: row;justify-content: space-between;width: 30%;margin-left: 5%;align-items: center;">
               <div>
-                <el-button @click="signInRecord(item.subject,item.student_name)">签到记录</el-button>
+                <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
               </div>
               <div>
                 <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>

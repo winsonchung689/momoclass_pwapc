@@ -472,7 +472,7 @@ export default {
             message: '学生' + sign_up,
             type: 'warning'
           });
-          that.signInRecord(subject,that.studio,student_name)
+          that.signUpRecord(subject,that.studio,student_name)
         }
       }else if(type == 'comment'){
         if(comment_status == '课评'){

@@ -8,9 +8,7 @@
       </div>
 
       <div style="margin-top: 3%;">
-
         <div style="display:flex;justify-content: space-between;margin-left: 3%;margin-bottom: 10px;">
-
           <div style="display: flex;flex-direction: row;">
             <el-button-group>
               <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
