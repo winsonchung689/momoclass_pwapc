@@ -20,7 +20,7 @@
             <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
           </div>
           <div >
-            <img @click="click('/announcementrecord')" class="notice" src="../assets/notice.png" alt="" >
+            <img @click="click('/announcementrecord')" style="width: 30px;height: 30px;margin-top: 10px;" src="../assets/notice.png" alt="" >
           </div>
         </div>
     </div>
@@ -591,10 +591,10 @@ border-radius: 0.5rem;
 }
 
 .notice{
-width: 30px;
-height: 30px;
+width: 40px;
+height: 40px;
 border-radius: 0.5rem;
-margin-top: 10px;
+margin-top: 5px;
 }
 
 

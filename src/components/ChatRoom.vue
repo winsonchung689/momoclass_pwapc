@@ -6,17 +6,17 @@
         </div>
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
     </div>
-    <div class="chatTitle">实时聊天(在线:{{ onlinecount }})</div>
+    <div class="chatTitle">实时聊天，不留记录（在线:{{ onlinecount }}）</div>
 
     <!-- <WebSocket ref="WebSocket"></WebSocket> -->
     <div ref="scrolldIV" class="chatAppBody">
         <div v-for="item in message_list">
             <div v-if="item.direction === 1" class="chatRow">
-              <el-avatar v-if="item.openid != 'oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
-              <el-avatar v-if="item.openid==='oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatAvatar" :size="30" src="../assets/logo.png"></el-avatar>
+              <el-avatar v-if="item.openid != 'o25ly6whIE5oBYdDjc2M4afnxQmU'" class="chatAvatar" :size="30" src="../assets/chat.png"></el-avatar>
+              <el-avatar v-if="item.openid==='o25ly6whIE5oBYdDjc2M4afnxQmU'" class="chatAvatar" :size="30" src="../assets/logo.png"></el-avatar>
               <div class="chatMsgContent">
-                  <div v-if="item.openid==='oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatUsername">小桃子</div>
-                  <div v-if="item.openid != 'oRRfU5TCmjXtbw9WsxnekwJAa72M'" class="chatUsername">匿名</div>
+                  <div v-if="item.openid==='o25ly6whIE5oBYdDjc2M4afnxQmU'" class="chatUsername">小桃子</div>
+                  <div v-if="item.openid != 'o25ly6whIE5oBYdDjc2M4afnxQmU'" class="chatUsername">匿名</div>
                   <div class="chatContent">{{ item.msg }}</div>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default {
     name: "ChatRoom",
     data() {
       return {
-        header: "吹水站",
+        header: "聊天室",
         subject: this.$route.query.subject,
         studio: this.$route.query.studio,
         role: this.$route.query.role,
