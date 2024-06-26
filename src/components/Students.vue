@@ -23,7 +23,7 @@
           </div>
           
           <el-button-group>
-            <el-button @click="getStudents()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
+            <el-button @click="refresh()" type="primary">刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
           </el-button-group>
         </div>
 
@@ -39,8 +39,8 @@
                 <div style="margin-right: 5px;">积分: {{ item.points }} </div>
               </div>
               <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                <div style="margin-right: 5px;color: rgb(71, 126, 228);font-size: small;;">余课时: {{ item.left_amount }} </div>
                 <div style="margin-right: 5px;">历史课时: {{ item.left_amount }} </div>
-                <div style="margin-right: 5px;">余课时: {{ item.left_amount }} </div>
               </div>
             </div>
 
@@ -158,6 +158,15 @@ export default {
           }
 
       }
+    },
+
+    refresh(){
+      let that = this;
+      that.getStudents()
+      that.$message({
+          message: '刷新成功',
+          type: 'success'
+      });
     },
 
     async handleSelect (item) {

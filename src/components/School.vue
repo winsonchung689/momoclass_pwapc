@@ -144,7 +144,7 @@
             </el-popconfirm>
           </div>
 
-          <el-dialog :title="student_name" :visible.sync="dialogFormVisible" style="width: 50%">
+          <el-dialog :title="student_name" :visible.sync="dialogFormVisible" style="width: 100%">
             <div v-if="type =='续课'">
               <el-input v-model="all_lesson" :placeholder="'请输入原课时'"></el-input>
               <el-input v-model="give_lesson" :placeholder="'请输入赠课时'"></el-input>
@@ -574,12 +574,12 @@ export default {
       let status = ''
       if(that.type == '扣课'){
         param.minus_amount = that.number
-        // console.log(param)
+        console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '积分'){
         param.coins_amount = that.number
-        // console.log(param)
+        console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '总课时'){
