@@ -14,7 +14,7 @@
           <div style="display: flex;flex-direction: row;">
             <el-button-group>
               <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
-              <el-button @click="getUser()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
+              <el-button @click="refresh()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
             </el-button-group>
 
             <div v-if="isBoss"> 
@@ -121,7 +121,7 @@
 
               <div style="display: flex;flex-direction: row;justify-content: space-between;width: 50%;margin-left: 5%;margin-top: 2%;align-items: center;">
                   <div>
-                    <el-button @click="signUpRecord(item.subject,item.student_name)">续课</el-button>
+                    <el-button @click="modifyFunction('续课',item.student_name,item.subject)">续课</el-button>
                   </div>
                   <div>
                     <el-button @click="modifyFunction('划课',item.student_name,item.subject)">划课</el-button>
@@ -145,7 +145,17 @@
           </div>
 
           <el-dialog :title="student_name" :visible.sync="dialogFormVisible" style="width: 50%">
-            <el-input v-model="number" :placeholder="mark"></el-input>
+            <div v-if="type =='续课'">
+              <el-input v-model="all_lesson" :placeholder="'请输入原课时'"></el-input>
+              <el-input v-model="give_lesson" :placeholder="'请输入赠课时'"></el-input>
+              <el-input v-model="total_money" :placeholder="'请输入课包原价'"></el-input>
+              <el-input v-model="discount_money" :placeholder="'请输入优惠金额'"></el-input>
+            </div>            
+
+            <el-input v-if="type != '续课'" v-model="number" :placeholder="placeholder_mark"></el-input>
+            <el-input v-if="type == '续课' || type =='划课'" v-model="mark" :placeholder="'备注'"></el-input>
+            
+
             <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
               <el-button @click="cancel_buttom()">取 消</el-button>
               <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
@@ -182,7 +192,7 @@ export default {
       allstudents:[],
       isBoss:false,
       dialogFormVisible:false,
-      mark:'',
+      placeholder_mark:'',
       number:'',
       subject_new:'全科目',
       gift_name:'',
@@ -199,7 +209,13 @@ export default {
       total_student:'',
       action_url:'',
       fileList:[],
-      file:''
+      file:'',
+      type:'',
+      all_lesson:'',
+      give_lesson:'',
+      total_money:'',
+      discount_money:'',
+      mark:''
     }
   },
 
@@ -264,6 +280,15 @@ export default {
           that.allstudents.push(json)
           that.items.push(json)
       }
+    },
+
+    refresh(){
+      let that = this;
+      that.getUser()
+      that.$message({
+          message: '刷新成功',
+          type: 'success'
+      });
     },
 
     async handleChange(file,fileList){
@@ -489,24 +514,37 @@ export default {
       that.subject = subject
       that.dialogFormVisible = true
       if(type == '扣课' ){
-        that.mark = '请输入单次扣课数'
+        that.placeholder_mark = '请输入单次扣课数'
+        that.type = '扣课'
       }else if(type == '积分'){
-        that.mark = '请输入单课积分数'
+        that.placeholder_mark = '请输入单课积分数'
+        that.type = '积分'
       }else if(type == '总课时'){
-        that.mark = '请输入总课时数'
+        that.placeholder_mark = '请输入总课时数'
+        that.type = '总课时'
       }else if(type == '余课时'){
-        that.mark = '请输入余课时数'
+        that.placeholder_mark = '请输入余课时数'
+        that.type = '余课时'
       }else if(type == '续课'){
-        that.mark = '请输入续课数'
+        that.placeholder_mark = '请输入续课数'
+        that.type = '续课'
       }else if(type == '划课'){
-        that.mark = '请输入划课数'
+        that.placeholder_mark = '请输入划课数'
+        that.type = '划课'
       }
     },
 
     cancel_buttom(){
-      this.dialogFormVisible = false
-      this.number = ''
-      this.student_name = ''
+      let that = this;
+      that.dialogFormVisible = false
+      that.number = ''
+      that.student_name = ''
+      that.all_lesson = '',
+      that.give_lesson = '',
+      that.total_money = '',
+      that.discount_money = '',
+      that.mark = '',
+      that.number = ''
     },
     
     async confirm_buttom(){
@@ -521,66 +559,82 @@ export default {
         minus_amount:that.minus_amount,
         student_name_new:that.student_name_new,
         modify_type:that.modify_type,
-        consume_lesson_amount:that.consume_lesson_amount,
+        consume_lessons_amount:that.consume_lesson_amount,
         lessons_amount:that.lessons_amount,
-        minus_amount:that.minus_amount,
-        coins_amount:that.coins_amount,
         total_amount:that.total_amount,
         left_amount:that.left_amount,
-        openid:that.openid
+        openid:that.openid,
+        all_lesson:that.all_lesson,
+        give_lesson:that.give_lesson,
+        total_money:that.total_money,
+        discount_money:that.discount_money,
+        mark:that.mark        
       }
 
       let status = ''
-      if(that.mark == '请输入单次扣课数'){
+      if(that.type == '扣课'){
         param.minus_amount = that.number
         // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
-      }else if(that.mark == '请输入单课积分数'){
+      }else if(that.type == '积分'){
         param.coins_amount = that.number
         // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
-      }else if(that.mark == '请输入总课时数'){
+      }else if(that.type == '总课时'){
         param.total_amount = that.number
-        // console.log(param)
+        param.modify_type = 'total_modify'
+        console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
-      }else if(that.mark == '请输入余课时数'){
+      }else if(that.type == '余课时'){
         param.left_amount = that.number
+        param.modify_type = 'left_modify'
         // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
-      }else if(that.mark == '请输入续课数'){
+      }else if(that.type == '续课'){
+        param.lessons_amount = parseInt(that.all_lesson)  +  parseInt(that.give_lesson)
         param.left_amount = that.number
-        // console.log(param)
+        param.modify_type = 'add_lessons'
+        console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
-      }else if(that.mark == '请输入划课数'){
-        param.left_amount = that.number
+      }else if(that.type == '划课'){
+        param.consume_lesson_amount = that.number
         // console.log(param)
-        let res = await HttpPost("/updateLesson",param)
+        let res = await HttpPost("/consumeLesson",param)
         status = res.status
+        let sign = await HttpPost("/insertSignUp",param)
+        status = sign.status
       }
       
+      console.log(status)
 
       if(status == 200){
         that.$message({
             message: '操作成功',
             type: 'success'
         });
-        that.dialogFormVisible = false
-        that.getUser()
       }else {
         that.$message({
             message: '操作失败',
             type: 'warning'
         });
-        that.dialogFormVisible = false
-        that.getUser()
       }
-    }
 
+      that.dialogFormVisible = false
+      that.number = ''
+      that.student_name = ''
+      that.all_lesson = '',
+      that.give_lesson = '',
+      that.total_money = '',
+      that.discount_money = '',
+      that.mark = '',
+      that.number = ''
+      that.getUser()
+    }
   }
 }
 </script>
