@@ -63,8 +63,8 @@ export default {
 }
 
 .welcome img {
-  width: 20%;
-  height: 20%;
+  width: 25%;
+  height: 25%;
   margin-top: 10%;
 }
 </style>
