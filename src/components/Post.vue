@@ -127,9 +127,9 @@
 
       async handleChange(file, fileList) {
         let that = this
-        let formdata ={
-          photo: file.raw
-        }
+
+        const formdata = new FormData();
+        formdata.append('photo',file.raw);
 
         let res = await UploadFile('/push_photo', formdata)
         let uuid  = res.data.split("/")[3]

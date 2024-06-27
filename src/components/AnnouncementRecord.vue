@@ -8,11 +8,11 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="justify-content: left;display: flex;margin-top: 2%;margin-bottom: 15px;flex-direction: column;">
+      <div style="justify-content: left;display: flex;margin-top: 3%;margin-bottom: 15px;flex-direction: column;">
         <el-collapse v-model="activeName" accordion v-for="(item,index_out) in items">
-          <el-collapse-item :title="item.create_time" :name='index_out'>
-            <div style="font-size:medium;">{{ item.title }}</div>
-            <div>{{ item.content }}</div>
+          <el-collapse-item :title="item.title" :name='index_out'>
+            <div style="font-size: small;font-weight: bolder;color: rgb(21, 48, 116);">{{ item.content }}</div>
+            <div style="font-size:small;color: rgb(124, 119, 125);margin-left: 90%;">{{ item.create_time }}</div>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -140,6 +140,10 @@ export default {
 }
 .smallActive{
     opacity: 1;
+}
+
+.custom-collapse .custom-collapse-item{
+  background-color: #b43434;
 }
 
 </style>

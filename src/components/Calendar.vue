@@ -305,10 +305,10 @@ export default {
       let wav = recorder.getWAVBlob();//获取 WAV 数据
       // const mp3Blob = this.convertToMp3(recorder.getWAV());
 
-      let formdata ={
-          photo: wav,
-          class_target:'录音文件'
-        }
+      const formdata = new FormData();
+      formdata.append('photo',wav);
+      formdata.append('class_target',录音文件);
+        
       let res = await UploadFile('/push_photo', formdata)
       that.mp3_url = res.data.split("/")[3]
       console.log(res,that.mp3_url)
@@ -686,6 +686,8 @@ export default {
           message: '发布成功',
           type: 'success'
         });
+        that.uuids=[]
+        that.fileList = []
       }else{
         that.$message({
         message: '发布失败',
@@ -709,14 +711,15 @@ export default {
 
     async handleChange(file, fileList) {
         let that = this
-        let formdata ={
-          photo: file.raw
-        }
+
+        const formdata = new FormData();
+        formdata.append('photo',file.raw);
+
 
         let res = await UploadFile('/push_photo', formdata)
         let uuid  = res.data.split("/")[3]
         that.uuids.push(uuid)
-        // console.log(that.uuids)
+        console.log(that.uuids)
     },
     
     goOff () {
