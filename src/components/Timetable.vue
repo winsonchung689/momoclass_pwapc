@@ -558,11 +558,15 @@ export default {
           inputdefault: inputdefault,
           chooselesson: chooselesson  
         }
-        await HttpPost('/updateBossLessons', param)
-
-        let res = await that .getArrangement(dayofweek)
-        let status = res.chooseLesson
-        that.tableData[0]['week'+dayofweek][index].chooseLesson = status
+        // console.log(param)
+        let res = HttpPost('/updateBossLessons', param)
+        res.then(res => {
+          let status = '已选'
+          if(chooselesson =='已选'){
+              status = '未选'
+          }
+          that.tableData[0]['week'+dayofweek][index].chooseLesson = status
+        })
     },
 
     async getArrangement (dayofweek) {
