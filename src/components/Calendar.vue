@@ -556,20 +556,7 @@ export default {
         type: 'success'
       });
 
-
-      let param1 = {
-        date_time: that.date_time,
-        studio:that.studio,
-        student_name:that.leave_student,
-        duration:that.leave_duration,
-        openid:that.openid
-      }
-      const leave_verify = await HttpPost('/getLeaveByDateDuration', param1)
-      let data = leave_verify.data[0]
-      let leave_type_get = data.leave_type
-      that.tableData[that.index1].children[that.index2].leave = '已'+leave_type_get
-      
-
+      that.tableData[that.index1].children[that.index2].leave = '已'+that.leave_type
     },
 
     async signIn () {
@@ -596,38 +583,7 @@ export default {
         message: '签到成功',
         type: 'success'
       });
-
-      let param1 = {
-        date_time: that.date_time,
-        studio:that.studio,
-        student_name:that.leave_student,
-        duration:that.leave_duration,
-        openid:that.openid
-      }
-      const signin_verify = await HttpPost('/getSignUpByDateDuration', param1)
-      let data = signin_verify.data[0]
-      console.log(data)
-      let id = data.id
-      let openid = data.openid
-      let subscription = data.subscription
-      if(id){
-        that.tableData[that.index1].children[that.index2].sign_up = '已签到'
-
-        let message = that.leave_student +'同学已签到 !!!\n日期:'+ that.date_time +'\n时间:'+ that.leave_duration+'\n本次扣课:' + that.class_count + '课时'
-        let json = {
-          title:that.studio,
-          message:message
-        }
-        console.log(subscription)
-        let res = await sendNotification(subscription, JSON.stringify(json))
-        console.log(res)
-        if(res.status == 200){
-            that.$message({
-            message: '通知成功',
-            type: 'success'
-        });
-        }
-      }
+      that.tableData[that.index1].children[that.index2].sign_up = '已签到'
     },
 
     async comment () {
@@ -667,35 +623,11 @@ export default {
       }
       console.log(param)
       await HttpPost('/push', param)
-
-      let param1 = {
-        date_time: that.date_time,
-        studio:that.studio,
-        student_name:that.leave_student,
-        duration:that.leave_duration,
-        openid:that.openid
-      }
-      const comment_verify = await HttpPost('/getCommentByDateDuration', param1)
-      let data = comment_verify.data[0]
-      // console.log(data)
-      let student_name = data.student_name
-      if(student_name == that.leave_student){
-        that.tableData[that.index1].children[that.index2].comment_status = '已课评'
-        // that.isComment = false
-          that.$message({
+      that.$message({
           message: '发布成功',
           type: 'success'
-        });
-        that.uuids=[]
-        that.fileList = []
-      }else{
-        that.$message({
-        message: '发布失败',
-        type: 'danger'
       });
-      }
-      // that.isCalender = true
-
+      that.tableData[that.index1].children[that.index2].comment_status = '已课评'
     },
 
     async confirm_buttom () {

@@ -10,7 +10,7 @@
     <div style="margin-top: 15%;">
       <div style="justify-content: center;display: flex;margin-bottom: 15px;">
         <div class="container">
-          <div class="item" @click="signInRecord(subject,studio,student_name)">
+          <div class="item" @click="signUpRecord(subject,studio,student_name)">
             <div class="content">
               <div style="display: flex;justify-content: center;">
                 <img style="width: 40px;height: 40px;" src="@/assets/signin.png" alt="">
