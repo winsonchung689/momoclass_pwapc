@@ -197,8 +197,8 @@ data () {
     isBoss:false,
     isClient:false,
     subscription:'',
-    pulickey:'BGVksyYnr7LQ2tjLt8Y6IELBlBS7W8IrOvVszRVuE0F97qvcV6qB_41BJ-pXPaDf6Ktqdg6AogGK_UUc3zf8Snw',
-    privatekey:'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE',
+    pulickey:'BNuTcvDy80K11oNHamaMxjG7mQht2r5wDP2ZdR6kL_rLkaizhUDxXFmjlCMS57XaWYgflJlo-_cDF8wVqWIPd2U',
+    privatekey:'q3-gIs92LkUmtLIKJB3bR3_ATFWTkDXJ4Pt9HGB84S8',
     subsctiption_status:'未订阅',
     registration:'',
     centerDialogVisible: false,
@@ -423,6 +423,7 @@ methods: {
   subscribeUser() {     
       let openid = this.openid
       let swRegistration = this.registration
+      console.log(swRegistration)
       const applicationServerPublicKey = this.pulickey
       const applicationServerKey = this.urlB64ToUint8Array(applicationServerPublicKey)
       swRegistration.pushManager.permissionState({
@@ -431,14 +432,14 @@ methods: {
       })
       .then(function(permission) {
           console.log('User is granted:', JSON.stringify(permission));
-          if (permission === 'granted') {
+          if (permission == 'granted') {
             swRegistration.pushManager.subscribe({
                 userVisibleOnly: true,
                 applicationServerKey: applicationServerKey
             })
             .then(function(subscription) {
                 console.log('User is subscribed:', JSON.stringify(subscription));
-                if (subscription) {
+                if(subscription) {
                   console.log('已订阅');
                   console.log(JSON.stringify(subscription));
                   let param = {
@@ -462,13 +463,13 @@ methods: {
   async subscriptionInit(){
     let that = this
     let openid = that.openid
-    console.log(openid)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
       that.registration = registration
-      console.log(registration)
+      // console.log(registration)
 
       registration.pushManager.getSubscription().then(function(subscription) {
+        console.log(subscription)
             if (subscription) {
               console.log('已订阅');
               that.subsctiption_status = '已订阅'

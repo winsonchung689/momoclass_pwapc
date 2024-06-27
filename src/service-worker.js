@@ -79,7 +79,7 @@ self.addEventListener('push', function (event) {
  self.addEventListener('notificationclick', function (event) {
       // console.log(event.notification.data)
       // var title = event.notification.data.title
-      event.waitUntil(clients.openWindow('https://www.momoclasss.xyz:8080/'))
+      event.waitUntil(clients.openWindow('https://www.momoclasss.xyz:80/'))
  })
 
 
