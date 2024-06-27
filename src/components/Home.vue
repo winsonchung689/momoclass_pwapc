@@ -15,7 +15,15 @@
           </div>
         </div>
 
-        <div style="display: flex;flex-direction: row;justify-content: space-around; width: 10%;">
+        <div style="display: flex;flex-direction: row;justify-content: space-around; width:25%;">
+          <div style="display: flex;justify-content: center;height: 100%;align-items: center;">
+              <el-button @click="subscribe_buttom()" type="success" size="mini" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
+          </div>
+          <!-- <div style="width: 15px;height: 15px;">
+            <img v-if="isBell1" @click="notifyMe()" class="notice" src="../assets/bell1.png" alt="" >
+            <img v-if="isBell2" @click="notifyMe()" class="notice" src="../assets/bell2.png" alt="" >
+          </div> -->
+
           <div >
             <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
           </div>
@@ -369,7 +377,7 @@ methods: {
     this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
   },
 
-  subscribe_button(){
+  subscribe_buttom(){
     let that = this
     if(that.subsctiption_status === '未订阅'){
       that.notifyMe()
@@ -454,10 +462,11 @@ methods: {
   async subscriptionInit(){
     let that = this
     let openid = that.openid
+    console.log(openid)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(function (registration) { 
       that.registration = registration
-      // console.log(registration)
+      console.log(registration)
 
       registration.pushManager.getSubscription().then(function(subscription) {
             if (subscription) {

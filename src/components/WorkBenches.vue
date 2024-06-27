@@ -496,7 +496,7 @@ export default {
           that.isBell2 = false
         }
       })
-     }
+    }
 
 
   }
