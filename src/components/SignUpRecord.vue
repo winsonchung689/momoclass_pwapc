@@ -143,7 +143,7 @@ export default {
                 message: '删除成功',
                 type: 'success'
             });
-            this.getSignInRecord()
+            this.getSignUpRecord()
           }else {
             this.$message({
                 message: '删除失败',
@@ -199,7 +199,7 @@ export default {
         message: '取消成功',
         type: 'success'
       })
-      await that.getSignInRecord()
+      await that.getSignUpRecord()
     }
 
   }

@@ -58,8 +58,8 @@ export function audioPlay() {
 export function sendNotification(subscription,json){
   let param ={
     subscription:subscription,
-    publickey: 'BGVksyYnr7LQ2tjLt8Y6IELBlBS7W8IrOvVszRVuE0F97qvcV6qB_41BJ-pXPaDf6Ktqdg6AogGK_UUc3zf8Snw',
-    privatekey: 'oc5e7TovuZB8WVXqQoma-I14sYjoeBp0VJTjqOWL7mE',
+    publickey: 'BNuTcvDy80K11oNHamaMxjG7mQht2r5wDP2ZdR6kL_rLkaizhUDxXFmjlCMS57XaWYgflJlo-_cDF8wVqWIPd2U',
+    privatekey: 'q3-gIs92LkUmtLIKJB3bR3_ATFWTkDXJ4Pt9HGB84S8',
     payload:json
   }
   let res = HttpPost('/sendSubscription', param )
