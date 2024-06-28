@@ -38,6 +38,7 @@
             <template slot-scope="props">
                 <div v-for="(item,index) in props.row.children" :key="index">
                   <div style="margin-left: 85%;width: 10%;display: flex;flex-direction: row;">
+                    <el-button round v-if="isBoss && index==0" @click="cancelAllSign('signin',props.$index)" type="info" style="margin-bottom: 5px;font-size: small;">取消</el-button>
                     <el-button round v-if="isBoss && index==0" @click="selectAllSign('signin',props.$index)" type="primary" style="margin-bottom: 5px;font-size: small;">全选</el-button>
                     <el-button round v-if="isBoss && index==0" @click="selectActionConfirm('signin',props.$index)" type="success" style="margin-left: 1%;margin-bottom: 5px;font-size: small;">确定</el-button>
                   </div>
@@ -483,6 +484,15 @@ export default {
       var children = that.tableData[index1].children
       for(var i in children){
         children[i].sign_select=true
+      }
+      that.tableData[index1].children = children
+    },
+
+    async cancelAllSign(type,index1){
+      let that = this;
+      var children = that.tableData[index1].children
+      for(var i in children){
+        children[i].sign_select=false
       }
       that.tableData[index1].children = children
     },
