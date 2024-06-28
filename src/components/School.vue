@@ -36,10 +36,10 @@
             </div>
 
             <div v-if="abnormal_package>0">
-              <el-button type="danger" @click="getAbnormalStudent('package')">课时监控:{{ abnormal_package }}</el-button>
+              <el-button type="danger" @click="getAbnormalStudent('package')">课包监控:{{ abnormal_package }}</el-button>
             </div>
             <div v-if="abnormal_package<=0">
-              <el-button plain type="info"  @click="getAbnormalStudent('package')">课时监控:{{ abnormal_package }}</el-button>
+              <el-button plain type="info"  @click="getAbnormalStudent('package')">课包监控:{{ abnormal_package }}</el-button>
             </div>
             
 
