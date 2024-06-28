@@ -9,6 +9,9 @@
       </div>
 
       <div style="margin-top: 2%;">
+
+        <div style="margin-left: 2%;color: cornflowerblue;font-weight: bolder;">总续课:{{ total_sum }}</div>
+
         <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
           <el-table-column prop="student_name" label="名字"  >
           </el-table-column>
@@ -67,7 +70,8 @@ export default {
       leave_type: this.$route.query.leave_type,
       header:  this.$route.query.leave_type+'记录',
       tableData: [],
-      isShow:false
+      isShow:false,
+      total_sum : 0
     }
   },
 
@@ -97,6 +101,7 @@ export default {
       let package_data = res.data;
 
       // console.log(package_data)
+      let total_sum = 0;
       that.tableData =[]
       for( var i in package_data){
           const all_lesson = package_data[i].all_lesson
@@ -109,6 +114,7 @@ export default {
           const end_date = package_data[i].end_date
           const nick_name = package_data[i].nick_name
           const id = package_data[i].id
+          total_sum = total_sum + all_lesson + give_lesson
 
           var json ={};
           json.all_lesson = all_lesson
@@ -122,7 +128,7 @@ export default {
           json.id = id
           that.tableData.push(json)
       }
-
+      that.total_sum = total_sum
     },
 
     goOff() {

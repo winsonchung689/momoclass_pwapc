@@ -7,20 +7,18 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 10%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
+      <div style="margin-top: 3%;" @touchstart="touchStart($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)">
         <div class="banner">
-          <div class="banner_wrap">
           <swiper :options="swiperOption" v-if="images.length > 1">
             <swiper-slide class="swiper-wrapper" v-for="(item, index) in images" :key="index">
-              <div  style="display: flex;justify-content: left; flex-direction: row;">
-                <div style="width: 40%;">
-                  <el-image  :src="item.img" :preview-src-list=[item.img] alt="" style="border-radius: 1rem; scale: 1;"></el-image>
+              <div  style="display: flex;justify-content: left; flex-direction: column;">
+                <div style="width: 100%;">
+                  <el-image  :src="item.img" :preview-src-list=[item.img] alt="" style="width: 90%;border-radius: 1rem; scale: 1;"></el-image>
                 </div>
               </div>
 
             </swiper-slide>
           </swiper>
-          </div>
         </div>
 
       </div>
@@ -50,10 +48,10 @@ export default {
         speed: 800,
         observer: true,
         observeParents: true,
-        slidesPerView:2,
-        loopedSlides:2,
+        slidesPerView:3,
+        loopedSlides:5,
         autoplay: {
-          delay: 3000,
+          delay: 10000,
           disableOnInteraction: false,
           reverseDirection:false
         }
@@ -227,7 +225,7 @@ header {
 }
 
 .banner_wrap {
-  padding: 0 0.2rem;
+  padding: 0 0rem;
 }
 
 .banner .swiper-container {

@@ -19,11 +19,6 @@
           <div style="display: flex;justify-content: center;height: 100%;align-items: center;">
               <el-button @click="subscribe_buttom()" type="success" size="mini" round>{{ subsctiption_status }}<i class="el-icon-message-solid el-icon--right"></i></el-button>
           </div>
-          <!-- <div style="width: 15px;height: 15px;">
-            <img v-if="isBell1" @click="notifyMe()" class="notice" src="../assets/bell1.png" alt="" >
-            <img v-if="isBell2" @click="notifyMe()" class="notice" src="../assets/bell2.png" alt="" >
-          </div> -->
-
           <div >
             <img @click="click('/chatroom')" class="notice" src="../assets/wechat.png" alt="" >
           </div>

@@ -15,7 +15,7 @@
               <el-button @click="refresh()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
             </el-button-group>
 
-            <div v-if="isBoss"> 
+            <div> 
               <el-autocomplete
                 popper-class="my-autocomplete"
                 v-model="state"
@@ -27,6 +27,22 @@
                 </template>
               </el-autocomplete>
             </div>
+
+            <div v-if="abnormal_lesson>0">
+              <el-button type="danger" @click="getAbnormalStudent('lesson')">课时监控:{{ abnormal_lesson }}</el-button>
+            </div>
+            <div v-if="abnormal_lesson<=0">
+              <el-button plain type="info"  @click="getAbnormalStudent('lesson')">课时监控:{{ abnormal_lesson }}</el-button>
+            </div>
+
+            <div v-if="abnormal_package>0">
+              <el-button type="danger" @click="getAbnormalStudent('package')">课时监控:{{ abnormal_package }}</el-button>
+            </div>
+            <div v-if="abnormal_package<=0">
+              <el-button plain type="info"  @click="getAbnormalStudent('package')">课时监控:{{ abnormal_package }}</el-button>
+            </div>
+            
+
           </div>
 
          
@@ -213,12 +229,15 @@ export default {
       give_lesson:'',
       total_money:'',
       discount_money:'',
-      mark:''
+      mark:'',
+      abnormal_lesson:0,
+      abnormal_package:0
     }
   },
 
   created () {
     this.getUser()
+    this.getLessonHead()
   },
 
   methods: {
@@ -241,6 +260,7 @@ export default {
       that.total_student = lessons_data[0].total_student
       that.total_amount_all = lessons_data[0].total_amount_all
       that.left_amount_all = lessons_data[0].left_amount_all
+
       that.items =[]
       that.allstudents = []
       for( var i in lessons_data){
@@ -277,7 +297,44 @@ export default {
           
           that.allstudents.push(json)
           that.items.push(json)
+        }
+
+    },
+
+    async getLessonHead () {
+      let that = this
+      var year = new Date().getFullYear()
+      var month = new Date().getMonth() + 1
+      if (month >= 1 && month <= 9) {
+          month = "0" + month;
       }
+      let month_date = year + '-' + month
+
+      let param = {
+        studio: that.studio,
+        student_name: 'all',
+        subject:'全科目',
+        openid:that.openid,
+        month_date:month_date
+      }
+      const heads = await HttpPost('/getLessonHead', param)
+      const head_data = heads.data
+      console.log(head_data)
+      that.abnormal_lesson = head_data[0].abnormal_lesson
+      that.abnormal_package = head_data[0].abnormal_package
+    },
+
+    async getAbnormalStudent (type) {
+      let that = this
+      let param = {
+        studio: that.studio,
+        openid:that.openid,
+        type:type
+      }
+      const heads = await HttpPost('/getAbnormalStudent', param)
+      const head_data = heads.data
+      // console.log(head_data)
+      that.items = head_data
     },
 
     refresh(){
@@ -300,7 +357,7 @@ export default {
           message: '上传成功',
           type: 'success'
       });
-      console.log(res)
+      // console.log(res)
 
     },
 
@@ -661,6 +718,14 @@ export default {
   margin-left: 5px;
   margin-top: 10px;
   scale: 1.5;
+}
+
+.red{
+  background-color: red;
+}
+
+.blue{
+  background-color: blue;
 }
 
 </style>

@@ -9,6 +9,9 @@
       </div>
 
       <div style="margin-top: 2%;">
+
+        <div style="margin-left: 2%;color: cornflowerblue;font-weight: bolder;">总次数:{{ total_sum }}</div>
+
         <el-table :data="tableData" style="width: 100%;font-size: small;" max-height="750">
           <el-table-column fixed prop="rank" label="序号" >
           </el-table-column> 
@@ -61,7 +64,8 @@ export default {
       leave_type: this.$route.query.leave_type,
       header:  this.$route.query.leave_type+'记录',
       tableData: [],
-      isShow:false
+      isShow:false,
+      total_sum:0
     }
   },
 
@@ -87,6 +91,7 @@ export default {
       let leave_data = leave.data;
 
       // console.log(leave_data)
+      let total_sum = 0
       that.tableData =[]
       for( var i in leave_data){
           const rank = leave_data[i].rank
@@ -96,6 +101,7 @@ export default {
           const date_time = leave_data[i].date_time
           const duration = leave_data[i].duration
           const id = leave_data[i].id
+          total_sum = total_sum + 1
 
           var json ={};
           json.rank = rank
@@ -107,6 +113,7 @@ export default {
           json.id = id
           that.tableData.push(json)
       }
+      that.total_sum = total_sum
 
     },
 

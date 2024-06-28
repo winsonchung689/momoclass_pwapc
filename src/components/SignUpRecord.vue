@@ -8,6 +8,9 @@
       </div>
 
       <div style="margin-top: 2%;">
+
+        <div style="margin-left: 2%;color: cornflowerblue;font-weight: bolder;">总消课:{{ total_sum }}</div>
+
         <el-table :data="tableData" style="width: 100%;font-size: small;" >
           <el-table-column fixed prop="rank" label="序号">
           </el-table-column> 
@@ -70,7 +73,8 @@ export default {
       openid: this.$route.query.openid,
       header:'签到记录',
       tableData: [],
-      isShow:false
+      isShow:false,
+      total_sum:0
     }
   },
 
@@ -94,6 +98,7 @@ export default {
       const signins = await HttpPost('/getSignUp', param)
       let signin_data = signins.data;
 
+      let total_sum = 0;
       // console.log(signin_data)
       that.tableData =[]
       for( var i in signin_data){
@@ -107,6 +112,7 @@ export default {
           const status = signin_data[i].status
           const id = signin_data[i].id
           const subject = signin_data[i].subject
+          total_sum = total_sum + count;
 
           var json ={};
           json.rank = rank
@@ -121,6 +127,7 @@ export default {
           json.subject = subject
           that.tableData.push(json)
       }
+      that.total_sum = total_sum
 
     },
 
