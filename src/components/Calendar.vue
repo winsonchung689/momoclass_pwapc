@@ -462,8 +462,9 @@ export default {
         let duration = children[i].duration
         let class_number = children[i].class_number
         let subject = children[i].subject
+        let sign_up = children[i].sign_up
 
-        if(sign_select == true){
+        if(sign_select == true && sign_up == '签到'){
           that.leave_student = student_name
           that.leave_subject = subject
           that.leave_duration = duration
