@@ -37,7 +37,7 @@
         <el-table-column type="expand">
             <template slot-scope="props">
                 <div v-for="(item,index) in props.row.children" :key="index">
-                  <div style="margin-left: 85%;width: 10%;">
+                  <div style="margin-left: 85%;width: 10%;display: flex;flex-direction: row;">
                     <el-button round v-if="isBoss && index==0" @click="selectAllSign('signin',props.$index)" type="primary" style="margin-bottom: 5px;font-size: small;">全选</el-button>
                     <el-button round v-if="isBoss && index==0" @click="selectActionConfirm('signin',props.$index)" type="success" style="margin-left: 1%;margin-bottom: 5px;font-size: small;">确定</el-button>
                   </div>
