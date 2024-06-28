@@ -33,15 +33,30 @@
         </div>
       </el-dialog>
 
-      <el-table :data="tableData" style="width: 100%;font-size: small;">
+      <el-table :data="tableData" style="width: 100%;font-size: small;font-size: medium;">
         <el-table-column type="expand">
             <template slot-scope="props">
                 <div v-for="(item,index) in props.row.children" :key="index">
-                  <div style="display: flex;flex-direction: row;margin-left: 20px;justify-content: left;margin-bottom: 20px;">
-                    <div style="margin-right: 5px;font-size: small;margin-top: 10px;">{{ item.student_name }}</div>
-                    <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.leave }}</el-button>
-                    <el-button v-if="isBoss" @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
-                    <el-button v-if="isBoss" @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
+                  <el-button round v-if="isBoss && index==0" @click="selectAllSign('signin',props.$index)" type="primary" style="margin-left: 90%;margin-bottom: 5px;font-size: small;">全选</el-button>
+                  <el-button round v-if="isBoss && index==0" @click="selectActionConfirm('signin',props.$index)" type="success" style="margin-left: 1%;margin-bottom: 5px;font-size: small;">确定</el-button>
+
+                  <div style="display: flex;flex-direction: row;margin-left: 1%;justify-content: left;margin-bottom: 20px;">
+                      
+                      <div style="margin-right: 5px;font-size:medium;margin-top: 10px;">{{ item.student_name }}</div>
+                      <div style="margin-left: 1%;display: flex;justify-content: space-between;width: 40%;">
+                        <div>
+                          <el-button v-if="isBoss" @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index,'')" type="primary" plain style="font-size: small;">{{ item.leave }}</el-button>
+                          <el-checkbox v-model="item.leave_select" border></el-checkbox>
+                        </div>
+
+                        <div>
+                          <el-button  v-if="isBoss" @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
+                          <el-checkbox v-model="item.sign_select" border></el-checkbox>
+                        </div>
+
+                        <el-button  v-if="isBoss" @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
+                        
+                      </div>
                   </div>
                 </div>
             </template>
@@ -225,7 +240,8 @@ export default {
       class_name:'',
       isCalender:true,
       mp3_url:'',
-      record_duration:'standby'
+      record_duration:'standby',
+      children:[]
     }
   },
 
@@ -344,7 +360,7 @@ export default {
         }
       const lessons = await HttpPost('/getSchedule', param)
       let lessons_data = lessons.data;
-      console.log(lessons_data)
+      // console.log(lessons_data)
       that.tableData = []
       let tmp = []
       for( var i=1; i < lessons_data.length; i++ ){
@@ -387,6 +403,8 @@ export default {
                   const subject = details_data[i].subject
                   const duration = details_data[i].duration
                   const class_number = details_data[i].class_number
+                  const sign_select = false
+                  const leave_select = false
 
                   json_detail.student_name = student_name
                   json_detail.leave = leave
@@ -396,6 +414,8 @@ export default {
                   json_detail.subject = subject
                   json_detail.duration = duration
                   json_detail.class_number = class_number
+                  json_detail.sign_select = sign_select
+                  json_detail.leave_select = leave_select
                   children.push(json_detail)
               }else if (that.role == 'client'){
                   console.log(that.student_string)
@@ -430,6 +450,38 @@ export default {
           }
       }
       // console.log(that.tableData)
+    },
+
+    async selectActionConfirm(type,index1){
+      let that = this;
+      var children = that.tableData[index1].children
+      // console.log(children)
+      for(var i in children){
+        let sign_select = children[i].sign_select
+        let student_name = children[i].student_name
+        let duration = children[i].duration
+        let class_number = children[i].class_number
+        let subject = children[i].subject
+
+        if(sign_select == true){
+          that.leave_student = student_name
+          that.leave_subject = subject
+          that.leave_duration = duration
+          that.sign_class_number = class_number
+          that.index1 = index1
+          that.index2 = i
+          await that.signIn()
+        }
+      }
+    },
+
+    async selectAllSign(type,index1){
+      let that = this;
+      var children = that.tableData[index1].children
+      for(var i in children){
+        children[i].sign_select=true
+      }
+      that.tableData[index1].children = children
     },
 
     dialogFunction (type,sign_up,class_number,student_name,subject,leave,duration,index1,index2,comment_status) {
