@@ -7,7 +7,7 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
-      <div style="margin-top: 2%;">
+      <div style="margin-top: 3%;">
 
         <div style="margin-left: 2%;color: cornflowerblue;font-weight: bolder;">总消课:{{ total_sum }}</div>
 
