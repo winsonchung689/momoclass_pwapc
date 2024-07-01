@@ -9,7 +9,18 @@
 
       <div style="margin-top: 3%;">
 
-        <div style="margin-left: 2%;color: cornflowerblue;font-weight: bolder;">总消课:{{ total_sum }}</div>
+        <div style="display:flex;margin-left: 2%;flex-direction: row;justify-content: space-between;margin-right: 3%;">
+          <div style="color: cornflowerblue;font-weight: bolder;">总消课:{{ total_sum }}</div>
+          <div>
+            <el-switch
+              v-model="package_value"
+              active-text="全部"
+              inactive-text="个人">
+            </el-switch>
+            <el-button @click="downlowd()" type="info">导出<i class="el-icon-download"></i></el-button>
+          </div>
+          
+        </div>
 
         <el-table :data="tableData" style="width: 100%;font-size: small;" >
           <el-table-column fixed prop="rank" label="序号">
@@ -74,7 +85,8 @@ export default {
       header:'签到记录',
       tableData: [],
       isShow:false,
-      total_sum:0
+      total_sum:0,
+      package_value:true
     }
   },
 
@@ -185,6 +197,27 @@ export default {
           }
       })
 
+    },
+
+    downlowd(){
+      let that = this;
+      let type = 'all_sign'
+      if(that.package_value == false){
+          type = 'single_sign'
+          that.getSignUpRecord()
+      }
+      
+      let param ={
+        studio:that.studio,
+        openid:that.openid,
+        type:type
+      }
+      let res = HttpPost("/getDownloadDataByType",param)
+      res.then(res => {
+          // console.log(res.data)
+          window.location.href = 'https://www.momoclasss.xyz:443/file/downloadData/'+that.studio +'/' + that.openid + '/' + type+'.xls'
+      })
+      
     },
 
     async cancel (index, tableData) {

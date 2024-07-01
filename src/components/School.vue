@@ -41,11 +41,7 @@
             <div v-if="abnormal_package<=0">
               <el-button plain type="info"  @click="getAbnormalStudent('package')">课包监控:{{ abnormal_package }}</el-button>
             </div>
-            
-
           </div>
-
-         
 
           <div style="display: flex;flex-direction: row;margin-right: 3%;">
               <el-button @click="downloadExcel()" type="success" plain>模版下载<i class="el-icon-download"></i></el-button>
@@ -65,9 +61,8 @@
               </div>
 
               <el-button @click="submitBatch()" type="success" plain>批量录入<i class="el-icon-refresh"></i></el-button>
+              <el-button @click="downlowd()" type="info">导出<i class="el-icon-download"></i></el-button>
                 
-
-              
           </div>
 
         </div>
@@ -407,6 +402,23 @@ export default {
           type: 'success'
       });
       this.getUser()
+    },
+
+    downlowd(){
+      let that = this;
+      let param ={
+        studio:that.studio,
+        openid:that.openid
+      }
+      let res = HttpPost("/downloadLesson",param)
+      res.then(res => {
+          console.log(res.data)
+          let feed_data = res.data
+          let file_name =  feed_data.split("/")[4];
+          console.log(file_name)
+          window.location.href = 'https://www.momoclasss.xyz:443/file/downloadLesson/'+that.studio+'/'+ file_name
+      })
+      
     },
 
     goOff() {
