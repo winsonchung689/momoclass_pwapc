@@ -115,15 +115,43 @@
 
           <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='了解我们'">
 
-            <div class="item" @click="classSystem()">
-                <div class="content">
-                  <div style="display: flex;justify-content: center;">
-                    <img style="width: 70px;height: 70px;" src="@/assets/system.png" alt="">
-                  </div>
-                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课程体系</div>
+            <div class="item" @click="daily()">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 60px;height: 60px;" src="@/assets/daily.png" alt="">
                 </div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">视图动态</div>
               </div>
+            </div>
 
+            <div class="item" @click="daily()">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 60px;height: 60px;" src="@/assets/class.png" alt="">
+                </div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">我的课堂</div>
+              </div>
+            </div>
+
+            <div class="item" @click="classSystem()">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 70px;height: 70px;" src="@/assets/system.png" alt="">
+                </div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课程体系</div>
+              </div>
+            </div>
+
+            <div class="item" @click="daily()">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 70px;height: 70px;" src="@/assets/girl.png" alt="">
+                </div>
+                <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">招生章程</div>
+              </div>
+            </div>
+
+           
           </div>
 
           <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='课后互动'">
@@ -143,6 +171,15 @@
                     <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
+                </div>
+            </div>
+
+            <div class="item" @click="commentCenter(subject)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 65px;height: 65px;" src="@/assets/camera.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">我的相册</div>
                 </div>
             </div>
 
