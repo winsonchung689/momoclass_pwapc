@@ -12,7 +12,7 @@
 
         <div style="display:flex;margin-left: 2%;flex-direction: row;justify-content: space-between;margin-right: 3%;">
           <div style="color: cornflowerblue;font-weight: bolder;">总续课:{{ total_sum }}</div>
-          <div>
+          <div v-if="isShow">
             <el-switch
               v-model="package_value"
               active-text="全部"
