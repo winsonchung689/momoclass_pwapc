@@ -19,19 +19,6 @@
         </el-calendar>
       </div>
 
-      <el-dialog :title="leave_student" :visible.sync="dialogFormVisible" style="width: 80%;align-items: center;">
-        <div v-if="isSignIn">
-          <template>
-            <el-input-number v-model="class_count" :precision="2" :step="0.1" :max="10" step-strictly></el-input-number>
-          </template>
-        </div>
-        
-        <el-input v-model="mark_leave" placeholder="请输入备注"></el-input>
-        <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
-        </div>
-      </el-dialog>
 
       <el-table :data="tableData" style="width: 100%;font-size: small;font-size: medium;">
         <el-table-column type="expand">
@@ -71,107 +58,6 @@
         <el-table-column prop="duration" label="时间段" >
         </el-table-column>
       </el-table>
-
-
-      <div v-if="isComment" style="margin-bottom: 30px;">
-        <div>
-          <el-button type="text"  @click="back">取消</el-button>
-        </div>
-        <el-upload
-          list-type="picture-card"
-          style="display: inline"
-          :auto-upload="false"
-          :on-change="handleChange"
-          :file-list="fileList"
-          :multiple="true"
-          :type="file"
-          action="#">
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{file}">
-              <img
-                class="el-upload-list__item-thumbnail"
-                :src="file.url" alt=""
-              >
-            </div>
-        </el-upload>
-        <div>学生名: {{ leave_student }}</div>
-        <div>时间段: {{ leave_duration }}</div>
-
-        <div style="width: 40%;">
-          <el-input
-            placeholder="请输入课堂名称"
-            v-model="class_name"
-            clearable>
-          </el-input>
-        </div>
-        <div style="width: 60%;">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入课堂目标"
-            v-model="class_target">
-          </el-input>
-        </div>
-
-
-        <div>
-          积极度:
-          <el-rate
-            v-model="positive"
-            show-text>
-          </el-rate>
-        </div>
-        <div>
-          纪律性:
-          <el-rate
-            v-model="discipline"
-            show-text>
-          </el-rate>
-        </div>
-        <div>
-          开心值:
-          <el-rate
-            v-model="happiness"
-            show-text>
-          </el-rate>
-        </div>
-
-        <div style="width: 80%;">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            placeholder="请输入老师点评"
-            v-model="class_comment">
-          </el-input>
-        </div>
-
-        <div style="color: pink;">录音时长: {{ record_duration }} 秒</div>
-          <div style="display: flex;flex-direction: row;">
-            <div>
-              <el-button-group>
-              <el-button @click="startRecorder" type="primary" >开始录音</el-button>
-              <el-button @click="pauseRecorder" type="primary" >暂停录音</el-button>
-              <el-button @click="resumeRecorder" type="primary" >继续录音</el-button>
-              </el-button-group>
-            </div>
-
-            <div>
-              <el-button-group>
-                <el-button @click="stopRecorder" type="primary" >停止录音</el-button>
-              <el-button @click="playRecorder" type="success" >播放录音</el-button>
-              <el-button @click="stopPlayRecorder" type="success" >停止播放</el-button>
-              </el-button-group>
-            </div>
-
-            <div style="display: flex;justify-content: center; margin-left: 5%;">
-              <el-button type="primary" @click="comment">提交</el-button>
-            </div>
-          
-
-          </div>
-        
-          
-      </div>
 
     </div>
   </div>
@@ -361,7 +247,7 @@ export default {
           openid:that.openid,
           test:'0'
         }
-      const lessons = await HttpPost('/getSchedule', param)
+      const lessons = await HttpPost('/getTodayClasses', param)
       let lessons_data = lessons.data;
       console.log(lessons_data)
       that.tableData = []
@@ -397,54 +283,30 @@ export default {
             var children = []
             for(var i=0; i < details_data.length; i++ ){
               var json_detail = {}
-              if(that.role == 'boss' || that.role === 'teacher'){
-                  const student_name = details_data[i].student_name
-                  const id = details_data[i].id
-                  const leave = details_data[i].leave
-                  const sign_up = details_data[i].sign_up
-                  const comment_status = details_data[i].comment_status
-                  const subject = details_data[i].subject
-                  const duration = details_data[i].duration
-                  const class_number = details_data[i].class_number
-                  const sign_select = false
-                  const leave_select = false
+              let studentlist = that.student_string.split(',')
+              const student_name = details_data[i].student_name
+              let index = studentlist.indexOf(student_name)
 
-                  json_detail.student_name = student_name
-                  json_detail.leave = leave
-                  json_detail.sign_up = sign_up
-                  json_detail.comment_status = comment_status
-                  json_detail.id = id
-                  json_detail.subject = subject
-                  json_detail.duration = duration
-                  json_detail.class_number = class_number
-                  json_detail.sign_select = sign_select
-                  json_detail.leave_select = leave_select
-                  children.push(json_detail)
-              }else if (that.role == 'client'){
-                  let studentlist = that.student_string.split(',')
-                  const student_name = details_data[i].student_name
-                  let index = studentlist.indexOf(student_name)
+              if(index >= 0){
+                const id = details_data[i].id
+                const leave = details_data[i].leave
+                const sign_up = details_data[i].sign_up
+                const comment_status = details_data[i].comment_status
+                const subject = details_data[i].subject
+                const duration = details_data[i].duration
+                const class_number = details_data[i].class_number
 
-                  if(index >= 0){
-                    const id = details_data[i].id
-                    const leave = details_data[i].leave
-                    const sign_up = details_data[i].sign_up
-                    const comment_status = details_data[i].comment_status
-                    const subject = details_data[i].subject
-                    const duration = details_data[i].duration
-                    const class_number = details_data[i].class_number
-
-                    json_detail.student_name = student_name
-                    json_detail.leave = leave
-                    json_detail.sign_up = sign_up
-                    json_detail.comment_status = comment_status
-                    json_detail.id = id
-                    json_detail.subject = subject
-                    json_detail.duration = duration
-                    json_detail.class_number = class_number
-                    children.push(json_detail)
-                }
+                json_detail.student_name = student_name
+                json_detail.leave = leave
+                json_detail.sign_up = sign_up
+                json_detail.comment_status = comment_status
+                json_detail.id = id
+                json_detail.subject = subject
+                json_detail.duration = duration
+                json_detail.class_number = class_number
+                children.push(json_detail)
               }
+              
             }
             json.children = children
             if(children.length>0){

@@ -155,6 +155,15 @@
                 </div>
             </div>
 
+            <div class="item" @click="classBooking(subject,studio,student_name)">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 60px;height: 60px;" src="@/assets/timer.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">查看排课</div>
+                </div>
+            </div>
+
             <div class="item" @click="commentCenter(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
@@ -247,7 +256,8 @@ data () {
     id:'',
     student_name:'',
     mark:'',
-    remind_type:''
+    remind_type:'',
+    student_string:''
   }
 },
 
@@ -290,6 +300,7 @@ methods: {
         that.subject = users.data[0].subjects
         that.comment_style = users.data[0].comment_style
         that.send_time = users.data[0].send_time
+        that.student_string = users.data[0].sb
         
         if('boss' == that.role){
           that.mode = '校长模式'
@@ -388,6 +399,10 @@ methods: {
 
   calender (subject) {
     this.$router.push({ path: '/calendar', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
+  },
+
+  classBooking (subject) {
+    this.$router.push({ path: '/classBooking', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,student_string:this.student_string } })
   },
 
   subscribe_buttom(){
