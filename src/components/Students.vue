@@ -40,7 +40,7 @@
               </div>
               <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;align-items: center;">
                 <div style="font-weight: bolder;margin-right: 5px;color: rgb(71, 126, 228);font-size: medium;;">余课时: {{ item.left_amount }} </div>
-                <div style="font-weight: bold;margin-right: 5px;color: #7f8281;">历史课时: {{ item.left_amount }} </div>
+                <div style="font-weight: bold;margin-right: 5px;color: #7f8281;">历史课时: {{ item.total_amount }} </div>
               </div>
             </div>
 
