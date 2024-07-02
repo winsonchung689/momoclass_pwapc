@@ -32,15 +32,15 @@
           <div class="lesson">
             <img style="width: 50px;height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" src="@/assets/logo.png" alt="">
             
-            <div style="margin-left: 40px;margin-top: 10px;">
+            <div style="margin-left: 40px;margin-top: 7px;">
               <div style="font-weight: bolder;font-size: large;color: #43504a;">{{ item.student_name }}</div>
-              <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                <div style="margin-right: 5px;">科目: {{ item.subject }} </div>
-                <div style="margin-right: 5px;">积分: {{ item.points }} </div>
+              <div style="color: #ffff;font-size: small;display: flex;direction: row;margin-top: 5px;">
+                <div style="font-weight: bold;margin-right: 5px;">科目: {{ item.subject }} </div>
+                <div style="font-weight: bold;margin-right: 5px;">积分: {{ item.points }} </div>
               </div>
-              <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                <div style="margin-right: 5px;color: rgb(71, 126, 228);font-size: small;;">余课时: {{ item.left_amount }} </div>
-                <div style="margin-right: 5px;">历史课时: {{ item.left_amount }} </div>
+              <div style="color: #fff;font-size: small;display: flex;direction: row;margin-top: 5px;align-items: center;">
+                <div style="font-weight: bolder;margin-right: 5px;color: rgb(71, 126, 228);font-size: medium;;">余课时: {{ item.left_amount }} </div>
+                <div style="font-weight: bold;margin-right: 5px;color: #7f8281;">历史课时: {{ item.left_amount }} </div>
               </div>
             </div>
 
@@ -258,7 +258,7 @@ export default {
 <style scoped>
 
 .lesson{
-  background-color: #ceab93;
+  background-color: #dad0ca;
   width: 95%;
   height: 90px;
   border-radius: 0.5rem;

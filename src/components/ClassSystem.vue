@@ -52,7 +52,7 @@ export default {
         slidesPerView:3,
         loopedSlides:5,
         autoplay: {
-          delay: 10000,
+          delay: 5000,
           disableOnInteraction: false,
           reverseDirection:false
         }
