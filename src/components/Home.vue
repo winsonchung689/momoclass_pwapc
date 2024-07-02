@@ -77,7 +77,7 @@
             <div class="item" @click="school(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 70px;height: 70px;" src="@/assets/school.png" alt="">
+                    <img style="width: 60px;height: 60px;" src="@/assets/school.png" alt="">
                   </div>
                   <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
                 </div>
@@ -86,7 +86,7 @@
             <div class="item" @click="timeTable(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 70px;height: 70px;" src="@/assets/timetable.png" alt="">
+                    <img style="width: 60px;height: 60px;" src="@/assets/timetable.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">班级排课</div>
                 </div>
@@ -95,7 +95,7 @@
             <div class="item" @click="calender(subject,studio,student_name)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 70px;height: 70px;" src="@/assets/tosignin.png" alt="">
+                    <img style="width: 60px;height: 60px;" src="@/assets/tosignin.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">点名签到</div>
                 </div>
@@ -104,7 +104,7 @@
             <div class="item" @click="accountBook()">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
-                  <img style="width: 70px;height: 70px;" src="@/assets/account_book.png" alt="">
+                  <img style="width: 60px;height: 60px;" src="@/assets/account_book.png" alt="">
                 </div>
                 <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">收入支出</div>
               </div>
