@@ -167,22 +167,16 @@
             <div class="item" @click="commentCenter(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 70px;height: 70px;" src="@/assets/comment.png" alt="">
+                    <img style="width: 60px;height: 60px;" src="@/assets/comment.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
                 </div>
             </div>
 
           </div>
-
       </div>
 
     </div>
-
-    
-
-  
-
 
   </div>
 </template>
