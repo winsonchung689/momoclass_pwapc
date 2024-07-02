@@ -246,10 +246,6 @@ data () {
     comment_nickname:'',
     comment_postid:'',
     index_out:'',
-    srcList: [
-        'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-        'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
-    ],
     title:'了解我们',
     sb:'',
     dialogFormVisible:false,
@@ -269,6 +265,7 @@ created () {
 mounted() {
 
 },
+
 methods: {
 
   async getUser () {
@@ -360,7 +357,7 @@ methods: {
         that.dialogFormVisible = false
         that.getUser()
       }
-    },
+  },
 
   bindSelect(item){
     let that = this;
