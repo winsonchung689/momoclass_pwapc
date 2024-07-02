@@ -114,7 +114,7 @@
 
           <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='了解我们'">
 
-            <div class="item" @click="daily()">
+            <div class="item" @click="classSystem('环境')">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
                   <img style="width: 60px;height: 60px;" src="@/assets/light.png" alt="">
@@ -123,7 +123,7 @@
               </div>
             </div>
 
-            <div class="item" @click="classSystem()">
+            <div class="item" @click="classSystem('课程体系')">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
                   <img style="width: 60px;height: 60px;" src="@/assets/desk.png" alt="">
@@ -132,7 +132,7 @@
               </div>
             </div>
 
-            <div class="item" @click="daily()">
+            <div class="item" @click="classSystem('广告')">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
                   <img style="width: 60px;height: 60px;" src="@/assets/abc.png" alt="">
@@ -361,8 +361,8 @@ methods: {
     this.$router.push({ path: '/timetable', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid,send_time:this.send_time,remind_type:this.remind_type,hours:this.hours } })
   },
 
-  classSystem(){
-    this.$router.push({ path: '/classsystem', query: { studio: this.studio,role:this.role,openid:this.openid } })
+  classSystem(type){
+    this.$router.push({ path: '/classsystem', query: { studio: this.studio,role:this.role,openid:this.openid,type } })
   },
 
   accountBook () {

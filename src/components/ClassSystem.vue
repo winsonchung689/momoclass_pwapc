@@ -37,6 +37,7 @@ export default {
     return {
       subject:this.$route.query.subject,
       studio:this.$route.query.studio,
+      type:this.$route.query.type,
       role:this.$route.query.role,
       openid:this.$route.query.openid,
       comment_style:this.$route.query.comment_style,
@@ -70,9 +71,10 @@ export default {
       let that = this
       let param ={
           studio:that.studio,
-          class_target:'课程体系',
+          class_target:that.type,
           page:1,
           openid:that.openid,
+          header:that.type
       }
       console.log(param)
       const res = await HttpPost('/getClassSys', param)
