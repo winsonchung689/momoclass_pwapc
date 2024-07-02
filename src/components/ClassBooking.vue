@@ -309,9 +309,7 @@ export default {
               
             }
             json.children = children
-            if(children.length>0){
-              that.tableData.push(json)
-            }
+            that.tableData.push(json)
           }
       }
       // console.log(that.tableData)
