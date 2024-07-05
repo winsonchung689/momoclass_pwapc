@@ -604,7 +604,6 @@ export default {
     cancel_buttom(){
       let that = this;
       that.dialogFormVisible = false
-      that.number = ''
       that.student_name = ''
       that.all_lesson = '',
       that.give_lesson = '',
@@ -616,6 +615,24 @@ export default {
     
     async confirm_buttom(){
       let that = this 
+      let all_lesson = that.all_lesson;
+      if(all_lesson==''){
+        all_lesson = 0;
+      }
+      let give_lesson = that.give_lesson;
+      if(give_lesson==''){
+        give_lesson = 0;
+      }
+      let total_money = that.total_money;
+      if(total_money==''){
+        total_money = 0;
+      }
+      let discount_money = that.discount_money;
+      if(discount_money==''){
+        discount_money = 0;
+      }
+
+
       let param = {
         studio: that.studio,
         subject:that.subject,
@@ -631,28 +648,28 @@ export default {
         total_amount:that.total_amount,
         left_amount:that.left_amount,
         openid:that.openid,
-        all_lesson:that.all_lesson,
-        give_lesson:that.give_lesson,
-        total_money:that.total_money,
-        discount_money:that.discount_money,
+        all_lesson:all_lesson,
+        give_lesson:give_lesson,
+        total_money:total_money,
+        discount_money:discount_money,
         mark:that.mark        
       }
 
       let status = ''
       if(that.type == '扣课'){
         param.minus_amount = that.number
-        console.log(param)
+        // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '积分'){
         param.coins_amount = that.number
-        console.log(param)
+        // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '总课时'){
         param.total_amount = that.number
         param.modify_type = 'total_modify'
-        console.log(param)
+        // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '余课时'){
@@ -662,10 +679,9 @@ export default {
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '续课'){
-        param.lessons_amount = parseInt(that.all_lesson)  +  parseInt(that.give_lesson)
-        param.left_amount = that.number
+        param.lessons_amount = parseInt(all_lesson)  +  parseInt(give_lesson)
         param.modify_type = 'add_lessons'
-        console.log(param)
+        // console.log(param)
         let res = await HttpPost("/updateLesson",param)
         status = res.status
       }else if(that.type == '划课'){
@@ -692,7 +708,6 @@ export default {
       }
 
       that.dialogFormVisible = false
-      that.number = ''
       that.student_name = ''
       that.all_lesson = '',
       that.give_lesson = '',
