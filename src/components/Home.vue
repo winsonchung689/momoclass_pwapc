@@ -112,6 +112,18 @@
 
           </div>
 
+          <div style="margin-top: 5%;display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
+            <div class="item" @click="analysis()">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 40px;height: 40px;" src="@/assets/analysis.png" alt="">
+                  </div>
+                  <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">统计面板</div>
+                </div>
+            </div>
+
+          </div>
+
           <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='了解我们'">
 
             <div class="item" @click="classSystem('环境')">
@@ -386,6 +398,10 @@ methods: {
 
   school (subject) {
     this.$router.push({ path: '/school', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+  },
+
+  analysis () {
+    this.$router.push({ path: '/analysis', query: {studio: this.studio,role:this.role,openid:this.openid } })
   },
 
   calender (subject) {

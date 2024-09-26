@@ -26,6 +26,7 @@ const CommunityMini = () => import('@/components/CommunityMini')
 const ClassSystem = () => import('@/components/ClassSystem')
 const LessonPackage = () => import('@/components/LessonPackage')
 const ClassBooking = () => import('@/components/ClassBooking')
+const Analysis = () => import('@/components/Analysis')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -210,6 +211,14 @@ export default new Router({
       path: '/classBooking',
       name: 'ClassBooking',
       component: ClassBooking,
+      meta:{
+        showTabBar:false
+      }
+    },
+    {
+      path: '/analysis',
+      name: 'Analysis',
+      component: Analysis,
       meta:{
         showTabBar:false
       }
