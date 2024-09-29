@@ -53,6 +53,15 @@
           </div>
         </div>
 
+        <div style="color: #fff;border-radius: 1rem;align-items: center;height:40px;font-weight: bold;background-color:#9FA8DA;display: flex;flex-direction: row;justify-content: space-around;width: 80%;margin-left: 10%;">
+          <div>总签到：{{ total_sign }}</div>
+          <div>总课时：{{ total_lessons.toFixed(2) }}</div>
+          <div>总金额：{{ total_pay.toFixed(2) }}</div>
+          <div>总请假：{{ total_leaves }}</div>
+          <div>总试听：{{ total_try }}</div>
+        </div>
+
+
         <template>
           <el-table
             :data="tableData"
@@ -175,7 +184,12 @@ export default {
         }, {
           value: '金额',
           label: '金额'
-        }],
+      }],
+      total_sign:0,
+      total_lessons:0,
+      total_pay:0,
+      total_leaves:0,
+      total_try:0
     }
   },
 
@@ -295,6 +309,11 @@ export default {
 
       that.date_time_bar=[];
       that.sum_data_bar=[];
+      that.total_sign = 0;
+      that.total_lessons = 0;
+      that.total_pay = 0;
+      that.total_leaves = 0;
+      that.total_try = 0;
       for(var i in res_data){
         that.date_time_bar.push(res_data[i].create_time);
 
@@ -308,7 +327,11 @@ export default {
           that.sum_data_bar.push(res_data[i].weekPrice);
         }
         
-        
+        that.total_sign +=  res_data[i].signCount;
+        that.total_lessons += res_data[i].lessonCount;
+        that.total_pay += parseFloat(res_data[i].weekPrice);
+        that.total_leaves +=  res_data[i].leaveCount;
+        that.total_try += res_data[i].tryCount;
       }
       console.log(that.date_time_bar,that.sum_data_bar)
       that.initEcharts();
@@ -337,7 +360,10 @@ export default {
             type:'bar',
             barWidth:20,
             data:this.sum_data_bar,
-            barHeight:150
+            barHeight:150,
+            itemStyle: {
+              color: '#5C6BC0' // 这里设置柱状图的颜色
+          }
           }
         ]
       };
