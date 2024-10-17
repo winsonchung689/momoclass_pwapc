@@ -21,41 +21,14 @@
 
 
       <el-table :data="tableData" style="width: 100%;font-size: small;font-size: medium;">
-        <el-table-column type="expand">
-            <template slot-scope="props">
-                <div v-for="(item,index) in props.row.children" :key="index">
-                  <div style="margin-left: 75%;width: 20%;display: flex;flex-direction: row;">
-                    <el-button round v-if="isBoss && index==0" @click="cancelAllSign('signin',props.$index)" type="info" style="margin-bottom: 5px;font-size: small;">取消</el-button>
-                    <el-button round v-if="isBoss && index==0" @click="selectAllSign('signin',props.$index)" type="primary" style="margin-bottom: 5px;font-size: small;">全选</el-button>
-                    <el-button round v-if="isBoss && index==0" @click="selectActionConfirm('signin',props.$index)" type="success" style="margin-bottom: 5px;font-size: small;">确定</el-button>
-                  </div>
-                
-                  <div style="display: flex;flex-direction: row;margin-left: 1%;justify-content: left;margin-bottom: 20px;">
-                      
-                      <div style="margin-right: 5px;font-size:medium;margin-top: 10px;">{{ item.student_name }}</div>
-                      <div style="margin-left: 1%;display: flex;justify-content: space-between;width: 40%;">
-                        <div v-if="isBoss">
-                          <el-button @click="dialogFunction('leave','',item.class_number,item.student_name,item.subject,item.leave,item.duration,props.$index,index,'')" type="primary" plain style="font-size: small;">{{ item.leave }}</el-button>
-                          <el-checkbox v-model="item.leave_select" border></el-checkbox>
-                        </div>
 
-                        <div  v-if="isBoss">
-                          <el-button @click="dialogFunction('signin',item.sign_up,item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,'')" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.sign_up }}</el-button>
-                          <el-checkbox v-model="item.sign_select" border></el-checkbox>
-                        </div>
-
-                        <el-button  v-if="isBoss" @click="dialogFunction('comment','',item.class_number,item.student_name,item.subject,'',item.duration,props.$index,index,item.comment_status)" type="primary" plain style="margin-right: 5px;font-size: small;">{{ item.comment_status }}</el-button>
-                        
-                      </div>
-                  </div>
-                </div>
-            </template>
-        </el-table-column>
         <el-table-column prop="subject" label="科目" >
         </el-table-column>
         <el-table-column prop="class_number" label="班号" >
         </el-table-column>
         <el-table-column prop="duration" label="时间段" >
+        </el-table-column>
+        <el-table-column prop="book_stauts" label="状态" >
         </el-table-column>
       </el-table>
 
@@ -221,7 +194,7 @@ export default {
 
     async getLesson () {
       let that = this
-
+      console.log(that.student_string)
       if(that.role == 'client'){
         that.isBoss = false
       }
@@ -250,69 +223,7 @@ export default {
       const lessons = await HttpPost('/getTodayClasses', param)
       let lessons_data = lessons.data;
       console.log(lessons_data)
-      that.tableData = []
-      let tmp = []
-      for( var i=1; i < lessons_data.length; i++ ){
-          const subject = lessons_data[i].subject
-          const class_number = lessons_data[i].class_number
-          const duration = lessons_data[i].duration
-          const id = lessons_data[i].id
-
-          let label = subject+class_number+duration
-          let index = tmp.indexOf(label)
-          if(index < 0){
-            var json = {};
-            json.subject = subject
-            json.class_number = class_number
-            json.duration = duration
-            json.id = id
-            tmp.push(label)
-
-            let param = {
-              date_time: that.date_time,
-              studio:that.studio,
-              subject:subject,
-              openid:that.openid,
-              duration:duration,
-              class_number:class_number.replace('(插班生)',''),
-              openid:that.openid
-            }
-            const details = await HttpPost('/getScheduleByClass', param)
-            let details_data = details.data;
-            
-            var children = []
-            for(var i=0; i < details_data.length; i++ ){
-              var json_detail = {}
-              let studentlist = that.student_string.split(',')
-              const student_name = details_data[i].student_name
-              let index = studentlist.indexOf(student_name)
-
-              if(index >= 0){
-                const id = details_data[i].id
-                const leave = details_data[i].leave
-                const sign_up = details_data[i].sign_up
-                const comment_status = details_data[i].comment_status
-                const subject = details_data[i].subject
-                const duration = details_data[i].duration
-                const class_number = details_data[i].class_number
-
-                json_detail.student_name = student_name
-                json_detail.leave = leave
-                json_detail.sign_up = sign_up
-                json_detail.comment_status = comment_status
-                json_detail.id = id
-                json_detail.subject = subject
-                json_detail.duration = duration
-                json_detail.class_number = class_number
-                children.push(json_detail)
-              }
-              
-            }
-            json.children = children
-            that.tableData.push(json)
-          }
-      }
-      // console.log(that.tableData)
+      that.tableData =lessons_data
     },
 
     async selectActionConfirm(type,index1){

@@ -80,7 +80,7 @@
                   <div style="display: flex;justify-content: center;">
                     <img style="width: 90px;height: 90px;" src="@/assets/school.png" alt="">
                   </div>
-                  <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
+                  <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
                 </div>
             </div>
 
@@ -119,7 +119,7 @@
                   <div style="display: flex;justify-content: center;">
                     <img style="width: 45px;height: 45px;" src="@/assets/analysis.png" alt="">
                   </div>
-                  <div style=";display: flex;justify-content:center;font-weight: bold;font-size: small;">统计面板</div>
+                  <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">统计面板</div>
                 </div>
             </div>
 
