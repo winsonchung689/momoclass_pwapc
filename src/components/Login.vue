@@ -167,7 +167,7 @@ export default {
                     that.$router.push({ path: '/Home', query: { openid: that.openid } })
                 } else {
                     this.$message({
-                        message: '用户不存在,请注册！',
+                        message: '用户不存在或未在小程序录入电话！',
                         type: 'warning'
                     });
                 }
