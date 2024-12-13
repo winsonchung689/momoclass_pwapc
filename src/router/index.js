@@ -11,7 +11,7 @@ const Records = () => import('@/components/Records')
 const SignUpRecord = () => import('@/components/SignUpRecord')
 const LeaveRecord = () => import('@/components/LeaveRecord')
 const GrowthRecord = () => import('@/components/GrowthRecord')
-const WorkBenches = () => import('@/components/WorkBenches')
+// const WorkBenches = () => import('@/components/WorkBenches')
 const Timetable = () => import('@/components/Timetable')
 const Calendar = () => import('@/components/Calendar')
 const School = () => import('@/components/School')
@@ -22,7 +22,7 @@ const Authorization = () => import('@/components/Authorization')
 const AnnouncementRecord = () => import('@/components/AnnouncementRecord')
 const AccountBook = () => import('@/components/AccountBook')
 const Post = () => import('@/components/Post')
-const CommunityMini = () => import('@/components/CommunityMini')
+// const CommunityMini = () => import('@/components/CommunityMini')
 const ClassSystem = () => import('@/components/ClassSystem')
 const LessonPackage = () => import('@/components/LessonPackage')
 const ClassBooking = () => import('@/components/ClassBooking')
@@ -95,14 +95,14 @@ export default new Router({
         showTabBar:false
       }
     },
-    {
-      path: '/workbenches',
-      name: 'WorkBenches',
-      component: WorkBenches,
-      meta:{
-        showTabBar:true
-      }
-    },
+    // {
+    //   path: '/workbenches',
+    //   name: 'WorkBenches',
+    //   component: WorkBenches,
+    //   meta:{
+    //     showTabBar:true
+    //   }
+    // },
     {
       path: '/timetable',
       name: 'Timetable',
@@ -179,14 +179,6 @@ export default new Router({
       path: '/post',
       name: 'Post',
       component: Post,
-      meta:{
-        showTabBar:false
-      }
-    },
-    {
-      path: '/communitymini',
-      name: 'CommunityMini',
-      component: CommunityMini,
       meta:{
         showTabBar:false
       }
