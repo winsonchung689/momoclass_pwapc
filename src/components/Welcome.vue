@@ -1,6 +1,14 @@
 <template>
-  <div class='welcome'>
-    <img src='@/assets/welcome.png' alt=''>
+  <div :style="screenStyle">
+    <div class='welcome' style="height: 60%;">
+      <img src='@/assets/welcome.png' alt=''>
+    </div>
+   
+    <div class="slogan">
+      <div style="margin-top: 10px;margin-left: 42%;font-size: x-large;">hello！</div>   
+      <div style="margin-left: 42%;">欢迎使用小桃子助手！</div> 
+      <div class="button">现在进入</div>
+    </div>
   </div>
 </template>
 
@@ -11,15 +19,29 @@ export default {
   data () {
     return {
       openid: '',
+      screenWidth: window.outerWidth,
+      screenHeight: window.outerHeight
+    }
+  },
+
+  computed:{
+
+    screenStyle(){
+      return{
+        width: this.screenWidth + 'px',
+        height: this.screenHeight + 'px',
+      }
     }
   },
 
   created () {
+    
     this.getCookie()
   },
 
   methods: {
     getCookie () {
+      console.log(this.screenHeight)
       if (document.cookie.length > 0) {
         var arr = document.cookie.split('; ')
         console.log(arr)
@@ -59,12 +81,38 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* margin-top: 10%; */
+  flex-direction: column;
 
 }
 
 .welcome img {
-  width: 10%;
-  height:10%;
-  margin-top: 10%;
+  width: 200px;
+  height:200px;
 }
+
+.slogan{
+  flex-direction: column;
+  border-top-right-radius: 3rem;
+  border-top-left-radius: 3rem;
+  height: 40%;
+  font-size: xx-large;
+  display: flex;
+  /* justify-content: center; */
+  background-color: #535CBE; 
+  color: #ffff;
+}
+
+.button{
+  margin-top: 50px;
+  margin-left: 45%;
+  border-radius: 0.5rem;
+  justify-content: center;
+  display: flex;
+  background-color: #ffff;
+  color: #535CBE;
+  width: 10%;
+
+}
+
 </style>

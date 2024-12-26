@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div style="background-color: #a3c6d3 ;width: 100%;margin-top: auto;display: flex;flex-direction: row;">
+    <!-- 个人信息 -->
+    <div style="background-color: #535CBE ;width: 100%;margin-top: auto;display: flex;flex-direction: row;">
         <div style="margin-top: auto;display: flex;flex-direction: row;width: 90%;">
           <div style="margin-top: auto;display: flex;flex-direction: row;">
               <div><img :src="avatarurl" alt="" style="width: 50px;height: 50px;border-radius: 50%; position: relative;"></div>
@@ -28,6 +29,7 @@
         </div>
     </div>
 
+    <!-- 学生 -->
     <div v-if="!isBoss" style="font-weight: bolder;color: #a981aa;display: flex;flex-direction: row;align-items: center;">
       <div >学生：{{sb}}</div>
       <div style="margin-left: 10px;color: rgb(111, 128, 139);margin-top: 2px;">
@@ -35,6 +37,7 @@
       </div>
     </div>
 
+    <!-- 添加框 -->
     <el-dialog :visible.sync="dialogFormVisible" style="width: 400px">
       <el-input v-model="student_name" :placeholder="mark"></el-input>
       <div slot="footer" style="display: flex;flex-direction: row;justify-content: space-between;">
@@ -45,6 +48,7 @@
 
     <div style="display: flex;flex-direction: row;width: 100%;">
 
+      <!-- 菜单 -->
       <el-col style="width: 10%;">
         <div style="color: #6c6c6e;font-weight: bolder;font-size: large;background-color: rgb(251, 248, 246);display: flex;justify-content: center;">
           <div>菜单</div>
@@ -71,6 +75,8 @@
         </el-menu>
       </el-col>
 
+
+      <!-- 主体 -->
       <div style="width: 90%;">
         <!-- 教务工具 -->
         <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>

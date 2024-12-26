@@ -8,6 +8,7 @@
       </div>
 
       <div style="margin-top: 3%;">
+        <!-- 按钮 -->
         <div style="display:flex;justify-content: space-between;margin-left: 3%;margin-bottom: 10px;">
           <div style="display: flex;flex-direction: row;">
             <el-button-group>
@@ -15,6 +16,7 @@
               <el-button @click="refresh()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
             </el-button-group>
 
+            <!-- 搜索框 -->
             <div> 
               <el-autocomplete
                 popper-class="my-autocomplete"
@@ -67,14 +69,14 @@
 
         </div>
 
-
+        <!-- 人数 -->
         <div style="margin-bottom: 10px;font-weight:bolder;font-size: medium;display: flex;flex-direction: row;justify-content: space-around;">
           <div style="color: #4d67e8;">总人数: {{ total_student }}</div>
           <div style="color: #4d67e8;">总课时数: {{ total_amount_all }}</div>
           <div style="color: #4d67e8;">余课时数: {{ left_amount_all }}</div>
         </div>
 
-        
+        <!-- 添加框 -->
         <div v-if="isAdd" style="margin-bottom: 30px;">
           <div>
             <el-button type="text"  @click="back">取消</el-button>
@@ -94,19 +96,24 @@
           </div>
 
           <div style="font-size: small;font-weight: bolder;">
-            总课时:
-            <el-input-number v-model="total_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
+            总课时（不含赠）:
+            <el-input-number v-model="total_amount" :precision="2" :step="1" :max="10000"></el-input-number>
           </div>
           <div style="font-size: small;font-weight: bolder;">
-            余课时:
-            <el-input-number v-model="left_amount" :precision="2" :step="1" :max="10000">总课时</el-input-number>
+            余课时（不含赠）:
+            <el-input-number v-model="left_amount" :precision="2" :step="1" :max="10000"></el-input-number>
+          </div>
+          <div style="font-size: small;font-weight: bolder;">
+           赠课时:
+            <el-input-number v-model="give_lesson" :precision="2" :step="1" :max="10000"></el-input-number>
           </div>
 
           <div style="display: flex;justify-content: center; margin-top: 20px;">
             <el-button type="primary" @click="submit_add">提交</el-button>
           </div>
         </div>
-        
+
+        <!-- 列表 -->
         <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
           <div class="card">
             <div class="lesson">
@@ -454,7 +461,8 @@ export default {
         student_name: that.student_name,
         total_amount: that.total_amount,
         left_amount: that.left_amount,
-        openid:that.openid
+        openid:that.openid,
+        give_lesson:that.give_lesson
       }
       // console.log(param)
       let res = HttpPost("/singleAdd",param)
@@ -504,8 +512,10 @@ export default {
         }
         const lessons = await HttpPost('/getLesson', param)
         const lessons_data = lessons.data
+        // console.log(lessons)
         that.items =[]
         for( var i in lessons_data){
+          const delete_status = lessons_data[i].delete_status
           const total_amount = lessons_data[i].total_amount
           const left_amount = lessons_data[i].left_amount
           const subject = lessons_data[i].subject
@@ -537,7 +547,9 @@ export default {
           json.coins = coins
           json.id = id
           
-          that.items.push(json)
+          if(delete_status == 0){
+            that.items.push(json)
+          }
         }
     },
 
