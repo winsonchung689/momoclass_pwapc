@@ -12,8 +12,8 @@
         <div style="display:flex;justify-content: space-between;margin-left: 3%;margin-bottom: 10px;">
           <div style="display: flex;flex-direction: row;">
             <el-button-group>
-              <el-button @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
-              <el-button @click="refresh()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
+              <el-button style="background-color: #4d67e8;" @click="singleAdd()" type="primary">新增学员<i class="el-icon-user el-icon--right"></i></el-button>
+              <el-button style="background-color: #4d67e8;color: #fff;" @click="refresh()" type="primary" plain>刷新<i class="el-icon-refresh el-icon--right"></i></el-button>
             </el-button-group>
 
             <!-- 搜索框 -->
@@ -121,17 +121,17 @@
               
               <div style="margin-left: 10px;margin-top: 20px;">
                 <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
-                  <div style="margin-right: 5px;color: #43504a;">科目: {{ item.subject }} </div>
+                  <div style="margin-right: 5px;color: #ffff;">科目: {{ item.subject }} </div>
                 </div>
 
-                <div style="font-weight: bolder;color: #43504a;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
+                <div style="font-weight: bolder;color: #ffff;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
                   <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                    <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #ea8c28;margin-right: 5px;font-size:medium;">余课时: {{ item.left_amount }} </div>
-                    <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #a4a499;margin-left: 15px;">历史课时: {{ item.total_amount }} </div>
+                    <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #ffff;margin-right: 5px;">余课时: {{ item.left_amount }} </div>
+                    <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #ffff;margin-left: 15px;">历史课时: {{ item.total_amount }} </div>
                   </div>
                   <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
-                    <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #4d67e8;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
-                    <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #4d67e8;margin-left: 5px;">单课积分: {{ item.coins }}</div>
+                    <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #ffff;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
+                    <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #ffff;margin-left: 5px;">单课积分: {{ item.coins }}</div>
                   </div>
               </div>
 
@@ -737,7 +737,7 @@ export default {
 <style scoped>
 
 .lesson{
-  background-color: rgb(226, 235, 217);
+  /* background-color: rgb(226, 235, 217); */
   width: 85%;
   height: 90px;
   border-radius: 0.5rem;
@@ -748,7 +748,7 @@ export default {
 }
 
 .card{
-  background-color: rgb(226, 235, 217);
+  background-color: #535CBE;
   width: 95%;
   border-radius: 0.5rem;
 }

@@ -84,7 +84,7 @@
             <div class="item" @click="school(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 90px;height: 90px;" src="@/assets/school.png" alt="">
+                    <img style="width: 90px;height: 90px;" src="@/assets/addst.png" alt="">
                   </div>
                   <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">学员管理</div>
                 </div>
@@ -93,7 +93,7 @@
             <div class="item" @click="timeTable(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 90px;height: 90px;" src="@/assets/timetable.png" alt="">
+                    <img style="width: 120px;height: 90px;margin-left: 30px;" src="@/assets/classview.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">班级排课</div>
                 </div>
@@ -102,7 +102,7 @@
             <div class="item" @click="calender(subject,studio,student_name)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 90px;height: 90px;" src="@/assets/tosignin.png" alt="">
+                    <img style="width: 90px;height: 90px;" src="@/assets/schedule.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">点名签到</div>
                 </div>
@@ -123,7 +123,7 @@
             <div class="item" @click="analysis()">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 45px;height: 45px;" src="@/assets/analysis.png" alt="">
+                    <img style="width: 90px;height: 90px;" src="@/assets/analyze.png" alt="">
                   </div>
                   <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">统计面板</div>
                 </div>
@@ -137,7 +137,7 @@
             <div class="item" @click="classSystem('环境')">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
-                  <img style="width: 90px;height: 90px;" src="@/assets/light.png" alt="">
+                  <img style="width: 90px;height: 90px;" src="@/assets/classroom.png" alt="">
                 </div>
                 <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">我的课堂</div>
               </div>
@@ -146,7 +146,7 @@
             <div class="item" @click="classSystem('课程体系')">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
-                  <img style="width: 90px;height: 90px;" src="@/assets/desk.png" alt="">
+                  <img style="width: 90px;height: 90px;" src="@/assets/system.png" alt="">
                 </div>
                 <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课程体系</div>
               </div>
@@ -155,7 +155,7 @@
             <div class="item" @click="classSystem('广告')">
               <div class="content">
                 <div style="display: flex;justify-content: center;">
-                  <img style="width: 90px;height: 90px;" src="@/assets/abc.png" alt="">
+                  <img style="width: 90px;height: 90px;" src="@/assets/recruit.png" alt="">
                 </div>
                 <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">招生章程</div>
               </div>
@@ -167,7 +167,7 @@
             <div class="item" @click="students()">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 80px;height: 80px;" src="@/assets/book.png" alt="">
+                    <img style="width: 90px;height: 90px;" src="@/assets/student_list.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">学生列表</div>
                 </div>
@@ -176,7 +176,7 @@
             <div class="item" @click="classBooking(subject,studio,student_name)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 80px;height: 80px;" src="@/assets/timer.png" alt="">
+                    <img style="width: 90px;height: 90px;" src="@/assets/booking.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">查看排课</div>
                 </div>
@@ -185,7 +185,7 @@
             <div class="item" @click="commentCenter(subject)">
                 <div class="content">
                   <div style="display: flex;justify-content: center;">
-                    <img style="width: 90px;height: 90px;" src="@/assets/comment.png" alt="">
+                    <img style="width: 90px;height: 90px;" src="@/assets/comment3.png" alt="">
                   </div>
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
                 </div>
