@@ -186,6 +186,7 @@ export default {
         const lessons_data = lessons.data
         that.items =[]
         for( var i in lessons_data){
+            const delete_status = lessons_data[i].delete_status
             const total_amount = lessons_data[i].total_amount
             const left_amount = lessons_data[i].left_amount
             const subject = lessons_data[i].subject
@@ -200,7 +201,9 @@ export default {
             json.left_amount = left_amount
             json.points = points
             
-            that.items.push(json)
+            if(delete_status == 0){
+              that.items.push(json)
+            }
         }
     },
 
