@@ -8,7 +8,6 @@
       </div>
     
       <div style="margin-top: 15%;">
-  
         <el-switch
           v-model="is_private"
           active-text="是否仅我的社区可见"
