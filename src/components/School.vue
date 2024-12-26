@@ -664,7 +664,8 @@ export default {
         give_lesson:give_lesson,
         total_money:total_money,
         discount_money:discount_money,
-        mark:that.mark        
+        mark:that.mark,
+        record_type:'合并'        
       }
 
       let status = ''
