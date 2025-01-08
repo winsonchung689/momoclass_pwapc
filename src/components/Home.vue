@@ -304,7 +304,7 @@ methods: {
         }
 
         that.nick_name = users.data[0].nick_name
-        that.avatarurl = users.data[0].avatarurl
+        that.avatarurl = ImageUrl + users.data[0].avatarurl.split("/")[5]
         that.role = users.data[0].role
         that.subject = users.data[0].subjects
         that.comment_style = users.data[0].comment_style
