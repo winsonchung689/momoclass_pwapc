@@ -44,7 +44,7 @@
               <el-button plain type="info"  @click="getAbnormalStudent('package')">课包监控:{{ abnormal_package }}</el-button>
             </div>
           </div>
-
+          <!-- 下载 -->
           <div style="display: flex;flex-direction: row;margin-right: 3%;">
               <el-button @click="downloadExcel()" type="success" plain>模版下载<i class="el-icon-download"></i></el-button>
                   
@@ -702,8 +702,6 @@ export default {
         // console.log(param)
         let res = await HttpPost("/consumeLesson",param)
         status = res.status
-        let sign = await HttpPost("/insertSignUp",param)
-        status = sign.status
       }
       
       console.log(status)
