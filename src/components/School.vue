@@ -189,6 +189,7 @@
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import { UploadFile } from '@/api'
+import { ImageUrl } from '@/api'
 
 
 export default {
@@ -272,9 +273,11 @@ export default {
           const points = lessons_data[i].points
           const studio = lessons_data[i].studio
           const student_name = lessons_data[i].student_name
-          let avatarurl = lessons_data[i].avatarurl
+          let avatarurl =  lessons_data[i].avatarurl
           if(avatarurl=='未绑定'){
             avatarurl = "https://www.momoclasss.xyz:443/data1/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
+          }else{
+            avatarurl =  ImageUrl + lessons_data[i].avatarurl.split('/')[5]
           }
           const parent = lessons_data[i].parent
           const percentage = lessons_data[i].percent
