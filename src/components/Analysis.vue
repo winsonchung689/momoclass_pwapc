@@ -55,8 +55,8 @@
 
         <div style="color: #fff;border-radius: 1rem;align-items: center;height:40px;font-weight: bold;background-color:#9FA8DA;display: flex;flex-direction: row;justify-content: space-around;width: 80%;margin-left: 10%;">
           <div>总签到：{{ total_sign }}</div>
-          <div>总课时：{{ total_lessons.toFixed(2) }}</div>
-          <div>总金额：{{ total_pay.toFixed(2) }}</div>
+          <div>总课时：{{ total_lessons }}</div>
+          <div>总金额：{{ total_pay }}</div>
           <div>总请假：{{ total_leaves }}</div>
           <div>总试听：{{ total_try }}</div>
         </div>
@@ -328,7 +328,7 @@ export default {
         }
         
         that.total_sign +=  res_data[i].signCount;
-        that.total_lessons += res_data[i].lessonCount;
+        that.total_lessons += parseFloat(res_data[i].lessonCount);
         that.total_pay += parseFloat(res_data[i].weekPrice);
         that.total_leaves +=  res_data[i].leaveCount;
         that.total_try += res_data[i].tryCount;
