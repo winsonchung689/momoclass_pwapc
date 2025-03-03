@@ -329,7 +329,7 @@ export default {
       formdata.append('class_target',录音文件);
         
       let res = await UploadFile('/push_photo', formdata)
-      that.mp3_url = res.data.split("/")[3]
+      that.mp3_url = res.data.split("/")[4]
       console.log(res,that.mp3_url)
     },
 
@@ -714,7 +714,8 @@ export default {
 
 
         let res = await UploadFile('/push_photo', formdata)
-        let uuid  = res.data.split("/")[3]
+        // console.log(res)
+        let uuid  = res.data.split("/")[4]
         that.uuids.push(uuid)
         console.log(that.uuids)
     },

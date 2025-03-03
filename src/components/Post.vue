@@ -131,7 +131,7 @@
         formdata.append('photo',file.raw);
 
         let res = await UploadFile('/push_photo', formdata)
-        let uuid  = res.data.split("/")[3]
+        let uuid  = res.data.split("/")[4]
         that.uuids.push(uuid)
         // console.log(that.uuids)
       },

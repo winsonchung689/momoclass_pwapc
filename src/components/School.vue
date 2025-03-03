@@ -275,7 +275,7 @@ export default {
           const student_name = lessons_data[i].student_name
           let avatarurl =  lessons_data[i].avatarurl
           if(avatarurl=='未绑定'){
-            avatarurl = "https://www.momoclasss.xyz:443/data1/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
+            avatarurl = "https://www.momoclasss.xyz:443/data/disk/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
           }else{
             avatarurl =  ImageUrl + lessons_data[i].avatarurl.split('/')[5]
           }
@@ -527,7 +527,7 @@ export default {
           const student_name = lessons_data[i].student_name
           let avatarurl = lessons_data[i].avatarurl
           if(avatarurl=='未绑定'){
-            avatarurl = "https://www.momoclasss.xyz:443/data1/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
+            avatarurl = "https://www.momoclasss.xyz:443/data/disk/uploadimages/fa8a634a-40c2-412a-9a95-2bd8d5ba5675.png"
           }
           const parent = lessons_data[i].parent
           const percentage = lessons_data[i].percent
