@@ -210,7 +210,8 @@ export default {
       let param ={
         studio:that.studio,
         openid:that.openid,
-        type:type
+        type:type,
+        student_name:data.student_name
       }
       let res = HttpPost("/getDownloadDataByType",param)
       res.then(res => {
