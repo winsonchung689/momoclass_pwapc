@@ -46,8 +46,8 @@
       </div>
     </el-dialog>
 
+    <!-- 主页 -->
     <div style="display: flex;flex-direction: row;width: 100%;">
-
       <!-- 菜单 -->
       <el-col style="width: 10%;">
         <div style="color: #6c6c6e;font-weight: bolder;font-size: large;background-color: rgb(251, 248, 246);display: flex;justify-content: center;">
@@ -74,12 +74,11 @@
           
         </el-menu>
       </el-col>
-
-
       <!-- 主体 -->
       <div style="width: 90%;">
-        <!-- 教务工具 -->
-        <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>
+          <!-- 教务工具 -->
+          <div style="background-color: rgb(251, 248, 246);font-size: large;font-weight: bolder;color: rgb(107, 172, 155);">{{ title }}</div>
+            <!-- 第一行 -->
           <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
             <div class="item" @click="school(subject)">
                 <div class="content">
@@ -118,15 +117,24 @@
             </div>
 
           </div>
-
+            <!-- 第二行 -->
           <div style="margin-top: 5%;display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='教务工具'">
             <div class="item" @click="analysis()">
-                <div class="content">
-                  <div style="display: flex;justify-content: center;">
-                    <img style="width: 90px;height: 90px;" src="@/assets/analyze.png" alt="">
-                  </div>
-                  <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">统计面板</div>
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 90px;height: 90px;" src="@/assets/analyze.png" alt="">
                 </div>
+                <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">统计面板</div>
+              </div>
+            </div>
+
+            <div class="item" @click="library()">
+              <div class="content">
+                <div style="display: flex;justify-content: center;">
+                  <img style="width: 90px;height: 90px;" src="@/assets/library.png" alt="">
+                </div>
+                <div style="display: flex;justify-content:center;font-weight: bold;font-size: small;">教学智库</div>
+              </div>
             </div>
 
           </div>
@@ -193,9 +201,7 @@
 
           </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -404,6 +410,10 @@ methods: {
 
   school (subject) {
     this.$router.push({ path: '/school', query: { subject: subject,studio: this.studio,role:this.role,openid:this.openid } })
+  },
+
+  library () {
+    this.$router.push({ path: '/library', query: {studio: this.studio,role:this.role,openid:this.openid } })
   },
 
   analysis () {
