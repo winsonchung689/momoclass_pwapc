@@ -30,7 +30,7 @@
             </el-table-column>
             <el-table-column label="封面">
               <template slot-scope="scope">
-                <div style="height: 100px;width: 150px;overflow: hidden;display: flex;align-items: center;">
+                <div style="height: 70px;width: 150px;overflow: hidden;display: flex;align-items: center;">
                   <img :src="scope.row.url" width="70%" alt="">
                 </div>
               </template>
