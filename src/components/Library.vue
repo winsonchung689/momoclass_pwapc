@@ -13,7 +13,7 @@
             <div>已用空间：{{ used_size }} G</div>
             <div>可用空间：{{ free_size }} G</div>
           </div>
-          <el-progress :show-text	="true" :text-inside="false" :stroke-width="20" :percentage="percentage" :color="progress_color"></el-progress>
+          <el-progress :text-inside="true" :stroke-width="20" :percentage="percentage" :color="progress_color"></el-progress>
 
           <!-- 类别 -->
           <div style="display:flex;flex-direction: row;justify-content: space-around;font-weight: bold;">
@@ -69,8 +69,6 @@
             </el-table-column>
         </el-table>
       </div>
-
-     
       
     </div>
 
