@@ -370,7 +370,7 @@ export default {
       let param = {
         file_name: '模板.xls'
       }
-      window.location.href = 'https://www.momoclasss.xyz:443/file/uploadfiles/模板.xls'
+      window.location.href = 'https://www.momoclasss.xyz:443/file/uploadfiles/model.xls'
     },
 
     deleteRow(id,student_name){
