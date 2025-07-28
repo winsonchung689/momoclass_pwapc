@@ -26,7 +26,14 @@
           <el-table :data="tableData" style="width: 100%;font-size: small;color: black;font-weight: bold;" >
             <el-table-column prop="category" label="类别">
             </el-table-column>
-             <el-table-column prop="ppt_name" label="名称" >
+            <el-table-column prop="ppt_name" label="名称" >
+            </el-table-column>
+            <el-table-column label="封面">
+              <template slot-scope="scope">
+                <div style="height: 100px;width: 150px;overflow: hidden;display: flex;align-items: center;">
+                  <img :src="scope.row.url" width="70%" alt="">
+                </div>
+              </template>
             </el-table-column>
             <el-table-column prop="introduce" label="简介" >
             </el-table-column>
@@ -75,6 +82,7 @@
 import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import download from "downloadjs"
+import { ImageUrl } from '@/api'
 
 
 export default {
@@ -144,8 +152,11 @@ export default {
       that.free_size = free_size.toFixed(4);
       that.percentage = (free_size*100/size_limit).toFixed(2)*1
       for(var i in res_data){
+          res_data[i].url =ImageUrl + res_data[i].uuid;
           res_data[i].single_size = res_data[i].single_size.toFixed(4);
           let menu_id = res_data[i].id;
+
+
           let param ={
             menu_id:menu_id
           }
