@@ -82,7 +82,7 @@
               </div>
 
                   <div>
-                    <el-popconfirm title="确定下载全部吗？" @confirm="downloadAll(props.row.children)">
+                    <el-popconfirm title="确定下载全部吗？" @confirm="downloadAll(props.row.children,props.row.ppt_name)">
                       <el-button slot="reference" type="primary" size="small" style="font-size:small">下载全部</el-button>
                     </el-popconfirm>
                   </div>
@@ -219,7 +219,7 @@ export default {
       window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
     },
 
-    async downloadAll(list){
+    async downloadAll(list,ppt_name){
       let that = this;
       let studio = that.studio.replace('/','');
       const zip = new JSZip();
@@ -231,7 +231,7 @@ export default {
         zip.file(file_name,blob)
       }
       const content =await zip.generateAsync({type: 'blob' });
-      saveAs(content, "批量下载");
+      saveAs(content, ppt_name);
       this.$message('下载完成！');
     },
 
