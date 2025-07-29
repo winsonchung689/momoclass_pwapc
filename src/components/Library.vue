@@ -105,6 +105,8 @@ import { HttpPost } from '@/api'
 import download from "downloadjs"
 import { ImageUrl } from '@/api'
 import { UploadFile } from '@/api'
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 
 
 export default {
@@ -213,17 +215,24 @@ export default {
       let that = this;
       console.log(file_name)
       let studio = that.studio.replace('/','');
-      download('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name)
-      // window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
+      // download('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name)
+      window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
     },
 
-    downloadAll(list){
+    async downloadAll(list){
       let that = this;
       let studio = that.studio.replace('/','');
+      const zip = new JSZip();
+      this.$message('正在下载中');
       for(var i in list){
         let file_name = list[i].file_name;
-        download('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name)
+        const response =await fetch('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name);
+        const blob = await response.blob();
+        zip.file(file_name,blob)
       }
+      const content =await zip.generateAsync({type: 'blob' });
+      saveAs(content, "zipName");
+      this.$message('下载完成！');
     },
 
     menuId(id){
