@@ -258,10 +258,6 @@ export default {
         let res =  UploadFile('/uploadFileByType', formdata)
         console.log(res)
         res.then(res => {
-          this.$message({
-                message: '上传成功',
-                type: 'success'
-            });
             that.insertLibrary(that.menu_id,file.name,file.size)
         })
       }
@@ -274,9 +270,15 @@ export default {
             file_name:file_name,
             size:size
         }
-        let res = await HttpPost('/insertLibrary', param)
-        // console.log(res)
-        await that.getPptMenu(that.select_category)
+        let res = HttpPost('/insertLibrary', param)
+        res.then(res => {
+          this.$message({
+              message: '上传成功',
+              type: 'success'
+          });
+          // console.log(res)
+          that.getPptMenu(that.select_category)
+        })
     },
 
     goOff() {
