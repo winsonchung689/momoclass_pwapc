@@ -255,16 +255,16 @@ export default {
         formdata.append('studio',that.studio);
         formdata.append('type','teach');
         // console.log(formdata)
-        let res =  await UploadFile('/uploadFileByType', formdata)
-        // console.log(res)
-        let res1 = await that.insertLibrary(that.menu_id,file.name,file.size)
-        // console.log(res1)
-        this.$message({
-            message: '上传成功',
-            type: 'success'
-        });
+        let res =  UploadFile('/uploadFileByType', formdata)
+        console.log(res)
+        res.then(res => {
+          this.$message({
+                message: '上传成功',
+                type: 'success'
+            });
+            that.insertLibrary(that.menu_id,file.name,file.size)
+        })
       }
-
     },
 
     async insertLibrary(menu_id,file_name,size){
@@ -275,7 +275,7 @@ export default {
             size:size
         }
         let res = await HttpPost('/insertLibrary', param)
-        console.log(res)
+        // console.log(res)
         await that.getPptMenu(that.select_category)
     },
 
