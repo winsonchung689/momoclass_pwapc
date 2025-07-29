@@ -9,7 +9,7 @@
 
       <div style="margin-top: 40px;width: 95%;">
           <!-- 进度条 -->
-          <div style="display: flex;flex-direction: row;justify-content: space-between;">
+          <div style="display: flex;flex-direction: row;justify-content: space-around;">
             <div>最大空间：{{ size_limit }} G</div>
             <div>已用空间：{{ used_size }} G</div>
             <div>可用空间：{{ free_size }} G</div>
@@ -17,7 +17,7 @@
           <el-progress :text-inside="true" :stroke-width="20" :percentage="percentage" :color="progress_color"></el-progress>
 
           <!-- 类别 -->
-          <div style="margin-top: 20px;display:flex;flex-direction: row;justify-content: space-between;font-weight: bold;">
+          <div style="margin-top: 20px;display:flex;flex-direction: row;justify-content: space-around;font-weight: bold;">
             <div v-for="item in category_all_list" >
                 <el-button type="primary" plain round @click="getPptMenu(item)" style="border-radius: 0.6rem;">{{item}}</el-button>
             </div>
