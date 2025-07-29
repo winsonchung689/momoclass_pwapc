@@ -231,7 +231,7 @@ export default {
         zip.file(file_name,blob)
       }
       const content =await zip.generateAsync({type: 'blob' });
-      saveAs(content, "zipName");
+      saveAs(content, "批量下载");
       this.$message('下载完成！');
     },
 
