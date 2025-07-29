@@ -128,7 +128,8 @@ export default {
       soli_color:'#535CBE',
       light_color:'rgba(230, 231, 233, 0.904)',
       menu_id:'',
-      isUpload:false
+      isUpload:false,
+      file:''
     }
   },
 
