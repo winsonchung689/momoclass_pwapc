@@ -8,6 +8,7 @@
       </div>
 
       <div style="margin-top: 40px;width: 95%;">
+          <!-- 进度条 -->
           <div style="display: flex;flex-direction: row;justify-content: space-between;">
             <div>最大空间：{{ size_limit }} G</div>
             <div>已用空间：{{ used_size }} G</div>
@@ -16,9 +17,9 @@
           <el-progress :text-inside="true" :stroke-width="20" :percentage="percentage" :color="progress_color"></el-progress>
 
           <!-- 类别 -->
-          <div style="display:flex;flex-direction: row;justify-content: space-around;font-weight: bold;">
+          <div style="margin-top: 20px;display:flex;flex-direction: row;justify-content: space-between;font-weight: bold;">
             <div v-for="item in category_all_list" >
-                <el-button type="primary" round @click="getPptMenu(item)" style="border-radius: 0.6rem;">{{item}}</el-button>
+                <el-button type="primary" plain round @click="getPptMenu(item)" style="border-radius: 0.6rem;">{{item}}</el-button>
             </div>
           </div>
           
@@ -45,8 +46,10 @@
                   <div v-for="(item,index) in props.row.children" :key="index">
 
                     <div style="margin-top: 10px;color:darkgrey;font-size: small;width: 80%;;display: flex;flex-direction: row;margin-left: 1%;justify-content: space-between;">
-                        <div >序号：{{ item.rank }}</div>
-                        <div >名称：{{ item.file_name }}</div>
+                        <div style="display: flex;flex-direction: row;">
+                            <div>序号：{{ item.rank }}</div>
+                            <div style="margin-left: 10px;">名称：{{ item.file_name }}</div>
+                        </div>
                         <div >大小：{{ item.size }} G</div>
                         <button @click="downlowd(item.file_name)">下载</button>
                     </div>
@@ -57,17 +60,37 @@
             <!-- 按钮 -->
             <el-table-column fixed="right" label="操作" v-if="isShow">
               <template slot-scope="props" >
-                <div style="justify-content: space-between;display: flex;flex-direction: row;width: 100px;">
+                <div style="justify-content: space-between;display: flex;flex-direction: row;width: 200px;">
+                  <div>
+                    
+                  </div>
+                  <div>
+                    <el-popconfirm v-if="!isUpload" title="确定上传吗？" @confirm="menuId(props.row.id)">
+                      <el-button slot="reference" type="primary" size="small">点击上传 </el-button>
+                    </el-popconfirm>
+
+                    <el-upload 
+                      class="upload-demo"
+                      action="#"
+                      :on-change="handleChange"
+                      :multiple="true"
+                      :type="file"
+                      :auto-upload="true"
+                      >
+                      <el-button v-if="isUpload" type="success" size="small">添加文件 </el-button>
+                    </el-upload>
+              </div>
+
                   <div>
                     <el-popconfirm title="确定下载全部吗？" @confirm="downloadAll(props.row.children)">
-                      <el-button slot="reference" type="text" size="small" style="font-size:small">下载全部</el-button>
+                      <el-button slot="reference" type="primary" size="small" style="font-size:small">下载全部</el-button>
                     </el-popconfirm>
                   </div>
                   
                 </div>
               </template>
             </el-table-column>
-        </el-table>
+          </el-table>
       </div>
       
     </div>
@@ -81,6 +104,7 @@ import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import download from "downloadjs"
 import { ImageUrl } from '@/api'
+import { UploadFile } from '@/api'
 
 
 export default {
@@ -102,7 +126,9 @@ export default {
       percentage:0,
       category_all_list:[],
       soli_color:'#535CBE',
-      light_color:'rgba(230, 231, 233, 0.904)'
+      light_color:'rgba(230, 231, 233, 0.904)',
+      menu_id:'',
+      isUpload:false
     }
   },
 
@@ -173,7 +199,7 @@ export default {
             json.file_name = file_name;
             json.size = size;
             json.id = id;
-            json.rank = j;
+            json.rank = parseInt(j) + 1;
             children.push(json)
           }
           res_data[i].children = children;
@@ -199,6 +225,49 @@ export default {
       }
     },
 
+    menuId(id){
+      let that = this;
+      that.menu_id = id;
+      that.isUpload = !that.isUpload;
+      console.log(that.menu_id,that.isUpload)
+
+    },
+
+    async handleChange(file,fileList){
+      let that = this
+      for(var i in fileList){
+        console.log(fileList[i])
+        let file = fileList[i];
+
+        const formdata = new FormData();
+        formdata.append('file',file.raw);
+        formdata.append('file_name',file.name);
+        formdata.append('studio',that.studio);
+        formdata.append('type','teach');
+        // console.log(formdata)
+        let res =  await UploadFile('/uploadFileByType', formdata)
+        // console.log(res)
+        let res1 = await that.insertLibrary(that.menu_id,file.name,file.size)
+        // console.log(res1)
+        this.$message({
+            message: '上传成功',
+            type: 'success'
+        });
+      }
+
+    },
+
+    async insertLibrary(menu_id,file_name,size){
+        let that = this;
+        let param ={
+            menu_id:menu_id,
+            file_name:file_name,
+            size:size
+        }
+        let res = await HttpPost('/insertLibrary', param)
+        console.log(res)
+        await that.getPptMenu(that.select_category)
+    },
 
     goOff() {
       this.$router.go(-1);
