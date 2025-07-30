@@ -25,10 +25,9 @@
           </div>
 
           <div  class="foot" :style="{display:MinDisplay}">
-            <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;">学生: {{ subject }}_{{ student_name }}</div>
-            <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;">课堂名称: {{ item.class_name }}</div>
-            <div style="font-size: medium;color: rgb(140, 219, 226);margin-top: 5px;margin-bottom: 5px;">老师点评: </div>
-            <div style="font-size: medium;color: rgb(140, 219, 226);margin-top: 5px;margin-bottom: 5px;">{{ item.comment }}</div>
+            <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;">学生： {{ subject }}_{{ student_name }}</div>
+            <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;">课堂名称：{{ item.class_name }}</div>
+            <div style="font-size: medium;color: rgb(90, 135, 231);margin-top: 5px;margin-bottom: 5px;">老师点评：{{ item.comment }} </div>
             <div v-if="item.isMp3">
               <audio controls ref="audio" class="aud" :src="item.mp3_url"></audio>
             </div>

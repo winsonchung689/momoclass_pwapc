@@ -46,7 +46,7 @@
                   <div v-for="(item,index) in props.row.children" :key="index">
 
                     <div style="margin-top: 10px;color:darkgrey;font-size: small;width: 80%;;display: flex;flex-direction: row;margin-left: 1%;justify-content: space-between;">
-                        <div style="display: flex;flex-direction: row;">
+                        <div style="display: flex;flex-direction: row;width: 50%;">
                             <div>序号：{{ item.rank }}</div>
                             <div style="margin-left: 10px;">名称：{{ item.file_name }}</div>
                         </div>
