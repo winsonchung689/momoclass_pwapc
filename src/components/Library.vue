@@ -21,6 +21,7 @@
             <div v-for="item in category_all_list" >
                 <el-button type="primary" plain round @click="getPptMenu(item)" style="border-radius: 0.6rem;">{{item}}</el-button>
             </div>
+            <!-- <div><el-button type="success">新增类别</el-button></div> -->
           </div>
           
           <!-- 列表 -->

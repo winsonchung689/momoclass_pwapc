@@ -29,14 +29,13 @@
                 </template>
               </el-autocomplete>
             </div>
-
+            <!-- 监控 -->
             <div v-if="abnormal_lesson>0">
               <el-button type="danger" @click="getAbnormalStudent('lesson')">课时监控:{{ abnormal_lesson }}</el-button>
             </div>
             <div v-if="abnormal_lesson<=0">
               <el-button plain type="info"  @click="getAbnormalStudent('lesson')">课时监控:{{ abnormal_lesson }}</el-button>
             </div>
-
             <div v-if="abnormal_package>0">
               <el-button type="danger" @click="getAbnormalStudent('package')">课包监控:{{ abnormal_package }}</el-button>
             </div>
@@ -117,14 +116,17 @@
         <div v-if="isStudent" style="justify-content: center;display: flex;margin-top: 15px" v-for="item of items">
           <div class="card">
             <div class="lesson">
-              <img style="height: 50px;border-radius: 15%;margin-left: 20px;margin-top: 20px;" :src="item.avatarurl" alt="">
-              
-              <div style="margin-left: 10px;margin-top: 20px;">
-                <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
-                  <div style="margin-right: 5px;color: #ffff;">科目: {{ item.subject }} </div>
+                <!-- 头像 -->
+                <div style="width: 50px;height: 50px;margin-left: 20px;margin-top: 20px;">
+                    <img style="height: 50px;border-radius: 15%;" :src="item.avatarurl" alt="">
                 </div>
-
-                <div style="font-weight: bolder;color: #ffff;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
+              
+                <!-- 信息 -->
+                <div style="margin-left: 10px;margin-top: 20px;width: 30%;">
+                  <div style="font-size: small;display: flex;direction: row;font-weight: bolder;">
+                    <div style="margin-right: 5px;color: #ffff;">科目: {{ item.subject }} </div>
+                  </div>
+                  <div style="font-weight: bolder;color: #ffff;">{{ item.student_name }}  (家长:{{ item.parent }})</div>
                   <div style="font-weight: bolder;font-size: small;display: flex;direction: row;margin-top: 5px;">
                     <div @click="modifyFunction('余课时',item.student_name,item.subject)" style="color: #ffff;margin-right: 5px;">余课时: {{ item.left_amount }} </div>
                     <div @click="modifyFunction('总课时',item.student_name,item.subject)" style="color: #ffff;margin-left: 15px;">历史课时: {{ item.total_amount }} </div>
@@ -133,28 +135,28 @@
                     <div @click="modifyFunction('扣课',item.student_name,item.subject)" style="color: #ffff;margin-right: 15px;">单次扣课: {{ item.minus }} </div>
                     <div @click="modifyFunction('积分',item.student_name,item.subject)" style="color: #ffff;margin-left: 5px;">单课积分: {{ item.coins }}</div>
                   </div>
-              </div>
+                </div>
 
-              <div style="display: flex;flex-direction: row;justify-content: space-between;width: 50%;margin-left: 5%;margin-top: 2%;align-items: center;">
-                  <div>
-                    <el-button @click="modifyFunction('续课',item.student_name,item.subject)">续课</el-button>
-                  </div>
-                  <div>
-                    <el-button @click="modifyFunction('划课',item.student_name,item.subject)">划课</el-button>
-                  </div>
-                  <div>
-                    <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
-                  </div>
-                  <div>
-                    <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
-                  </div>
-                  <div>
-                    <el-button @click="lessonPackage(item.subject,item.student_name)">报课记录</el-button>
-                  </div>
-              </div>
-
+                <!-- 按钮 -->
+                <div style="display: flex;flex-direction: row;justify-content: space-between;width: 50%;margin-left: 5%;margin-top: 2%;align-items: center;">
+                    <div>
+                      <el-button @click="modifyFunction('续课',item.student_name,item.subject)">续课</el-button>
+                    </div>
+                    <div>
+                      <el-button @click="modifyFunction('划课',item.student_name,item.subject)">划课</el-button>
+                    </div>
+                    <div>
+                      <el-button @click="signUpRecord(item.subject,item.student_name)">签到记录</el-button>
+                    </div>
+                    <div>
+                      <el-button @click="leaveRecord(item.subject,item.student_name)">请假记录</el-button>
+                    </div>
+                    <div>
+                      <el-button @click="lessonPackage(item.subject,item.student_name)">报课记录</el-button>
+                    </div>
+                </div>
             </div>
-
+            
             <el-popconfirm title="确定删除吗？" style="margin-left: 98%;" @confirm="deleteRow(item.id,item.student_name)">
               <el-button slot="reference" icon="el-icon-delete" type="danger" circle size="mini"></el-button>
             </el-popconfirm>
@@ -177,7 +179,6 @@
               <el-button type="primary" @click="confirm_buttom()">确 定</el-button>
             </div>
           </el-dialog>
-            
         </div>
 
       </div>
