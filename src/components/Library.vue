@@ -46,10 +46,13 @@
               <template slot-scope="props">
                   <div v-for="(item,index) in props.row.children" :key="index">
 
-                    <div style="margin-top: 10px;color:darkgrey;font-size: small;width: 80%;;display: flex;flex-direction: row;margin-left: 1%;justify-content: space-between;">
-                        <div style="display: flex;flex-direction: row;width: 50%;">
+                    <div style="margin-top: 10px;color:darkgrey;font-size: small;width: 90%;;display: flex;flex-direction: row;margin-left: 1%;justify-content: space-between;align-items: center;">
+                        <div style="display: flex;flex-direction: row;width: 40%;">
                             <div>序号：{{ item.rank }}</div>
                             <div style="margin-left: 10px;">名称：{{ item.file_name }}</div>
+                        </div>
+                        <div style="height: 70px;width: 150px;overflow: hidden;display: flex;align-items: center;">
+                          <img :src="item.url" width="70%" alt="">
                         </div>
                         <div >大小：{{ item.size }} G</div>
                         <button @click="downlowd(item.file_name)">下载</button>
@@ -195,11 +198,15 @@ export default {
 
           let children = [];
           for(var j in librarg_data){
-             var json = {}
-             const file_name = librarg_data[j].file_name
-             const size = (librarg_data[j].size/1024/1024/1024).toFixed(4);
-             const id = librarg_data[j].id;
+            var json = {}
+            const file_name = librarg_data[j].file_name
+            const size = (librarg_data[j].size/1024/1024/1024).toFixed(4);
+            const id = librarg_data[j].id;
+            const uuid = librarg_data[j].uuid;
+            const url = ImageUrl + librarg_data[j].uuid;
 
+            json.url = url;
+            json.uuid = uuid;
             json.file_name = file_name;
             json.size = size;
             json.id = id;
