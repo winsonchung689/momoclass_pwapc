@@ -55,6 +55,7 @@
                           <img :src="item.url" width="70%" alt="">
                         </div>
                         <div >大小：{{ item.size }} G</div>
+                        <button @click="preview(item.file_name)">预览</button>
                         <button @click="downlowd(item.file_name)">下载</button>
                     </div>
 
@@ -96,6 +97,11 @@
             </el-table-column>
           </el-table>
       </div>
+
+      <div>
+        <VueOfficePptx :src="pptUrl" />
+
+      </div>
       
     </div>
 
@@ -111,6 +117,7 @@ import { ImageUrl } from '@/api'
 import { UploadFile } from '@/api'
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
+import VueOfficePptx from '@vue-office/pptx'
 
 
 export default {
@@ -135,7 +142,8 @@ export default {
       light_color:'rgba(230, 231, 233, 0.904)',
       menu_id:'',
       isUpload:false,
-      file:''
+      file:'',
+      pptUrl:''
     }
   },
 
@@ -225,6 +233,14 @@ export default {
       let studio = that.studio.replace('/','');
       // download('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name)
       window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
+    },
+
+    preview(file_name){
+      let that = this;
+      let studio = that.studio.replace('/','');
+      let pptUrl = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
+      console.log(pptUrl)
+      that.pptUrl = pptUrl;
     },
 
     async downloadAll(list,ppt_name){
