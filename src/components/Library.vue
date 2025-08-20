@@ -100,7 +100,6 @@
 
       <div>
         <VueOfficePptx :src="pptUrl" />
-
       </div>
       
     </div>
