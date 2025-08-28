@@ -103,7 +103,7 @@
 
 <script>
 
-import { HttpGet } from '@/api'
+import { downloadAttachment } from '@/api'
 import { HttpPost } from '@/api'
 import download from "downloadjs"
 import { ImageUrl } from '@/api'
@@ -264,9 +264,10 @@ export default {
             studio:studio,
             type:type
         }
-        let res = HttpPost('/downloadFileByType', param)
+        let res = downloadAttachment('/downloadFileByType',param)
         console.log(res)
-        window.open(res)
+        const url = window.URL.createObjectURL(res);
+        window.open(url)
     },
 
     menuId(id){
