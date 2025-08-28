@@ -23,7 +23,13 @@
             </div>
             <!-- <div><el-button type="success">新增类别</el-button></div> -->
           </div>
-      
+          
+          <template>
+            <div style="height: 10vh">
+              <vue-office-pptx :src="pptUrl" @rendered=""  @error=""/>
+            </div>
+          </template>
+          
           
           <!-- 列表 -->
           <el-table :data="tableData" style="width: 100%;font-size: small;color: black;font-weight: bold;" >
@@ -103,14 +109,13 @@
 
 <script>
 
-import { downloadAttachment } from '@/api'
+import { HttpGet } from '@/api'
 import { HttpPost } from '@/api'
 import download from "downloadjs"
 import { ImageUrl } from '@/api'
 import { UploadFile } from '@/api'
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import VueOfficePptx from '@vue-office/pptx'
 
 
 export default {
@@ -136,8 +141,12 @@ export default {
       menu_id:'',
       isUpload:false,
       file:'',
-      pptUrl:''
+      pptUrl:'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + 'aa.pptx'
     }
+  },
+
+  comments:{
+    VueOfficePptx
   },
 
   created () {
@@ -222,24 +231,16 @@ export default {
 
     async downlowd(file_name){
       let that = this;
-      console.log(file_name)
       let studio = that.studio.replace('/','');
-      let url = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + '哎.pptx'
-      // download('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name)
-      // window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + encodeURIComponent(encodeURIComponent('哎.pptx'))
-      // const response =await fetch(url);
-      // const blob = await response.blob();
-      // console.log(blob)
-      await that.downloadFileByType(file_name,studio,'teach')
+      console.log(file_name)
+      window.open('https://www.momoclasss.xyz:443/downloadFile?file_name=' + file_name + '&studio=' + studio)
     },
 
     preview(file_name){
       let that = this;
       let studio = that.studio.replace('/','');
-      let pptUrl = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + 'aa.pptx'
-      // let pptUrl = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
-      console.log(pptUrl)
-      that.pptUrl = pptUrl;
+      window.open('https://www.momoclasss.xyz:443/downloadFile?file_name=' + file_name + '&studio=' + studio)
+      // that.pptUrl =  pptUrl;
     },
 
     async downloadAll(list,ppt_name){
@@ -249,7 +250,7 @@ export default {
       this.$message('正在下载中');
       for(var i in list){
         let file_name = list[i].file_name;
-        const response =await fetch('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name);
+        const response =await fetch('https://www.momoclasss.xyz:443/downloadFile?file_name=' + file_name + '&studio=' + studio);
         const blob = await response.blob();
         zip.file(file_name,blob)
       }
@@ -264,10 +265,9 @@ export default {
             studio:studio,
             type:type
         }
-        let res = downloadAttachment('/downloadFileByType',param)
+        let res = HttpPost('/downloadFileByType', param)
         console.log(res)
-        const url = window.URL.createObjectURL(res);
-        window.open(url)
+        window.open(res)
     },
 
     menuId(id){

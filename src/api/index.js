@@ -34,20 +34,6 @@ export function UploadFile (url, formData) {
   })
 }
 
-export function downloadAttachment(path, param) {
-  var url = baseUrl + path
-  axios({
-    method: 'POST',
-    url: url,
-    data: param,
-    responseType: 'blob',
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }).then(res => {
-    console.log(res)
-    resolveBlob(res, res.data.type)
-  })
-}
-
 
 export const ImageUrl = baseUrl + '/data/disk/uploadimages/'
 
