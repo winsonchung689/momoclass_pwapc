@@ -23,6 +23,7 @@
             </div>
             <!-- <div><el-button type="success">新增类别</el-button></div> -->
           </div>
+      
           
           <!-- 列表 -->
           <el-table :data="tableData" style="width: 100%;font-size: small;color: black;font-weight: bold;" >
@@ -56,7 +57,7 @@
                         </div>
                         <div >大小：{{ item.size }} G</div>
                         <button @click="preview(item.file_name)">预览</button>
-                        <button @click="downlowd(item.file_name)">下载</button>
+                        <button type="button" @click="downlowd(item.file_name)">下载</button>
                     </div>
 
                   </div>
@@ -66,9 +67,6 @@
             <el-table-column fixed="right" label="操作" v-if="isShow">
               <template slot-scope="props" >
                 <div style="justify-content: space-between;display: flex;flex-direction: row;width: 200px;">
-                  <div>
-                    
-                  </div>
                   <div>
                     <el-popconfirm v-if="!isUpload" title="确定上传吗？" @confirm="menuId(props.row.id)">
                       <el-button slot="reference" type="primary" size="small">点击上传 </el-button>
@@ -84,13 +82,13 @@
                       >
                       <el-button v-if="isUpload" type="success" size="small">添加文件 </el-button>
                     </el-upload>
-              </div>
+                  </div>
 
-                  <div>
+                  <!-- <div>
                     <el-popconfirm title="确定下载全部吗？" @confirm="downloadAll(props.row.children,props.row.ppt_name)">
                       <el-button slot="reference" type="primary" size="small" style="font-size:small">下载全部</el-button>
                     </el-popconfirm>
-                  </div>
+                  </div> -->
                   
                 </div>
               </template>
@@ -98,10 +96,6 @@
           </el-table>
       </div>
 
-      <div>
-        <VueOfficePptx :src="pptUrl" />
-      </div>
-      
     </div>
 
 
@@ -226,18 +220,24 @@ export default {
       console.log(res_data)
     },
 
-    downlowd(file_name){
+    async downlowd(file_name){
       let that = this;
       console.log(file_name)
       let studio = that.studio.replace('/','');
+      let url = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + '哎.pptx'
       // download('https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name)
-      window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
+      // window.location.href = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + encodeURIComponent(encodeURIComponent('哎.pptx'))
+      // const response =await fetch(url);
+      // const blob = await response.blob();
+      // console.log(blob)
+      await that.downloadFileByType(file_name,studio,'teach')
     },
 
     preview(file_name){
       let that = this;
       let studio = that.studio.replace('/','');
-      let pptUrl = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
+      let pptUrl = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + 'aa.pptx'
+      // let pptUrl = 'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + studio + '/' + file_name
       console.log(pptUrl)
       that.pptUrl = pptUrl;
     },
@@ -256,6 +256,17 @@ export default {
       const content =await zip.generateAsync({type: 'blob' });
       saveAs(content, ppt_name);
       this.$message('下载完成！');
+    },
+
+    async downloadFileByType(file_name,studio,type){
+       let param ={
+            file_name:file_name,
+            studio:studio,
+            type:type
+        }
+        let res = HttpPost('/downloadFileByType', param)
+        console.log(res)
+        window.open(res)
     },
 
     menuId(id){
