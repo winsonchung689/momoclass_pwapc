@@ -24,12 +24,6 @@
             <!-- <div><el-button type="success">新增类别</el-button></div> -->
           </div>
           
-          <template>
-            <div style="height: 10vh">
-              <vue-office-pptx :src="pptUrl" @rendered=""  @error=""/>
-            </div>
-          </template>
-          
           
           <!-- 列表 -->
           <el-table :data="tableData" style="width: 100%;font-size: small;color: black;font-weight: bold;" >
