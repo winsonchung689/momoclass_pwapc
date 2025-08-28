@@ -145,9 +145,6 @@ export default {
     }
   },
 
-  comments:{
-    VueOfficePptx
-  },
 
   created () {
     this.getPptMenu(this.dayType)
