@@ -179,7 +179,7 @@ export default {
       let type = 'all_lesson'
       if(that.package_value == false){
           type = 'single_lesson'
-          that.getSignUpRecord()
+          that.getLessonPackage()
       }
       
       let param ={
@@ -189,8 +189,8 @@ export default {
       }
       let res = HttpPost("/getDownloadDataByType",param)
       res.then(res => {
-          // console.log(res.data)
-          window.location.href = 'https://www.momoclasss.xyz:443/file/downloadData/'+that.studio +'/' + that.openid + '/' + type+'.xls'
+        let path = '/data/downloadData/' + that.studio + '/' + that.openid + '/' + type+'.xls';
+        window.open('https://www.momoclasss.xyz:443/get_download?path=' + path)
       })
       
     },

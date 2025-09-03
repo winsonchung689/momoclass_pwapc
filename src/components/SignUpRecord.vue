@@ -216,8 +216,9 @@ export default {
       console.log(param)
       let res = HttpPost("/getDownloadDataByType",param)
       res.then(res => {
-          // console.log(res.data)
-          window.location.href = 'https://www.momoclasss.xyz:443/file/downloadData/'+that.studio +'/' + that.openid + '/' + type+'.xls'
+        // console.log(res.data)
+        let path = '/data/downloadData/' + that.studio + '/' + that.openid + '/' + type+'.xls';
+        window.open('https://www.momoclasss.xyz:443/get_download?path=' + path)
       })
       
     },

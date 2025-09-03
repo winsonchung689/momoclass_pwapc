@@ -425,9 +425,12 @@ export default {
       res.then(res => {
           console.log(res.data)
           let feed_data = res.data
-          let file_name =  feed_data.split("/")[4];
+          let file_name =  feed_data.split("/").pop();
           console.log(file_name)
-          window.location.href = 'https://www.momoclasss.xyz:443/file/downloadLesson/'+that.studio+'/'+ file_name
+          // window.location.href = 'https://www.momoclasss.xyz:443/file/downloadLesson/'+that.studio+'/'+ file_name
+          // window.open('https://www.momoclasss.xyz:443/get_download?file_name=' + file_name + '&studio=' + that.studio)
+          let path = '/data/downloadLesson/' + that.studio + '/' + file_name;
+          window.open('https://www.momoclasss.xyz:443/get_download?path=' + path)
       })
       
     },
