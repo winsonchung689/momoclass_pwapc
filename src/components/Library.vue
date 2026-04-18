@@ -7,6 +7,12 @@
         <div style="font-size: medium;font-weight: bold;justify-content: left;margin-left: 10px;margin-top: 5px;">{{ header }}</div>
       </div>
 
+      <div style="background-color:aqua;margin-top: 100rpx;">
+          <iframe src="https://www.momoclasss.xyz:443/data/disk/uploadteach/aa.pptx" style="z-index: 1000;height:560px;width:100%" 
+          sandbox="allow-scripts allow-top-navigation allow-same-origin allow-popups"  
+           frameborder="0"></iframe>
+      </div>
+
       <div style="margin-top: 40px;width: 95%;">
           <!-- 进度条 -->
           <div style="display: flex;flex-direction: row;justify-content: space-around;">
@@ -135,7 +141,7 @@ export default {
       menu_id:'',
       isUpload:false,
       file:'',
-      pptUrl:'https://www.momoclasss.xyz:443/data/disk/uploadteach/' + 'aa.pptx'
+      pptUrl:'https://www.momoclasss.xyz:443/data/disk/uploadteach/aa.pptx'
     }
   },
 
