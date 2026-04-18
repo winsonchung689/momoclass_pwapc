@@ -28,6 +28,7 @@ const LessonPackage = () => import('@/components/LessonPackage')
 const ClassBooking = () => import('@/components/ClassBooking')
 const Analysis = () => import('@/components/Analysis')
 const Library = () => import('@/components/Library')
+const Dashborad = () => import('@/components/Dashborad')
 
 export default new Router({
   // history 模式，需要服务器后端配合做路由代理，将所有的前端路由同步代理到 /
@@ -220,6 +221,14 @@ export default new Router({
       path: '/library',
       name: 'Library',
       component: Library,
+      meta:{
+        showTabBar:false
+      }
+    },
+    {
+      path: '/dashborad',
+      name: 'Dashborad',
+      component: Dashborad,
       meta:{
         showTabBar:false
       }

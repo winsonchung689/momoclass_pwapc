@@ -71,6 +71,10 @@
               <i class="el-icon-connection"></i>
               <span slot="title">课后互动</span>
           </el-menu-item>
+          <el-menu-item index="3" @click="bindSelect('数据分析')">
+              <i class="el-icon-connection"></i>
+              <span slot="title">数据分析</span>
+          </el-menu-item>
           
         </el-menu>
       </el-col>
@@ -198,6 +202,20 @@
                   <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">课后点评</div>
                 </div>
             </div>
+
+          </div>
+
+          <!-- 课后互动 -->
+          <div style="display: flex;flex-direction: row;justify-content:space-between;width: 60%;margin-left: 10%;" v-if="this.title=='数据分析'">
+            <div class="item" @click="dashborad()">
+                <div class="content">
+                  <div style="display: flex;justify-content: center;">
+                    <img style="width: 90px;height: 90px;" src="@/assets/student_list.png" alt="">
+                  </div>
+                  <div style="display: flex;justify-content: center;font-weight: bold;font-size: small;">整体看版</div>
+                </div>
+            </div>
+
 
           </div>
       </div>
@@ -401,6 +419,10 @@ methods: {
 
   students () {
     this.$router.push({ path: '/students', query: {studio: this.studio,role:this.role,openid:this.openid} })
+  },
+
+  dashborad () {
+    this.$router.push({ path: '/dashborad', query: {studio: this.studio,role:this.role,openid:this.openid} })
   },
 
 
